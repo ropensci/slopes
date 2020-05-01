@@ -1,5 +1,5 @@
 Package: slopes
-Title: What the Package Does (One Line, Title Case)
+Title: Calculate Slopes of Roads, Rivers and Transport Routes
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "First",
@@ -20,3 +20,5 @@ Imports:
     geodist
 Depends: 
     R (>= 2.10)
+Suggests: 
+    pbapply

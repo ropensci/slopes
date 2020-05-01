@@ -60,3 +60,34 @@ sequential_dist = function(m, lonlat = TRUE) {
     sqrt(diff(m[, 1])^2 + diff(m[, 2])^2)
   }
 }
+
+
+rg3d = function(x, elevation = NULL) {
+  m = sf::st_coordinates(x)
+  x_sfc = sf::st_sfc(x)
+  if(!is.null(elevation)) {
+    e = slope_extract_elevation_from_raster()
+  } else {
+    e = x[, 3]
+  }
+  g1 = slope_matrix(m, e = e, lonlat = FALSE)
+  d = sequential_dist(m = m, lonlat = FALSE)
+  stats::weighted.mean(abs(g1), d, na.rm = TRUE)
+}
+
+slope_raster = function(r, e = NULL) {
+  res_list =
+    if (requireNamespace("pbapply", quietly = TRUE)) {
+      pbapply::pblapply(sf::st_geometry(r), rg3d, e = e)
+    } else {
+      lapply(sf::st_geometry(r), rg3d, e = e)
+    }
+  unlist(res_list)
+}
+
+# m = sf::st_coordinates(lisbon_road_segments[1, ])
+# e = dem_lisbon_raster
+# slope_extract_elevation_from_raster(m, e)
+slope_extract_elevation_from_raster = function(m, e, method = "bilinear") {
+  raster::extract(e, m[, 1:2], method = method)
+}

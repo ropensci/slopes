@@ -10,3 +10,4 @@
 ^clang-.*
 ^gfortran.*
 ^tic\.R$
+^README\.Rmd$
