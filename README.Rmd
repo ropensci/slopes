@@ -44,12 +44,17 @@ Load the package in the usual way:
 library(slopes)
 ```
 
+<!-- We will also use the `sf` package for representing road segments: -->
+
+<!-- ```{r} -->
+<!-- library(sf) -->
+<!-- ``` -->
 
 The minimum data requirements for using the package are elevation points, either as a vector, a matrix or as a digital elevation model (DEM) encoded as a raster dataset.
 Typically you will also have a geographic object representing the roads or similar features.
 These two types of input data are represented in the code output and plot below.
 
-```{r}
+```{r dem-lisbon}
 # A raster dataset included in the package:
 class(dem_lisbon_raster) # digital elevation model
 summary(raster::values(dem_lisbon_raster)) # heights range from 0 to ~100m
@@ -58,6 +63,32 @@ raster::plot(dem_lisbon_raster)
 # A vector dataset included in the package:
 class(lisbon_road_segments)
 plot(sf::st_geometry(lisbon_road_segments), add = TRUE)
+```
+
+Calculate the average gradient of each road segment as follows:
+
+```{r}
+lisbon_road_segments$slope = slope_raster(lisbon_road_segments, e = dem_lisbon_raster)
+summary(lisbon_road_segments$slope)
+```
+
+This created a new column, `slope` that represents the average, distance weighted slope associated with each road segment.
+The units represent the percentage incline, that is the change in elevation divided by distance.
+The summary of the result tells us that the average gradient of slopes in the example data is just over 5%.
+This result is equivalent to that returned by ESRI's `Slope_3d()` in the [3D Analyst extension](https://desktop.arcgis.com/en/arcmap/10.3/tools/3d-analyst-toolbox/slope.htm), with a correlation between the ArcMap implementation and our implementation of more than 0.95 on our test datast (we find higher correlations on larger datasets):
+
+```{r}
+cor(
+  lisbon_road_segments$slope,    # slopes calculates by the slopes package
+  lisbon_road_segments$Avg_Slope # slopes calculated by ArcMap's 3D Analyst extension
+)
+```
+
+We can now visualise the slopes calculated by the `slopes` package as follows:
+
+```{r slope-vis}
+raster::plot(dem_lisbon_raster)
+plot(lisbon_road_segments["slope"], add = TRUE, lwd = 5)
 ```
 
 

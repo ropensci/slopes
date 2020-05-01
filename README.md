@@ -39,6 +39,14 @@ Load the package in the usual way:
 library(slopes)
 ```
 
+<!-- We will also use the `sf` package for representing road segments: -->
+
+<!-- ```{r} -->
+
+<!-- library(sf) -->
+
+<!-- ``` -->
+
 The minimum data requirements for using the package are elevation
 points, either as a vector, a matrix or as a digital elevation model
 (DEM) encoded as a raster dataset. Typically you will also have a
@@ -62,4 +70,42 @@ class(lisbon_road_segments)
 plot(sf::st_geometry(lisbon_road_segments), add = TRUE)
 ```
 
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+<img src="man/figures/README-dem-lisbon-1.png" width="100%" />
+
+Calculate the average gradient of each road segment as follows:
+
+``` r
+lisbon_road_segments$slope = slope_raster(lisbon_road_segments, e = dem_lisbon_raster)
+summary(lisbon_road_segments$slope)
+#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#> 0.00000 0.01246 0.03534 0.05462 0.08251 0.27583
+```
+
+This created a new column, `slope` that represents the average, distance
+weighted slope associated with each road segment. The units represent
+the percentage incline, that is the change in elevation divided by
+distance. The summary of the result tells us that the average gradient
+of slopes in the example data is just over 5%. This result is equivalent
+to that returned by ESRI’s `Slope_3d()` in the [3D Analyst
+extension](https://desktop.arcgis.com/en/arcmap/10.3/tools/3d-analyst-toolbox/slope.htm),
+with a correlation between the ArcMap implementation and our
+implementation of more than 0.95 on our test datast (we find higher
+correlations on larger datasets):
+
+``` r
+cor(
+  lisbon_road_segments$slope,    # slopes calculates by the slopes package
+  lisbon_road_segments$Avg_Slope # slopes calculated by ArcMap's 3D Analyst extension
+)
+#> [1] 0.9770436
+```
+
+We can now visualise the slopes calculated by the `slopes` package as
+follows:
+
+``` r
+raster::plot(dem_lisbon_raster)
+plot(lisbon_road_segments["slope"], add = TRUE, lwd = 5)
+```
+
+<img src="man/figures/README-slope-vis-1.png" width="100%" />
