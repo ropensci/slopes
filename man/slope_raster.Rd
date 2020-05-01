@@ -15,7 +15,7 @@ slope_raster(r, e = NULL)
 Calculate the gradient of line segments from a raster dataset
 }
 \examples{
-r = lisbon_road_segments[1:30, ]
+r = lisbon_road_segments
 e = dem_lisbon_raster
 (s = slope_raster(r, e))
 cor(r$Avg_Slope, s)^2

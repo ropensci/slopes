@@ -38,6 +38,13 @@ slope_matrix = function(m, e = m[, 3], lonlat = TRUE) {
   g = e_change / d
   g
 }
+#' @rdname slope_matrix
+#' @export
+slope_matrix_weighted = function(m, e = m[, 3], lonlat = TRUE) {
+  g1 = slope_matrix(m, e = e, lonlat = lonlat)
+  d = sequential_dist(m = m, lonlat = lonlat)
+  stats::weighted.mean(abs(g1), d, na.rm = TRUE)
+}
 
 #' Calculate the sequential distances between sequential coordinate pairs
 #'
@@ -85,18 +92,39 @@ rg3d_single_line = function(x, elevation = NULL) {
 #' @param e A raster object overlapping with `r` and values representing elevations
 #' @export
 #' @examples
-#' r = lisbon_road_segments[1:30, ]
+#' r = lisbon_road_segments
 #' e = dem_lisbon_raster
 #' (s = slope_raster(r, e))
 #' cor(r$Avg_Slope, s)^2
 slope_raster = function(r, e = NULL) {
-  r_geometry = r$geom
+  # if("geom" %in% names(r)) {
+  #   r = r$geom
+  # } else if(methods::is(object = r[[attr(r, "sf_column")]], class2 = "sfc")) {
+    r = sf::st_geometry(r)
+  # }
+  n_lines = length(r)
+  m = sf::st_coordinates(r)
+  vertex_elevations = slope_extract_elevation_from_raster(m, e)
+  nrow(m) == length(vertex_elevations)
   res_list =
     if (requireNamespace("pbapply", quietly = TRUE)) {
-      pbapply::pblapply(r_geometry, rg3d_single_line, e = e)
+      pbapply::pblapply(1:n_lines, function(i) {
+        sel = m[, "L1"] == i
+        slope_matrix_weighted(m[sel, ], vertex_elevations[sel])
+      })
     } else {
-      lapply(r_geometry, rg3d_single_line, e = e)
+      lapply(1:n_lines, function(i) {
+        sel = m[, "L1"] == i
+        slope_matrix_weighted(m[sel, ], vertex_elevations[sel])
+      })
     }
+
+  # res_list =
+  #   if (requireNamespace("pbapply", quietly = TRUE)) {
+  #     pbapply::pblapply(r_geometry, rg3d_single_line, e = e)
+  #   } else {
+  #     lapply(r_geometry, rg3d_single_line, e = e)
+  #   }
   unlist(res_list)
 }
 

@@ -2,9 +2,12 @@
 % Please edit documentation in R/slopes.R
 \name{slope_matrix}
 \alias{slope_matrix}
+\alias{slope_matrix_weighted}
 \title{Calculate the gradient of line segments from a 3D matrix of coordinates}
 \usage{
 slope_matrix(m, e = m[, 3], lonlat = TRUE)
+
+slope_matrix_weighted(m, e = m[, 3], lonlat = TRUE)
 }
 \arguments{
 \item{m}{Matrix containing coordinates and elevations}
