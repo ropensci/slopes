@@ -4,12 +4,17 @@
 \alias{slope_raster}
 \title{Calculate the gradient of line segments from a raster dataset}
 \usage{
-slope_raster(r, e = NULL)
+slope_raster(r, e = NULL, lonlat = FALSE, method = "bilinear")
 }
 \arguments{
 \item{r}{Routes, the gradients of which are to be calculated}
 
 \item{e}{A raster object overlapping with \code{r} and values representing elevations}
+
+\item{lonlat}{Are the coordinates in lon/lat order? \code{TRUE} by default}
+
+\item{method}{The method of estimating elevation at points, passed to the \code{extract}
+function for extracting values from raster datasets. Default: \code{"bilinear"}.}
 }
 \description{
 Calculate the gradient of line segments from a raster dataset

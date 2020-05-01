@@ -112,17 +112,35 @@ plot(lisbon_road_segments["slope"], add = TRUE, lwd = 5)
 
 # Performance
 
-A benchmark can reveal how many gradients are calculated per second:
+A benchmark can reveal how many route gradients can be calculated per
+second:
 
 ``` r
 e = dem_lisbon_raster
 r = lisbon_road_segments[1:100, ]
-bench::mark(
-  slope_raster(r, e)
+res = bench::mark(check = FALSE,
+  raster_bilinear = {slope_raster(r, e)},
+  raster_simple = {slope_raster(r, e, method = "simple")}
 )
-#> Warning: Some expressions had a GC in every iteration; so filtering is disabled.
-#> # A tibble: 1 x 6
-#>   expression              min   median `itr/sec` mem_alloc `gc/sec`
-#>   <bch:expr>         <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 slope_raster(r, e)    574ms    574ms      1.74    7.35MB     10.4
+# ?bench::mark
+res
+#> # A tibble: 2 x 6
+#>   expression           min   median `itr/sec` mem_alloc `gc/sec`
+#>   <bch:expr>      <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
+#> 1 raster_bilinear  12.12ms  12.93ms      77.8    7.73MB     21.5
+#> 2 raster_simple     6.49ms   6.78ms     146.     5.68MB     25.6
 ```
+
+That is approximately
+
+``` r
+round(res$`itr/sec` * 100)
+#> [1]  7779 14570
+```
+
+routes per second using bilinear (the default) and ‘simple’ methods to
+extract elevation estimates from the raster datasets.
+
+That is sufficient for our needs but we plan to speed-up the
+calculation, e.g. using the new `terra` package, as outlined this
+[thread](https://github.com/rspatial/terra/issues/29#issuecomment-619444555).

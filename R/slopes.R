@@ -87,16 +87,18 @@ rg3d_single_line = function(x, elevation = NULL) {
 }
 
 #' Calculate the gradient of line segments from a raster dataset
-#'
+#' @inheritParams sequential_dist
 #' @param r Routes, the gradients of which are to be calculated
 #' @param e A raster object overlapping with `r` and values representing elevations
+#' @param method The method of estimating elevation at points, passed to the `extract`
+#' function for extracting values from raster datasets. Default: `"bilinear"`.
 #' @export
 #' @examples
 #' r = lisbon_road_segments
 #' e = dem_lisbon_raster
 #' (s = slope_raster(r, e))
 #' cor(r$Avg_Slope, s)^2
-slope_raster = function(r, e = NULL) {
+slope_raster = function(r, e = NULL, lonlat = FALSE, method = "bilinear") {
   # if("geom" %in% names(r)) {
   #   r = r$geom
   # } else if(methods::is(object = r[[attr(r, "sf_column")]], class2 = "sfc")) {
@@ -104,18 +106,18 @@ slope_raster = function(r, e = NULL) {
   # }
   n_lines = length(r)
   m = sf::st_coordinates(r)
-  vertex_elevations = slope_extract_elevation_from_raster(m, e)
+  vertex_elevations = slope_extract_elevation_from_raster(m, e, method = method)
   nrow(m) == length(vertex_elevations)
   res_list =
     if (requireNamespace("pbapply", quietly = TRUE)) {
       pbapply::pblapply(1:n_lines, function(i) {
         sel = m[, "L1"] == i
-        slope_matrix_weighted(m[sel, ], vertex_elevations[sel])
+        slope_matrix_weighted(m[sel, ], vertex_elevations[sel], lonlat = lonlat)
       })
     } else {
       lapply(1:n_lines, function(i) {
         sel = m[, "L1"] == i
-        slope_matrix_weighted(m[sel, ], vertex_elevations[sel])
+        slope_matrix_weighted(m[sel, ], vertex_elevations[sel], lonlat = lonlat)
       })
     }
 
