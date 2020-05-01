@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • slopes</title>
+<title>Calculate the gradient of line segments from a raster dataset — slope_raster • slopes</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,8 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Calculate the gradient of line segments from a raster dataset — slope_raster" />
+<meta property="og:description" content="Calculate the gradient of line segments from a raster dataset" />
 
 
 
@@ -58,7 +59,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -100,72 +101,37 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Calculate the gradient of line segments from a raster dataset</h1>
+    
+    <div class="hidden name"><code>slope_raster.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Calculate the gradient of line segments from a raster dataset</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>slope_raster</span>(<span class='no'>r</span>, <span class='kw'>e</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="dem_lisbon_raster.html">dem_lisbon_raster</a></code> </p>
-        </td>
-        <td><p>Elevation in central Lisbon, Portugal</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="lisbon_road_segments.html">lisbon_road_segments</a></code> </p>
-        </td>
-        <td><p>Road segments in Lisbon</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="sequential_dist.html">sequential_dist()</a></code> </p>
-        </td>
-        <td><p>Calculate the sequential distances between sequential coordinate pairs</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slope_matrix.html">slope_matrix()</a></code> </p>
-        </td>
-        <td><p>Calculate the gradient of line segments from a 3D matrix of coordinates</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slope_raster.html">slope_raster()</a></code> </p>
-        </td>
-        <td><p>Calculate the gradient of line segments from a raster dataset</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slope_vector.html">slope_vector()</a></code> </p>
-        </td>
-        <td><p>Calculate the gradient of line segments from distance and elevation vectors</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>r</th>
+      <td><p>Routes, the gradients of which are to be calculated</p></td>
+    </tr>
+    <tr>
+      <th>e</th>
+      <td><p>A raster object overlapping with <code>r</code> and values representing elevations</p></td>
+    </tr>
     </table>
-  </div>
 
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>r</span> <span class='kw'>=</span> <span class='no'>lisbon_road_segments</span>[<span class='fl'>1</span>:<span class='fl'>30</span>, ]</div><div class='output co'>#&gt; <span class='error'>Error: Input must be a vector, not a `sfc_POLYGON/sfc` object.</span></div><div class='input'><span class='no'>e</span> <span class='kw'>=</span> <span class='no'>dem_lisbon_raster</span>
+(<span class='no'>s</span> <span class='kw'>=</span> <span class='fu'>slope_raster</span>(<span class='no'>r</span>, <span class='no'>e</span>))</div><div class='output co'>#&gt; <span class='error'>Error in slope_raster(r, e): object 'r' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='no'>r</span>$<span class='no'>Avg_Slope</span>, <span class='no'>s</span>)^<span class='fl'>2</span></div><div class='output co'>#&gt; <span class='error'>Error in is.data.frame(y): object 's' not found</span></div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
