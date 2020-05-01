@@ -9,6 +9,7 @@ Authors@R:
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: What the package does (one paragraph).
 License: GPL-3
+URL: https://github.com/itsleeds/slopes/, https://itsleeds.github.io/slopes/
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
