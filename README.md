@@ -109,3 +109,20 @@ plot(lisbon_road_segments["slope"], add = TRUE, lwd = 5)
 ```
 
 <img src="man/figures/README-slope-vis-1.png" width="100%" />
+
+# Performance
+
+A benchmark can reveal how many gradients are calculated per second:
+
+``` r
+e = dem_lisbon_raster
+r = lisbon_road_segments[1:100, ]
+bench::mark(
+  slope_raster(r, e)
+)
+#> Warning: Some expressions had a GC in every iteration; so filtering is disabled.
+#> # A tibble: 1 x 6
+#>   expression              min   median `itr/sec` mem_alloc `gc/sec`
+#>   <bch:expr>         <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
+#> 1 slope_raster(r, e)    574ms    574ms      1.74    7.35MB     10.4
+```

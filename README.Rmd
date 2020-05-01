@@ -91,4 +91,16 @@ raster::plot(dem_lisbon_raster)
 plot(lisbon_road_segments["slope"], add = TRUE, lwd = 5)
 ```
 
+# Performance
+
+A benchmark can reveal how many gradients are calculated per second:
+
+```{r}
+e = dem_lisbon_raster
+r = lisbon_road_segments[1:100, ]
+bench::mark(
+  slope_raster(r, e)
+)
+```
+
 
