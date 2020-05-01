@@ -2,7 +2,7 @@
 % Please edit documentation in R/slopes.R
 \name{slope_matrix}
 \alias{slope_matrix}
-\title{Calculate the gradient of line segments from a matrix of coordinates}
+\title{Calculate the gradient of line segments from a 3D matrix of coordinates}
 \usage{
 slope_matrix(m, e = m[, 3], lonlat = TRUE)
 }
@@ -14,7 +14,7 @@ slope_matrix(m, e = m[, 3], lonlat = TRUE)
 \item{lonlat}{Are the coordinates in lon/lat order? \code{TRUE} by default}
 }
 \description{
-Calculate the gradient of line segments from a matrix of coordinates
+Calculate the gradient of line segments from a 3D matrix of coordinates
 }
 \examples{
 x = c(0, 2, 3, 4, 5, 9)

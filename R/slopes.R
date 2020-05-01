@@ -13,7 +13,7 @@ slope_vector = function(x, e) {
   e_change / d
 }
 
-#' Calculate the gradient of line segments from a matrix of coordinates
+#' Calculate the gradient of line segments from a 3D matrix of coordinates
 #'
 #' @param m Matrix containing coordinates and elevations
 #' @inheritParams slope_vector
@@ -61,12 +61,16 @@ sequential_dist = function(m, lonlat = TRUE) {
   }
 }
 
-
-rg3d = function(x, elevation = NULL) {
-  m = sf::st_coordinates(x)
-  x_sfc = sf::st_sfc(x)
+# x = sf::st_coordinates(lisbon_road_segments[1, ])
+# rg3d(x, elevation = dem_lisbon_raster)
+rg3d_single_line = function(x, elevation = NULL) {
+  if(methods::is(x, "sf")) {
+    m = sf::st_coordinates(x)
+  } else {
+    m = x
+  }
   if(!is.null(elevation)) {
-    e = slope_extract_elevation_from_raster()
+    e = slope_extract_elevation_from_raster(m, elevation)
   } else {
     e = x[, 3]
   }
@@ -75,12 +79,23 @@ rg3d = function(x, elevation = NULL) {
   stats::weighted.mean(abs(g1), d, na.rm = TRUE)
 }
 
+#' Calculate the gradient of line segments from a raster dataset
+#'
+#' @param r Routes, the gradients of which are to be calculated
+#' @param e A raster object overlapping with `r` and values representing elevations
+#' @export
+#' @examples
+#' r = lisbon_road_segments[1:30, ]
+#' e = dem_lisbon_raster
+#' (s = slope_raster(r, e))
+#' cor(r$Avg_Slope, s)^2
 slope_raster = function(r, e = NULL) {
+  r_geometry = r$geom
   res_list =
     if (requireNamespace("pbapply", quietly = TRUE)) {
-      pbapply::pblapply(sf::st_geometry(r), rg3d, e = e)
+      pbapply::pblapply(r_geometry, rg3d_single_line, e = e)
     } else {
-      lapply(sf::st_geometry(r), rg3d, e = e)
+      lapply(r_geometry, rg3d_single_line, e = e)
     }
   unlist(res_list)
 }
