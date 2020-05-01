@@ -5,3 +5,8 @@
 ^docs$
 ^pkgdown$
 ^LICENSE\.md$
+^\.ccache$
+^\.github$
+^clang-.*
+^gfortran.*
+^tic\.R$
