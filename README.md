@@ -31,4 +31,35 @@ Install the development version from [GitHub](https://github.com/) with:
 devtools::install_github("itsleeds/slopes")
 ```
 
-## An example
+## Usage
+
+Load the package in the usual way:
+
+``` r
+library(slopes)
+```
+
+The minimum data requirements for using the package are elevation
+points, either as a vector, a matrix or as a digital elevation model
+(DEM) encoded as a raster dataset. Typically you will also have a
+geographic object representing the roads or similar features. These two
+types of input data are represented in the code output and plot below.
+
+``` r
+# A raster dataset included in the package:
+class(dem_lisbon_raster) # digital elevation model
+#> [1] "RasterLayer"
+#> attr(,"package")
+#> [1] "raster"
+summary(raster::values(dem_lisbon_raster)) # heights range from 0 to ~100m
+#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+#>   0.000   8.598  30.233  33.733  55.691  97.906    4241
+raster::plot(dem_lisbon_raster)
+
+# A vector dataset included in the package:
+class(lisbon_road_segments)
+#> [1] "sf"         "tbl_df"     "tbl"        "data.frame"
+plot(sf::st_geometry(lisbon_road_segments), add = TRUE)
+```
+
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
