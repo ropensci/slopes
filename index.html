@@ -129,17 +129,25 @@
 <div id="performance" class="section level1">
 <h1 class="hasAnchor">
 <a href="#performance" class="anchor"></a>Performance</h1>
-<p>A benchmark can reveal how many gradients are calculated per second:</p>
+<p>A benchmark can reveal how many route gradients can be calculated per second:</p>
 <div class="sourceCode" id="cb7"><pre class="r"><span class="no">e</span> <span class="kw">=</span> <span class="no">dem_lisbon_raster</span>
 <span class="no">r</span> <span class="kw">=</span> <span class="no">lisbon_road_segments</span>[<span class="fl">1</span>:<span class="fl">100</span>, ]
-<span class="kw pkg">bench</span><span class="kw ns">::</span><span class="fu">mark</span>(
-  <span class="fu"><a href="reference/slope_raster.html">slope_raster</a></span>(<span class="no">r</span>, <span class="no">e</span>)
+<span class="no">res</span> <span class="kw">=</span> <span class="kw pkg">bench</span><span class="kw ns">::</span><span class="fu">mark</span>(<span class="kw">check</span> <span class="kw">=</span> <span class="fl">FALSE</span>,
+  <span class="kw">raster_bilinear</span> <span class="kw">=</span> {<span class="fu"><a href="reference/slope_raster.html">slope_raster</a></span>(<span class="no">r</span>, <span class="no">e</span>)},
+  <span class="kw">raster_simple</span> <span class="kw">=</span> {<span class="fu"><a href="reference/slope_raster.html">slope_raster</a></span>(<span class="no">r</span>, <span class="no">e</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"simple"</span>)}
 )
-<span class="co">#&gt; Warning: Some expressions had a GC in every iteration; so filtering is disabled.</span>
-<span class="co">#&gt; # A tibble: 1 x 6</span>
-<span class="co">#&gt;   expression              min   median `itr/sec` mem_alloc `gc/sec`</span>
-<span class="co">#&gt;   &lt;bch:expr&gt;         &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 slope_raster(r, e)    574ms    574ms      1.74    7.35MB     10.4</span></pre></div>
+<span class="co"># ?bench::mark</span>
+<span class="no">res</span>
+<span class="co">#&gt; # A tibble: 2 x 6</span>
+<span class="co">#&gt;   expression           min   median `itr/sec` mem_alloc `gc/sec`</span>
+<span class="co">#&gt;   &lt;bch:expr&gt;      &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 raster_bilinear  12.12ms  12.93ms      77.8    7.73MB     21.5</span>
+<span class="co">#&gt; 2 raster_simple     6.49ms   6.78ms     146.     5.68MB     25.6</span></pre></div>
+<p>That is approximately</p>
+<div class="sourceCode" id="cb8"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(<span class="no">res</span>$<span class="no">`itr/sec`</span> * <span class="fl">100</span>)
+<span class="co">#&gt; [1]  7779 14570</span></pre></div>
+<p>routes per second using bilinear (the default) and ‘simple’ methods to extract elevation estimates from the raster datasets.</p>
+<p>That is sufficient for our needs but we plan to speed-up the calculation, e.g. using the new <code>terra</code> package, as outlined this <a href="https://github.com/rspatial/terra/issues/29#issuecomment-619444555">thread</a>.</p>
 </div>
 
   </div>
