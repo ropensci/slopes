@@ -4,7 +4,13 @@
 \alias{slope_raster}
 \title{Calculate the gradient of line segments from a raster dataset}
 \usage{
-slope_raster(r, e = NULL, lonlat = FALSE, method = "bilinear")
+slope_raster(
+  r,
+  e = NULL,
+  lonlat = FALSE,
+  method = "bilinear",
+  fun = slope_matrix_weighted
+)
 }
 \arguments{
 \item{r}{Routes, the gradients of which are to be calculated}
@@ -15,13 +21,17 @@ slope_raster(r, e = NULL, lonlat = FALSE, method = "bilinear")
 
 \item{method}{The method of estimating elevation at points, passed to the \code{extract}
 function for extracting values from raster datasets. Default: \code{"bilinear"}.}
+
+\item{fun}{The slope function to calculate per route,
+\code{slope_matrix_weighted} by default.}
 }
 \description{
 Calculate the gradient of line segments from a raster dataset
 }
 \examples{
+# r = lisbon_road_segments[239, ]
 r = lisbon_road_segments
 e = dem_lisbon_raster
-(s = slope_raster(r, e))
-cor(r$Avg_Slope, s)^2
+(s = slope_raster(r, e))[1:5]
+cor(r$Avg_Slope, s)
 }

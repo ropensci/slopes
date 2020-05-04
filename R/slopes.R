@@ -68,22 +68,10 @@ sequential_dist = function(m, lonlat = TRUE) {
   }
 }
 
-# x = sf::st_coordinates(lisbon_road_segments[1, ])
-# rg3d(x, elevation = dem_lisbon_raster)
-rg3d_single_line = function(x, elevation = NULL) {
-  if(methods::is(x, "sf")) {
-    m = sf::st_coordinates(x)
-  } else {
-    m = x
-  }
-  if(!is.null(elevation)) {
-    e = slope_extract_elevation_from_raster(m, elevation)
-  } else {
-    e = x[, 3]
-  }
-  g1 = slope_matrix(m, e = e, lonlat = FALSE)
-  d = sequential_dist(m = m, lonlat = FALSE)
-  stats::weighted.mean(abs(g1), d, na.rm = TRUE)
+# convert matrices to gradients
+m2g_i = function(i, m_xyz, lonlat, fun = slope_matrix_weighted) {
+  sel = m_xyz[, "L1"] == i
+  fun(m_xyz[sel, 1:2], m_xyz[sel, "z"], lonlat = lonlat)
 }
 
 #' Calculate the gradient of line segments from a raster dataset
@@ -92,47 +80,44 @@ rg3d_single_line = function(x, elevation = NULL) {
 #' @param e A raster object overlapping with `r` and values representing elevations
 #' @param method The method of estimating elevation at points, passed to the `extract`
 #' function for extracting values from raster datasets. Default: `"bilinear"`.
+#' @param fun The slope function to calculate per route,
+#'   `slope_matrix_weighted` by default.
 #' @export
 #' @examples
+#' # r = lisbon_road_segments[239, ]
 #' r = lisbon_road_segments
 #' e = dem_lisbon_raster
-#' (s = slope_raster(r, e))
-#' cor(r$Avg_Slope, s)^2
-slope_raster = function(r, e = NULL, lonlat = FALSE, method = "bilinear") {
+#' (s = slope_raster(r, e))[1:5]
+#' cor(r$Avg_Slope, s)
+slope_raster = function(r, e = NULL, lonlat = FALSE, method = "bilinear",
+                        fun = slope_matrix_weighted) {
   # if("geom" %in% names(r)) {
   #   r = r$geom
   # } else if(methods::is(object = r[[attr(r, "sf_column")]], class2 = "sfc")) {
     r = sf::st_geometry(r)
   # }
-  n_lines = length(r)
+  n = length(r)
   m = sf::st_coordinates(r)
-  vertex_elevations = slope_extract_elevation_from_raster(m, e, method = method)
-  nrow(m) == length(vertex_elevations)
-  res_list =
-    if (requireNamespace("pbapply", quietly = TRUE)) {
-      pbapply::pblapply(1:n_lines, function(i) {
-        sel = m[, "L1"] == i
-        slope_matrix_weighted(m[sel, ], vertex_elevations[sel], lonlat = lonlat)
-      })
+  z = elevation_extract(m, e, method = method)
+  m_xyz = cbind(m, z)
+  res_list = if (requireNamespace("pbapply", quietly = TRUE)) {
+      pbapply::pblapply(1:n, m2g_i, m_xyz, lonlat, fun)
     } else {
-      lapply(1:n_lines, function(i) {
-        sel = m[, "L1"] == i
-        slope_matrix_weighted(m[sel, ], vertex_elevations[sel], lonlat = lonlat)
-      })
+      lapply(1:n, m2g_i, m_xyz, lonlat, fun)
     }
-
-  # res_list =
-  #   if (requireNamespace("pbapply", quietly = TRUE)) {
-  #     pbapply::pblapply(r_geometry, rg3d_single_line, e = e)
-  #   } else {
-  #     lapply(r_geometry, rg3d_single_line, e = e)
-  #   }
   unlist(res_list)
 }
 
-# m = sf::st_coordinates(lisbon_road_segments[1, ])
-# e = dem_lisbon_raster
-# slope_extract_elevation_from_raster(m, e)
-slope_extract_elevation_from_raster = function(m, e, method = "bilinear") {
+#' Extract elevations from coordinates
+#'
+#' @inheritParams slope_raster
+#' @inheritParams slope_matrix
+#' @export
+#' @examples
+#' m = sf::st_coordinates(lisbon_road_segments[1, ])
+#' e = dem_lisbon_raster
+#' elevation_extract(m, e)
+#' elevation_extract(m, e, method = "simple")
+elevation_extract = function(m, e, method = "bilinear") {
   raster::extract(e, m[, 1:2], method = method)
 }
