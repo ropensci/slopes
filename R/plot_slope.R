@@ -1,3 +1,19 @@
+#' Plot slope data for a 3d linestring with base R graphics
+#'
+#' @param r A linestring with xyz dimensions
+#' @inheritParams plot_dz
+#'
+#' @export
+#' @examples
+#' r = lisbon_road_segment_3d
+#' plot_slope(r)
+plot_slope = function(r, fill = TRUE) {
+  m = sf::st_coordinates(r)
+  d = cumsum(sequential_dist(m, lonlat = FALSE))
+  d = c(0, d)
+  z = m[, 3]
+  plot_dz(d, z, fill = fill)
+}
 #' Plot a digital elevation profile based on xyz data
 #'
 #' @param d Cumulative distance

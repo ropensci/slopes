@@ -2,6 +2,7 @@
 
 export(elevation_extract)
 export(plot_dz)
+export(plot_slope)
 export(sequential_dist)
 export(slope_3d)
 export(slope_matrix)
