@@ -139,24 +139,24 @@ function for extracting values from raster datasets. Default: <code>"bilinear"</
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>r</span> <span class='kw'>=</span> <span class='no'>lisbon_road_segments</span>[<span class='fl'>239</span>, ]
+    <pre class="examples"><div class='input'><span class='no'>r</span> <span class='kw'>=</span> <span class='no'>lisbon_road_segments</span>[<span class='fl'>204</span>, ]
 <span class='no'>e</span> <span class='kw'>=</span> <span class='no'>dem_lisbon_raster</span>
 (<span class='no'>r3d</span> <span class='kw'>=</span> <span class='fu'>slope_3d</span>(<span class='no'>r</span>, <span class='no'>e</span>))</div><div class='output co'>#&gt; Simple feature collection with 1 feature and 21 fields
 #&gt; Active geometry column: geom
 #&gt; geometry type:  LINESTRING
 #&gt; dimension:      XYZ
-#&gt; bbox:           xmin: -86950.1 ymin: -105411.4 xmax: -86809.3 ymax: -105241.1
-#&gt; z_range:        zmin: 31.53479 zmax: 61.36759
+#&gt; bbox:           xmin: -87080.48 ymin: -105629.6 xmax: -87056.99 ymax: -105506.3
+#&gt; z_range:        zmin: 86.49414 zmax: 92.31126
 #&gt; CRS:            ETRS89 / Portugal TM06
 #&gt; <span style='color: #555555;'># A tibble: 1 x 23</span><span>
 #&gt;   OBJECTID fid_1 gradient_s Shape_Leng Z_Min Z_Max Z_Mean SLength Min_Slope
 #&gt;      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     </span><span style='text-decoration: underline;'>3</span><span>032  </span><span style='text-decoration: underline;'>3</span><span>032      0.121       288.  31.5  61.4   45.5    290.     0.312
+#&gt; </span><span style='color: #555555;'>1</span><span>     </span><span style='text-decoration: underline;'>2</span><span>997  </span><span style='text-decoration: underline;'>2</span><span>997     0.078</span><span style='text-decoration: underline;'>0</span><span>       182.  86.5  92.3   89.9    183.     0.334
 #&gt; </span><span style='color: #555555;'># … with 14 more variables: Max_Slope </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Avg_Slope </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, z0 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   z1 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, gradverifi </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, query </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, lat </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, lon </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   lat_min </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, lat_max </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, lon_min </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, lon_max </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, bbox </span><span style='color: #555555;font-style: italic;'>&lt;POLYGON</span><span>
 #&gt; </span><span style='color: #555555;'># </span><span style='color: #555555;font-style: italic;'>  [m]&gt;</span><span style='color: #555555;'>, geom </span><span style='color: #555555;font-style: italic;'>&lt;LINESTRING [m]&gt;</span><span></div><div class='input'><span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_z_range.html'>st_z_range</a></span>(<span class='no'>r</span>)</div><div class='output co'>#&gt; NULL</div><div class='input'><span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_z_range.html'>st_z_range</a></span>(<span class='no'>r3d</span>)</div><div class='output co'>#&gt;     zmin     zmax 
-#&gt; 31.53479 61.36759 </div></span></pre>
+#&gt; 86.49414 92.31126 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_coordinates.html'>st_coordinates</a></span>(<span class='no'>r3d</span>)[, <span class='fl'>3</span>])</div><div class='img'><img src='slope_3d-1.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

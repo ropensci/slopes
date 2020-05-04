@@ -117,7 +117,13 @@
     <p>Plot a digital elevation profile based on xyz data</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plot_dz</span>(<span class='no'>d</span>, <span class='no'>z</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>plot_dz</span>(
+  <span class='no'>d</span>,
+  <span class='no'>z</span>,
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>p</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>colorspace</span>), <span class='kw pkg'>colorspace</span><span class='kw ns'>::</span><span class='no'><a href='http://colorspace.R-Forge.R-project.org//reference/hcl_palettes.html'>diverging_hcl</a></span>,
+    <span class='kw pkg'>grDevices</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/r/grDevices/palettes.html'>terrain.colors</a></span>)
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -134,6 +140,10 @@
       <th>fill</th>
       <td><p>Should the profile be filled? <code>TRUE</code> by default.</p></td>
     </tr>
+    <tr>
+      <th>p</th>
+      <td><p>Color palette to use</p></td>
+    </tr>
     </table>
 
 
@@ -143,7 +153,10 @@
 <span class='no'>d</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/cumsum.html'>cumsum</a></span>(<span class='fu'><a href='sequential_dist.html'>sequential_dist</a></span>(<span class='no'>m</span>, <span class='kw'>lonlat</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>))
 <span class='no'>d</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='no'>d</span>)
 <span class='no'>z</span> <span class='kw'>=</span> <span class='no'>m</span>[, <span class='fl'>3</span>]
-<span class='fu'>plot_dz</span>(<span class='no'>d</span>, <span class='no'>z</span>)</div><div class='img'><img src='plot_dz-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>plot_dz</span>(<span class='no'>d</span>, <span class='no'>z</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: colorspace</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘colorspace’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:raster’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    RGB</span></div><div class='img'><img src='plot_dz-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
