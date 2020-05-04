@@ -126,11 +126,12 @@ elevation_extract = function(m, e, method = "bilinear") {
 #' @inheritParams slope_raster
 #' @export
 #' @examples
-#' r = lisbon_road_segments[239, ]
+#' r = lisbon_road_segments[204, ]
 #' e = dem_lisbon_raster
 #' (r3d = slope_3d(r, e))
 #' sf::st_z_range(r)
 #' sf::st_z_range(r3d)
+#' plot(sf::st_coordinates(r3d)[, 3])
 slope_3d = function(r, e, method = "bilinear") {
   if(sum(c("geom", "geometry") %in% names(r)) > 0) {
     rgeom = r$geom

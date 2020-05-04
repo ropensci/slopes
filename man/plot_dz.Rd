@@ -4,7 +4,13 @@
 \alias{plot_dz}
 \title{Plot a digital elevation profile based on xyz data}
 \usage{
-plot_dz(d, z, fill = TRUE)
+plot_dz(
+  d,
+  z,
+  fill = TRUE,
+  p = ifelse(test = require(colorspace), colorspace::diverging_hcl,
+    grDevices::terrain.colors)
+)
 }
 \arguments{
 \item{d}{Cumulative distance}
@@ -12,6 +18,8 @@ plot_dz(d, z, fill = TRUE)
 \item{z}{Elevations at points across a linestring}
 
 \item{fill}{Should the profile be filled? \code{TRUE} by default.}
+
+\item{p}{Color palette to use}
 }
 \description{
 Plot a digital elevation profile based on xyz data

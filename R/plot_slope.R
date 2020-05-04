@@ -18,6 +18,7 @@ plot_slope = function(r, fill = TRUE) {
 #'
 #' @param d Cumulative distance
 #' @param z Elevations at points across a linestring
+#' @param p Color palette to use
 #' @param fill Should the profile be filled? `TRUE` by default.
 #' @export
 #' @examples
@@ -27,16 +28,24 @@ plot_slope = function(r, fill = TRUE) {
 #' d = c(0, d)
 #' z = m[, 3]
 #' plot_dz(d, z)
-plot_dz = function(d, z, fill = TRUE) {
+plot_dz = function(d, z, fill = TRUE, p = ifelse(
+  test = require(colorspace),
+  colorspace::diverging_hcl,
+  grDevices::terrain.colors
+  )) {
   graphics::plot(d, z, type = "l", col = "brown", lwd = 2)
   if(fill) {
     n = c(0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 100)
+    n = c(-rev(n), (n[-1]))
     b = n / 100
-    pal = grDevices::terrain.colors(n = length(b) - 1)
+    if(identical(p, colorspace::diverging_hcl)) {
+      pal = p(n = length(b) - 1, palette = "Green-Brown")
+    } else {
+      pal = p(n = length(b) - 1)
+    }
     g = slope_vector(x = d, e = z)
-    colz = cut(x = abs(g), breaks = b, labels = pal)
+    colz = cut(x = g, breaks = b, labels = pal)
     colz = as.character(colz)
-    2
     lapply(seq(d)[-(length(d))], function(i) {
       graphics::polygon(
         x = c(d[i:(i+1)], d[(i+1):i]),
@@ -46,7 +55,9 @@ plot_dz = function(d, z, fill = TRUE) {
         )
     })
     graphics::lines(d, z, col = "black", lwd = 2)
-  graphics::legend(x = "topright", legend = paste(n[-1], "%"), fill = pal)
+    s = seq(from = 3, to = length(n) - 1, by = 2)
+    graphics::legend(x = "topright", legend = paste(n[s], "%"), fill = pal[s],
+                   cex = 0.9, title = "Slope")
   }
 }
 # g = slope_matrix(m)

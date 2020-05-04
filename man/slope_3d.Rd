@@ -18,9 +18,10 @@ function for extracting values from raster datasets. Default: \code{"bilinear"}.
 Take a linestring and add a third (z) dimension to its coordinates
 }
 \examples{
-r = lisbon_road_segments[239, ]
+r = lisbon_road_segments[204, ]
 e = dem_lisbon_raster
 (r3d = slope_3d(r, e))
 sf::st_z_range(r)
 sf::st_z_range(r3d)
+plot(sf::st_coordinates(r3d)[, 3])
 }

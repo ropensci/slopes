@@ -23,4 +23,5 @@ Depends:
 Suggests: 
     geodist,
     pbapply,
-    terra
+    terra,
+    colorspace
