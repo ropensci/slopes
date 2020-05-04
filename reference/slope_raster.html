@@ -117,7 +117,13 @@
     <p>Calculate the gradient of line segments from a raster dataset</p>
     </div>
 
-    <pre class="usage"><span class='fu'>slope_raster</span>(<span class='no'>r</span>, <span class='kw'>e</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lonlat</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"bilinear"</span>)</pre>
+    <pre class="usage"><span class='fu'>slope_raster</span>(
+  <span class='no'>r</span>,
+  <span class='kw'>e</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>lonlat</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"bilinear"</span>,
+  <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>slope_matrix_weighted</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -139,67 +145,19 @@
       <td><p>The method of estimating elevation at points, passed to the <code>extract</code>
 function for extracting values from raster datasets. Default: <code>"bilinear"</code>.</p></td>
     </tr>
+    <tr>
+      <th>fun</th>
+      <td><p>The slope function to calculate per route,
+<code>slope_matrix_weighted</code> by default.</p></td>
+    </tr>
     </table>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>r</span> <span class='kw'>=</span> <span class='no'>lisbon_road_segments</span>
+    <pre class="examples"><div class='input'><span class='co'># r = lisbon_road_segments[239, ]</span>
+<span class='no'>r</span> <span class='kw'>=</span> <span class='no'>lisbon_road_segments</span>
 <span class='no'>e</span> <span class='kw'>=</span> <span class='no'>dem_lisbon_raster</span>
-(<span class='no'>s</span> <span class='kw'>=</span> <span class='fu'>slope_raster</span>(<span class='no'>r</span>, <span class='no'>e</span>))</div><div class='output co'>#&gt;   [1] 3.074005e-03 1.087046e-02 4.998315e-03 1.425567e-02 5.333236e-03
-#&gt;   [6] 1.310303e-02 1.310303e-02 2.585747e-02 3.923249e-02 2.259499e-03
-#&gt;  [11] 3.420071e-03 6.338765e-02 1.475274e-02 2.300732e-02 7.431299e-03
-#&gt;  [16] 3.566200e-02 1.310303e-02 5.483172e-02 8.979176e-02 1.407353e-01
-#&gt;  [21] 1.026832e-01 2.128894e-01 1.041400e-01 1.199143e-01 1.996291e-02
-#&gt;  [26] 1.130363e-01 7.285990e-02 6.708783e-02 2.480976e-02 9.501323e-02
-#&gt;  [31] 6.387474e-02 1.325193e-02 4.288482e-02 1.310303e-02 1.310303e-02
-#&gt;  [36] 5.333236e-03 1.425567e-02 3.423468e-03 2.498694e-02 1.087046e-02
-#&gt;  [41] 3.074005e-03 1.205867e-02 4.409960e-02 7.224405e-03 4.612236e-03
-#&gt;  [46] 3.934449e-03 2.259499e-03 3.857314e-02 4.966335e-02 1.241104e-02
-#&gt;  [51] 2.455801e-02 2.054553e-02 2.521060e-02 1.347086e-01 3.611626e-03
-#&gt;  [56] 1.044272e-01 2.289246e-01 2.758316e-01 1.283347e-01 2.030014e-01
-#&gt;  [61] 1.358153e-01 7.134438e-02 1.087931e-01 1.228427e-01 1.394815e-01
-#&gt;  [66] 2.683368e-02 4.665411e-02 1.604800e-02 1.361481e-01 1.417267e-01
-#&gt;  [71] 1.433924e-01 2.123102e-01 1.802022e-01 2.265860e-02 1.071692e-02
-#&gt;  [76] 5.933725e-05 1.150703e-02 1.620129e-02 1.889174e-02 7.927565e-03
-#&gt;  [81] 1.418638e-16 3.616773e-02 2.443816e-02 3.533526e-02 1.296875e-02
-#&gt;  [86] 3.616773e-02 1.418638e-16 1.835551e-03 2.438554e-02 3.993501e-02
-#&gt;  [91] 2.765567e-02 2.317484e-02 5.063163e-02 4.483658e-02 6.371459e-02
-#&gt;  [96] 7.531101e-02 1.137188e-01 4.101872e-02 3.424646e-03 6.363231e-02
-#&gt; [101] 1.429397e-01 2.103757e-01 1.738450e-01 1.941065e-01 4.255518e-02
-#&gt; [106] 3.651447e-02 3.372936e-02 3.344048e-03 2.969840e-02 9.041050e-04
-#&gt; [111] 2.628022e-03 7.712939e-03 1.525326e-02 2.031330e-02 2.245615e-02
-#&gt; [116] 5.690689e-02 2.515642e-02 3.923249e-02 2.585747e-02 4.998315e-03
-#&gt; [121] 1.929805e-04 1.372704e-02 3.622174e-03 4.285773e-04 4.626865e-04
-#&gt; [126] 1.279684e-02 1.909044e-03 1.806464e-03 1.575317e-03 3.644256e-02
-#&gt; [131] 5.983547e-02 8.572783e-02 2.925455e-03 2.194583e-02 1.969296e-02
-#&gt; [136] 3.074005e-03 1.347086e-01 2.521060e-02 5.211203e-02 5.059354e-03
-#&gt; [141] 1.039402e-01 3.683233e-02 5.856788e-02 5.107504e-02 3.467072e-02
-#&gt; [146] 5.360840e-02 7.768261e-02 7.514460e-02 1.537696e-02 5.523761e-02
-#&gt; [151] 7.148472e-02 1.204771e-01 1.155883e-01 1.150921e-01 1.324066e-02
-#&gt; [156] 0.000000e+00 2.482997e-16 6.177143e-17 0.000000e+00 1.508745e-16
-#&gt; [161] 0.000000e+00 4.638191e-03 1.251198e-02 1.655059e-02 1.951437e-01
-#&gt; [166] 3.934819e-02 2.756013e-02 1.540712e-01 8.682767e-02 7.886121e-02
-#&gt; [171] 3.127983e-02 2.768095e-02 1.204188e-02 3.025752e-02 5.519990e-02
-#&gt; [176] 1.245545e-01 5.443024e-02 2.738194e-02 3.073584e-02 4.180824e-02
-#&gt; [181] 1.246362e-01 8.200920e-02 6.765302e-02 8.704484e-02 1.679109e-02
-#&gt; [186] 4.665411e-02 3.334219e-02 6.237032e-02 1.941099e-01 1.081655e-01
-#&gt; [191] 2.222246e-01 5.820341e-02 1.736503e-01 1.281327e-01 6.372363e-02
-#&gt; [196] 1.169481e-01 1.446041e-03 6.556451e-03 1.689554e-02 7.536771e-03
-#&gt; [201] 4.288482e-02 1.325193e-02 6.387474e-02 9.501323e-02 2.480976e-02
-#&gt; [206] 6.708783e-02 7.285990e-02 1.130363e-01 1.996291e-02 1.199143e-01
-#&gt; [211] 1.041400e-01 2.128894e-01 1.004600e-01 8.200920e-02 1.208425e-01
-#&gt; [216] 9.721340e-02 1.196593e-02 5.680142e-02 1.446867e-02 6.200052e-03
-#&gt; [221] 8.300675e-02 9.529052e-02 1.469852e-01 1.467706e-01 1.160536e-02
-#&gt; [226] 1.780237e-01 1.091320e-02 6.556451e-03 2.505247e-03 3.129335e-03
-#&gt; [231] 2.652915e-02 7.844415e-03 2.265860e-02 2.103757e-01 1.429397e-01
-#&gt; [236] 6.363231e-02 3.424646e-03 7.739929e-02 1.331082e-01 1.445820e-01
-#&gt; [241] 8.878006e-03 5.548617e-02 2.522949e-02 1.246362e-01 4.180824e-02
-#&gt; [246] 3.073584e-02 8.979176e-02 4.937218e-02 8.133036e-03 3.639028e-02
-#&gt; [251] 1.245545e-01 6.443823e-02 4.467738e-02 2.814733e-02 1.414425e-02
-#&gt; [256] 6.665666e-02 9.106105e-02 5.107504e-02 5.856788e-02 3.683233e-02
-#&gt; [261] 1.039402e-01 7.844415e-03 1.665122e-02 3.876077e-02 4.212827e-03
-#&gt; [266] 1.873147e-02 1.356266e-02 1.310303e-02 3.771554e-03 3.129335e-03
-#&gt; [271] 2.505247e-03</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='no'>r</span>$<span class='no'>Avg_Slope</span>, <span class='no'>s</span>)^<span class='fl'>2</span></div><div class='output co'>#&gt; [1] 0.9546143</div></pre>
+(<span class='no'>s</span> <span class='kw'>=</span> <span class='fu'>slope_raster</span>(<span class='no'>r</span>, <span class='no'>e</span>))[<span class='fl'>1</span>:<span class='fl'>5</span>]</div><div class='output co'>#&gt; [1] 0.003074005 0.010870459 0.004998315 0.014255667 0.005333236</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='no'>r</span>$<span class='no'>Avg_Slope</span>, <span class='no'>s</span>)</div><div class='output co'>#&gt; [1] 0.9770436</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
