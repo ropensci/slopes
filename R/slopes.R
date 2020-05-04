@@ -91,7 +91,7 @@ m2g_i = function(i, m_xyz, lonlat, fun = slope_matrix_weighted) {
 #' cor(r$Avg_Slope, s)
 slope_raster = function(r, e = NULL, lonlat = FALSE, method = "bilinear",
                         fun = slope_matrix_weighted) {
-  # if("geom" %in% names(r)) {
+  # if(sum(c("geom", "geometry") %in% names(r)) > 0) {
   #   r = r$geom
   # } else if(methods::is(object = r[[attr(r, "sf_column")]], class2 = "sfc")) {
     r = sf::st_geometry(r)
@@ -120,4 +120,34 @@ slope_raster = function(r, e = NULL, lonlat = FALSE, method = "bilinear",
 #' elevation_extract(m, e, method = "simple")
 elevation_extract = function(m, e, method = "bilinear") {
   raster::extract(e, m[, 1:2], method = method)
+}
+
+#' Take a linestring and add a third (z) dimension to its coordinates
+#' @inheritParams slope_raster
+#' @export
+#' @examples
+#' r = lisbon_road_segments[239, ]
+#' e = dem_lisbon_raster
+#' (r3d = slope_3d(r, e))
+#' sf::st_z_range(r)
+#' sf::st_z_range(r3d)
+slope_3d = function(r, e, method = "bilinear") {
+  if(sum(c("geom", "geometry") %in% names(r)) > 0) {
+    rgeom = r$geom
+  } else {
+    rgeom = sf::st_geometry(r)
+  }
+  n = length(rgeom)
+  if(length(n) == 1) {
+    # currently only works for 1 line, to be generalised
+    m = sf::st_coordinates(rgeom)
+    z = elevation_extract(m, e, method = method)
+    m_xyz = cbind(m[, 1:2], z)
+    rgeom3d_line = sf::st_linestring(m_xyz)
+    rgeom3d_sfc = sf::st_sfc(rgeom3d_line, crs = sf::st_crs(rgeom))
+    # message("Original geometry: ", ncol(rgeom[[1]]))
+    sf::st_geometry(r) = rgeom3d_sfc
+    # message("New geometry: ", ncol(r$geom[[1]]))
+    return(r)
+  }
 }

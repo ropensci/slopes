@@ -20,3 +20,15 @@
 #' names(lisbon_road_segments)
 #' plot(lisbon_road_segments["Avg_Slope"])
 "lisbon_road_segments"
+
+#' A road segment in Lisbon, Portugal
+#'
+#' A single road segment and a 3d version.
+#'
+#' @format And object of class `sf`
+#' @source Produced by ESRI's [3D Analyst extension](https://pro.arcgis.com/en/pro-app/help/analysis/3d-analyst/get-started-with-3d-analyst-in-pro.htm)
+#' @aliases lisbon_road_segment_3d
+#' @examples
+#' lisbon_road_segment
+#' lisbon_road_segment_3d
+"lisbon_road_segment"
