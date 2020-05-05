@@ -38,8 +38,22 @@ library(slopes)
 
 ... small example from readme? ...
 
-# Measuring route hilliness
+# Assessing route hilliness
 
-...
+The hilliness of a route is an important factor which can affect its suitability for activities such as cycling.
+
+Using the `slopes` package we can estimate the gradient of individual road segments. When these segments are combined into routes, we then need a means of assessing the hilliness of the entire route. A range of indices can be used to represent route hilliness. The choice of which index is most appropriate may be context dependent.
+
+- Mean distance weighted gradient. Perhaps the simplest and most widely applicable measure is the mean gradient of the route. This should be weighted by the distance of each segment.
+
+- Max gradient. For activities like cycling, where steep hills have a disproportionate impact, it may be useful to consider the maximum gradient.
+
+- Xth percentile gradient. Since the maximum gradient gives no information about the rest of the route segments, other measures such as the 75th percentile gradient could be more informative.
+
+- Inverted harmonic mean. If we use the following formula we will get an index that (like the arithmetic mean) makes use of the full dataset, but that is weighted towards the higher gradient segments. Whether this index is helpful remains to be tested.
+
+$$
+H(x) = 1 - distance.weighted.harmonic.mean(1-x)
+$$
 
 # References
