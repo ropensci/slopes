@@ -57,3 +57,4 @@ H(x) = 1 - distance.weighted.harmonic.mean(1-x)
 $$
 
 # References
+

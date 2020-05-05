@@ -4,7 +4,7 @@
 \alias{slope_3d}
 \title{Take a linestring and add a third (z) dimension to its coordinates}
 \usage{
-slope_3d(r, e, method = "bilinear")
+slope_3d(r, e, method = "bilinear", terra = has_terra())
 }
 \arguments{
 \item{r}{Routes, the gradients of which are to be calculated}
@@ -13,6 +13,10 @@ slope_3d(r, e, method = "bilinear")
 
 \item{method}{The method of estimating elevation at points, passed to the \code{extract}
 function for extracting values from raster datasets. Default: \code{"bilinear"}.}
+
+\item{terra}{Should the \code{terra} package be used?
+\code{TRUE} by default if the package is installed \emph{and}
+if \code{e} is of class \code{SpatRast}}
 }
 \description{
 Take a linestring and add a third (z) dimension to its coordinates
@@ -24,4 +28,5 @@ e = dem_lisbon_raster
 sf::st_z_range(r)
 sf::st_z_range(r3d)
 plot(sf::st_coordinates(r3d)[, 3])
+# (r3d = slope_3d(r, et))
 }

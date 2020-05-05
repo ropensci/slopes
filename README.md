@@ -9,10 +9,10 @@
 {tic}](https://github.com/ITSLeeds/slopes/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg)
 <!-- badges: end -->
 
-The goal of slopes is to enable rapid and accurate calculation slope
-steepness of linear features such as roads, based on commonly available
-input datasets such as road geometries and digital elevation model (DEM)
-datasets.
+The goal of slopes is to enable fast, accurate and user friendly
+calculation longitudinal steepness of linear features such as roads and
+rivers, based on commonly available input datasets such as road
+geometries and digital elevation model (DEM) datasets.
 
 ## Installation
 
@@ -83,6 +83,7 @@ Calculate the average gradient of each road segment as follows:
 
 ``` r
 lisbon_road_segments$slope = slope_raster(lisbon_road_segments, e = dem_lisbon_raster)
+#> [1] TRUE
 summary(lisbon_road_segments$slope)
 #>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 #> 0.00000 0.01246 0.03534 0.05462 0.08251 0.27583
@@ -135,6 +136,7 @@ follows:
 
 ``` r
 lisbon_route_3d = slope_3d(lisbon_route, dem_lisbon_raster)
+#> [1] TRUE
 ```
 
 We can now visualise the elevation profile of the route as follows:
@@ -147,35 +149,93 @@ plot_slope(lisbon_route_3d)
 
 # Performance
 
+For this benchmark we will download the following small (\< 100 kB)
+`.tif` file:
+
+``` r
+u = "https://github.com/ITSLeeds/slopes/releases/download/0.0.0/dem_lisbon.tif"
+if(!file.exists("dem_lisbon.tif")) download.file(u, "dem_lisbon.tif")
+```
+
 A benchmark can reveal how many route gradients can be calculated per
 second:
 
 ``` r
 e = dem_lisbon_raster
-r = lisbon_road_segments[1:100, ]
+r = lisbon_road_segments
+et = terra::rast("dem_lisbon.tif")
 res = bench::mark(check = FALSE,
-  raster_bilinear = {slope_raster(r, e)},
-  raster_simple = {slope_raster(r, e, method = "simple")}
+  slope_raster = slope_raster(r, e, terra = FALSE),
+  slope_terra1 = slope_raster(r, e, terra = TRUE),
+  slope_terra2 = slope_raster(r, et, terra = TRUE)
 )
-# ?bench::mark
+#> Warning: Some expressions had a GC in every iteration; so filtering is disabled.
 res
-#> # A tibble: 2 x 6
-#>   expression           min   median `itr/sec` mem_alloc `gc/sec`
-#>   <bch:expr>      <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 raster_bilinear  12.69ms   13.1ms      72.9    7.57MB     18.9
-#> 2 raster_simple     6.32ms    6.8ms     142.     5.76MB     32.7
+#> # A tibble: 3 x 6
+#>   expression        min   median `itr/sec` mem_alloc `gc/sec`
+#>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
+#> 1 slope_raster   30.5ms   33.6ms      27.7    32.6MB     39.5
+#> 2 slope_terra1   32.5ms   38.5ms      19.8    32.6MB     29.8
+#> 3 slope_terra2   20.6ms   24.3ms      41.1    29.2MB     31.3
 ```
 
 That is approximately
 
 ``` r
-round(res$`itr/sec` * 100)
-#> [1]  7287 14183
+round(res$`itr/sec` * nrow(r))
+#> [1]  7501  5379 11142
 ```
 
-routes per second using bilinear (the default) and ‘simple’ methods to
-extract elevation estimates from the raster datasets.
+routes per second using the `raster` and `terra` (the default if
+installed, using `RasterLayer` and native `SpatRaster` objects) packages
+to extract elevation estimates from the raster datasets, respectively.
 
-That is sufficient for our needs but we plan to speed-up the
-calculation, e.g. using the new `terra` package, as outlined this
-[thread](https://github.com/rspatial/terra/issues/29#issuecomment-619444555).
+The message: use the `terra` package to read-in DEM data for slope
+extraction if speed is important.
+
+To go faster, you can chose the `simple` method to gain some speed at
+the expense of accuracy:
+
+``` r
+e = dem_lisbon_raster
+r = lisbon_road_segments
+res = bench::mark(check = FALSE,
+  bilinear1 = slope_raster(r, e, terra = TRUE),
+  bilinear2 = slope_raster(r, et, terra = TRUE),
+  simple1 = slope_raster(r, e, method = "simple", terra = TRUE),
+  simple2 = slope_raster(r, et, method = "simple", terra = TRUE)
+)
+#> Warning: Some expressions had a GC in every iteration; so filtering is disabled.
+# ?bench::mark
+res
+#> # A tibble: 4 x 6
+#>   expression      min   median `itr/sec` mem_alloc `gc/sec`
+#>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
+#> 1 bilinear1    30.5ms   32.2ms      30.9    32.6MB     30.9
+#> 2 bilinear2    23.4ms   28.3ms      34.6    29.2MB     32.7
+#> 3 simple1      22.3ms   26.7ms      37.4    29.2MB     35.4
+#> 4 simple2      24.1ms   28.6ms      34.8    29.2MB     32.8
+```
+
+The equivalent benchmark with the `raster` package is as follows:
+
+``` r
+e = dem_lisbon_raster
+r = lisbon_road_segments
+res = bench::mark(check = FALSE,
+  bilinear = slope_raster(r, e, terra = FALSE),
+  simple = slope_raster(r, e, method = "simple", terra = FALSE)
+)
+#> Warning: Some expressions had a GC in every iteration; so filtering is disabled.
+# ?bench::mark
+res
+#> # A tibble: 2 x 6
+#>   expression      min   median `itr/sec` mem_alloc `gc/sec`
+#>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
+#> 1 bilinear     33.1ms   34.9ms      27.4    32.6MB     31.3
+#> 2 simple       22.5ms   28.3ms      27.3    29.2MB     29.3
+```
+
+    #> [1] TRUE
+
+<!-- That is sufficient for our needs but we plan to speed-up the calculation, e.g. using the new `terra` package, as outlined this [thread](https://github.com/rspatial/terra/issues/29#issuecomment-619444555). -->

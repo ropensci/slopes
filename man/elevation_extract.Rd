@@ -4,7 +4,12 @@
 \alias{elevation_extract}
 \title{Extract elevations from coordinates}
 \usage{
-elevation_extract(m, e, method = "bilinear")
+elevation_extract(
+  m,
+  e,
+  method = "bilinear",
+  terra = has_terra() && methods::is(e, "SpatRaster")
+)
 }
 \arguments{
 \item{m}{Matrix containing coordinates and elevations}
@@ -13,6 +18,10 @@ elevation_extract(m, e, method = "bilinear")
 
 \item{method}{The method of estimating elevation at points, passed to the \code{extract}
 function for extracting values from raster datasets. Default: \code{"bilinear"}.}
+
+\item{terra}{Should the \code{terra} package be used?
+\code{TRUE} by default if the package is installed \emph{and}
+if \code{e} is of class \code{SpatRast}}
 }
 \description{
 Extract elevations from coordinates

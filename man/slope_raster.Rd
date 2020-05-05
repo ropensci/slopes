@@ -9,7 +9,8 @@ slope_raster(
   e = NULL,
   lonlat = FALSE,
   method = "bilinear",
-  fun = slope_matrix_weighted
+  fun = slope_matrix_weighted,
+  terra = has_terra()
 )
 }
 \arguments{
@@ -24,6 +25,10 @@ function for extracting values from raster datasets. Default: \code{"bilinear"}.
 
 \item{fun}{The slope function to calculate per route,
 \code{slope_matrix_weighted} by default.}
+
+\item{terra}{Should the \code{terra} package be used?
+\code{TRUE} by default if the package is installed \emph{and}
+if \code{e} is of class \code{SpatRast}}
 }
 \description{
 Calculate the gradient of line segments from a raster dataset

@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 ![R CMD Check via {tic}](https://github.com/ITSLeeds/slopes/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg)
 <!-- badges: end -->
 
-The goal of slopes is to enable rapid and accurate calculation slope steepness of linear features such as roads, based on commonly available input datasets such as road geometries and digital elevation model (DEM) datasets.
+The goal of slopes is to enable fast, accurate and user friendly calculation longitudinal steepness of linear features such as roads and rivers, based on commonly available input datasets such as road geometries and digital elevation model (DEM) datasets.
 
 ## Installation
 
@@ -135,31 +135,71 @@ We can now visualise the elevation profile of the route as follows:
 plot_slope(lisbon_route_3d)
 ```
 
-
-
-
 # Performance
+
+For this benchmark we will download the following small (< 100 kB) `.tif` file:
+
+```{r}
+u = "https://github.com/ITSLeeds/slopes/releases/download/0.0.0/dem_lisbon.tif"
+if(!file.exists("dem_lisbon.tif")) download.file(u, "dem_lisbon.tif")
+```
 
 A benchmark can reveal how many route gradients can be calculated per second:
 
 ```{r}
 e = dem_lisbon_raster
-r = lisbon_road_segments[1:100, ]
+r = lisbon_road_segments
+et = terra::rast("dem_lisbon.tif")
 res = bench::mark(check = FALSE,
-  raster_bilinear = {slope_raster(r, e)},
-  raster_simple = {slope_raster(r, e, method = "simple")}
+  slope_raster = slope_raster(r, e, terra = FALSE),
+  slope_terra1 = slope_raster(r, e, terra = TRUE),
+  slope_terra2 = slope_raster(r, et, terra = TRUE)
 )
-# ?bench::mark
 res
 ```
 
 That is approximately
 
 ```{r}
-round(res$`itr/sec` * 100)
+round(res$`itr/sec` * nrow(r))
 ```
 
-routes per second using bilinear (the default) and 'simple' methods to extract elevation estimates from the raster datasets.
+routes per second using the `raster` and `terra` (the default if installed, using `RasterLayer` and native `SpatRaster` objects) packages to extract elevation estimates from the raster datasets, respectively.
 
-That is sufficient for our needs but we plan to speed-up the calculation, e.g. using the new `terra` package, as outlined this [thread](https://github.com/rspatial/terra/issues/29#issuecomment-619444555).
+The message: use the `terra` package to read-in DEM data for slope extraction if speed is important.
+
+To go faster, you can chose the `simple` method to gain some speed at the expense of accuracy:
+
+```{r}
+e = dem_lisbon_raster
+r = lisbon_road_segments
+res = bench::mark(check = FALSE,
+  bilinear1 = slope_raster(r, e, terra = TRUE),
+  bilinear2 = slope_raster(r, et, terra = TRUE),
+  simple1 = slope_raster(r, e, method = "simple", terra = TRUE),
+  simple2 = slope_raster(r, et, method = "simple", terra = TRUE)
+)
+# ?bench::mark
+res
+```
+
+The equivalent benchmark with the `raster` package is as follows:
+
+```{r}
+e = dem_lisbon_raster
+r = lisbon_road_segments
+res = bench::mark(check = FALSE,
+  bilinear = slope_raster(r, e, terra = FALSE),
+  simple = slope_raster(r, e, method = "simple", terra = FALSE)
+)
+# ?bench::mark
+res
+```
+
+```{r, echo=FALSE}
+file.remove("dem_lisbon.tif")
+```
+
+
+<!-- That is sufficient for our needs but we plan to speed-up the calculation, e.g. using the new `terra` package, as outlined this [thread](https://github.com/rspatial/terra/issues/29#issuecomment-619444555). -->
 

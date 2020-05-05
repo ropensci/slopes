@@ -101,6 +101,7 @@ m2g_i = function(i, m_xyz, lonlat, fun = slope_matrix_weighted) {
 
 #' Calculate the gradient of line segments from a raster dataset
 #' @inheritParams sequential_dist
+#' @inheritParams elevation_extract
 #' @param r Routes, the gradients of which are to be calculated
 #' @param e A raster object overlapping with `r` and values representing elevations
 #' @param method The method of estimating elevation at points, passed to the `extract`
@@ -115,7 +116,7 @@ m2g_i = function(i, m_xyz, lonlat, fun = slope_matrix_weighted) {
 #' (s = slope_raster(r, e))[1:5]
 #' cor(r$Avg_Slope, s)
 slope_raster = function(r, e = NULL, lonlat = FALSE, method = "bilinear",
-                        fun = slope_matrix_weighted) {
+                        fun = slope_matrix_weighted, terra = has_terra()) {
   # if(sum(c("geom", "geometry") %in% names(r)) > 0) {
   #   r = r$geom
   # } else if(methods::is(object = r[[attr(r, "sf_column")]], class2 = "sfc")) {
@@ -123,7 +124,7 @@ slope_raster = function(r, e = NULL, lonlat = FALSE, method = "bilinear",
   # }
   n = length(r)
   m = sf::st_coordinates(r)
-  z = elevation_extract(m, e, method = method)
+  z = elevation_extract(m, e, method = method, terra = terra)
   m_xyz = cbind(m, z)
   res_list = if (requireNamespace("pbapply", quietly = TRUE)) {
       pbapply::pblapply(1:n, m2g_i, m_xyz, lonlat, fun)
@@ -135,6 +136,9 @@ slope_raster = function(r, e = NULL, lonlat = FALSE, method = "bilinear",
 
 #' Extract elevations from coordinates
 #'
+#' @param terra Should the `terra` package be used?
+#' `TRUE` by default if the package is installed *and*
+#' if `e` is of class `SpatRast`
 #' @inheritParams slope_raster
 #' @inheritParams slope_matrix
 #' @export
@@ -143,12 +147,23 @@ slope_raster = function(r, e = NULL, lonlat = FALSE, method = "bilinear",
 #' e = dem_lisbon_raster
 #' elevation_extract(m, e)
 #' elevation_extract(m, e, method = "simple")
-elevation_extract = function(m, e, method = "bilinear") {
-  unlist(raster::extract(e, m[, 1:2], method = method))
+elevation_extract = function(m,
+                             e,
+                             method = "bilinear",
+                             terra = has_terra() && methods::is(e, "SpatRaster")
+                             ) {
+  if(terra) {
+    res = as.numeric(terra::extract(e, m[, 1:2], method = method))
+  } else {
+    res = raster::extract(e, m[, 1:2], method = method)
+  }
+  # unlist(res)
+  res
 }
 
 #' Take a linestring and add a third (z) dimension to its coordinates
 #' @inheritParams slope_raster
+#' @inheritParams elevation_extract
 #' @export
 #' @examples
 #' r = lisbon_road_segments[204, ]
@@ -157,7 +172,8 @@ elevation_extract = function(m, e, method = "bilinear") {
 #' sf::st_z_range(r)
 #' sf::st_z_range(r3d)
 #' plot(sf::st_coordinates(r3d)[, 3])
-slope_3d = function(r, e, method = "bilinear") {
+#' # (r3d = slope_3d(r, et))
+slope_3d = function(r, e, method = "bilinear", terra = has_terra()) {
   if("geom" %in% names(r)) {
     rgeom = r$geom
   } else if("geometry" %in% names(r)) {
@@ -169,7 +185,7 @@ slope_3d = function(r, e, method = "bilinear") {
   if(length(n) == 1) {
     # currently only works for 1 line, to be generalised
     m = sf::st_coordinates(rgeom)
-    z = elevation_extract(m, e, method = method)
+    z = as.numeric(elevation_extract(m, e, method = method, terra = terra))
     m_xyz = cbind(m[, 1:2], z)
     rgeom3d_line = sf::st_linestring(m_xyz)
     rgeom3d_sfc = sf::st_sfc(rgeom3d_line, crs = sf::st_crs(rgeom))
@@ -178,4 +194,11 @@ slope_3d = function(r, e, method = "bilinear") {
     # message("New geometry: ", ncol(r$geom[[1]]))
     return(r)
   }
+}
+# terra = has_terra()
+# terra
+has_terra = function() {
+  res = requireNamespace("terra", quietly = TRUE)
+  print(res)
+  res
 }
