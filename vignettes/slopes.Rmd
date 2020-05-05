@@ -5,6 +5,7 @@ vignette: >
   %\VignetteIndexEntry{An introdution to slopes}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+bibliography: slope-references.bib
 ---
 
 ```{r, include = FALSE}
@@ -17,6 +18,8 @@ knitr::opts_chunk$set(
 # Introduction
 
 Slopes are important for many purposes, including flood risk and vehicle routing modes that are sensitive to going up or down steep hills (e.g. bicycles and large trucks)...
+
+Slopes can be defined as the "longitudinal gradient" [@cohen_global_2018].
 
 # Calculating slopes
 
@@ -38,3 +41,5 @@ library(slopes)
 # Measuring route hilliness
 
 ...
+
+# References
