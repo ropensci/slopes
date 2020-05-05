@@ -100,10 +100,20 @@ r = e/d
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">slopes</span>)</pre></body></html></div>
 <p>… small example from readme? …</p>
 </div>
-<div id="measuring-route-hilliness" class="section level1">
+<div id="assessing-route-hilliness" class="section level1">
 <h1 class="hasAnchor">
-<a href="#measuring-route-hilliness" class="anchor"></a>Measuring route hilliness</h1>
-<p>…</p>
+<a href="#assessing-route-hilliness" class="anchor"></a>Assessing route hilliness</h1>
+<p>The hilliness of a route is an important factor which can affect its suitability for activities such as cycling.</p>
+<p>Using the <code>slopes</code> package we can estimate the gradient of individual road segments. When these segments are combined into routes, we then need a means of assessing the hilliness of the entire route. A range of indices can be used to represent route hilliness. The choice of which index is most appropriate may be context dependent.</p>
+<ul>
+<li><p>Mean distance weighted gradient. Perhaps the simplest and most widely applicable measure is the mean gradient of the route. This should be weighted by the distance of each segment.</p></li>
+<li><p>Max gradient. For activities like cycling, where steep hills have a disproportionate impact, it may be useful to consider the maximum gradient.</p></li>
+<li><p>Xth percentile gradient. Since the maximum gradient gives no information about the rest of the route segments, other measures such as the 75th percentile gradient could be more informative.</p></li>
+<li><p>Inverted harmonic mean. If we use the following formula we will get an index that (like the arithmetic mean) makes use of the full dataset, but that is weighted towards the higher gradient segments. Whether this index is helpful remains to be tested.</p></li>
+</ul>
+<p><span class="math display">\[
+H(x) = 1 - distance.weighted.harmonic.mean(1-x)
+\]</span></p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">
