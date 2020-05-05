@@ -133,8 +133,10 @@ elevation_extract = function(m, e, method = "bilinear") {
 #' sf::st_z_range(r3d)
 #' plot(sf::st_coordinates(r3d)[, 3])
 slope_3d = function(r, e, method = "bilinear") {
-  if(sum(c("geom", "geometry") %in% names(r)) > 0) {
+  if("geom" %in% names(r)) {
     rgeom = r$geom
+  } else if("geometry" %in% names(r)) {
+    rgeom = r$geometry
   } else {
     rgeom = sf::st_geometry(r)
   }

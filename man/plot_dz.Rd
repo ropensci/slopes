@@ -8,8 +8,8 @@ plot_dz(
   d,
   z,
   fill = TRUE,
-  p = ifelse(test = require(colorspace), colorspace::diverging_hcl,
-    grDevices::terrain.colors)
+  p = ifelse(test = requireNamespace("colorspace", quietly = TRUE),
+    colorspace::diverging_hcl, grDevices::terrain.colors)
 )
 }
 \arguments{

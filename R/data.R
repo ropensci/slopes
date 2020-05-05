@@ -27,7 +27,7 @@
 #'
 #' @format And object of class `sf`
 #' @source Produced by ESRI's [3D Analyst extension](https://pro.arcgis.com/en/pro-app/help/analysis/3d-analyst/get-started-with-3d-analyst-in-pro.htm)
-#' @aliases lisbon_road_segment_3d
+#' @aliases lisbon_road_segment_3d lisbon_route lisbon_route_3d
 #' @examples
 #' lisbon_road_segment
 #' lisbon_road_segment_3d

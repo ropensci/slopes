@@ -44,6 +44,13 @@ Load the package in the usual way:
 library(slopes)
 ```
 
+We will also load the `sf` library:
+
+```{r}
+library(sf)
+```
+
+
 <!-- We will also use the `sf` package for representing road segments: -->
 
 <!-- ```{r} -->
@@ -89,7 +96,47 @@ We can now visualise the slopes calculated by the `slopes` package as follows:
 ```{r slope-vis}
 raster::plot(dem_lisbon_raster)
 plot(lisbon_road_segments["slope"], add = TRUE, lwd = 5)
+# mapview::mapview(lisbon_road_segments["slope"], map.types = "Esri.WorldStreetMap")
 ```
+
+Imagine that we want to go from Santa Catarina to the East of the map to the Castelo de Sao Jorge to the West of the map:
+
+```{r route}
+mapview::mapview(lisbon_route)
+```
+
+
+We can convert the `lisbon_route` object into a 3d linestring object as follows:
+
+```{r, warning=FALSE, echo=FALSE, eval=FALSE}
+sln = stplanr::SpatialLinesNetwork(lisbon_road_segments)
+points = sf::st_as_sf(crs = 4326, coords = c("X1", "X2"), data.frame(rbind(
+  stplanr::geo_code("Santa Catarina, Lisbon"),
+  stplanr::geo_code("Castelo, Lisbon")
+)))
+points_projected = sf::st_transform(points, sf::st_crs(lisbon_road_segments))
+coords = sf::st_coordinates(points_projected)
+nodes = stplanr::find_network_nodes(sln, coords[, 1], coords[, 2])
+lisbon_route = stplanr::sum_network_routes(sln = sln, start = nodes[1], end = nodes[2])
+mapview::mapview(lisbon_route) +
+  mapview::mapview(lisbon_road_segments["slope"])
+lisbon_route_3d = slope_3d(lisbon_route, dem_lisbon_raster)
+usethis::use_data(lisbon_route, overwrite = TRUE)
+usethis::use_data(lisbon_route_3d, overwrite = TRUE)
+```
+
+```{r}
+lisbon_route_3d = slope_3d(lisbon_route, dem_lisbon_raster)
+```
+
+We can now visualise the elevation profile of the route as follows:
+
+```{r plot_slope}
+plot_slope(lisbon_route_3d)
+```
+
+
+
 
 # Performance
 

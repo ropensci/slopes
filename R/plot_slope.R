@@ -29,7 +29,7 @@ plot_slope = function(r, fill = TRUE) {
 #' z = m[, 3]
 #' plot_dz(d, z)
 plot_dz = function(d, z, fill = TRUE, p = ifelse(
-  test = require(colorspace),
+  test = requireNamespace("colorspace", quietly = TRUE),
   colorspace::diverging_hcl,
   grDevices::terrain.colors
   )) {

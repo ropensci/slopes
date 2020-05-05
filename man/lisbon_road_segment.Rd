@@ -4,6 +4,8 @@
 \name{lisbon_road_segment}
 \alias{lisbon_road_segment}
 \alias{lisbon_road_segment_3d}
+\alias{lisbon_route}
+\alias{lisbon_route_3d}
 \title{A road segment in Lisbon, Portugal}
 \format{
 And object of class \code{sf}

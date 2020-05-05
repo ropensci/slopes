@@ -39,6 +39,13 @@ Load the package in the usual way:
 library(slopes)
 ```
 
+We will also load the `sf` library:
+
+``` r
+library(sf)
+#> Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 7.0.0
+```
+
 <!-- We will also use the `sf` package for representing road segments: -->
 
 <!-- ```{r} -->
@@ -110,6 +117,34 @@ plot(lisbon_road_segments["slope"], add = TRUE, lwd = 5)
 
 <img src="man/figures/README-slope-vis-1.png" width="100%" />
 
+``` r
+# mapview::mapview(lisbon_road_segments["slope"], map.types = "Esri.WorldStreetMap")
+```
+
+Imagine that we want to go from Santa Catarina to the East of the map to
+the Castelo de Sao Jorge to the West of the map:
+
+``` r
+mapview::mapview(lisbon_route)
+```
+
+<img src="man/figures/README-route-1.png" width="100%" />
+
+We can convert the `lisbon_route` object into a 3d linestring object as
+follows:
+
+``` r
+lisbon_route_3d = slope_3d(lisbon_route, dem_lisbon_raster)
+```
+
+We can now visualise the elevation profile of the route as follows:
+
+``` r
+plot_slope(lisbon_route_3d)
+```
+
+<img src="man/figures/README-plot_slope-1.png" width="100%" />
+
 # Performance
 
 A benchmark can reveal how many route gradients can be calculated per
@@ -127,15 +162,15 @@ res
 #> # A tibble: 2 x 6
 #>   expression           min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>      <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 raster_bilinear  12.12ms  12.93ms      77.8    7.73MB     21.5
-#> 2 raster_simple     6.49ms   6.78ms     146.     5.68MB     25.6
+#> 1 raster_bilinear  12.69ms   13.1ms      72.9    7.57MB     18.9
+#> 2 raster_simple     6.32ms    6.8ms     142.     5.76MB     32.7
 ```
 
 That is approximately
 
 ``` r
 round(res$`itr/sec` * 100)
-#> [1]  7779 14570
+#> [1]  7287 14183
 ```
 
 routes per second using bilinear (the default) and ‘simple’ methods to
