@@ -24,4 +24,7 @@ Suggests:
     geodist,
     pbapply,
     terra,
-    colorspace
+    colorspace,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

@@ -1,0 +1,40 @@
+---
+title: "An introdution to slopes"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{An introdution to slopes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+Slopes are important for many purposes, including flood risk and vehicle routing modes that are sensitive to going up or down steep hills (e.g. bicycles and large trucks)...
+
+# Calculating slopes
+
+$$
+r = e/d
+$$
+
+# Implementation in the slopes package
+
+To help research slopes using open source software for reproducibility, we have developed the slopes package.
+After you have installed it, load it as follows:
+
+```{r setup}
+library(slopes)
+```
+
+... small example from readme? ...
+
+# Measuring route hilliness
+
+...
