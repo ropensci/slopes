@@ -2,14 +2,25 @@
 % Please edit documentation in R/slopes.R
 \name{slope_vector}
 \alias{slope_vector}
+\alias{slope_distance}
+\alias{slope_distance_weighted}
+\alias{slope_distance_mean}
 \title{Calculate the gradient of line segments from distance and elevation vectors}
 \usage{
 slope_vector(x, e)
+
+slope_distance(d, e)
+
+slope_distance_weighted(d, e)
+
+slope_distance_mean(d, e)
 }
 \arguments{
 \item{x}{Vector of locations}
 
 \item{e}{Elevations in same units as x (assumed to be metres)}
+
+\item{d}{Vector of distances between points}
 }
 \description{
 Calculate the gradient of line segments from distance and elevation vectors
@@ -18,4 +29,10 @@ Calculate the gradient of line segments from distance and elevation vectors
 x = c(0, 2, 3, 4, 5, 9)
 e = c(1, 2, 2, 4, 3, 1) / 10
 slope_vector(x, e)
+m = sf::st_coordinates(lisbon_road_segment)
+d = sequential_dist(m, lonlat = FALSE)
+e = elevation_extract(m, dem_lisbon_raster)
+slope_distance(d, e)
+slope_distance_mean(d, e)
+slope_distance_weighted(d, e)
 }

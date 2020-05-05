@@ -5,8 +5,10 @@
 #'
 #' @export
 #' @examples
+#' plot_slope(lisbon_route_3d)
 #' r = lisbon_road_segment_3d
 #' plot_slope(r)
+#' r = lisbon_road_segment_3d
 plot_slope = function(r, fill = TRUE) {
   m = sf::st_coordinates(r)
   d = cumsum(sequential_dist(m, lonlat = FALSE))

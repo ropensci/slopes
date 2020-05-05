@@ -1,16 +1,41 @@
 #' Calculate the gradient of line segments from distance and elevation vectors
 #'
 #' @param x Vector of locations
+#' @param d Vector of distances between points
 #' @param e Elevations in same units as x (assumed to be metres)
 #' @export
 #' @examples
 #' x = c(0, 2, 3, 4, 5, 9)
 #' e = c(1, 2, 2, 4, 3, 1) / 10
 #' slope_vector(x, e)
+#' m = sf::st_coordinates(lisbon_road_segment)
+#' d = sequential_dist(m, lonlat = FALSE)
+#' e = elevation_extract(m, dem_lisbon_raster)
+#' slope_distance(d, e)
+#' slope_distance_mean(d, e)
+#' slope_distance_weighted(d, e)
 slope_vector = function(x, e) {
   d = diff(x)
   e_change = diff(e)
   e_change / d
+}
+#' @rdname slope_vector
+#' @export
+slope_distance = function(d, e) {
+  e_change = diff(e)
+  e_change / d
+}
+#' @rdname slope_vector
+#' @export
+slope_distance_weighted = function(d, e) {
+  e_change = diff(e)
+  stats::weighted.mean(e_change / d, d)
+}
+#' @rdname slope_vector
+#' @export
+slope_distance_mean = function(d, e) {
+  e_change = diff(e)
+  mean(e_change / d)
 }
 
 #' Calculate the gradient of line segments from a 3D matrix of coordinates
@@ -119,7 +144,7 @@ slope_raster = function(r, e = NULL, lonlat = FALSE, method = "bilinear",
 #' elevation_extract(m, e)
 #' elevation_extract(m, e, method = "simple")
 elevation_extract = function(m, e, method = "bilinear") {
-  raster::extract(e, m[, 1:2], method = method)
+  unlist(raster::extract(e, m[, 1:2], method = method))
 }
 
 #' Take a linestring and add a third (z) dimension to its coordinates

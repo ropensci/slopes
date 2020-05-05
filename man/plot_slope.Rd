@@ -15,6 +15,8 @@ plot_slope(r, fill = TRUE)
 Plot slope data for a 3d linestring with base R graphics
 }
 \examples{
+plot_slope(lisbon_route_3d)
 r = lisbon_road_segment_3d
 plot_slope(r)
+r = lisbon_road_segment_3d
 }
