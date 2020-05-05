@@ -117,7 +117,13 @@
     <p>Calculate the gradient of line segments from distance and elevation vectors</p>
     </div>
 
-    <pre class="usage"><span class='fu'>slope_vector</span>(<span class='no'>x</span>, <span class='no'>e</span>)</pre>
+    <pre class="usage"><span class='fu'>slope_vector</span>(<span class='no'>x</span>, <span class='no'>e</span>)
+
+<span class='fu'>slope_distance</span>(<span class='no'>d</span>, <span class='no'>e</span>)
+
+<span class='fu'>slope_distance_weighted</span>(<span class='no'>d</span>, <span class='no'>e</span>)
+
+<span class='fu'>slope_distance_mean</span>(<span class='no'>d</span>, <span class='no'>e</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -130,13 +136,23 @@
       <th>e</th>
       <td><p>Elevations in same units as x (assumed to be metres)</p></td>
     </tr>
+    <tr>
+      <th>d</th>
+      <td><p>Vector of distances between points</p></td>
+    </tr>
     </table>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>5</span>, <span class='fl'>9</span>)
 <span class='no'>e</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>3</span>, <span class='fl'>1</span>) / <span class='fl'>10</span>
-<span class='fu'>slope_vector</span>(<span class='no'>x</span>, <span class='no'>e</span>)</div><div class='output co'>#&gt; [1]  0.05  0.00  0.20 -0.10 -0.05</div></pre>
+<span class='fu'>slope_vector</span>(<span class='no'>x</span>, <span class='no'>e</span>)</div><div class='output co'>#&gt; [1]  0.05  0.00  0.20 -0.10 -0.05</div><div class='input'><span class='no'>m</span> <span class='kw'>=</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_coordinates.html'>st_coordinates</a></span>(<span class='no'>lisbon_road_segment</span>)
+<span class='no'>d</span> <span class='kw'>=</span> <span class='fu'><a href='sequential_dist.html'>sequential_dist</a></span>(<span class='no'>m</span>, <span class='kw'>lonlat</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>e</span> <span class='kw'>=</span> <span class='fu'><a href='elevation_extract.html'>elevation_extract</a></span>(<span class='no'>m</span>, <span class='no'>dem_lisbon_raster</span>)
+<span class='fu'>slope_distance</span>(<span class='no'>d</span>, <span class='no'>e</span>)</div><div class='output co'>#&gt;  [1] -0.047226259 -0.040883072 -0.025032918 -0.061124557 -0.017447060
+#&gt;  [6] -0.062426272 -0.123580541  0.033705378  0.004292243 -0.040360003
+#&gt; [11] -0.151671893 -0.182367906  0.409246854 -0.034463974 -0.098406640
+#&gt; [16] -0.161798173  0.076261379  0.100654228</div><div class='input'><span class='fu'>slope_distance_mean</span>(<span class='no'>d</span>, <span class='no'>e</span>)</div><div class='output co'>#&gt; [1] -0.0234794</div><div class='input'><span class='fu'>slope_distance_weighted</span>(<span class='no'>d</span>, <span class='no'>e</span>)</div><div class='output co'>#&gt; [1] -0.01996371</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
