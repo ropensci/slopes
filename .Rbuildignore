@@ -11,3 +11,4 @@
 ^gfortran.*
 ^tic\.R$
 ^README\.Rmd$
+^\.httr-oauth$

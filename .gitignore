@@ -3,3 +3,4 @@ docs
 docs/
 .Rhistory
 inst/doc
+.httr-oauth

@@ -124,13 +124,21 @@ slope_raster = function(r, e = NULL, lonlat = FALSE, method = "bilinear",
   # }
   n = length(r)
   m = sf::st_coordinates(r)
+  # colnames(m)
   z = elevation_extract(m, e, method = method, terra = terra)
   m_xyz = cbind(m, z)
-  res_list = if (requireNamespace("pbapply", quietly = TRUE)) {
+  cl = colnames(m_xyz)
+  if("L1" %in% cl) {
+    # todo: use split() instead
+    res_list = if (requireNamespace("pbapply", quietly = TRUE)) {
       pbapply::pblapply(1:n, m2g_i, m_xyz, lonlat, fun)
     } else {
       lapply(1:n, m2g_i, m_xyz, lonlat, fun)
     }
+  } else {
+    # todo: add content here
+  }
+
   unlist(res_list)
 }
 
