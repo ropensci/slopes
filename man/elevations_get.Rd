@@ -17,13 +17,12 @@ elevations_get(r, file = NULL, ...)
 Get elevation data from hosted maptile services
 }
 \examples{
-\donttest{
-# time-consuming
+# time-consuming, and see
+# https://github.com/ITSLeeds/slopes/runs/648128378#step:18:107
 r = cyclestreets_route
-e = elevations_get(r)
-class(e)
-e
-plot(e)
-plot(sf::st_geometry(r), add = TRUE)
-}
+# e = elevations_get(r)
+# class(e)
+# e
+# plot(e)
+# plot(sf::st_geometry(r), add = TRUE)
 }
