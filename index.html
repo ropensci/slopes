@@ -96,8 +96,8 @@
 <!-- install.packages("slopes") -->
 <!-- ``` -->
 <p>Install the development version from <a href="https://github.com/">GitHub</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="co"># install.packages("devtools")</span>
-<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu">install_github</span>(<span class="st">"itsleeds/slopes"</span>)</pre></div>
+<div class="sourceCode" id="cb1"><pre class="r"><span class="co"># install.packages("remotes")</span>
+<span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"itsleeds/slopes"</span>)</pre></div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
@@ -175,12 +175,12 @@
 <span class="co">#&gt; # A tibble: 3 x 6</span>
 <span class="co">#&gt;   expression        min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;   &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 slope_raster   30.5ms   33.6ms      27.7    32.6MB     39.5</span>
-<span class="co">#&gt; 2 slope_terra1   32.5ms   38.5ms      19.8    32.6MB     29.8</span>
-<span class="co">#&gt; 3 slope_terra2   20.6ms   24.3ms      41.1    29.2MB     31.3</span></pre></div>
+<span class="co">#&gt; 1 slope_raster   47.7ms     53ms      16.9    32.7MB     26.3</span>
+<span class="co">#&gt; 2 slope_terra1   52.7ms     57ms      17.2    32.7MB     22.9</span>
+<span class="co">#&gt; 3 slope_terra2   40.3ms   50.9ms      12.4    29.4MB     15.9</span></pre></div>
 <p>That is approximately</p>
 <div class="sourceCode" id="cb14"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(<span class="no">res</span>$<span class="no">`itr/sec`</span> * <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="no">r</span>))
-<span class="co">#&gt; [1]  7501  5379 11142</span></pre></div>
+<span class="co">#&gt; [1] 4586 4661 3348</span></pre></div>
 <p>routes per second using the <code>raster</code> and <code>terra</code> (the default if installed, using <code>RasterLayer</code> and native <code>SpatRaster</code> objects) packages to extract elevation estimates from the raster datasets, respectively.</p>
 <p>The message: use the <code>terra</code> package to read-in DEM data for slope extraction if speed is important.</p>
 <p>To go faster, you can chose the <code>simple</code> method to gain some speed at the expense of accuracy:</p>
@@ -198,10 +198,10 @@
 <span class="co">#&gt; # A tibble: 4 x 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 bilinear1    30.5ms   32.2ms      30.9    32.6MB     30.9</span>
-<span class="co">#&gt; 2 bilinear2    23.4ms   28.3ms      34.6    29.2MB     32.7</span>
-<span class="co">#&gt; 3 simple1      22.3ms   26.7ms      37.4    29.2MB     35.4</span>
-<span class="co">#&gt; 4 simple2      24.1ms   28.6ms      34.8    29.2MB     32.8</span></pre></div>
+<span class="co">#&gt; 1 bilinear1    39.2ms   42.5ms      23.9    32.7MB     25.9</span>
+<span class="co">#&gt; 2 bilinear2    34.4ms   39.2ms      25.3    29.4MB     23.3</span>
+<span class="co">#&gt; 3 simple1      31.5ms   38.2ms      26.0    29.3MB     22.3</span>
+<span class="co">#&gt; 4 simple2      35.6ms   38.8ms      25.7    29.4MB     23.7</span></pre></div>
 <p>The equivalent benchmark with the <code>raster</code> package is as follows:</p>
 <div class="sourceCode" id="cb16"><pre class="r"><span class="no">e</span> <span class="kw">=</span> <span class="no">dem_lisbon_raster</span>
 <span class="no">r</span> <span class="kw">=</span> <span class="no">lisbon_road_segments</span>
@@ -215,8 +215,8 @@
 <span class="co">#&gt; # A tibble: 2 x 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 bilinear     33.1ms   34.9ms      27.4    32.6MB     31.3</span>
-<span class="co">#&gt; 2 simple       22.5ms   28.3ms      27.3    29.2MB     29.3</span></pre></div>
+<span class="co">#&gt; 1 bilinear     41.6ms     46ms      21.6    32.7MB     23.5</span>
+<span class="co">#&gt; 2 simple       34.1ms   38.1ms      26.3    29.3MB     28.2</span></pre></div>
 <div class="sourceCode" id="cb17"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <!-- That is sufficient for our needs but we plan to speed-up the calculation, e.g. using the new `terra` package, as outlined this [thread](https://github.com/rspatial/terra/issues/29#issuecomment-619444555). -->
 </div>
