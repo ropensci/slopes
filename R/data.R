@@ -14,7 +14,7 @@
 #'
 #' A dataset representing road segments in Lisbon, with X, Y and Z (elevation) dimensions for each coordinate.
 #'
-#' @format And object of class `sf`
+#' @format An object of class `sf`
 #' @source Produced by ESRI's [3D Analyst extension](https://pro.arcgis.com/en/pro-app/help/analysis/3d-analyst/get-started-with-3d-analyst-in-pro.htm)
 #' @examples
 #' names(lisbon_road_segments)
@@ -25,10 +25,26 @@
 #'
 #' A single road segment and a 3d version.
 #'
-#' @format And object of class `sf`
+#' @format An object of class `sf`
 #' @source Produced by ESRI's [3D Analyst extension](https://pro.arcgis.com/en/pro-app/help/analysis/3d-analyst/get-started-with-3d-analyst-in-pro.htm)
 #' @aliases lisbon_road_segment_3d lisbon_route lisbon_route_3d
 #' @examples
 #' lisbon_road_segment
 #' lisbon_road_segment_3d
 "lisbon_road_segment"
+
+#' A journey from CycleStreets.net
+#'
+#' Road segments representing suggested route to cycle in Leeds, UK.
+#'
+#' @format An object of class `sf`
+#' @source CycleStreets.net
+#' @examples
+#' # cyclestreets_route = cyclestreets::journey(
+#' #   stplanr::geo_code("Potternewton Park Leeds"),
+#' #   stplanr::geo_code("University of Leeds")
+#' # )
+#' # usethis::use_data(cyclestreets_route)
+#' cyclestreets_route
+#' plot(cyclestreets_route)
+"cyclestreets_route"

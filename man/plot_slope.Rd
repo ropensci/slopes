@@ -4,7 +4,7 @@
 \alias{plot_slope}
 \title{Plot slope data for a 3d linestring with base R graphics}
 \usage{
-plot_slope(r, fill = TRUE)
+plot_slope(r, fill = TRUE, lonlat = sf::st_is_longlat(r))
 }
 \arguments{
 \item{r}{A linestring with xyz dimensions}

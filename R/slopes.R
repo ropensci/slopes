@@ -181,27 +181,50 @@ elevation_extract = function(m,
 #' sf::st_z_range(r3d)
 #' plot(sf::st_coordinates(r3d)[, 3])
 #' # (r3d = slope_3d(r, et))
-slope_3d = function(r, e, method = "bilinear", terra = has_terra()) {
-  if("geom" %in% names(r)) {
-    rgeom = r$geom
-  } else if("geometry" %in% names(r)) {
-    rgeom = r$geometry
+#' r3d_get = slope_3d(cyclestreets_route)
+#' plot_slope(r3d_get)
+slope_3d = function(r, e = NULL, method = "bilinear", terra = has_terra()) {
+  # if("geom" %in% names(r)) {
+  #   rgeom = r$geom
+  # } else if("geometry" %in% names(r)) {
+  #   rgeom = r$geometry
+  # } else {
+  #   rgeom = sf::st_geometry(r)
+  # }
+  if(is.null(e)) {
+    e = elevations_get(r)
+    r_original = r # create copy to deal with projection issues
+    r = sf::st_transform(r, raster::crs(e))
+    suppressWarnings({sf::st_crs(r) = sf::st_crs(r_original)})
+    # plot(e)
+    # plot(r$geometry, add = TRUE)
+    m = sf::st_coordinates(r)
+    mo = sf::st_coordinates(r_original)
+    z = as.numeric(elevation_extract(m, e, method = method, terra = terra))
+    m_xyz = cbind(mo[, 1:2], z)
   } else {
-    rgeom = sf::st_geometry(r)
-  }
-  n = length(rgeom)
-  if(length(n) == 1) {
-    # currently only works for 1 line, to be generalised
-    m = sf::st_coordinates(rgeom)
+    m = sf::st_coordinates(r)
     z = as.numeric(elevation_extract(m, e, method = method, terra = terra))
     m_xyz = cbind(m[, 1:2], z)
+  }
+  n = nrow(r)
+
+  if(n == 1) {
+    # currently only works for 1 line, to be generalised
+
     rgeom3d_line = sf::st_linestring(m_xyz)
-    rgeom3d_sfc = sf::st_sfc(rgeom3d_line, crs = sf::st_crs(rgeom))
+    rgeom3d_sfc = sf::st_sfc(rgeom3d_line, crs = sf::st_crs(r))
     # message("Original geometry: ", ncol(rgeom[[1]]))
     sf::st_geometry(r) = rgeom3d_sfc
     # message("New geometry: ", ncol(r$geom[[1]]))
-    return(r)
+  } else {
+    linestrings = lapply(seq(n), function(i){
+      rgeom3d_line = sf::st_linestring(m_xyz[m[, 3] == i, ])
+    })
+    rgeom3d_sfc = sf::st_sfc(linestrings, crs = sf::st_crs(r))
+    sf::st_geometry(r) = rgeom3d_sfc
   }
+  r
 }
 # terra = has_terra()
 # terra

@@ -9,9 +9,9 @@
 #' r = lisbon_road_segment_3d
 #' plot_slope(r)
 #' r = lisbon_road_segment_3d
-plot_slope = function(r, fill = TRUE) {
+plot_slope = function(r, fill = TRUE, lonlat = sf::st_is_longlat(r)) {
   m = sf::st_coordinates(r)
-  d = cumsum(sequential_dist(m, lonlat = FALSE))
+  d = cumsum(sequential_dist(m, lonlat = lonlat))
   d = c(0, d)
   z = m[, 3]
   plot_dz(d, z, fill = fill)
