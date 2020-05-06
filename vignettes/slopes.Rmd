@@ -56,5 +56,14 @@ $$
 H(x) = 1 - distance.weighted.harmonic.mean(1-x)
 $$
 
+```{r, eval=FALSE, echo=FALSE}
+start_coords = stplanr::geo_code("bramley park")
+end_coods = stplanr::geo_code("university of leeds")
+rj = cyclestreets::journey(from = start_coords, to = end_coods)
+mapview::mapview(rj)
+rj_3d = 
+```
+
+
 # References
 
