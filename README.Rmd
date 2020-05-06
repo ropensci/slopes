@@ -31,9 +31,9 @@ The goal of slopes is to enable fast, accurate and user friendly calculation lon
 
 Install the development version from [GitHub](https://github.com/) with:
 
-``` r
-# install.packages("devtools")
-devtools::install_github("itsleeds/slopes")
+```{r, eval=FALSE}
+# install.packages("remotes")
+remotes::install_github("itsleeds/slopes")
 ```
 
 ## Usage

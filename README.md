@@ -27,8 +27,8 @@ geometries and digital elevation model (DEM) datasets.
 Install the development version from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("itsleeds/slopes")
+# install.packages("remotes")
+remotes::install_github("itsleeds/slopes")
 ```
 
 ## Usage
@@ -174,16 +174,16 @@ res
 #> # A tibble: 3 x 6
 #>   expression        min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 slope_raster   30.5ms   33.6ms      27.7    32.6MB     39.5
-#> 2 slope_terra1   32.5ms   38.5ms      19.8    32.6MB     29.8
-#> 3 slope_terra2   20.6ms   24.3ms      41.1    29.2MB     31.3
+#> 1 slope_raster   47.7ms     53ms      16.9    32.7MB     26.3
+#> 2 slope_terra1   52.7ms     57ms      17.2    32.7MB     22.9
+#> 3 slope_terra2   40.3ms   50.9ms      12.4    29.4MB     15.9
 ```
 
 That is approximately
 
 ``` r
 round(res$`itr/sec` * nrow(r))
-#> [1]  7501  5379 11142
+#> [1] 4586 4661 3348
 ```
 
 routes per second using the `raster` and `terra` (the default if
@@ -211,10 +211,10 @@ res
 #> # A tibble: 4 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 bilinear1    30.5ms   32.2ms      30.9    32.6MB     30.9
-#> 2 bilinear2    23.4ms   28.3ms      34.6    29.2MB     32.7
-#> 3 simple1      22.3ms   26.7ms      37.4    29.2MB     35.4
-#> 4 simple2      24.1ms   28.6ms      34.8    29.2MB     32.8
+#> 1 bilinear1    39.2ms   42.5ms      23.9    32.7MB     25.9
+#> 2 bilinear2    34.4ms   39.2ms      25.3    29.4MB     23.3
+#> 3 simple1      31.5ms   38.2ms      26.0    29.3MB     22.3
+#> 4 simple2      35.6ms   38.8ms      25.7    29.4MB     23.7
 ```
 
 The equivalent benchmark with the `raster` package is as follows:
@@ -232,8 +232,8 @@ res
 #> # A tibble: 2 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 bilinear     33.1ms   34.9ms      27.4    32.6MB     31.3
-#> 2 simple       22.5ms   28.3ms      27.3    29.2MB     29.3
+#> 1 bilinear     41.6ms     46ms      21.6    32.7MB     23.5
+#> 2 simple       34.1ms   38.1ms      26.3    29.3MB     28.2
 ```
 
     #> [1] TRUE
