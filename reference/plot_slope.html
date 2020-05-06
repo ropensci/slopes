@@ -132,7 +132,22 @@
     <p>Plot slope data for a 3d linestring with base R graphics</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plot_slope</span>(<span class='no'>r</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>lonlat</span> <span class='kw'>=</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_is_longlat.html'>st_is_longlat</a></span>(<span class='no'>r</span>))</pre>
+    <pre class="usage"><span class='fu'>plot_slope</span>(
+  <span class='no'>r</span>,
+  <span class='kw'>lonlat</span> <span class='kw'>=</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_is_longlat.html'>st_is_longlat</a></span>(<span class='no'>r</span>),
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>horiz</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>p</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"colorspace"</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
+    <span class='kw pkg'>colorspace</span><span class='kw ns'>::</span><span class='no'><a href='http://colorspace.R-Forge.R-project.org//reference/hcl_palettes.html'>diverging_hcl</a></span>, <span class='kw pkg'>grDevices</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/r/grDevices/palettes.html'>terrain.colors</a></span>),
+  <span class='no'>...</span>,
+  <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"top"</span>,
+  <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
+  <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
+  <span class='kw'>bg</span> <span class='kw'>=</span> <span class='kw pkg'>grDevices</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/r/grDevices/rgb.html'>rgb</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0.8</span>),
+  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Slope colors (percentage gradient)"</span>,
+  <span class='kw'>s</span> <span class='kw'>=</span> <span class='fl'>3</span>:<span class='fl'>18</span>,
+  <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>4</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -142,12 +157,53 @@
       <td><p>A linestring with xyz dimensions</p></td>
     </tr>
     <tr>
-      <th>fill</th>
-      <td><p>Should the profile be filled? <code>TRUE</code> by default.</p></td>
-    </tr>
-    <tr>
       <th>lonlat</th>
       <td><p>Are the coordinates in lon/lat order? <code>TRUE</code> by default</p></td>
+    </tr>
+    <tr>
+      <th>fill</th>
+      <td><p>Should the profile be filled? <code>TRUE</code> by default</p></td>
+    </tr>
+    <tr>
+      <th>horiz</th>
+      <td><p>Should the legend be horizontal (<code>FALSE</code> by default)</p></td>
+    </tr>
+    <tr>
+      <th>p</th>
+      <td><p>Color palette to use</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional parameters to pass to legend</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>Keyword, one of "bottomright", "bottom",
+"bottomleft", "left", "topleft", "top", "topright", "right" and "center"</p></td>
+    </tr>
+    <tr>
+      <th>col</th>
+      <td><p>Line colour</p></td>
+    </tr>
+    <tr>
+      <th>cex</th>
+      <td><p>Legend size</p></td>
+    </tr>
+    <tr>
+      <th>bg</th>
+      <td><p>Legend background colour</p></td>
+    </tr>
+    <tr>
+      <th>title</th>
+      <td><p>Title of the legend</p></td>
+    </tr>
+    <tr>
+      <th>s</th>
+      <td><p>Sequence of numbers to show in legend</p></td>
+    </tr>
+    <tr>
+      <th>ncol</th>
+      <td><p>Number of columns in legend</p></td>
     </tr>
     </table>
 
