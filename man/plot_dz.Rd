@@ -28,6 +28,8 @@ plot_dz(
 
 \item{fill}{Should the profile be filled? \code{TRUE} by default}
 
+\item{horiz}{Should the legend be horizontal (\code{FALSE} by default)}
+
 \item{p}{Color palette to use}
 
 \item{...}{Additional parameters to pass to legend}

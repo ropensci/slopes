@@ -10,7 +10,23 @@
 #' r = lisbon_road_segment_3d
 #' plot_slope(r)
 #' r = lisbon_road_segment_3d
-plot_slope = function(r, fill = TRUE, lonlat = sf::st_is_longlat(r)) {
+plot_slope = function(r,
+                      lonlat = sf::st_is_longlat(r),
+                      fill = TRUE,
+                      horiz = FALSE,
+                      p = ifelse(
+                        test = requireNamespace("colorspace", quietly = TRUE),
+                        colorspace::diverging_hcl,
+                        grDevices::terrain.colors
+                      ),
+                      ...,
+                      x = "top",
+                      col = "black",
+                      cex = 0.9,
+                      bg = grDevices::rgb(1, 1, 1, 0.8),
+                      title = "Slope colors (percentage gradient)",
+                      s = 3:18,
+                      ncol = 4) {
   m = sf::st_coordinates(r)
   d = cumsum(sequential_dist(m, lonlat = lonlat))
   d = c(0, d)
@@ -41,47 +57,65 @@ plot_slope = function(r, fill = TRUE, lonlat = sf::st_is_longlat(r)) {
 #' d = c(0, d)
 #' z = m[, 3]
 #' plot_dz(d, z)
-plot_dz = function(d, z, fill = TRUE, horiz = FALSE, p = ifelse(
-  test = requireNamespace("colorspace", quietly = TRUE),
-  colorspace::diverging_hcl,
-  grDevices::terrain.colors
-  ),
-  ...,
-  x = "top",
-  col = "black",
-  cex = 0.9,
-  bg = grDevices::rgb(1, 1, 1, 0.8),
-  title = "Slope colors (percentage gradient)",
-  s = 3:18,
-  ncol = 4
-  ) {
-  graphics::plot(d, z, type = "l", col = "brown", lwd = 2)
-  if(fill) {
+plot_dz = function(d,
+                   z,
+                   fill = TRUE,
+                   horiz = FALSE,
+                   p = ifelse(
+                     test = requireNamespace("colorspace", quietly = TRUE),
+                     colorspace::diverging_hcl,
+                     grDevices::terrain.colors
+                   ),
+                   ...,
+                   x = "top",
+                   col = "black",
+                   cex = 0.9,
+                   bg = grDevices::rgb(1, 1, 1, 0.8),
+                   title = "Slope colors (percentage gradient)",
+                   s = 3:18,
+                   ncol = 4) {
+  graphics::plot(d,
+                 z,
+                 type = "l",
+                 col = "brown",
+                 lwd = 2)
+  if (fill) {
     n = c(1, 3, 6, 10, 15, 21, 28, 36, 45, 100)
     n = c(-rev(n), (n))
     b = n / 100
-    if(identical(p, colorspace::diverging_hcl)) {
+    if (identical(p, colorspace::diverging_hcl)) {
       pal = p(n = length(b) - 1, palette = "Green-Brown")
     } else {
       pal = p(n = length(b) - 1)
     }
     g = slope_vector(x = d, e = z)
-    colz = cut(x = g, breaks = b, labels = pal)
+    colz = cut(x = g,
+               breaks = b,
+               labels = pal)
     colz = as.character(colz)
     lapply(seq(d)[-(length(d))], function(i) {
       graphics::polygon(
-        x = c(d[i:(i+1)], d[(i+1):i]),
-        y = c(z[i], z[i+1], 0, 0),
+        x = c(d[i:(i + 1)], d[(i + 1):i]),
+        y = c(z[i], z[i + 1], 0, 0),
         col = colz[i],
         border = NA
-        )
+      )
     })
     graphics::lines(d, z, col = col, lwd = 2)
     # s = seq(from = 3, to = length(n) - 1, by = 2)
     # s = c(3, 7, 9, 10, 11, 12, 13, 15, 19) # custom s
     # s = seq(from = 3, to = length(n) - 2)
-    graphics::legend(x = x, legend = n[s], fill = pal[s], ..., bg = bg,
-                     title = title, horiz = horiz, ncol = ncol, cex = cex)
+    graphics::legend(
+      x = x,
+      legend = n[s],
+      fill = pal[s],
+      ...,
+      bg = bg,
+      title = title,
+      horiz = horiz,
+      ncol = ncol,
+      cex = cex
+    )
   }
 }
 # g = slope_matrix(m)
