@@ -1,0 +1,153 @@
+---
+title: "Verification of slopes"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Verification of slopes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: slope-references.bib
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This article aims to provide external verification of the results provided by the package.
+So far only one verification dataset has been used, but we hope to find others.
+If you know of verification datasets, please let us know --- initially we planned to use a dataset from a paper on river slopes [@cohen_global_2018], but we could find no way of extracting the underlying data to do the calculation.
+
+For this article we primarily used the following packages, although others are loaded in subsequent code chunks.
+
+```{r setup}
+library(slopes)
+library(sf)
+```
+
+The results are reproducible (requires downloading input data manually and installing additional packages).
+To keep package build times low, only the results are presented below.
+
+
+# Three-dimensional traces of roads dataset
+
+An input dataset, comprising a 3D linestring recorded using a dual frequency GNSS receiver (a [Leica 1200](https://gef.nerc.ac.uk/equipment/gnss/1200/1200_overview.php)) with a vertical accuracy of 20 mm
+<!-- 138 GPS 3D traces of a hilly road from a peer reviewed journal article -->
+[@ariza-lopez_dataset_2019] was downloaded from the 
+<!-- [figshare website as a .zip file](https://ndownloader.figshare.com/files/14331197) - raw data -->
+[figshare website as a .zip file](https://ndownloader.figshare.com/files/14331185)
+and unzipped and inflated in the working directory as follows (not evaluated to reduce package build times): 
+
+```{r, eval=FALSE}
+unzip("vignettes/3DGRT_AXIS_EPSG25830_v2.zip")
+trace = sf::read_sf("3DGRT_AXIS_EPSG25830_v2.shp")
+plot(trace)
+nrow(trace)
+#> 11304
+summary(trace$X3DGRT_h)
+#>  Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#>   642.9   690.3   751.4   759.9   834.3   884.9 
+```
+
+
+```{r, eval=FALSE, echo=FALSE}
+# original trace dataset
+traces = sf::read_sf("vignettes/3DGRT_TRACES_EPSG25830_v2.shp")
+traces = sf::read_sf("3DGRT_TRACES_EPSG25830_v2.shp")
+nrow(traces)
+#> [1] 111113
+```
+
+To verify our estimates of hilliness, we generated slope estimates for each segment and compared them with [Table 7](https://www.nature.com/articles/s41597-019-0147-x/tables/7) in @ariza-lopez_dataset_2019.
+The absolute gradient measure published in that paper were:
+
+```{r}
+res_gps = c(0.00, 4.58, 1136.36, 6.97)
+res_final = c(0.00, 4.96, 40.70, 3.41)
+res = data.frame(cbind(
+  c("GPS", "Dual frequency GNSS receiver"),
+  rbind(res_gps, res_final)
+))
+names(res) = c("Source", "min", " mean", " max", " stdev")
+knitr::kable(res, row.names = FALSE)
+```
+
+```{r, eval=FALSE}
+# mapview::mapview(trace) # check extent: it's above 6km in height
+# remotes::install_github("hypertidy/ceramic")
+loc = colMeans(sf::st_coordinates(sf::st_transform(trace, 4326)))
+e = ceramic::cc_elevation(loc = loc[1:2], buffer = 3000)
+trace_projected = sf::st_transform(trace, 3857)
+plot(e)
+plot(trace_projected$geometry, add = TRUE)
+```
+
+```{r, echo=FALSE}
+knitr::include_graphics("https://user-images.githubusercontent.com/1825120/81125221-75c06780-8f2f-11ea-8cea-ad6322ef99e7.png")
+```
+
+The slopes were estimated as follows:
+
+```{r, eval=FALSE}
+# source: https://www.robinlovelace.net/presentations/munster.html#31
+points2line_trajectory = function(p) {
+  c = st_coordinates(p)
+  i = seq(nrow(p) - 2)
+  l = purrr::map(i, ~ sf::st_linestring(c[.x:(.x + 1), ]))
+  lfc = sf::st_sfc(l)
+  a = seq(length(lfc)) + 1 # sequence to subset
+  p_data = cbind(sf::st_set_geometry(p[a, ], NULL))
+  sf::st_sf(p_data, geometry = lfc)
+}
+r = points2line_trajectory(trace_projected)
+s = slope_raster(r, e = e)
+slope_summary = data.frame(min = min(s), mean = mean(s), max = max(s), stdev = sd(s))
+slope_summary = slope_summary * 100
+knitr::kable(slope_summary, digits = 1)
+```
+
+| min| mean|  max| stdev|
+|---:|----:|----:|-----:|
+|   0|  6.2| 48.2|   5.6|
+
+Combined with the previous table from @ariza-lopez_dataset_2019, these results can be compared with those obtained from mainstream GPS, and an accurate GNSS receiver:
+
+|Source                       |min | mean | max    | stdev |
+|:----------------------------|:---|:-----|:-------|:------|
+|GPS                          |0   |4.58  |1136.36 |6.97   |
+|Dual frequency GNSS receiver |0   |4.96  |40.7    |3.41   |
+|Slopes R package             |0   |6.2   |48.2    |5.6    |
+
+It is notable that the package substantially overestimates the gradient, perhaps due to the low resolution of the underlying elevation raster.
+However, the slopes package seems to provide less noisy slope estimates than the GPS approach, with lower maximum values and low standard deviation.
+
+# References
+
+
+
+
+```{r, eval=FALSE, echo=FALSE}
+# failed tests
+raster::extract(e, trace_projected)
+raster::writeRaster(e, "e.tif")
+e_terra = terra::rast("e.tif")
+terra::crs(e_terra)
+v = terra::vect("vignettes/3DGRT_TRACES_EPSG25830_v2.shp")
+e_wgs = terra::project(e_terra, v)
+e_stars = stars::st_as_stars(e)
+e_wgs = sf::st_transform(e_stars, 4326)
+stars::write_stars(e_wgs, "e_wgs.tif")
+e2 = raster::raster("e_wgs.tif")
+raster::plot(e)
+plot(trace$geometry, add = TRUE)
+```
+
+
+```{r, echo=FALSE, eval=FALSE}
+# discarded way:
+remotes::install_github("jhollist/elevatr")
+sp_bbox = sp::bbox(sf::as_Spatial(sf::st_transform(trace, 4326)))
+e = elevatr::get_aws_terrain(locations = sp_bbox, prj = "+init:4326")
+```
+
