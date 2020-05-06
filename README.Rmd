@@ -196,7 +196,7 @@ res = bench::mark(check = FALSE,
 res
 ```
 
-```{r, echo=FALSE}
+```{r, include=FALSE}
 file.remove("dem_lisbon.tif")
 ```
 

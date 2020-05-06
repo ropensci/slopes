@@ -174,16 +174,16 @@ res
 #> # A tibble: 3 x 6
 #>   expression        min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 slope_raster   47.7ms     53ms      16.9    32.7MB     26.3
-#> 2 slope_terra1   52.7ms     57ms      17.2    32.7MB     22.9
-#> 3 slope_terra2   40.3ms   50.9ms      12.4    29.4MB     15.9
+#> 1 slope_raster   47.6ms   58.1ms      16.5    32.7MB     25.7
+#> 2 slope_terra1   55.6ms     61ms      16.5    32.7MB     23.9
+#> 3 slope_terra2   44.4ms   53.8ms      11.7    29.4MB     15.6
 ```
 
 That is approximately
 
 ``` r
 round(res$`itr/sec` * nrow(r))
-#> [1] 4586 4661 3348
+#> [1] 4474 4480 3175
 ```
 
 routes per second using the `raster` and `terra` (the default if
@@ -211,10 +211,10 @@ res
 #> # A tibble: 4 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 bilinear1    39.2ms   42.5ms      23.9    32.7MB     25.9
-#> 2 bilinear2    34.4ms   39.2ms      25.3    29.4MB     23.3
-#> 3 simple1      31.5ms   38.2ms      26.0    29.3MB     22.3
-#> 4 simple2      35.6ms   38.8ms      25.7    29.4MB     23.7
+#> 1 bilinear1    45.8ms   52.9ms      18.9    32.7MB     18.9
+#> 2 bilinear2    45.5ms   47.4ms      19.9    29.4MB     19.9
+#> 3 simple1      39.4ms   46.9ms      21.7    29.3MB     21.7
+#> 4 simple2      38.2ms   51.1ms      20.6    29.4MB     18.8
 ```
 
 The equivalent benchmark with the `raster` package is as follows:
@@ -232,10 +232,8 @@ res
 #> # A tibble: 2 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 bilinear     41.6ms     46ms      21.6    32.7MB     23.5
-#> 2 simple       34.1ms   38.1ms      26.3    29.3MB     28.2
+#> 1 bilinear     48.8ms   55.9ms      16.8    32.7MB     20.5
+#> 2 simple       43.9ms   49.5ms      13.3    29.3MB     11.4
 ```
-
-    #> [1] TRUE
 
 <!-- That is sufficient for our needs but we plan to speed-up the calculation, e.g. using the new `terra` package, as outlined this [thread](https://github.com/rspatial/terra/issues/29#issuecomment-619444555). -->
