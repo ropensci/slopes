@@ -22,7 +22,17 @@ plot_slope = function(r, fill = TRUE, lonlat = sf::st_is_longlat(r)) {
 #' @param d Cumulative distance
 #' @param z Elevations at points across a linestring
 #' @param p Color palette to use
-#' @param fill Should the profile be filled? `TRUE` by default.
+#' @param fill Should the profile be filled? `TRUE` by default
+#' @param x Keyword, one of "bottomright", "bottom",
+#' "bottomleft", "left", "topleft", "top", "topright", "right" and "center"
+#' @param col Line colour
+#' @param cex Legend size
+#' @param bg Legend background colour
+#' @param title Title of the legend
+#' @param s Sequence of numbers to show in legend
+#' @param ncol Number of columns in legend
+#' @param horiz Should the legend be horizontal (`FALSE` by default)
+#' @param ... Additional parameters to pass to legend
 #' @export
 #' @examples
 #' r = lisbon_road_segment_3d
@@ -31,15 +41,24 @@ plot_slope = function(r, fill = TRUE, lonlat = sf::st_is_longlat(r)) {
 #' d = c(0, d)
 #' z = m[, 3]
 #' plot_dz(d, z)
-plot_dz = function(d, z, fill = TRUE, p = ifelse(
+plot_dz = function(d, z, fill = TRUE, horiz = FALSE, p = ifelse(
   test = requireNamespace("colorspace", quietly = TRUE),
   colorspace::diverging_hcl,
   grDevices::terrain.colors
-  )) {
+  ),
+  ...,
+  x = "top",
+  col = "black",
+  cex = 0.9,
+  bg = grDevices::rgb(1, 1, 1, 0.8),
+  title = "Slope colors (percentage gradient)",
+  s = 3:18,
+  ncol = 4
+  ) {
   graphics::plot(d, z, type = "l", col = "brown", lwd = 2)
   if(fill) {
-    n = c(0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 100)
-    n = c(-rev(n), (n[-1]))
+    n = c(1, 3, 6, 10, 15, 21, 28, 36, 45, 100)
+    n = c(-rev(n), (n))
     b = n / 100
     if(identical(p, colorspace::diverging_hcl)) {
       pal = p(n = length(b) - 1, palette = "Green-Brown")
@@ -57,10 +76,12 @@ plot_dz = function(d, z, fill = TRUE, p = ifelse(
         border = NA
         )
     })
-    graphics::lines(d, z, col = "black", lwd = 2)
-    s = seq(from = 3, to = length(n) - 1, by = 2)
-    graphics::legend(x = "topright", legend = paste(n[s], "%"), fill = pal[s],
-                   cex = 0.9, title = "Slope")
+    graphics::lines(d, z, col = col, lwd = 2)
+    # s = seq(from = 3, to = length(n) - 1, by = 2)
+    # s = c(3, 7, 9, 10, 11, 12, 13, 15, 19) # custom s
+    # s = seq(from = 3, to = length(n) - 2)
+    graphics::legend(x = x, legend = n[s], fill = pal[s], ..., bg = bg,
+                     title = title, horiz = horiz, ncol = ncol, cex = cex)
   }
 }
 # g = slope_matrix(m)

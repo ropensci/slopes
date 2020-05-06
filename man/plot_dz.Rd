@@ -8,8 +8,17 @@ plot_dz(
   d,
   z,
   fill = TRUE,
+  horiz = FALSE,
   p = ifelse(test = requireNamespace("colorspace", quietly = TRUE),
-    colorspace::diverging_hcl, grDevices::terrain.colors)
+    colorspace::diverging_hcl, grDevices::terrain.colors),
+  ...,
+  x = "top",
+  col = "black",
+  cex = 0.9,
+  bg = grDevices::rgb(1, 1, 1, 0.8),
+  title = "Slope colors (percentage gradient)",
+  s = 3:18,
+  ncol = 4
 )
 }
 \arguments{
@@ -17,9 +26,26 @@ plot_dz(
 
 \item{z}{Elevations at points across a linestring}
 
-\item{fill}{Should the profile be filled? \code{TRUE} by default.}
+\item{fill}{Should the profile be filled? \code{TRUE} by default}
 
 \item{p}{Color palette to use}
+
+\item{...}{Additional parameters to pass to legend}
+
+\item{x}{Keyword, one of "bottomright", "bottom",
+"bottomleft", "left", "topleft", "top", "topright", "right" and "center"}
+
+\item{col}{Line colour}
+
+\item{cex}{Legend size}
+
+\item{bg}{Legend background colour}
+
+\item{title}{Title of the legend}
+
+\item{s}{Sequence of numbers to show in legend}
+
+\item{ncol}{Number of columns in legend}
 }
 \description{
 Plot a digital elevation profile based on xyz data
