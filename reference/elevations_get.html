@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculate the gradient of line segments from a raster dataset — slope_raster • slopes</title>
+<title>Get elevation data from hosted maptile services — elevations_get • slopes</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Calculate the gradient of line segments from a raster dataset — slope_raster" />
-<meta property="og:description" content="Calculate the gradient of line segments from a raster dataset" />
+<meta property="og:title" content="Get elevation data from hosted maptile services — elevations_get" />
+<meta property="og:description" content="Get elevation data from hosted maptile services" />
 
 
 
@@ -123,23 +123,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculate the gradient of line segments from a raster dataset</h1>
-    <small class="dont-index">Source: <a href='https://github.com/itsleeds/slopes/blob/master/R/slopes.R'><code>R/slopes.R</code></a></small>
-    <div class="hidden name"><code>slope_raster.Rd</code></div>
+    <h1>Get elevation data from hosted maptile services</h1>
+    <small class="dont-index">Source: <a href='https://github.com/itsleeds/slopes/blob/master/R/slope_get.R'><code>R/slope_get.R</code></a></small>
+    <div class="hidden name"><code>elevations_get.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Calculate the gradient of line segments from a raster dataset</p>
+    <p>Get elevation data from hosted maptile services</p>
     </div>
 
-    <pre class="usage"><span class='fu'>slope_raster</span>(
-  <span class='no'>r</span>,
-  <span class='kw'>e</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>lonlat</span> <span class='kw'>=</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_is_longlat.html'>st_is_longlat</a></span>(<span class='no'>r</span>),
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"bilinear"</span>,
-  <span class='kw'>fun</span> <span class='kw'>=</span> <span class='no'>slope_matrix_weighted</span>,
-  <span class='kw'>terra</span> <span class='kw'>=</span> <span class='fu'>has_terra</span>()
-)</pre>
+    <pre class="usage"><span class='fu'>elevations_get</span>(<span class='no'>r</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -149,37 +142,25 @@
       <td><p>Routes, the gradients of which are to be calculated</p></td>
     </tr>
     <tr>
-      <th>e</th>
-      <td><p>A raster object overlapping with <code>r</code> and values representing elevations</p></td>
+      <th>file</th>
+      <td><p>Where to save the resulting data if specified (not implemented)</p></td>
     </tr>
     <tr>
-      <th>lonlat</th>
-      <td><p>Are the coordinates in lon/lat order? <code>TRUE</code> by default</p></td>
-    </tr>
-    <tr>
-      <th>method</th>
-      <td><p>The method of estimating elevation at points, passed to the <code>extract</code>
-function for extracting values from raster datasets. Default: <code>"bilinear"</code>.</p></td>
-    </tr>
-    <tr>
-      <th>fun</th>
-      <td><p>The slope function to calculate per route,
-<code>slope_matrix_weighted</code> by default.</p></td>
-    </tr>
-    <tr>
-      <th>terra</th>
-      <td><p>Should the <code>terra</code> package be used?
-<code>TRUE</code> by default if the package is installed <em>and</em>
-if <code>e</code> is of class <code>SpatRast</code></p></td>
+      <th>...</th>
+      <td><p>Options passed to <code>cc_elevation()</code></p></td>
     </tr>
     </table>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># r = lisbon_road_segments[239, ]</span>
-<span class='no'>r</span> <span class='kw'>=</span> <span class='no'>lisbon_road_segments</span>
-<span class='no'>e</span> <span class='kw'>=</span> <span class='no'>dem_lisbon_raster</span>
-(<span class='no'>s</span> <span class='kw'>=</span> <span class='fu'>slope_raster</span>(<span class='no'>r</span>, <span class='no'>e</span>))[<span class='fl'>1</span>:<span class='fl'>5</span>]</div><div class='output co'>#&gt; [1] TRUE</div><div class='output co'>#&gt; [1] 0.003074005 0.010870459 0.004998315 0.014255667 0.005333236</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='no'>r</span>$<span class='no'>Avg_Slope</span>, <span class='no'>s</span>)</div><div class='output co'>#&gt; [1] 0.9770436</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># time-consuming, and see</span>
+<span class='co'># https://github.com/ITSLeeds/slopes/runs/648128378#step:18:107</span>
+<span class='no'>r</span> <span class='kw'>=</span> <span class='no'>cyclestreets_route</span>
+<span class='co'># e = elevations_get(r)</span>
+<span class='co'># class(e)</span>
+<span class='co'># e</span>
+<span class='co'># plot(e)</span>
+<span class='co'># plot(sf::st_geometry(r), add = TRUE)</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

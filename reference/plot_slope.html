@@ -132,7 +132,7 @@
     <p>Plot slope data for a 3d linestring with base R graphics</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plot_slope</span>(<span class='no'>r</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>plot_slope</span>(<span class='no'>r</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>lonlat</span> <span class='kw'>=</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_is_longlat.html'>st_is_longlat</a></span>(<span class='no'>r</span>))</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -144,6 +144,10 @@
     <tr>
       <th>fill</th>
       <td><p>Should the profile be filled? <code>TRUE</code> by default.</p></td>
+    </tr>
+    <tr>
+      <th>lonlat</th>
+      <td><p>Are the coordinates in lon/lat order? <code>TRUE</code> by default</p></td>
     </tr>
     </table>
 
