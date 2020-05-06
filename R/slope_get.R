@@ -1,15 +1,19 @@
 #' Get elevation data from hosted maptile services
 #'
 #' @param file Where to save the resulting data if specified (not implemented)
+#' @param ... Options passed to `cc_elevation()`
 #' @inheritParams slope_raster
 #' @export
 #' @examples
+#' \donttest{
+#' # time-consuming
 #' r = cyclestreets_route
 #' e = elevations_get(r)
 #' class(e)
 #' e
 #' plot(e)
 #' plot(sf::st_geometry(r), add = TRUE)
+#' }
 elevations_get = function(r, file = NULL, ...) {
   if(requireNamespace("ceramic")) {
     mid_ext = sf_mid_ext_lonlat(r)
@@ -43,7 +47,7 @@ sf_mid_ext_lonlat = function(r) {
   }
   bb = sf::st_bbox(r)
   res$midpoint = c(mean(c(bb[1], bb[3])), mean(c(bb[2], bb[4])))
-  res$width = geosphere::distHaversine(c(bb[1], bb[2]), c(bb[3], bb[2]))
-  res$height = geosphere::distHaversine(c(bb[1], bb[2]), c(bb[1], bb[4]))
+  res$width = geodist::geodist(c(bb[1], bb[2]), c(bb[3], bb[2]))
+  res$height = geodist::geodist(c(bb[1], bb[2]), c(bb[1], bb[4]))
   res
 }

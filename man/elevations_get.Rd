@@ -10,15 +10,20 @@ elevations_get(r, file = NULL, ...)
 \item{r}{Routes, the gradients of which are to be calculated}
 
 \item{file}{Where to save the resulting data if specified (not implemented)}
+
+\item{...}{Options passed to \code{cc_elevation()}}
 }
 \description{
 Get elevation data from hosted maptile services
 }
 \examples{
+\donttest{
+# time-consuming
 r = cyclestreets_route
 e = elevations_get(r)
 class(e)
 e
 plot(e)
 plot(sf::st_geometry(r), add = TRUE)
+}
 }

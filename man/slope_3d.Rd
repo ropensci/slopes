@@ -29,6 +29,9 @@ sf::st_z_range(r)
 sf::st_z_range(r3d)
 plot(sf::st_coordinates(r3d)[, 3])
 # (r3d = slope_3d(r, et))
+\donttest{
+# takes bandwidth and time
 r3d_get = slope_3d(cyclestreets_route)
 plot_slope(r3d_get)
+}
 }

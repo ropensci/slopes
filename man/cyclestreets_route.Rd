@@ -22,7 +22,7 @@ Road segments representing suggested route to cycle in Leeds, UK.
 #   stplanr::geo_code("University of Leeds")
 # )
 # usethis::use_data(cyclestreets_route)
-cyclestreets_route
-plot(cyclestreets_route)
+class(cyclestreets_route)
+# plot(cyclestreets_route)
 }
 \keyword{datasets}

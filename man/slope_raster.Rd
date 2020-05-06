@@ -7,7 +7,7 @@
 slope_raster(
   r,
   e = NULL,
-  lonlat = FALSE,
+  lonlat = sf::st_is_longlat(r),
   method = "bilinear",
   fun = slope_matrix_weighted,
   terra = has_terra()

@@ -26,5 +26,6 @@ Suggests:
     terra,
     colorspace,
     knitr,
-    rmarkdown
+    rmarkdown,
+    ceramic
 VignetteBuilder: knitr

@@ -45,6 +45,6 @@
 #' #   stplanr::geo_code("University of Leeds")
 #' # )
 #' # usethis::use_data(cyclestreets_route)
-#' cyclestreets_route
-#' plot(cyclestreets_route)
+#' class(cyclestreets_route)
+#' # plot(cyclestreets_route)
 "cyclestreets_route"

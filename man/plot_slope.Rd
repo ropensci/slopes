@@ -10,6 +10,8 @@ plot_slope(r, fill = TRUE, lonlat = sf::st_is_longlat(r))
 \item{r}{A linestring with xyz dimensions}
 
 \item{fill}{Should the profile be filled? \code{TRUE} by default.}
+
+\item{lonlat}{Are the coordinates in lon/lat order? \code{TRUE} by default}
 }
 \description{
 Plot slope data for a 3d linestring with base R graphics

@@ -115,7 +115,7 @@ m2g_i = function(i, m_xyz, lonlat, fun = slope_matrix_weighted) {
 #' e = dem_lisbon_raster
 #' (s = slope_raster(r, e))[1:5]
 #' cor(r$Avg_Slope, s)
-slope_raster = function(r, e = NULL, lonlat = FALSE, method = "bilinear",
+slope_raster = function(r, e = NULL, lonlat = sf::st_is_longlat(r), method = "bilinear",
                         fun = slope_matrix_weighted, terra = has_terra()) {
   # if(sum(c("geom", "geometry") %in% names(r)) > 0) {
   #   r = r$geom
@@ -181,8 +181,11 @@ elevation_extract = function(m,
 #' sf::st_z_range(r3d)
 #' plot(sf::st_coordinates(r3d)[, 3])
 #' # (r3d = slope_3d(r, et))
+#' \donttest{
+#' # takes bandwidth and time
 #' r3d_get = slope_3d(cyclestreets_route)
 #' plot_slope(r3d_get)
+#' }
 slope_3d = function(r, e = NULL, method = "bilinear", terra = has_terra()) {
   # if("geom" %in% names(r)) {
   #   rgeom = r$geom

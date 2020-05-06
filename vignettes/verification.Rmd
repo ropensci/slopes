@@ -40,7 +40,8 @@ An input dataset, comprising a 3D linestring recorded using a dual frequency GNS
 and unzipped and inflated in the working directory as follows (not evaluated to reduce package build times): 
 
 ```{r, eval=FALSE}
-unzip("vignettes/3DGRT_AXIS_EPSG25830_v2.zip")
+download.file("https://ndownloader.figshare.com/files/14331185", "3DGRT_AXIS_EPSG25830_v2.zip")
+unzip("3DGRT_AXIS_EPSG25830_v2.zip")
 trace = sf::read_sf("3DGRT_AXIS_EPSG25830_v2.shp")
 plot(trace)
 nrow(trace)
@@ -82,6 +83,15 @@ trace_projected = sf::st_transform(trace, 3857)
 plot(e)
 plot(trace_projected$geometry, add = TRUE)
 ```
+
+```{r, echo=FALSE, eval=FALSE}
+# aim: get max distance from centrepoint
+bb = sf::st_bbox(sf::st_transform(trace, 4326))
+geosphere::distHaversine(c(bb[1], bb[2]), c(bb[3], bb[2]))
+geosphere::distHaversine(c(bb[1], bb[2]), c(bb[1], bb[4]))
+# max of those 2 and divide by 2
+```
+
 
 ```{r, echo=FALSE}
 knitr::include_graphics("https://user-images.githubusercontent.com/1825120/81125221-75c06780-8f2f-11ea-8cea-ad6322ef99e7.png")

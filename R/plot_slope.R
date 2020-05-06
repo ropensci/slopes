@@ -2,6 +2,7 @@
 #'
 #' @param r A linestring with xyz dimensions
 #' @inheritParams plot_dz
+#' @inheritParams sequential_dist
 #'
 #' @export
 #' @examples
