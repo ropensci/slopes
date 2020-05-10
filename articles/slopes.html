@@ -96,46 +96,73 @@
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
 <p>Slopes are important for many purposes, including flood risk, agriculture, geology, and infrastructure constructions. The information about slopes is very relevant for vehicle routing modes that are sensitive to going up or down steep hills (e.g. bicycles, trains, and large trucks).<br><img src="https://sinalnorte.com/wp-content/uploads/2018/02/A3b.jpg" style="width:10.0%" alt="Traffic sign"></p>
-<p>Altough there are several ways to name “slope”, such as “steepness”, “hilliness”, “inclination”, “aspect”, “gradient”, “declivity”, the reffered <code>slopes</code> in this package can be defined as the “longitudinal gradient” <span class="citation">(Cohen et al. 2018)</span>.</p>
+<p>Although there are several ways to name “slope”, such as “steepness”, “hilliness”, “inclination”, “aspect”, “gradient”, “declivity”, the referred <code>slopes</code> in this package can be defined as the “longitudinal gradient” <span class="citation">(Cohen et al. 2018)</span>.</p>
 </div>
 <div id="calculating-slopes" class="section level1">
 <h1 class="hasAnchor">
 <a href="#calculating-slopes" class="anchor"></a>Calculating slopes</h1>
-<p>The most comomn slope calculation method is defined by the vertical difference of the final and start point or line height (z1 and z0) divided by the horizontal lenght that apparts them.</p>
+<p>The most common slope calculation method is defined by the vertical difference of the final and start point or line height (z1 and z0) divided by the horizontal length that separates them.</p>
 <p><span class="math display">\[
 s = \Delta z/l
 \]</span></p>
 <p>Depending on the purpouse of application, it might me relevant to understand how hilliness is estimated.</p>
-<div id="assessing-route-hilliness" class="section level2">
-<h2 class="hasAnchor">
-<a href="#assessing-route-hilliness" class="anchor"></a>Assessing route hilliness</h2>
-<p>The hilliness of a route is an important factor which can affect its suitability for activities such as cycling.</p>
-<p>Using the <code>slopes</code> package we can estimate the gradient of individual road segments. When these segments are combined into routes, we then need a means of assessing the hilliness of the entire route. A range of indices can be used to represent route hilliness. The choice of which index is most appropriate may be context dependent.</p>
-<ul>
-<li><p>Mean distance weighted gradient. Perhaps the simplest and most widely applicable measure is the mean gradient of the route. This should be weighted by the distance of each segment.</p></li>
-<li><p>Max gradient. For activities like cycling, where steep hills have a disproportionate impact, it may be useful to consider the maximum gradient.</p></li>
-<li><p>Xth percentile gradient. Since the maximum gradient gives no information about the rest of the route segments, other measures such as the 75th percentile gradient could be more informative.</p></li>
-<li><p>Inverted harmonic mean. If we use the following formula we will get an index that (like the arithmetic mean) makes use of the full dataset, but that is weighted towards the higher gradient segments. Whether this index is helpful remains to be tested.</p></li>
-</ul>
-<p><span class="math display">\[
-H(x) = 1 - distance.weighted.harmonic.mean(1-x)
-\]</span></p>
-</div>
 </div>
 <div id="implementation-in-the-slopes-package" class="section level1">
 <h1 class="hasAnchor">
 <a href="#implementation-in-the-slopes-package" class="anchor"></a>Implementation in the slopes package</h1>
+<p>Using the <code>slopes</code> package we can estimate the gradient of individual road segments. When these segments are combined into routes, we then need a means of assessing the hilliness of the entire route. A range of indices can be used to represent route hilliness. The choice of which index is most appropriate may be context dependent.</p>
 <p>To help research slopes using open source software for reproducibility, we have developed the slopes package. After you have installed it, load it as follows:</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">slopes</span>)</pre></body></html></div>
-<p>… small example from readme? …</p>
-</div>
-<div id="thoughts" class="section level1">
-<h1 class="hasAnchor">
-<a href="#thoughts" class="anchor"></a>Thoughts</h1>
-<div id="segments-in-a-route-commulative-slope" class="section level2">
+<!-- ... small example from readme? ... -->
+<!-- # Thoughts -->
+<div id="segments-in-a-route-cumulative-slope" class="section level2">
 <h2 class="hasAnchor">
-<a href="#segments-in-a-route-commulative-slope" class="anchor"></a>Segments in a route: Commulative slope</h2>
-<p>The length of a segment in a route is also a relevant factor to have in consideration. If it is ok to bike through a segment of 8% with <span class="math inline">\(x\)</span> lenght, it is not so ok to bike in four segments in a row like that one (8% for 4<span class="math inline">\(x\)</span> length). image.png . <img src="https://github.com/ITSLeeds/slopes/blob/master/man/figures/SLOPES-commulative-slope-1" style="width:40.0%" alt="Commulative slope"> &gt; not the same</p>
+<a href="#segments-in-a-route-cumulative-slope" class="anchor"></a>Segments in a route: Cumulative slope</h2>
+<p>The length of a segment in a route is also a relevant factor to have in consideration. If it is ok to bike through a segment of 8% with <span class="math inline">\(x\)</span> lenght, it is not so ok to bike in four segments in a row like that one (8% for 4<span class="math inline">\(x\)</span> length), as illustrated in Figure @ref(fig:cumulative-slopes).</p>
+<div class="figure">
+<img src="SLOPES-commulative-slope-1.png" alt="Illustration of the importance of slope length. 4 segments with an 8% gradient is not the same as a single segment with a gradient of 8%." width="40%"><p class="caption">
+Illustration of the importance of slope length. 4 segments with an 8% gradient is not the same as a single segment with a gradient of 8%.
+</p>
+</div>
+<p>This is accounted for in slope calculation methods that take the distance-weighted mean of slopes.</p>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">x</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">9</span>)
+<span class="no">y</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">9</span>)
+<span class="no">z</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">1</span>) / <span class="fl">10</span>
+<span class="no">m</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="no">x</span>, <span class="no">y</span>, <span class="no">z</span>)
+<span class="no">d</span> <span class="kw">=</span> <span class="fu"><a href="../reference/sequential_dist.html">sequential_dist</a></span>(<span class="kw">m</span> <span class="kw">=</span> <span class="no">m</span>, <span class="kw">lonlat</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
+<span class="kw pkg">slopes</span><span class="kw ns">::</span><span class="fu"><a href="../reference/slope_vector.html">slope_distance_weighted</a></span>(<span class="kw">d</span> <span class="kw">=</span> <span class="no">d</span>, <span class="kw">e</span> <span class="kw">=</span> <span class="no">z</span>)
+<span class="co">#&gt; [1] 0.04040715</span>
+<span class="kw pkg">slopes</span><span class="kw ns">::</span><span class="fu"><a href="../reference/slope_vector.html">slope_distance_mean</a></span>(<span class="kw">d</span> <span class="kw">=</span> <span class="no">d</span>, <span class="kw">e</span> <span class="kw">=</span> <span class="no">z</span>)
+<span class="co">#&gt; [1] 0.07406138</span></pre></body></html></div>
+<p>The slope estimate that results from the distance-weighted mean is lower than the simple mean. This is common: steep slopes tend to be short. A graphical representation of the scenario demonstrated above is shown in Figure @ref(fig:weighted), that shows the relatively long and flat final segment reduces the slope by half.</p>
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">x</span>, <span class="no">z</span>, <span class="kw">ylim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="kw">type</span> <span class="kw">=</span> <span class="st">"l"</span>)
+(<span class="no">gxy</span> <span class="kw">=</span> <span class="fu"><a href="../reference/slope_matrix.html">slope_matrix</a></span>(<span class="no">m</span>, <span class="kw">lonlat</span> <span class="kw">=</span> <span class="fl">FALSE</span>))
+<span class="co">#&gt; [1]  0.05000000  0.00000000  0.20000000 -0.10000000 -0.02030692</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span>(<span class="kw">h</span> <span class="kw">=</span> <span class="fl">0</span>, <span class="kw">lty</span> <span class="kw">=</span> <span class="fl">2</span>)
+<span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span>(<span class="no">x</span>[-<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">x</span>)], <span class="no">gxy</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="st">"blue"</span>)
+<span class="fu"><a href="https://rdrr.io/r/graphics/title.html">title</a></span>(<span class="st">"Distance elevation profile"</span>,
+  <span class="kw">sub</span> <span class="kw">=</span> <span class="st">"Points show calculated gradients of subsequent lines"</span>)</pre></body></html></div>
+<div class="figure">
+<img src="slopes_files/figure-html/weighted-1.png" alt="Illustration of example data that demonstrates distance-weighted mean gradient, used by default in the slopes package." width="700"><p class="caption">
+Illustration of example data that demonstrates distance-weighted mean gradient, used by default in the slopes package.
+</p>
+</div>
+</div>
+<div id="measures-of-route-hilliness" class="section level2">
+<h2 class="hasAnchor">
+<a href="#measures-of-route-hilliness" class="anchor"></a>Measures of route hilliness</h2>
+<p>There are many ways to measure hilliness, mean distance weighted hilliness being perhaps the most common. These measures, and their implemenation (or current lack thereof) in the package is summarised below.</p>
+<ul>
+<li><p>Mean distance weighted gradient. Perhaps the simplest and most widely applicable measure is the mean gradient of the route. This should be weighted by the distance of each segment. Implemented by default in the <code><a href="../reference/slope_raster.html">slope_raster()</a></code> function.</p></li>
+<li><p>Max gradient. For activities like cycling, where steep hills have a disproportionate impact, it may be useful to consider the maximum gradient. Not yet implemented.</p></li>
+</ul>
+<!-- Todo: update when we have `method = max` --><ul>
+<li><p>Xth percentile gradient. Since the maximum gradient gives no information about the rest of the route segments, other measures such as the 75th percentile gradient could be more informative. Not yet implemented.</p></li>
+<li><p>Inverted harmonic mean. If we use the following formula we will get an index that (like the arithmetic mean) makes use of the full dataset, but that is weighted towards the higher gradient segments. Whether this index, the formular of which is shown below, is helpful, remains to be tested. Not yet implemented.</p></li>
+</ul>
+<p><span class="math display">\[
+H(x) = 1 - distance.weighted.harmonic.mean(1-x)
+\]</span></p>
 </div>
 </div>
 <div id="references" class="section level1 unnumbered">

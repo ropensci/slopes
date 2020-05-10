@@ -92,15 +92,24 @@
 
     
     
+<div id="introduction" class="section level1">
+<h1 class="hasAnchor">
+<a href="#introduction" class="anchor"></a>Introduction</h1>
 <p>This article aims to provide external verification of the results provided by the package. So far only one verification dataset has been used, but we hope to find others. If you know of verification datasets, please let us know — initially we planned to use a dataset from a paper on river slopes <span class="citation">(Cohen et al. 2018)</span>, but we could find no way of extracting the underlying data to do the calculation.</p>
 <p>For this article we primarily used the following packages, although others are loaded in subsequent code chunks.</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">slopes</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">sf</span>)
 <span class="co">#&gt; Linking to GEOS 3.6.2, GDAL 2.2.3, PROJ 4.9.3</span></pre></body></html></div>
 <p>The results are reproducible (requires downloading input data manually and installing additional packages). To keep package build times low, only the results are presented below.</p>
+</div>
+<div id="comparison-with-results-from-arcmap-3d-analyst" class="section level1">
+<h1 class="hasAnchor">
+<a href="#comparison-with-results-from-arcmap-3d-analyst" class="anchor"></a>Comparison with results from ArcMap 3D Analyst</h1>
+</div>
 <div id="three-dimensional-traces-of-roads-dataset" class="section level1">
 <h1 class="hasAnchor">
 <a href="#three-dimensional-traces-of-roads-dataset" class="anchor"></a>Three-dimensional traces of roads dataset</h1>
+<!-- todo: make the segments -->
 <p>An input dataset, comprising a 3D linestring recorded using a dual frequency GNSS receiver (a <a href="https://gef.nerc.ac.uk/equipment/gnss/1200/1200_overview.php">Leica 1200</a>) with a vertical accuracy of 20 mm <!-- 138 GPS 3D traces of a hilly road from a peer reviewed journal article --> <span class="citation">(Ariza-López et al. 2019)</span> was downloaded from the <!-- [figshare website as a .zip file](https://ndownloader.figshare.com/files/14331197) - raw data --> <a href="https://ndownloader.figshare.com/files/14331185">figshare website as a .zip file</a> and unzipped and inflated in the working directory as follows (not evaluated to reduce package build times):</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span>(<span class="st">"https://ndownloader.figshare.com/files/14331185"</span>, <span class="st">"3DGRT_AXIS_EPSG25830_v2.zip"</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/unzip.html">unzip</a></span>(<span class="st">"3DGRT_AXIS_EPSG25830_v2.zip"</span>)
@@ -165,6 +174,7 @@
   <span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/sf.html">st_sf</a></span>(<span class="no">p_data</span>, <span class="kw">geometry</span> <span class="kw">=</span> <span class="no">lfc</span>)
 }
 <span class="no">r</span> <span class="kw">=</span> <span class="fu">points2line_trajectory</span>(<span class="no">trace_projected</span>)
+<span class="co"># summary(st_length(r)) # mean distance is 1m! Doesn't make sense, need to create segments</span>
 <span class="no">s</span> <span class="kw">=</span> <span class="fu"><a href="../reference/slope_raster.html">slope_raster</a></span>(<span class="no">r</span>, <span class="kw">e</span> <span class="kw">=</span> <span class="no">e</span>)
 <span class="no">slope_summary</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">min</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span>(<span class="no">s</span>), <span class="kw">mean</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">s</span>), <span class="kw">max</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">s</span>), <span class="kw">stdev</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span>(<span class="no">s</span>))
 <span class="no">slope_summary</span> <span class="kw">=</span> <span class="no">slope_summary</span> * <span class="fl">100</span>
