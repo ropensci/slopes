@@ -135,6 +135,14 @@ We can now visualise the elevation profile of the route as follows:
 plot_slope(lisbon_route_3d)
 ```
 
+If you do not have a raster dataset representing elevations, you can automatically download them as follows.
+
+```{r}
+lisbon_route_3d_auto = slope_3d(r = lisbon_route)
+plot_slope(lisbon_route_3d_auto)
+```
+
+
 # Performance
 
 For this benchmark we will download the following small (< 100 kB) `.tif` file:

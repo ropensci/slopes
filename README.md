@@ -147,6 +147,20 @@ plot_slope(lisbon_route_3d)
 
 <img src="man/figures/README-plot_slope-1.png" width="100%" />
 
+If you do not have a raster dataset representing elevations, you can
+automatically download them as follows.
+
+``` r
+lisbon_route_3d_auto = slope_3d(r = lisbon_route)
+#> Loading required namespace: ceramic
+#> Preparing to download: 12 tiles at zoom = 15 from 
+#> https://api.mapbox.com/v4/mapbox.terrain-rgb/
+#> [1] TRUE
+plot_slope(lisbon_route_3d_auto)
+```
+
+<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
+
 # Performance
 
 For this benchmark we will download the following small (\< 100 kB)
@@ -169,21 +183,20 @@ res = bench::mark(check = FALSE,
   slope_terra1 = slope_raster(r, e, terra = TRUE),
   slope_terra2 = slope_raster(r, et, terra = TRUE)
 )
-#> Warning: Some expressions had a GC in every iteration; so filtering is disabled.
 res
 #> # A tibble: 3 x 6
 #>   expression        min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 slope_raster   47.6ms   58.1ms      16.5    32.7MB     25.7
-#> 2 slope_terra1   55.6ms     61ms      16.5    32.7MB     23.9
-#> 3 slope_terra2   44.4ms   53.8ms      11.7    29.4MB     15.6
+#> 1 slope_raster     44ms   49.3ms      20.3    32.7MB     5.06
+#> 2 slope_terra1   37.7ms     42ms      23.1    32.7MB     5.12
+#> 3 slope_terra2   37.2ms   41.9ms      24.2    29.4MB     4.83
 ```
 
 That is approximately
 
 ``` r
 round(res$`itr/sec` * nrow(r))
-#> [1] 4474 4480 3175
+#> [1] 5489 6250 6551
 ```
 
 routes per second using the `raster` and `terra` (the default if
@@ -205,16 +218,15 @@ res = bench::mark(check = FALSE,
   simple1 = slope_raster(r, e, method = "simple", terra = TRUE),
   simple2 = slope_raster(r, et, method = "simple", terra = TRUE)
 )
-#> Warning: Some expressions had a GC in every iteration; so filtering is disabled.
 # ?bench::mark
 res
 #> # A tibble: 4 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 bilinear1    45.8ms   52.9ms      18.9    32.7MB     18.9
-#> 2 bilinear2    45.5ms   47.4ms      19.9    29.4MB     19.9
-#> 3 simple1      39.4ms   46.9ms      21.7    29.3MB     21.7
-#> 4 simple2      38.2ms   51.1ms      20.6    29.4MB     18.8
+#> 1 bilinear1    38.8ms   43.7ms      22.3    32.7MB     8.38
+#> 2 bilinear2    31.9ms   38.4ms      25.0    29.4MB     4.55
+#> 3 simple1      30.6ms   36.1ms      27.2    29.3MB     4.53
+#> 4 simple2      31.8ms   37.7ms      25.7    29.4MB     4.68
 ```
 
 The equivalent benchmark with the `raster` package is as follows:
@@ -226,14 +238,13 @@ res = bench::mark(check = FALSE,
   bilinear = slope_raster(r, e, terra = FALSE),
   simple = slope_raster(r, e, method = "simple", terra = FALSE)
 )
-#> Warning: Some expressions had a GC in every iteration; so filtering is disabled.
 # ?bench::mark
 res
 #> # A tibble: 2 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 bilinear     48.8ms   55.9ms      16.8    32.7MB     20.5
-#> 2 simple       43.9ms   49.5ms      13.3    29.3MB     11.4
+#> 1 bilinear     37.7ms   47.1ms      21.7    32.7MB     8.15
+#> 2 simple       32.8ms   38.4ms      26.8    29.3MB     4.86
 ```
 
 <!-- That is sufficient for our needs but we plan to speed-up the calculation, e.g. using the new `terra` package, as outlined this [thread](https://github.com/rspatial/terra/issues/29#issuecomment-619444555). -->
