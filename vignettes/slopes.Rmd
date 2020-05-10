@@ -17,28 +17,22 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-Slopes are important for many purposes, including flood risk and vehicle routing modes that are sensitive to going up or down steep hills (e.g. bicycles and large trucks)...
+Slopes are important for many purposes, including flood risk, agriculture, geology, and infrastructure constructions. The information about slopes is very relevant for vehicle routing modes that are sensitive to going up or down steep hills (e.g. bicycles, trains, and large trucks).  
+![Traffic sign](https://sinalnorte.com/wp-content/uploads/2018/02/A3b.jpg){ width=10% }  
 
-Slopes can be defined as the "longitudinal gradient" [@cohen_global_2018].
+Altough there are several ways to name "slope", such as "steepness", "hilliness", "inclination", "aspect", "gradient", "declivity", the reffered `slopes` in this package can be defined as the "longitudinal gradient" [@cohen_global_2018].
 
 # Calculating slopes
 
+The most comomn slope calculation method is defined by the vertical difference of the final and start point or line height (z1 and z0) divided by the horizontal lenght that apparts them.
+
 $$
-r = e/d
+s = \Delta z/l
 $$
 
-# Implementation in the slopes package
+Depending on the purpouse of application, it might me relevant to understand how hilliness is estimated.  
 
-To help research slopes using open source software for reproducibility, we have developed the slopes package.
-After you have installed it, load it as follows:
-
-```{r setup}
-library(slopes)
-```
-
-... small example from readme? ...
-
-# Assessing route hilliness
+## Assessing route hilliness
 
 The hilliness of a route is an important factor which can affect its suitability for activities such as cycling.
 
@@ -66,6 +60,27 @@ plot_slope(rj_3d)
 plot(cumsum(rj$distances), cumsum(rj$elevation_change))
 ```
 
+
+# Implementation in the slopes package
+
+To help research slopes using open source software for reproducibility, we have developed the slopes package.
+After you have installed it, load it as follows:
+
+```{r setup}
+library(slopes)
+```
+
+... small example from readme? ...
+
+  
+  
+# Thoughts
+## Segments in a route: Commulative slope 
+The length of a segment in a route is also a relevant factor to have in consideration. 
+If it is ok to bike through a segment of 8% with $x$ lenght, it is not so ok to bike in four segments in a row like that one (8% for 4$x$ length). 
+image.png .
+![Commulative slope](https://github.com/ITSLeeds/slopes/blob/master/man/figures/SLOPES-commulative-slope-1){ width=40% } 
+> not the same
 
 # References
 
