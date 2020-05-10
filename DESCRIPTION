@@ -39,5 +39,6 @@ Suggests:
     colorspace,
     knitr,
     rmarkdown,
-    ceramic
+    ceramic,
+    bookdown
 VignetteBuilder: knitr
