@@ -29,13 +29,13 @@ slope_distance = function(d, e) {
 #' @export
 slope_distance_weighted = function(d, e) {
   e_change = diff(e)
-  stats::weighted.mean(e_change / d, d)
+  stats::weighted.mean(abs(e_change) / d, d)
 }
 #' @rdname slope_vector
 #' @export
 slope_distance_mean = function(d, e) {
   e_change = diff(e)
-  mean(e_change / d)
+  mean(abs(e_change) / d)
 }
 
 #' Calculate the gradient of line segments from a 3D matrix of coordinates
