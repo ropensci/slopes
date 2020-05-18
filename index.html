@@ -182,7 +182,7 @@
 <p>A benchmark can reveal how many route gradients can be calculated per second:</p>
 <div class="sourceCode" id="cb14"><pre class="r"><span class="no">e</span> <span class="kw">=</span> <span class="no">dem_lisbon_raster</span>
 <span class="no">r</span> <span class="kw">=</span> <span class="no">lisbon_road_segments</span>
-<span class="no">et</span> <span class="kw">=</span> <span class="kw pkg">terra</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html">rast</a></span>(<span class="st">"dem_lisbon.tif"</span>)
+<span class="no">et</span> <span class="kw">=</span> <span class="kw pkg">terra</span><span class="kw ns">::</span><span class="fu">rast</span>(<span class="st">"dem_lisbon.tif"</span>)
 <span class="no">res</span> <span class="kw">=</span> <span class="kw pkg">bench</span><span class="kw ns">::</span><span class="fu">mark</span>(<span class="kw">check</span> <span class="kw">=</span> <span class="fl">FALSE</span>,
   <span class="kw">slope_raster</span> <span class="kw">=</span> <span class="fu"><a href="reference/slope_raster.html">slope_raster</a></span>(<span class="no">r</span>, <span class="no">e</span>, <span class="kw">terra</span> <span class="kw">=</span> <span class="fl">FALSE</span>),
   <span class="kw">slope_terra1</span> <span class="kw">=</span> <span class="fu"><a href="reference/slope_raster.html">slope_raster</a></span>(<span class="no">r</span>, <span class="no">e</span>, <span class="kw">terra</span> <span class="kw">=</span> <span class="fl">TRUE</span>),

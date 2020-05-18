@@ -179,7 +179,7 @@ if <code>e</code> is of class <code>SpatRast</code></p></td>
     <pre class="examples"><div class='input'><span class='co'># r = lisbon_road_segments[239, ]</span>
 <span class='no'>r</span> <span class='kw'>=</span> <span class='no'>lisbon_road_segments</span>
 <span class='no'>e</span> <span class='kw'>=</span> <span class='no'>dem_lisbon_raster</span>
-(<span class='no'>s</span> <span class='kw'>=</span> <span class='fu'>slope_raster</span>(<span class='no'>r</span>, <span class='no'>e</span>))[<span class='fl'>1</span>:<span class='fl'>5</span>]</div><div class='output co'>#&gt; [1] TRUE</div><div class='output co'>#&gt; [1] 0.003074005 0.010870459 0.004998315 0.014255667 0.005333236</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='no'>r</span>$<span class='no'>Avg_Slope</span>, <span class='no'>s</span>)</div><div class='output co'>#&gt; [1] 0.9770436</div></pre>
+(<span class='no'>s</span> <span class='kw'>=</span> <span class='fu'>slope_raster</span>(<span class='no'>r</span>, <span class='no'>e</span>))[<span class='fl'>1</span>:<span class='fl'>5</span>]</div><div class='output co'>#&gt; [1] FALSE</div><div class='output co'>#&gt; [1] 0.003074005 0.010870459 0.004998315 0.014255667 0.005333236</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='no'>r</span>$<span class='no'>Avg_Slope</span>, <span class='no'>s</span>)</div><div class='output co'>#&gt; [1] 0.9770436</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
