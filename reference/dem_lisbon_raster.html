@@ -132,7 +132,7 @@
     <p>A dataset containing elevation in and around Lisbon with a geographic resolution of 10m.</p>
     </div>
 
-    <pre class="usage"><span class='no'>dem_lisbon_raster</span></pre>
+    <pre class="usage"><span class='kw'>dem_lisbon_raster</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
@@ -143,7 +143,10 @@
     <p><a href='https://github.com/rspatial/terra/issues/29'>https://github.com/rspatial/terra/issues/29</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>dem_lisbon_raster</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: raster</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: sp</span></div><div class='output co'>#&gt; NULL</div><div class='input'><span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span>(<span class='no'>dem_lisbon_raster</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>lisbon_road_segments</span>[<span class='st'>"Avg_Slope"</span>], <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='dem_lisbon_raster-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>dem_lisbon_raster</span>)
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: raster</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: sp</span></div><div class='output co'>#&gt; NULL</div><div class='input'><span class='kw'>raster</span>::<span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span>(<span class='kw'>dem_lisbon_raster</span>)
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/sf/man/plot.html'>plot</a></span>(<span class='kw'>lisbon_road_segments</span>[<span class='st'>"Avg_Slope"</span>], add = <span class='fl'>TRUE</span>)
+</div><div class='img'><img src='dem_lisbon_raster-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -159,7 +162,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

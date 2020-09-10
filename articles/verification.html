@@ -97,9 +97,11 @@
 <a href="#introduction" class="anchor"></a>Introduction</h1>
 <p>This article aims to provide external verification of the results provided by the package. So far only one verification dataset has been used, but we hope to find others. If you know of verification datasets, please let us know — initially we planned to use a dataset from a paper on river slopes <span class="citation">(Cohen et al. 2018)</span>, but we could find no way of extracting the underlying data to do the calculation.</p>
 <p>For this article we primarily used the following packages, although others are loaded in subsequent code chunks.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">slopes</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">sf</span>)
-<span class="co">#&gt; Linking to GEOS 3.7.1, GDAL 2.2.3, PROJ 4.9.3</span></pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/itsleeds/slopes">slopes</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://r-spatial.github.io/sf">sf</a></span>)
+<span class="co">#&gt; Linking to GEOS 3.7.1, GDAL 2.2.3, PROJ 4.9.3</span>
+</pre></div>
 <p>The results are reproducible (requires downloading input data manually and installing additional packages). To keep package build times low, only the results are presented below.</p>
 </div>
 <div id="comparison-with-results-from-arcmap-3d-analyst" class="section level1">
@@ -111,24 +113,28 @@
 <a href="#three-dimensional-traces-of-roads-dataset" class="anchor"></a>Three-dimensional traces of roads dataset</h1>
 <!-- todo: make the segments -->
 <p>An input dataset, comprising a 3D linestring recorded using a dual frequency GNSS receiver (a <a href="https://gef.nerc.ac.uk/equipment/gnss/1200/1200_overview.php">Leica 1200</a>) with a vertical accuracy of 20 mm <!-- 138 GPS 3D traces of a hilly road from a peer reviewed journal article --> <span class="citation">(Ariza-López et al. 2019)</span> was downloaded from the <!-- [figshare website as a .zip file](https://ndownloader.figshare.com/files/14331197) - raw data --> <a href="https://ndownloader.figshare.com/files/14331185">figshare website as a .zip file</a> and unzipped and inflated in the working directory as follows (not evaluated to reduce package build times):</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span>(<span class="st">"https://ndownloader.figshare.com/files/14331185"</span>, <span class="st">"3DGRT_AXIS_EPSG25830_v2.zip"</span>)
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span>(<span class="st">"https://ndownloader.figshare.com/files/14331185"</span>, <span class="st">"3DGRT_AXIS_EPSG25830_v2.zip"</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/unzip.html">unzip</a></span>(<span class="st">"3DGRT_AXIS_EPSG25830_v2.zip"</span>)
-<span class="no">trace</span> <span class="kw">=</span> <span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_read.html">read_sf</a></span>(<span class="st">"3DGRT_AXIS_EPSG25830_v2.shp"</span>)
-<span class="fu"><a href="https://rdrr.io/pkg/sf/man/plot.html">plot</a></span>(<span class="no">trace</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="no">trace</span>)
+<span class="kw">trace</span> <span class="op">=</span> <span class="kw">sf</span>::<span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_read.html">read_sf</a></span>(<span class="st">"3DGRT_AXIS_EPSG25830_v2.shp"</span>)
+<span class="fu"><a href="https://rdrr.io/pkg/sf/man/plot.html">plot</a></span>(<span class="kw">trace</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="kw">trace</span>)
 <span class="co">#&gt; 11304</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">trace</span>$<span class="no">X3DGRT_h</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">trace</span><span class="op">$</span><span class="kw">X3DGRT_h</span>)
 <span class="co">#&gt;  Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
-<span class="co">#&gt;   642.9   690.3   751.4   759.9   834.3   884.9 </span></pre></body></html></div>
+<span class="co">#&gt;   642.9   690.3   751.4   759.9   834.3   884.9 </span>
+</pre></div>
 <p>To verify our estimates of hilliness, we generated slope estimates for each segment and compared them with <a href="https://www.nature.com/articles/s41597-019-0147-x/tables/7">Table 7</a> in <span class="citation">Ariza-López et al. (2019)</span>. The absolute gradient measure published in that paper were:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">res_gps</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.00</span>, <span class="fl">4.58</span>, <span class="fl">1136.36</span>, <span class="fl">6.97</span>)
-<span class="no">res_final</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.00</span>, <span class="fl">4.96</span>, <span class="fl">40.70</span>, <span class="fl">3.41</span>)
-<span class="no">res</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="kw">res_gps</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.00</span>, <span class="fl">4.58</span>, <span class="fl">1136.36</span>, <span class="fl">6.97</span>)
+<span class="kw">res_final</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.00</span>, <span class="fl">4.96</span>, <span class="fl">40.70</span>, <span class="fl">3.41</span>)
+<span class="kw">res</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(
   <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"GPS"</span>, <span class="st">"Dual frequency GNSS receiver"</span>),
-  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="no">res_gps</span>, <span class="no">res_final</span>)
+  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="kw">res_gps</span>, <span class="kw">res_final</span>)
 ))
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">res</span>) <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Source"</span>, <span class="st">"min"</span>, <span class="st">" mean"</span>, <span class="st">" max"</span>, <span class="st">" stdev"</span>)
-<span class="kw pkg">knitr</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="no">res</span>, <span class="kw">row.names</span> <span class="kw">=</span> <span class="fl">FALSE</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="kw">res</span>) <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Source"</span>, <span class="st">"min"</span>, <span class="st">" mean"</span>, <span class="st">" max"</span>, <span class="st">" stdev"</span>)
+<span class="kw">knitr</span>::<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw">res</span>, row.names = <span class="fl">FALSE</span>)
+</pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Source</th>
@@ -154,31 +160,35 @@
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="co"># mapview::mapview(trace) # check extent: it's above 6km in height</span>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="co"># mapview::mapview(trace) # check extent: it's above 6km in height</span>
 <span class="co"># remotes::install_github("hypertidy/ceramic")</span>
-<span class="no">loc</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colMeans</a></span>(<span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_coordinates.html">st_coordinates</a></span>(<span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_transform.html">st_transform</a></span>(<span class="no">trace</span>, <span class="fl">4326</span>)))
-<span class="no">e</span> <span class="kw">=</span> <span class="kw pkg">ceramic</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/ceramic/man/cc_location.html">cc_elevation</a></span>(<span class="kw">loc</span> <span class="kw">=</span> <span class="no">loc</span>[<span class="fl">1</span>:<span class="fl">2</span>], <span class="kw">buffer</span> <span class="kw">=</span> <span class="fl">3000</span>)
-<span class="no">trace_projected</span> <span class="kw">=</span> <span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_transform.html">st_transform</a></span>(<span class="no">trace</span>, <span class="fl">3857</span>)
-<span class="fu"><a href="https://rdrr.io/pkg/sf/man/plot.html">plot</a></span>(<span class="no">e</span>)
-<span class="fu"><a href="https://rdrr.io/pkg/sf/man/plot.html">plot</a></span>(<span class="no">trace_projected</span>$<span class="no">geometry</span>, <span class="kw">add</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<span class="kw">loc</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colMeans</a></span>(<span class="kw">sf</span>::<span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_coordinates.html">st_coordinates</a></span>(<span class="kw">sf</span>::<span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_transform.html">st_transform</a></span>(<span class="kw">trace</span>, <span class="fl">4326</span>)))
+<span class="kw">e</span> <span class="op">=</span> <span class="kw">ceramic</span>::<span class="fu"><a href="https://rdrr.io/pkg/ceramic/man/cc_location.html">cc_elevation</a></span>(loc = <span class="kw">loc</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">2</span>], buffer = <span class="fl">3000</span>)
+<span class="kw">trace_projected</span> <span class="op">=</span> <span class="kw">sf</span>::<span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_transform.html">st_transform</a></span>(<span class="kw">trace</span>, <span class="fl">3857</span>)
+<span class="fu"><a href="https://rdrr.io/pkg/sf/man/plot.html">plot</a></span>(<span class="kw">e</span>)
+<span class="fu"><a href="https://rdrr.io/pkg/sf/man/plot.html">plot</a></span>(<span class="kw">trace_projected</span><span class="op">$</span><span class="kw">geometry</span>, add = <span class="fl">TRUE</span>)
+</pre></div>
 <p><img src="https://user-images.githubusercontent.com/1825120/81125221-75c06780-8f2f-11ea-8cea-ad6322ef99e7.png"><!-- --></p>
 <p>The slopes were estimated as follows:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co"># source: https://www.robinlovelace.net/presentations/munster.html#31</span>
-<span class="no">points2line_trajectory</span> <span class="kw">=</span> <span class="kw">function</span>(<span class="no">p</span>) {
-  <span class="no">c</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_coordinates.html">st_coordinates</a></span>(<span class="no">p</span>)
-  <span class="no">i</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="no">p</span>) - <span class="fl">2</span>)
-  <span class="no">l</span> <span class="kw">=</span> <span class="kw pkg">purrr</span><span class="kw ns">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(<span class="no">i</span>, ~ <span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st.html">st_linestring</a></span>(<span class="no">c</span>[<span class="no">.x</span>:(<span class="no">.x</span> + <span class="fl">1</span>), ]))
-  <span class="no">lfc</span> <span class="kw">=</span> <span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/sfc.html">st_sfc</a></span>(<span class="no">l</span>)
-  <span class="no">a</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">lfc</span>)) + <span class="fl">1</span> <span class="co"># sequence to subset</span>
-  <span class="no">p_data</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html">st_set_geometry</a></span>(<span class="no">p</span>[<span class="no">a</span>, ], <span class="kw">NULL</span>))
-  <span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/sf.html">st_sf</a></span>(<span class="no">p_data</span>, <span class="kw">geometry</span> <span class="kw">=</span> <span class="no">lfc</span>)
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="co"># source: https://www.robinlovelace.net/presentations/munster.html#31</span>
+<span class="kw">points2line_trajectory</span> <span class="op">=</span> <span class="fu">function</span>(<span class="kw">p</span>) {
+  <span class="kw">c</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_coordinates.html">st_coordinates</a></span>(<span class="kw">p</span>)
+  <span class="kw">i</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="kw">p</span>) <span class="op">-</span> <span class="fl">2</span>)
+  <span class="kw">l</span> <span class="op">=</span> <span class="kw">purrr</span>::<span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(<span class="kw">i</span>, <span class="op">~</span> <span class="kw">sf</span>::<span class="fu"><a href="https://rdrr.io/pkg/sf/man/st.html">st_linestring</a></span>(<span class="kw">c</span>[<span class="kw">.x</span><span class="op">:</span>(<span class="kw">.x</span> <span class="op">+</span> <span class="fl">1</span>), ]))
+  <span class="kw">lfc</span> <span class="op">=</span> <span class="kw">sf</span>::<span class="fu"><a href="https://rdrr.io/pkg/sf/man/sfc.html">st_sfc</a></span>(<span class="kw">l</span>)
+  <span class="kw">a</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="kw">lfc</span>)) <span class="op">+</span> <span class="fl">1</span> <span class="co"># sequence to subset</span>
+  <span class="kw">p_data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="kw">sf</span>::<span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html">st_set_geometry</a></span>(<span class="kw">p</span>[<span class="kw">a</span>, ], <span class="kw">NULL</span>))
+  <span class="kw">sf</span>::<span class="fu"><a href="https://rdrr.io/pkg/sf/man/sf.html">st_sf</a></span>(<span class="kw">p_data</span>, geometry = <span class="kw">lfc</span>)
 }
-<span class="no">r</span> <span class="kw">=</span> <span class="fu">points2line_trajectory</span>(<span class="no">trace_projected</span>)
+<span class="kw">r</span> <span class="op">=</span> <span class="fu">points2line_trajectory</span>(<span class="kw">trace_projected</span>)
 <span class="co"># summary(st_length(r)) # mean distance is 1m! Doesn't make sense, need to create segments</span>
-<span class="no">s</span> <span class="kw">=</span> <span class="fu"><a href="../reference/slope_raster.html">slope_raster</a></span>(<span class="no">r</span>, <span class="kw">e</span> <span class="kw">=</span> <span class="no">e</span>)
-<span class="no">slope_summary</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">min</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span>(<span class="no">s</span>), <span class="kw">mean</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">s</span>), <span class="kw">max</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">s</span>), <span class="kw">stdev</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span>(<span class="no">s</span>))
-<span class="no">slope_summary</span> <span class="kw">=</span> <span class="no">slope_summary</span> * <span class="fl">100</span>
-<span class="kw pkg">knitr</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="no">slope_summary</span>, <span class="kw">digits</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
+<span class="kw">s</span> <span class="op">=</span> <span class="fu"><a href="../reference/slope_raster.html">slope_raster</a></span>(<span class="kw">r</span>, e = <span class="kw">e</span>)
+<span class="kw">slope_summary</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(min = <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span>(<span class="kw">s</span>), mean = <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="kw">s</span>), max = <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="kw">s</span>), stdev = <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span>(<span class="kw">s</span>))
+<span class="kw">slope_summary</span> <span class="op">=</span> <span class="kw">slope_summary</span> <span class="op">*</span> <span class="fl">100</span>
+<span class="kw">knitr</span>::<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw">slope_summary</span>, digits = <span class="fl">1</span>)
+</pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">min</th>
@@ -257,7 +267,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

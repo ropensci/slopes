@@ -133,20 +133,20 @@
     </div>
 
     <pre class="usage"><span class='fu'>plot_dz</span>(
-  <span class='no'>d</span>,
-  <span class='no'>z</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>horiz</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>p</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"colorspace"</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-    <span class='kw pkg'>colorspace</span><span class='kw ns'>::</span><span class='no'><a href='http://colorspace.R-Forge.R-project.org//reference/hcl_palettes.html'>diverging_hcl</a></span>, <span class='kw pkg'>grDevices</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/r/grDevices/palettes.html'>terrain.colors</a></span>),
-  <span class='no'>...</span>,
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"top"</span>,
-  <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
-  <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
-  <span class='kw'>bg</span> <span class='kw'>=</span> <span class='kw pkg'>grDevices</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/r/grDevices/rgb.html'>rgb</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0.8</span>),
-  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Slope colors (percentage gradient)"</span>,
-  <span class='kw'>s</span> <span class='kw'>=</span> <span class='fl'>3</span>:<span class='fl'>18</span>,
-  <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>4</span>
+  <span class='kw'>d</span>,
+  <span class='kw'>z</span>,
+  fill = <span class='fl'>TRUE</span>,
+  horiz = <span class='fl'>FALSE</span>,
+  p = <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(test = <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"colorspace"</span>, quietly = <span class='fl'>TRUE</span>),
+    <span class='kw'>colorspace</span>::<span class='kw'><a href='http://colorspace.R-Forge.R-project.org//reference/hcl_palettes.html'>diverging_hcl</a></span>, <span class='kw'>grDevices</span>::<span class='kw'><a href='https://rdrr.io/r/grDevices/palettes.html'>terrain.colors</a></span>),
+  <span class='kw'>...</span>,
+  x = <span class='st'>"top"</span>,
+  col = <span class='st'>"black"</span>,
+  cex = <span class='fl'>0.9</span>,
+  bg = <span class='kw'>grDevices</span>::<span class='fu'><a href='https://rdrr.io/r/grDevices/rgb.html'>rgb</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0.8</span>),
+  title = <span class='st'>"Slope colors (percentage gradient)"</span>,
+  s = <span class='fl'>3</span><span class='op'>:</span><span class='fl'>18</span>,
+  ncol = <span class='fl'>4</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -209,12 +209,13 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>r</span> <span class='kw'>=</span> <span class='no'>lisbon_road_segment_3d</span>
-<span class='no'>m</span> <span class='kw'>=</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_coordinates.html'>st_coordinates</a></span>(<span class='no'>r</span>)
-<span class='no'>d</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/cumsum.html'>cumsum</a></span>(<span class='fu'><a href='sequential_dist.html'>sequential_dist</a></span>(<span class='no'>m</span>, <span class='kw'>lonlat</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>))
-<span class='no'>d</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='no'>d</span>)
-<span class='no'>z</span> <span class='kw'>=</span> <span class='no'>m</span>[, <span class='fl'>3</span>]
-<span class='fu'>plot_dz</span>(<span class='no'>d</span>, <span class='no'>z</span>)</div><div class='img'><img src='plot_dz-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>r</span> <span class='op'>=</span> <span class='kw'>lisbon_road_segment_3d</span>
+<span class='kw'>m</span> <span class='op'>=</span> <span class='kw'>sf</span>::<span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_coordinates.html'>st_coordinates</a></span>(<span class='kw'>r</span>)
+<span class='kw'>d</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/cumsum.html'>cumsum</a></span>(<span class='fu'><a href='sequential_dist.html'>sequential_dist</a></span>(<span class='kw'>m</span>, lonlat = <span class='fl'>FALSE</span>))
+<span class='kw'>d</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='kw'>d</span>)
+<span class='kw'>z</span> <span class='op'>=</span> <span class='kw'>m</span>[, <span class='fl'>3</span>]
+<span class='fu'>plot_dz</span>(<span class='kw'>d</span>, <span class='kw'>z</span>)
+</div><div class='img'><img src='plot_dz-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -230,7 +231,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

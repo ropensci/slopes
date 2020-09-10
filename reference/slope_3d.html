@@ -132,7 +132,7 @@
     <p>Take a linestring and add a third (z) dimension to its coordinates</p>
     </div>
 
-    <pre class="usage"><span class='fu'>slope_3d</span>(<span class='no'>r</span>, <span class='kw'>e</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"bilinear"</span>, <span class='kw'>terra</span> <span class='kw'>=</span> <span class='fu'>has_terra</span>())</pre>
+    <pre class="usage"><span class='fu'>slope_3d</span>(<span class='kw'>r</span>, e = <span class='kw'>NULL</span>, method = <span class='st'>"bilinear"</span>, terra = <span class='fu'>has_terra</span>())</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -160,9 +160,10 @@ if <code>e</code> is of class <code>SpatRast</code></p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>r</span> <span class='kw'>=</span> <span class='no'>lisbon_road_segments</span>[<span class='fl'>204</span>, ]
-<span class='no'>e</span> <span class='kw'>=</span> <span class='no'>dem_lisbon_raster</span>
-(<span class='no'>r3d</span> <span class='kw'>=</span> <span class='fu'>slope_3d</span>(<span class='no'>r</span>, <span class='no'>e</span>))</div><div class='output co'>#&gt; [1] TRUE</div><div class='output co'>#&gt; Simple feature collection with 1 feature and 21 fields
+    <pre class="examples"><div class='input'><span class='kw'>r</span> <span class='op'>=</span> <span class='kw'>lisbon_road_segments</span>[<span class='fl'>204</span>, ]
+<span class='kw'>e</span> <span class='op'>=</span> <span class='kw'>dem_lisbon_raster</span>
+(<span class='kw'>r3d</span> <span class='op'>=</span> <span class='fu'>slope_3d</span>(<span class='kw'>r</span>, <span class='kw'>e</span>))
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='output co'>#&gt; Simple feature collection with 1 feature and 21 fields
 #&gt; Active geometry column: geom
 #&gt; geometry type:  LINESTRING
 #&gt; dimension:      XYZ
@@ -176,13 +177,16 @@ if <code>e</code> is of class <code>SpatRast</code></p></td>
 #&gt; </span><span style='color: #555555;'># … with 14 more variables: Max_Slope </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Avg_Slope </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, z0 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   z1 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, gradverifi </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, query </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, lat </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, lon </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   lat_min </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, lat_max </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, lon_min </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, lon_max </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, bbox </span><span style='color: #555555;font-style: italic;'>&lt;POLYGON</span><span>
-#&gt; </span><span style='color: #555555;'># </span><span style='color: #555555;font-style: italic;'>  [m]&gt;</span><span style='color: #555555;'>, geom </span><span style='color: #555555;font-style: italic;'>&lt;LINESTRING [m]&gt;</span><span></div><div class='input'><span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_z_range.html'>st_z_range</a></span>(<span class='no'>r</span>)</div><div class='output co'>#&gt; NULL</div><div class='input'><span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_z_range.html'>st_z_range</a></span>(<span class='no'>r3d</span>)</div><div class='output co'>#&gt;     zmin     zmax 
-#&gt; 86.49414 92.31126 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_coordinates.html'>st_coordinates</a></span>(<span class='no'>r3d</span>)[, <span class='fl'>3</span>])</div><div class='img'><img src='slope_3d-1.png' alt='' width='700' height='433' /></div><div class='input'># (r3d = slope_3d(r, et))
-# takes bandwidth and time and (currently) fails with:
-#   GDAL Error 1: No PROJ.4 translation for source SRS
-# https://github.com/ITSLeeds/slopes/runs/648128378#step:18:107
-# r3d_get = slope_3d(cyclestreets_route)
-# plot_slope(r3d_get)
+#&gt; </span><span style='color: #555555;'># </span><span style='color: #555555;font-style: italic;'>  [m]&gt;</span><span style='color: #555555;'>, geom </span><span style='color: #555555;font-style: italic;'>&lt;LINESTRING [m]&gt;</span><span></div><div class='input'><span class='kw'>sf</span>::<span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_z_range.html'>st_z_range</a></span>(<span class='kw'>r</span>)
+</div><div class='output co'>#&gt; NULL</div><div class='input'><span class='kw'>sf</span>::<span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_z_range.html'>st_z_range</a></span>(<span class='kw'>r3d</span>)
+</div><div class='output co'>#&gt;     zmin     zmax 
+#&gt; 86.49414 92.31126 </div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/sf/man/plot.html'>plot</a></span>(<span class='kw'>sf</span>::<span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_coordinates.html'>st_coordinates</a></span>(<span class='kw'>r3d</span>)[, <span class='fl'>3</span>])
+</div><div class='img'><img src='slope_3d-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># (r3d = slope_3d(r, et))</span>
+<span class='co'># takes bandwidth and time and (currently) fails with:</span>
+<span class='co'>#   GDAL Error 1: No PROJ.4 translation for source SRS</span>
+<span class='co'># https://github.com/ITSLeeds/slopes/runs/648128378#step:18:107</span>
+<span class='co'># r3d_get = slope_3d(cyclestreets_route)</span>
+<span class='co'># plot_slope(r3d_get)</span>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -199,7 +203,7 @@ if <code>e</code> is of class <code>SpatRast</code></p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>
