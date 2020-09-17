@@ -1,6 +1,8 @@
 pandoc: 2.7.3
-pkgdown: 1.6.0
+pkgdown: 1.6.1
 pkgdown_sha: ~
-articles: []
-last_built: 2020-09-10T04:41Z
+articles:
+  slopes: slopes.html
+  verification: verification.html
+last_built: 2020-09-17T04:39Z
 
