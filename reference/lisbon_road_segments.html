@@ -132,7 +132,7 @@
     <p>A dataset representing road segments in Lisbon, with X, Y and Z (elevation) dimensions for each coordinate.</p>
     </div>
 
-    <pre class="usage"><span class='kw'>lisbon_road_segments</span></pre>
+    <pre class="usage"><span class='va'>lisbon_road_segments</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
@@ -143,12 +143,12 @@
     <p>Produced by ESRI's <a href='https://pro.arcgis.com/en/pro-app/help/analysis/3d-analyst/get-started-with-3d-analyst-in-pro.htm'>3D Analyst extension</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>lisbon_road_segments</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>lisbon_road_segments</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;  [1] "OBJECTID"   "fid_1"      "gradient_s" "Shape_Leng" "Z_Min"     
 #&gt;  [6] "Z_Max"      "Z_Mean"     "SLength"    "Min_Slope"  "Max_Slope" 
 #&gt; [11] "Avg_Slope"  "z0"         "z1"         "gradverifi" "query"     
 #&gt; [16] "lat"        "lon"        "lat_min"    "lat_max"    "lon_min"   
-#&gt; [21] "lon_max"    "bbox"       "geom"      </div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/sf/man/plot.html'>plot</a></span>(<span class='kw'>lisbon_road_segments</span>[<span class='st'>"Avg_Slope"</span>])
+#&gt; [21] "lon_max"    "bbox"       "geom"      </div><div class='input'><span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>lisbon_road_segments</span><span class='op'>[</span><span class='st'>"Avg_Slope"</span><span class='op'>]</span><span class='op'>)</span>
 </div><div class='img'><img src='lisbon_road_segments-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

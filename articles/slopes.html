@@ -113,8 +113,7 @@ s = \Delta z/l
 <p>Using the <code>slopes</code> package we can estimate the gradient of individual road segments. When these segments are combined into routes, we then need a means of assessing the hilliness of the entire route. A range of indices can be used to represent route hilliness. The choice of which index is most appropriate may be context dependent.</p>
 <p>To help research slopes using open source software for reproducibility, we have developed the slopes package. After you have installed it, load it as follows:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/itsleeds/slopes">slopes</a></span>)
-</pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/itsleeds/slopes/">slopes</a></span><span class="op">)</span></pre></div>
 <!-- ... small example from readme? ... -->
 <!-- # Thoughts -->
 <div id="segments-in-a-route-cumulative-slope" class="section level2">
@@ -128,26 +127,24 @@ Illustration of the importance of slope length. 4 segments with an 8% gradient i
 </div>
 <p>This is accounted for in slope calculation methods that take the distance-weighted mean of slopes.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">9</span>)
-<span class="kw">y</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">9</span>)
-<span class="kw">z</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">1</span>) <span class="op">/</span> <span class="fl">10</span>
-<span class="kw">m</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="kw">x</span>, <span class="kw">y</span>, <span class="kw">z</span>)
-<span class="kw">d</span> <span class="op">=</span> <span class="fu"><a href="../reference/sequential_dist.html">sequential_dist</a></span>(m = <span class="kw">m</span>, lonlat = <span class="fl">FALSE</span>)
-<span class="kw">slopes</span>::<span class="fu"><a href="../reference/slope_vector.html">slope_distance_weighted</a></span>(d = <span class="kw">d</span>, e = <span class="kw">z</span>)
+<span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">9</span><span class="op">)</span>
+<span class="va">y</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">9</span><span class="op">)</span>
+<span class="va">z</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">/</span> <span class="fl">10</span>
+<span class="va">m</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">z</span><span class="op">)</span>
+<span class="va">d</span> <span class="op">=</span> <span class="fu"><a href="../reference/sequential_dist.html">sequential_dist</a></span><span class="op">(</span>m <span class="op">=</span> <span class="va">m</span>, lonlat <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="fu">slopes</span><span class="fu">::</span><span class="fu"><a href="../reference/slope_vector.html">slope_distance_weighted</a></span><span class="op">(</span>d <span class="op">=</span> <span class="va">d</span>, e <span class="op">=</span> <span class="va">z</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0.04040715</span>
-<span class="kw">slopes</span>::<span class="fu"><a href="../reference/slope_vector.html">slope_distance_mean</a></span>(d = <span class="kw">d</span>, e = <span class="kw">z</span>)
-<span class="co">#&gt; [1] 0.07406138</span>
-</pre></div>
+<span class="fu">slopes</span><span class="fu">::</span><span class="fu"><a href="../reference/slope_vector.html">slope_distance_mean</a></span><span class="op">(</span>d <span class="op">=</span> <span class="va">d</span>, e <span class="op">=</span> <span class="va">z</span><span class="op">)</span>
+<span class="co">#&gt; [1] 0.07406138</span></pre></div>
 <p>The slope estimate that results from the distance-weighted mean is lower than the simple mean. This is common: steep slopes tend to be short. A graphical representation of the scenario demonstrated above is shown in Figure @ref(fig:weighted), that shows the relatively long and flat final segment reduces the slope by half.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/pkg/sf/man/plot.html">plot</a></span>(<span class="kw">x</span>, <span class="kw">z</span>, ylim = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>), type = <span class="st">"l"</span>)
-(<span class="kw">gxy</span> <span class="op">=</span> <span class="fu"><a href="../reference/slope_matrix.html">slope_matrix</a></span>(<span class="kw">m</span>, lonlat = <span class="fl">FALSE</span>))
+<span class="fu"><a href="https://r-spatial.github.io/sf/reference/plot.html">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">z</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"l"</span><span class="op">)</span>
+<span class="op">(</span><span class="va">gxy</span> <span class="op">=</span> <span class="fu"><a href="../reference/slope_matrix.html">slope_matrix</a></span><span class="op">(</span><span class="va">m</span>, lonlat <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1]  0.05000000  0.00000000  0.20000000 -0.10000000 -0.02030692</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span>(h = <span class="fl">0</span>, lty = <span class="fl">2</span>)
-<span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span>(<span class="kw">x</span>[<span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="kw">x</span>)], <span class="kw">gxy</span>, col = <span class="st">"blue"</span>)
-<span class="fu"><a href="https://rdrr.io/r/graphics/title.html">title</a></span>(<span class="st">"Distance elevation profile"</span>,
-  sub = <span class="st">"Points show calculated gradients of subsequent lines"</span>)
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fl">0</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">]</span>, <span class="va">gxy</span>, col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/title.html">title</a></span><span class="op">(</span><span class="st">"Distance elevation profile"</span>,
+  sub <span class="op">=</span> <span class="st">"Points show calculated gradients of subsequent lines"</span><span class="op">)</span></pre></div>
 <div class="figure">
 <img src="slopes_files/figure-html/weighted-1.png" alt="Illustration of example data that demonstrates distance-weighted mean gradient, used by default in the slopes package." width="700"><p class="caption">
 Illustration of example data that demonstrates distance-weighted mean gradient, used by default in the slopes package.
