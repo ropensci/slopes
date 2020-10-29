@@ -38,7 +38,7 @@ library(slopes)
 
 #import datasets
 network_original = st_read("https://github.com/U-Shift/Declives-RedeViaria/blob/main/shapefiles/RedeViariaLisboa_dadosabertos.gpkg?raw=true")
-network = st_zm(network, drop = T) # make sure it has no Z values stored
+network = st_zm(network_original, drop = T) # make sure it has no Z values stored
 network
 u = "https://github.com/U-Shift/Declives-RedeViaria/blob/main/raster/LisboaNASA_clip.tif?raw=true"
 download.file(u, "LisboaNASA_clip.tif")
@@ -72,4 +72,32 @@ mapview::mapview(network_subset_ls)
 network_subset_ls$slopesNASA = slope_raster(network_subset_ls, e = dem_subset) 
 ```
 
+Testing on the full network:
+
+
+```{r}
+# install latest version
+remotes::install_github("itsleeds/slopes")
+library(sf)
+library(raster)
+library(slopes)
+
+#import datasets
+network_original = st_read("https://github.com/U-Shift/Declives-RedeViaria/blob/main/shapefiles/RedeViariaLisboa_dadosabertos.gpkg?raw=true")
+network = st_zm(network_original, drop = T) # make sure it has no Z values stored
+network
+u = "https://github.com/U-Shift/Declives-RedeViaria/blob/main/raster/LisboaNASA_clip.tif?raw=true"
+download.file(u, "LisboaNASA_clip.tif")
+dem = raster("LisboaNASA_clip.tif")
+dem
+
+# do they overlap?
+raster::plot(dem)
+plot(sf::st_geometry(network), add = TRUE)
+# why this error?
+network$slopeNASA = slope_raster(network, e = dem)
+network_ls = sf::st_cast(network, "LINESTRING")
+network_ls$slopeNASA = slope_raster(network_ls, e = dem)
+plot(network_ls["slopeNASA"], lwd = 5)
+```
 
