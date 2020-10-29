@@ -104,6 +104,7 @@ plot(network_ls["slopeNASA"], lwd = 5)
 # Issues with terra
 
 ```{r}
+remotes::install_github("itsleeds/slopes")
 library(slopes)
 class(lisbon_road_segments)
 raster::plot(dem_lisbon_raster)

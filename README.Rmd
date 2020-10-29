@@ -137,7 +137,7 @@ plot_slope(lisbon_route_3d)
 
 If you do not have a raster dataset representing elevations, you can automatically download them as follows.
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 lisbon_route_3d_auto = slope_3d(r = lisbon_route)
 plot_slope(lisbon_route_3d_auto)
 ```
@@ -154,17 +154,20 @@ if(!file.exists("dem_lisbon.tif")) download.file(u, "dem_lisbon.tif")
 
 A benchmark can reveal how many route gradients can be calculated per second:
 
-```{r}
+```{r, results='hide'}
 e = dem_lisbon_raster
 r = lisbon_road_segments
 et = terra::rast("dem_lisbon.tif")
 res = bench::mark(check = FALSE,
-  slope_raster = slope_raster(r, e, terra = FALSE),
-  slope_terra1 = slope_raster(r, e, terra = TRUE),
-  slope_terra2 = slope_raster(r, et, terra = TRUE)
+  slope_raster = slope_raster(r, e),
+  slope_terra = slope_raster(r, et)
 )
+```
+
+```{r}
 res
 ```
+
 
 That is approximately
 
@@ -178,36 +181,36 @@ The message: use the `terra` package to read-in DEM data for slope extraction if
 
 To go faster, you can chose the `simple` method to gain some speed at the expense of accuracy:
 
-```{r}
+```{r, results='hide'}
 e = dem_lisbon_raster
 r = lisbon_road_segments
 res = bench::mark(check = FALSE,
-  bilinear1 = slope_raster(r, e, terra = TRUE),
-  bilinear2 = slope_raster(r, et, terra = TRUE),
-  simple1 = slope_raster(r, e, method = "simple", terra = TRUE),
-  simple2 = slope_raster(r, et, method = "simple", terra = TRUE)
+  bilinear1 = slope_raster(r, e),
+  bilinear2 = slope_raster(r, et),
+  simple1 = slope_raster(r, e, method = "simple"),
+  simple2 = slope_raster(r, et, method = "simple")
 )
-# ?bench::mark
+```
+
+```{r}
 res
 ```
 
 The equivalent benchmark with the `raster` package is as follows:
 
-```{r}
+```{r, results='hide'}
 e = dem_lisbon_raster
 r = lisbon_road_segments
 res = bench::mark(check = FALSE,
-  bilinear = slope_raster(r, e, terra = FALSE),
-  simple = slope_raster(r, e, method = "simple", terra = FALSE)
+  bilinear = slope_raster(r, e),
+  simple = slope_raster(r, e, method = "simple")
 )
-# ?bench::mark
+```
+
+```{r}
 res
 ```
 
 ```{r, include=FALSE}
 file.remove("dem_lisbon.tif")
 ```
-
-
-<!-- That is sufficient for our needs but we plan to speed-up the calculation, e.g. using the new `terra` package, as outlined this [thread](https://github.com/rspatial/terra/issues/29#issuecomment-619444555). -->
-
