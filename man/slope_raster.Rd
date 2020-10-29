@@ -10,7 +10,7 @@ slope_raster(
   lonlat = sf::st_is_longlat(r),
   method = "bilinear",
   fun = slope_matrix_weighted,
-  terra = has_terra()
+  terra = has_terra() && methods::is(e, "SpatRaster")
 )
 }
 \arguments{

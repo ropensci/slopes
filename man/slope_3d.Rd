@@ -4,7 +4,12 @@
 \alias{slope_3d}
 \title{Take a linestring and add a third (z) dimension to its coordinates}
 \usage{
-slope_3d(r, e = NULL, method = "bilinear", terra = has_terra())
+slope_3d(
+  r,
+  e = NULL,
+  method = "bilinear",
+  terra = has_terra() && methods::is(e, "SpatRaster")
+)
 }
 \arguments{
 \item{r}{Routes, the gradients of which are to be calculated.

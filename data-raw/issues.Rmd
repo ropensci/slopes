@@ -101,3 +101,37 @@ network_ls$slopeNASA = slope_raster(network_ls, e = dem)
 plot(network_ls["slopeNASA"], lwd = 5)
 ```
 
+# Issues with terra
+
+```{r}
+library(slopes)
+class(lisbon_road_segments)
+raster::plot(dem_lisbon_raster)
+plot(sf::st_geometry(lisbon_road_segments), add = TRUE)
+demterra = terra::rast(dem_lisbon_raster)
+plot(sf::st_geometry(lisbon_road_segments), add = TRUE)
+lisbon_road_segments$sloperaster = slope_raster(lisbon_road_segments, e = dem_lisbon_raster)
+library(terra)
+plot(demterra)
+lisbon_road_segments$slopeterra = slope_raster(lisbon_road_segments, e = demterra, terra = T)
+summary(lisbon_road_segments$sloperaster)
+summary(lisbon_road_segments$slopeterra)
+
+# Looking at the code, this seems to be the culprit:
+
+# res = as.numeric(terra::extract(e, m[, 1:2], method = method))
+# vs
+# res = as.numeric(raster::extract(e, m[, 1:2], method = method))
+# lets try it...
+method = "bilinear"
+m = sf::st_coordinates(lisbon_road_segment)[1:2, ]
+e = demterra
+as.numeric(terra::extract(e, m[, 1:2], method = method))
+as.numeric(terra::extract(dem_lisbon_raster, m[, 1:2], method = method))
+res_terra = terra::extract(e, m[, 1:2], method = method)
+class(res_terra)
+res_terra
+as.numeric(res_terra[, "r1"])
+```
+
+

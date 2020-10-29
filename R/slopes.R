@@ -126,7 +126,7 @@ m2g_i = function(i, m_xyz, lonlat, fun = slope_matrix_weighted) {
 #' (s = slope_raster(r, e))[1:5]
 #' cor(r$Avg_Slope, s)
 slope_raster = function(r, e = NULL, lonlat = sf::st_is_longlat(r), method = "bilinear",
-                        fun = slope_matrix_weighted, terra = has_terra()) {
+                        fun = slope_matrix_weighted, terra = has_terra() && methods::is(e, "SpatRaster")) {
   # if(sum(c("geom", "geometry") %in% names(r)) > 0) {
   #   r = r$geom
   # } else if(methods::is(object = r[[attr(r, "sf_column")]], class2 = "sfc")) {
@@ -172,7 +172,7 @@ elevation_extract = function(m,
                              terra = has_terra() && methods::is(e, "SpatRaster")
                              ) {
   if(terra) {
-    res = as.numeric(terra::extract(e, m[, 1:2], method = method))
+    res = terra::extract(e, m[, 1:2], method = method)[, 2]
   } else {
     res = raster::extract(e, m[, 1:2], method = method)
   }
@@ -197,7 +197,7 @@ elevation_extract = function(m,
 #' # https://github.com/ITSLeeds/slopes/runs/648128378#step:18:107
 #' # r3d_get = slope_3d(cyclestreets_route)
 #' # plot_slope(r3d_get)
-slope_3d = function(r, e = NULL, method = "bilinear", terra = has_terra()) {
+slope_3d = function(r, e = NULL, method = "bilinear", terra = has_terra() && methods::is(e, "SpatRaster")) {
   # if("geom" %in% names(r)) {
   #   rgeom = r$geom
   # } else if("geometry" %in% names(r)) {
@@ -240,7 +240,7 @@ slope_3d = function(r, e = NULL, method = "bilinear", terra = has_terra()) {
   }
   r
 }
-# terra = has_terra()
+# terra = has_terra() && methods::is(e, "SpatRaster")
 # terra
 has_terra = function() {
   res = requireNamespace("terra", quietly = TRUE)
