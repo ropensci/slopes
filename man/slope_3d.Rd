@@ -7,7 +7,8 @@
 slope_3d(r, e = NULL, method = "bilinear", terra = has_terra())
 }
 \arguments{
-\item{r}{Routes, the gradients of which are to be calculated}
+\item{r}{Routes, the gradients of which are to be calculated.
+The object must be of class \code{sf} with \code{LINESTRING} geometries.}
 
 \item{e}{A raster object overlapping with \code{r} and values representing elevations}
 

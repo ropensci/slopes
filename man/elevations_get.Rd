@@ -7,7 +7,8 @@
 elevations_get(r, file = NULL, ...)
 }
 \arguments{
-\item{r}{Routes, the gradients of which are to be calculated}
+\item{r}{Routes, the gradients of which are to be calculated.
+The object must be of class \code{sf} with \code{LINESTRING} geometries.}
 
 \item{file}{Where to save the resulting data if specified (not implemented)}
 

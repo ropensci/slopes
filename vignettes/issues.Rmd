@@ -39,6 +39,7 @@ library(slopes)
 #import datasets
 network_original = st_read("https://github.com/U-Shift/Declives-RedeViaria/blob/main/shapefiles/RedeViariaLisboa_dadosabertos.gpkg?raw=true")
 network = st_zm(network, drop = T) # make sure it has no Z values stored
+network
 u = "https://github.com/U-Shift/Declives-RedeViaria/blob/main/raster/LisboaNASA_clip.tif?raw=true"
 download.file(u, "LisboaNASA_clip.tif")
 dem = raster("LisboaNASA_clip.tif")
@@ -47,8 +48,28 @@ dem
 # do they overlap?
 raster::plot(dem)
 plot(sf::st_geometry(network), add = TRUE)
-
 # why this error?
 network$slopeNASA = slope_raster(network, e = dem)
+# In addition: Warning messages:
+# 1: In max(d, na.rm = TRUE) :
+#   no non-missing arguments to max; returning -Inf
+# 2: In max(d, na.rm = TRUE) :
+#   no non-missing arguments to max; returning -Inf
 ```
+
+Does it error on a subset of the network?
+
+```{r}
+network_subset = network[1:9, ]
+network$slopesNASA = slope_raster(network_subset, e = dem) # also fails with the same error
+dem_subset = crop(dem, network)
+network_subset$slopesNASA = slope_raster(network_subset, e = dem_subset) # also fails with the same error
+unique(st_geometry_type(network_subset))
+unique(st_geometry_type(lisbon_road_segment))
+mapview::mapview(network_subset)
+network_subset_ls = sf::st_cast(network_subset, to = "LINESTRING")
+mapview::mapview(network_subset_ls)
+network_subset_ls$slopesNASA = slope_raster(network_subset_ls, e = dem_subset) 
+```
+
 

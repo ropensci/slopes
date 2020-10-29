@@ -100,9 +100,19 @@ m2g_i = function(i, m_xyz, lonlat, fun = slope_matrix_weighted) {
 }
 
 #' Calculate the gradient of line segments from a raster dataset
+#'
+#' This function takes an `sf` representing routes over geographical space
+#' and a raster dataset representing the terrain as inputs.
+#' It returns the average gradient of each route feature.
+#'
+#' **Note:** The `r` object must have a geometry type of `LINESTRING`.
+#' The `sf::st_cast()` function can convert from `MULTILINESTRING` (and other)
+#' geometries to `LINESTRING`s as follows: `r_linestring = sf::st_cast(r, "LINESTRING")`.
+#'
 #' @inheritParams sequential_dist
 #' @inheritParams elevation_extract
-#' @param r Routes, the gradients of which are to be calculated
+#' @param r Routes, the gradients of which are to be calculated.
+#'   The object must be of class `sf` with `LINESTRING` geometries.
 #' @param e A raster object overlapping with `r` and values representing elevations
 #' @param method The method of estimating elevation at points, passed to the `extract`
 #' function for extracting values from raster datasets. Default: `"bilinear"`.
@@ -120,7 +130,8 @@ slope_raster = function(r, e = NULL, lonlat = sf::st_is_longlat(r), method = "bi
   # if(sum(c("geom", "geometry") %in% names(r)) > 0) {
   #   r = r$geom
   # } else if(methods::is(object = r[[attr(r, "sf_column")]], class2 = "sfc")) {
-    r = sf::st_geometry(r)
+  stop_is_not_linestring(r)
+  r = sf::st_geometry(r)
   # }
   n = length(r)
   m = sf::st_coordinates(r)
@@ -236,3 +247,19 @@ has_terra = function() {
   print(res)
   res
 }
+
+is_linestring = function(x) {
+  unique(sf::st_geometry_type(x)) == "LINESTRING"
+}
+stop_is_not_linestring = function(x) {
+  if(isFALSE(is_linestring(x)))
+  stop(
+    "Only works with LINESTRINGs. Try converting with sf::st_cast(object, 'LINESTRING') first"
+  )
+}
+# # test:
+# x = sf::st_cast(lisbon_road_segment, "MULTILINESTRING")
+# is_linestring(lisbon_road_segment)
+# is_linestring(x)
+# stop_is_not_linestring(x)
+# stop_is_not_linestring(lisbon_road_segment)

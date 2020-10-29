@@ -14,7 +14,8 @@ slope_raster(
 )
 }
 \arguments{
-\item{r}{Routes, the gradients of which are to be calculated}
+\item{r}{Routes, the gradients of which are to be calculated.
+The object must be of class \code{sf} with \code{LINESTRING} geometries.}
 
 \item{e}{A raster object overlapping with \code{r} and values representing elevations}
 
@@ -31,7 +32,14 @@ function for extracting values from raster datasets. Default: \code{"bilinear"}.
 if \code{e} is of class \code{SpatRast}}
 }
 \description{
-Calculate the gradient of line segments from a raster dataset
+This function takes an \code{sf} representing routes over geographical space
+and a raster dataset representing the terrain as inputs.
+It returns the average gradient of each route feature.
+}
+\details{
+\strong{Note:} The \code{r} object must have a geometry type of \code{LINESTRING}.
+The \code{sf::st_cast()} function can convert from \code{MULTILINESTRING} (and other)
+geometries to \code{LINESTRING}s as follows: \code{r_linestring = sf::st_cast(r, "LINESTRING")}.
 }
 \examples{
 # r = lisbon_road_segments[239, ]
