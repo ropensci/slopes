@@ -7,6 +7,7 @@
 
 ![R CMD Check via
 {tic}](https://github.com/ITSLeeds/slopes/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg)
+[![R-CMD-check](https://github.com/itsleeds/slopes/workflows/R-CMD-check/badge.svg)](https://github.com/itsleeds/slopes/actions)
 <!-- badges: end -->
 
 The goal of slopes is to enable fast, accurate and user friendly
@@ -17,11 +18,8 @@ geometries and digital elevation model (DEM) datasets.
 ## Installation
 
 <!-- You can install the released version of slopes from [CRAN](https://CRAN.R-project.org) with: -->
-
 <!-- ``` r -->
-
 <!-- install.packages("slopes") -->
-
 <!-- ``` -->
 
 Install the development version from [GitHub](https://github.com/) with:
@@ -47,11 +45,8 @@ library(sf)
 ```
 
 <!-- We will also use the `sf` package for representing road segments: -->
-
 <!-- ```{r} -->
-
 <!-- library(sf) -->
-
 <!-- ``` -->
 
 The minimum data requirements for using the package are elevation
@@ -155,6 +150,16 @@ lisbon_route_3d_auto = slope_3d(r = lisbon_route)
 #> Loading required namespace: ceramic
 #> Preparing to download: 12 tiles at zoom = 15 from 
 #> https://api.mapbox.com/v4/mapbox.terrain-rgb/
+#> Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO", prefer_proj
+#> = prefer_proj): Discarded ellps unknown in CRS definition: +proj=merc +lon_0=0
+#> +k=1 +x_0=0 +y_0=0 +R=6378137 +units=m +no_defs +type=crs
+#> Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO", prefer_proj =
+#> prefer_proj): Discarded datum unknown in CRS definition
+#> Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO", prefer_proj
+#> = prefer_proj): Discarded ellps unknown in CRS definition: +proj=merc +lon_0=0
+#> +k=1 +x_0=0 +y_0=0 +R=6378137 +units=m +no_defs +type=crs
+#> Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO", prefer_proj =
+#> prefer_proj): Discarded datum unknown in CRS definition
 #> [1] TRUE
 plot_slope(lisbon_route_3d_auto)
 ```
@@ -163,7 +168,7 @@ plot_slope(lisbon_route_3d_auto)
 
 # Performance
 
-For this benchmark we will download the following small (\< 100 kB)
+For this benchmark we will download the following small (&lt; 100 kB)
 `.tif` file:
 
 ``` r
@@ -183,20 +188,46 @@ res = bench::mark(check = FALSE,
   slope_terra1 = slope_raster(r, e, terra = TRUE),
   slope_terra2 = slope_raster(r, et, terra = TRUE)
 )
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
+
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
+
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
+
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
+
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
+
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
+
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
+
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
+
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
 res
 #> # A tibble: 3 x 6
 #>   expression        min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 slope_raster     44ms   49.3ms      20.3    32.7MB     5.06
-#> 2 slope_terra1   37.7ms     42ms      23.1    32.7MB     5.12
-#> 3 slope_terra2   37.2ms   41.9ms      24.2    29.4MB     4.83
+#> 1 slope_raster   37.6ms   38.7ms      25.4    32.7MB     4.62
+#> 2 slope_terra1   37.6ms   38.1ms      26.2    32.7MB     7.85
+#> 3 slope_terra2   58.5ms   61.1ms      15.5    29.1MB     5.15
 ```
 
 That is approximately
 
 ``` r
 round(res$`itr/sec` * nrow(r))
-#> [1] 5489 6250 6551
+#> [1] 6888 7088 4191
 ```
 
 routes per second using the `raster` and `terra` (the default if
@@ -218,15 +249,68 @@ res = bench::mark(check = FALSE,
   simple1 = slope_raster(r, e, method = "simple", terra = TRUE),
   simple2 = slope_raster(r, et, method = "simple", terra = TRUE)
 )
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
+
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
+
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
+
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
+
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
+
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
+
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
+
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
+
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
+
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
+
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
+
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
+
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
+
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
+
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
+
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
+
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
+
+#> Warning in cbind(m, z): number of rows of result is not a multiple of vector
+#> length (arg 2)
 # ?bench::mark
 res
 #> # A tibble: 4 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 bilinear1    38.8ms   43.7ms      22.3    32.7MB     8.38
-#> 2 bilinear2    31.9ms   38.4ms      25.0    29.4MB     4.55
-#> 3 simple1      30.6ms   36.1ms      27.2    29.3MB     4.53
-#> 4 simple2      31.8ms   37.7ms      25.7    29.4MB     4.68
+#> 1 bilinear1    37.8ms   39.4ms      25.6    32.7MB     4.65
+#> 2 bilinear2    59.9ms   62.2ms      16.1    29.1MB     5.38
+#> 3 simple1      29.7ms   31.2ms      32.0      29MB     4.92
+#> 4 simple2      57.8ms   59.9ms      16.4    29.1MB     5.48
 ```
 
 The equivalent benchmark with the `raster` package is as follows:
@@ -243,8 +327,8 @@ res
 #> # A tibble: 2 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 bilinear     37.7ms   47.1ms      21.7    32.7MB     8.15
-#> 2 simple       32.8ms   38.4ms      26.8    29.3MB     4.86
+#> 1 bilinear     37.8ms   39.5ms      25.3    32.7MB     7.60
+#> 2 simple       29.9ms   31.4ms      31.7      29MB     4.54
 ```
 
 <!-- That is sufficient for our needs but we plan to speed-up the calculation, e.g. using the new `terra` package, as outlined this [thread](https://github.com/rspatial/terra/issues/29#issuecomment-619444555). -->
