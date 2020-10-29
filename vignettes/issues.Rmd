@@ -1,0 +1,54 @@
+---
+title: "Debugging issues in the slopes package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Debugging issues in the slopes package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(slopes)
+```
+
+The aim of this vignette is to document issues that have been identified and (hopefully, eventually) fixed.
+It does not run by default.
+To run it, change `FALSE` to `TRUE` in the code chunk below.
+
+```{r}
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+
+## Error in weighted mean (#12)
+
+This issue showed that the function `slope_raster()` errors in the final line:
+
+```{r}
+library(sf)
+library(raster)
+library(slopes)
+
+#import datasets
+network_original = st_read("https://github.com/U-Shift/Declives-RedeViaria/blob/main/shapefiles/RedeViariaLisboa_dadosabertos.gpkg?raw=true")
+network = st_zm(network, drop = T) # make sure it has no Z values stored
+u = "https://github.com/U-Shift/Declives-RedeViaria/blob/main/raster/LisboaNASA_clip.tif?raw=true"
+download.file(u, "LisboaNASA_clip.tif")
+dem = raster("LisboaNASA_clip.tif")
+dem
+
+# do they overlap?
+raster::plot(dem)
+plot(sf::st_geometry(network), add = TRUE)
+
+# why this error?
+network$slopeNASA = slope_raster(network, e = dem)
+```
+
