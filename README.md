@@ -5,8 +5,6 @@
 
 <!-- badges: start -->
 
-![R CMD Check via
-{tic}](https://github.com/ITSLeeds/slopes/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg)
 [![R-CMD-check](https://github.com/itsleeds/slopes/workflows/R-CMD-check/badge.svg)](https://github.com/itsleeds/slopes/actions)
 <!-- badges: end -->
 
@@ -218,16 +216,16 @@ res
 #> # A tibble: 3 x 6
 #>   expression        min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 slope_raster   37.6ms   38.7ms      25.4    32.7MB     4.62
-#> 2 slope_terra1   37.6ms   38.1ms      26.2    32.7MB     7.85
-#> 3 slope_terra2   58.5ms   61.1ms      15.5    29.1MB     5.15
+#> 1 slope_raster   38.5ms   39.3ms      25.4    32.7MB     4.62
+#> 2 slope_terra1   38.3ms   39.1ms      25.3    32.7MB     7.58
+#> 3 slope_terra2   59.9ms   61.8ms      15.3    29.1MB     5.09
 ```
 
 That is approximately
 
 ``` r
 round(res$`itr/sec` * nrow(r))
-#> [1] 6888 7088 4191
+#> [1] 6893 6848 4140
 ```
 
 routes per second using the `raster` and `terra` (the default if
@@ -307,10 +305,10 @@ res
 #> # A tibble: 4 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 bilinear1    37.8ms   39.4ms      25.6    32.7MB     4.65
-#> 2 bilinear2    59.9ms   62.2ms      16.1    29.1MB     5.38
-#> 3 simple1      29.7ms   31.2ms      32.0      29MB     4.92
-#> 4 simple2      57.8ms   59.9ms      16.4    29.1MB     5.48
+#> 1 bilinear1    38.4ms   39.4ms      25.3    32.7MB     4.60
+#> 2 bilinear2      62ms   63.7ms      15.7    29.1MB     5.22
+#> 3 simple1      30.3ms   32.3ms      31.2      29MB     5.20
+#> 4 simple2      59.8ms   62.4ms      16.1    29.1MB     5.35
 ```
 
 The equivalent benchmark with the `raster` package is as follows:
@@ -327,8 +325,8 @@ res
 #> # A tibble: 2 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 bilinear     37.8ms   39.5ms      25.3    32.7MB     7.60
-#> 2 simple       29.9ms   31.4ms      31.7      29MB     4.54
+#> 1 bilinear     38.9ms   40.2ms      24.8    32.7MB     4.95
+#> 2 simple       30.3ms   31.7ms      31.5      29MB     7.27
 ```
 
 <!-- That is sufficient for our needs but we plan to speed-up the calculation, e.g. using the new `terra` package, as outlined this [thread](https://github.com/rspatial/terra/issues/29#issuecomment-619444555). -->

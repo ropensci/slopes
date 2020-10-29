@@ -16,7 +16,6 @@ knitr::opts_chunk$set(
 # slopes
 
 <!-- badges: start -->
-![R CMD Check via {tic}](https://github.com/ITSLeeds/slopes/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg)
 [![R-CMD-check](https://github.com/itsleeds/slopes/workflows/R-CMD-check/badge.svg)](https://github.com/itsleeds/slopes/actions)
 <!-- badges: end -->
 
