@@ -40,5 +40,6 @@ Suggests:
     knitr,
     rmarkdown,
     ceramic,
-    bookdown
+    bookdown,
+    covr
 VignetteBuilder: knitr

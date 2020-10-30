@@ -12,3 +12,4 @@
 ^tic\.R$
 ^README\.Rmd$
 ^\.httr-oauth$
+^codecov\.yml$
