@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • slopes</title>
+<title>Calculate summary values for 'Z' elevation attributes — slope_z_value • slopes</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,9 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Calculate summary values for 'Z' elevation attributes — slope_z_value" />
+<meta property="og:description" content="The slope_z*() functions calculate summary values for the Z axis
+in sfc objects with XYZ geometries." />
 
 
 
@@ -58,7 +60,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -120,120 +122,49 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Calculate summary values for 'Z' elevation attributes</h1>
+    <small class="dont-index">Source: <a href='https://github.com/itsleeds/slopes/blob/master/R/z.R'><code>R/z.R</code></a></small>
+    <div class="hidden name"><code>slope_z_value.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>The <code>slope_z*()</code> functions calculate summary values for the Z axis
+in <code>sfc</code> objects with <code>XYZ</code> geometries.</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>slope_z_value</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="cyclestreets_route.html">cyclestreets_route</a></code> </p>
-        </td>
-        <td><p>A journey from CycleStreets.net</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="dem_lisbon_raster.html">dem_lisbon_raster</a></code> </p>
-        </td>
-        <td><p>Elevation in central Lisbon, Portugal</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="elevation_extract.html">elevation_extract()</a></code> </p>
-        </td>
-        <td><p>Extract elevations from coordinates</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="elevations_get.html">elevations_get()</a></code> </p>
-        </td>
-        <td><p>Get elevation data from hosted maptile services</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="lisbon_road_segment.html">lisbon_road_segment</a></code> </p>
-        </td>
-        <td><p>A road segment in Lisbon, Portugal</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="lisbon_road_segments.html">lisbon_road_segments</a></code> </p>
-        </td>
-        <td><p>Road segments in Lisbon</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot_dz.html">plot_dz()</a></code> </p>
-        </td>
-        <td><p>Plot a digital elevation profile based on xyz data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot_slope.html">plot_slope()</a></code> </p>
-        </td>
-        <td><p>Plot slope data for a 3d linestring with base R graphics</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="sequential_dist.html">sequential_dist()</a></code> </p>
-        </td>
-        <td><p>Calculate the sequential distances between sequential coordinate pairs</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slope_3d.html">slope_3d()</a></code> </p>
-        </td>
-        <td><p>Take a linestring and add a third (z) dimension to its coordinates</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slope_matrix.html">slope_matrix()</a></code> <code><a href="slope_matrix.html">slope_matrix_weighted()</a></code> </p>
-        </td>
-        <td><p>Calculate the gradient of line segments from a 3D matrix of coordinates</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slope_raster.html">slope_raster()</a></code> </p>
-        </td>
-        <td><p>Calculate the gradient of line segments from a raster dataset</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slope_vector.html">slope_vector()</a></code> <code><a href="slope_vector.html">slope_distance()</a></code> <code><a href="slope_vector.html">slope_distance_mean()</a></code> <code><a href="slope_vector.html">slope_distance_weighted()</a></code> </p>
-        </td>
-        <td><p>Calculate the gradient of line segments from distance and elevation vectors</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slope_z_value.html">slope_z_value()</a></code> <code><a href="slope_z_value.html">slope_z_start()</a></code> <code><a href="slope_z_value.html">slope_z_end()</a></code> </p>
-        </td>
-        <td><p>Calculate summary values for 'Z' elevation attributes</p></td>
-      </tr>
-    </tbody>
+<span class='fu'>slope_z_start</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+
+<span class='fu'>slope_z_end</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>An <code>sfc</code> object with 'XYZ' coordinates</p></td>
+    </tr>
     </table>
-  </div>
 
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>=</span> <span class='fu'>slopes</span><span class='fu'>::</span><span class='va'><a href='lisbon_road_segment.html'>lisbon_route_3d</a></span>
+<span class='fu'>sf</span><span class='fu'>::</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_geometry.html'>st_geometry</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Geometry set for 1 feature 
+#&gt; geometry type:  LINESTRING
+#&gt; dimension:      XYZ
+#&gt; bbox:           xmin: -88214.27 ymin: -106127.1 xmax: -86881.07 ymax: -105506.3
+#&gt; z_range:        zmin: 6.650858 zmax: 94.99939
+#&gt; projected CRS:  ETRS89 / Portugal TM06</div><div class='output co'>#&gt; <span class='message'>LINESTRING Z (-88202.31 -105757.6 55.91552, -88...</span></div><div class='input'><span class='fu'>slope_z_value</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; [1] 55.91552 55.52176 54.62495 50.82914 50.76749</div><div class='input'><span class='va'>xy</span> <span class='op'>=</span> <span class='fu'>slopes</span><span class='fu'>::</span><span class='va'><a href='lisbon_road_segment.html'>lisbon_route</a></span>
+<span class='co'># slope_z_value(xy) # error message</span>
+<span class='fu'>slope_z_start</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 55.91552</div><div class='input'><span class='fu'>slope_z_end</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 94.28048</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
