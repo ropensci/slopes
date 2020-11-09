@@ -181,7 +181,10 @@ if <code>e</code> is of class <code>SpatRast</code></p></td>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><strong>Note:</strong> The <code>r</code> object must have a geometry type of <code>LINESTRING</code>.
+    <p>If calculating slopes associated with OSM data, the results may be better if the
+network is first split-up, e.g. using the function <code>stplanr::rnet_breakup_vertices()</code> from the
+<a href='https://docs.ropensci.org/stplanr/reference/rnet_breakup_vertices.html'><code>stplanr</code></a> package.
+<strong>Note:</strong> The <code>r</code> object must have a geometry type of <code>LINESTRING</code>.
 The <code><a href='https://r-spatial.github.io/sf/reference/st_cast.html'>sf::st_cast()</a></code> function can convert from <code>MULTILINESTRING</code> (and other)
 geometries to <code>LINESTRING</code>s as follows: <code>r_linestring = sf::st_cast(r, "LINESTRING")</code>.</p>
 
