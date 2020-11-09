@@ -41,5 +41,7 @@ Suggests:
     rmarkdown,
     ceramic,
     bookdown,
-    covr
+    covr,
+    testthat
 VignetteBuilder: knitr
+Config/testthat/edition: 3

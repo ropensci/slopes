@@ -1,5 +1,17 @@
 #' Calculate the gradient of line segments from distance and elevation vectors
 #'
+#' [slope_vector()] calculates the slopes associated with consecutive elements in one dimensional distance
+#' and associated elevations (see examples).
+#'
+#' [slope_distance()] calculates the slopes associated with consecutive distances and elevations.
+#'
+#' [slope_distance_mean()] calculates the mean average slopes associated with consecutive distances and elevations.
+#'
+#' [slope_distance_weighted()] calculates the slopes associated with consecutive distances and elevations,
+#' with the mean value associated with each set of distance/elevation vectors weighted in
+#' proportion to the distance between each elevation measurement, so longer sections
+#' have proportionally more influence on the resulting gradient estimate (see examples).
+#'
 #' @param x Vector of locations
 #' @param d Vector of distances between points
 #' @param e Elevations in same units as x (assumed to be metres)
@@ -27,17 +39,16 @@ slope_distance = function(d, e) {
 }
 #' @rdname slope_vector
 #' @export
-slope_distance_weighted = function(d, e) {
-  e_change = diff(e)
-  stats::weighted.mean(abs(e_change) / d, d)
-}
-#' @rdname slope_vector
-#' @export
 slope_distance_mean = function(d, e) {
   e_change = diff(e)
   mean(abs(e_change) / d)
 }
-
+#' @rdname slope_vector
+#' @export
+slope_distance_weighted = function(d, e) {
+  e_change = diff(e)
+  stats::weighted.mean(abs(e_change) / d, d)
+}
 #' Calculate the gradient of line segments from a 3D matrix of coordinates
 #'
 #' @param m Matrix containing coordinates and elevations
