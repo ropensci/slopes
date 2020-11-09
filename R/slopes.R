@@ -1,5 +1,7 @@
 #' Calculate the gradient of line segments from distance and elevation vectors
 #'
+#' @description
+#'
 #' [slope_vector()] calculates the slopes associated with consecutive elements in one dimensional distance
 #' and associated elevations (see examples).
 #'

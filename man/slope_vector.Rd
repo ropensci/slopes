@@ -25,8 +25,7 @@ slope_distance_weighted(d, e)
 \description{
 \code{\link[=slope_vector]{slope_vector()}} calculates the slopes associated with consecutive elements in one dimensional distance
 and associated elevations (see examples).
-}
-\details{
+
 \code{\link[=slope_distance]{slope_distance()}} calculates the slopes associated with consecutive distances and elevations.
 
 \code{\link[=slope_distance_mean]{slope_distance_mean()}} calculates the mean average slopes associated with consecutive distances and elevations.
