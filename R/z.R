@@ -39,14 +39,32 @@ slope_z_end = function(x) {
   }
   coords[, "Z"][nrow(coords)]
 }
+#' @rdname slope_z_mean #? or value?
+#' @export
 slope_z_mean = function(x) {
-  # ...
+  coords = sf::st_coordinates(x)
+  if(!"Z" %in% colnames(coords)) {
+    stop("Requires object that have XYZ geometries, see ?slope_raster for details")
+  }
+  mean(coords[, "Z"], na.rm = T)
 }
+#' @rdname slope_z_max
+#' @export
 slope_z_max = function(x) {
-  # ...
+  coords = sf::st_coordinates(x)
+  if(!"Z" %in% colnames(coords)) {
+    stop("Requires object that have XYZ geometries, see ?slope_raster for details")
+  }
+  max(coords[, "Z"])
 }
+#' @rdname slope_z_min
+#' @export
 slope_z_min = function(x) {
-  # ...
+  coords = sf::st_coordinates(x)
+  if(!"Z" %in% colnames(coords)) {
+    stop("Requires object that have XYZ geometries, see ?slope_raster for details")
+  }
+  min(coords[, "Z"])
 }
 slope_z_direction = function(x) {
   # ...
