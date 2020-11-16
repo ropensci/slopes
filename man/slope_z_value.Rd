@@ -4,6 +4,9 @@
 \alias{slope_z_value}
 \alias{slope_z_start}
 \alias{slope_z_end}
+\alias{slope_z_mean}
+\alias{slope_z_max}
+\alias{slope_z_min}
 \title{Calculate summary values for 'Z' elevation attributes}
 \usage{
 slope_z_value(x)
@@ -11,6 +14,12 @@ slope_z_value(x)
 slope_z_start(x)
 
 slope_z_end(x)
+
+slope_z_mean(x)
+
+slope_z_max(x)
+
+slope_z_min(x)
 }
 \arguments{
 \item{x}{An \code{sfc} object with 'XYZ' coordinates}

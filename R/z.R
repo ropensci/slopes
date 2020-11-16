@@ -39,7 +39,7 @@ slope_z_end = function(x) {
   }
   coords[, "Z"][nrow(coords)]
 }
-#' @rdname slope_z_mean #? or value?
+#' @rdname slope_z_value
 #' @export
 slope_z_mean = function(x) {
   coords = sf::st_coordinates(x)
@@ -48,7 +48,7 @@ slope_z_mean = function(x) {
   }
   mean(coords[, "Z"], na.rm = T)
 }
-#' @rdname slope_z_max
+#' @rdname slope_z_value
 #' @export
 slope_z_max = function(x) {
   coords = sf::st_coordinates(x)
@@ -57,7 +57,7 @@ slope_z_max = function(x) {
   }
   max(coords[, "Z"])
 }
-#' @rdname slope_z_min
+#' @rdname slope_z_value
 #' @export
 slope_z_min = function(x) {
   coords = sf::st_coordinates(x)
