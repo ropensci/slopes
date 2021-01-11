@@ -265,7 +265,7 @@ slope_3d = function(r, e = NULL, method = "bilinear", terra = has_terra() && met
 # terra
 has_terra = function() {
   res = requireNamespace("terra", quietly = TRUE)
-  print(res)
+  # print(res)
   res
 }
 
