@@ -183,15 +183,15 @@ res
 #> # A tibble: 2 x 6
 #>   expression        min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 slope_raster   47.3ms   49.3ms      20.0    32.7MB     5.01
-#> 2 slope_terra      74ms   78.1ms      11.8    29.1MB     2.37
+#> 1 slope_raster   39.3ms   44.5ms      22.6    32.7MB     9.02
+#> 2 slope_terra    60.5ms   61.6ms      14.4    29.2MB     4.80
 ```
 
 That is approximately
 
 ``` r
 round(res$`itr/sec` * nrow(r))
-#> [1] 5426 3206
+#> [1] 6113 3900
 ```
 
 routes per second using the `raster` and `terra` (the default if
@@ -220,28 +220,8 @@ res
 #> # A tibble: 4 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 bilinear1    47.9ms   52.3ms      19.3    32.7MB     4.81
-#> 2 bilinear2      75ms   84.4ms      12.0      29MB     2.41
-#> 3 simple1        32ms     38ms      26.4      29MB     7.93
-#> 4 simple2      74.9ms   80.8ms      12.4      29MB     2.06
-```
-
-The equivalent benchmark with the `raster` package is as follows:
-
-``` r
-e = dem_lisbon_raster
-r = lisbon_road_segments
-res = bench::mark(check = FALSE,
-  bilinear = slope_raster(r, e),
-  simple = slope_raster(r, e, method = "simple")
-)
-```
-
-``` r
-res
-#> # A tibble: 2 x 6
-#>   expression      min   median `itr/sec` mem_alloc `gc/sec`
-#>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 bilinear     49.8ms   53.2ms      18.8    32.7MB     2.36
-#> 2 simple       38.1ms     41ms      24.3      29MB     4.85
+#> 1 bilinear1    38.5ms   40.6ms      24.2    32.7MB     2.20
+#> 2 bilinear2    61.7ms   63.4ms      15.8    29.2MB     5.25
+#> 3 simple1      31.2ms   32.4ms      30.6      29MB     5.09
+#> 4 simple2      61.9ms   63.3ms      15.8    29.2MB     5.26
 ```

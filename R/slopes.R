@@ -182,13 +182,18 @@ slope_raster = function(r, e = NULL, lonlat = sf::st_is_longlat(r), method = "bi
 #' e = dem_lisbon_raster
 #' elevation_extract(m, e)
 #' elevation_extract(m, e, method = "simple")
+#' # uncomment the following lines to test with terra (experimental)
+#' # u = "https://github.com/ITSLeeds/slopes/releases/download/0.0.0/dem_lisbon.tif"
+#' # if(!file.exists("dem_lisbon.tif")) download.file(u, "dem_lisbon.tif")
+#' # et = terra::rast("dem_lisbon.tif")
+#' # elevation_extract(m, et)
 elevation_extract = function(m,
                              e,
                              method = "bilinear",
                              terra = has_terra() && methods::is(e, "SpatRaster")
                              ) {
   if(terra) {
-    res = terra::extract(e, m[, 1:2], method = method)[, 2]
+    res = terra::extract(e, m[, 1:2], method = method)[[1]]
   } else {
     res = raster::extract(e, m[, 1:2], method = method)
   }

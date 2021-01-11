@@ -197,21 +197,6 @@ res = bench::mark(check = FALSE,
 res
 ```
 
-The equivalent benchmark with the `raster` package is as follows:
-
-```{r, results='hide'}
-e = dem_lisbon_raster
-r = lisbon_road_segments
-res = bench::mark(check = FALSE,
-  bilinear = slope_raster(r, e),
-  simple = slope_raster(r, e, method = "simple")
-)
-```
-
-```{r}
-res
-```
-
 ```{r, include=FALSE}
 file.remove("dem_lisbon.tif")
 ```
