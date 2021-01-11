@@ -3,4 +3,18 @@ test_that("slope_* functions work", {
   e = c(1, 2, 2, 4, 3, 1) / 10
   expect_equal(slope_vector(x, e), c(0.05, 0, 0.2, -0.1, -0.05))
   # expect_equal(slope_distance(x, e), c(0.05, 0, 0.2, -0.1, -0.05))
+
+  m = sf::st_coordinates(lisbon_road_segment)
+  d = sequential_dist(m, lonlat = FALSE)
+
+  # test lengths to nearest mm
+  sequential_right = round(sum(d), 2) ==
+    round(as.numeric(sf::st_length(lisbon_road_segment)), 2)
+  expect_true(sequential_right)
+
+  e = elevation_extract(m, dem_lisbon_raster)
+  expect_identical(round(e[1:3], 2), c(92.31, 91.93, 91.60))
+  s = slope_distance(d, e)
+  expect_identical(round(s[1:3], 3), c(-0.047, -0.041, -0.025))
+
 })
