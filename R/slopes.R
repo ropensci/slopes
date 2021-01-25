@@ -143,31 +143,48 @@ slope_matrices = function(m_xyz_split, fun = slope_matrix_weighted, ...) {
 #' (s = slope_raster(r, e))
 #' cor(r$Avg_Slope, s)
 slope_raster = function(r, e = NULL, lonlat = sf::st_is_longlat(r), method = "bilinear",
-                        fun = slope_matrix_weighted, terra = has_terra() && methods::is(e, "SpatRaster")) {
+                        fun = slope_matrix_weighted
+                        , terra = has_terra() && methods::is(e, "SpatRaster")
+
+                        ) {
   stop_is_not_linestring(r)
   r = sf::st_geometry(r)
   # todo: split out this bit into slope_xyz function
   m = sf::st_coordinates(r)
   # colnames(m)
   z = elevation_extract(m, e, method = method, terra = terra)
-  m_xyz_df = data.frame(x = m[, "X"], y = m[, "Y"], z = z)
-  # browser()
-  res = slope_xyz(m_xyz_df)
+  m_xyz_df = data.frame(x = m[, "X"], y = m[, "Y"], z = z, L1 = m[, "L1"])
+  res = slope_xyz(m_xyz_df, fun = fun)
   res
 }
 
 #' Extract slopes from xyz dataframe or sf objects
 #'
+#' @param r_xyz An sf object with x, y, z dimensions
+#' @inheritParams slope_raster
+#'
 #' @export
-#' r_xyz = slopes::lisbon_route_3d[1:3, ]
-slope_xyz = function(r_xyz) {
-  if(inherits())
-  if("L1" %in% colnames(m)) {
-    m_xyz_split = split(x = m_xyz_df, f = m[, "L1"])
+#' @examples
+#' r_xyz = lisbon_road_segment_3d
+#' slope_xyz(r_xyz)
+slope_xyz = function(r_xyz, fun = slope_matrix_weighted, lonlat = NULL) {
+  # browser()
+  if(inherits(r_xyz, "sf") | inherits(r_xyz, "sfc")) {
+    if(is.null(lonlat)) {
+      lonlat = sf::st_is_longlat(r_xyz)
+    }
+    r_xyz = as.data.frame(sf::st_coordinates(r_xyz))
+  }
+  if(is.null(lonlat)) {
+    lonlat = FALSE
+  }
+  if("L1" %in% colnames(r_xyz)) {
+    m_xyz_split = split(x = r_xyz, f = r_xyz[, "L1"])
     res = slope_matrices(m_xyz_split, lonlat = lonlat, fun = fun)
   } else {
     # todo: add content here
   }
+  res
 }
 
 #' Extract elevations from coordinates
