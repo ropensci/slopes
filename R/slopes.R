@@ -106,12 +106,14 @@ sequential_dist = function(m, lonlat = TRUE) {
   }
 }
 
-# convert matrices to gradients
-m2g_i = function(i, m_xyz, lonlat, fun = slope_matrix_weighted) {
-  sel = m_xyz[, "L1"] == i
-  fun(m_xyz[sel, 1:2], m_xyz[sel, "z"], lonlat = lonlat)
+slope_matrices = function(m_xyz_split, fun = slope_matrix_weighted, ...) {
+  if (requireNamespace("pbapply", quietly = TRUE)) {
+    slope_list = pbapply::pblapply(m_xyz_split, fun, ...)
+  } else {
+    slope_list = lapply(m_xyz_split, fun, ...)
+  }
+  unlist(slope_list)
 }
-
 #' Calculate the gradient of line segments from a raster dataset
 #'
 #' This function takes an `sf` representing routes over geographical space
@@ -136,37 +138,32 @@ m2g_i = function(i, m_xyz, lonlat, fun = slope_matrix_weighted) {
 #'   `slope_matrix_weighted` by default.
 #' @export
 #' @examples
-#' # r = lisbon_road_segments[239, ]
-#' r = lisbon_road_segments
+#' r = lisbon_road_segments[1:3, ]
 #' e = dem_lisbon_raster
-#' (s = slope_raster(r, e))[1:5]
+#' (s = slope_raster(r, e))
 #' cor(r$Avg_Slope, s)
 slope_raster = function(r, e = NULL, lonlat = sf::st_is_longlat(r), method = "bilinear",
                         fun = slope_matrix_weighted, terra = has_terra() && methods::is(e, "SpatRaster")) {
-  # if(sum(c("geom", "geometry") %in% names(r)) > 0) {
-  #   r = r$geom
-  # } else if(methods::is(object = r[[attr(r, "sf_column")]], class2 = "sfc")) {
   stop_is_not_linestring(r)
   r = sf::st_geometry(r)
-  # }
-  n = length(r)
+  # todo: split out this bit into slope_xyz function
   m = sf::st_coordinates(r)
   # colnames(m)
   z = elevation_extract(m, e, method = method, terra = terra)
-  m_xyz = cbind(m, z)
-  cl = colnames(m_xyz)
-  if("L1" %in% cl) {
-    # todo: use split() instead
-    res_list = if (requireNamespace("pbapply", quietly = TRUE)) {
-      pbapply::pblapply(1:n, m2g_i, m_xyz, lonlat, fun)
-    } else {
-      lapply(1:n, m2g_i, m_xyz, lonlat, fun)
-    }
+  m_xyz_df = data.frame(x = m[, "X"], y = m[, "Y"], z = z)
+  # browser()
+  if("L1" %in% colnames(m)) {
+    m_xyz_split = split(x = m_xyz_df, f = m[, "L1"])
+    res = slope_matrices(m_xyz_split, lonlat = lonlat, fun = fun)
   } else {
     # todo: add content here
   }
+  res
+}
 
-  unlist(res_list)
+
+slope_xyz = function(r_xyz) {
+
 }
 
 #' Extract elevations from coordinates
@@ -212,10 +209,7 @@ elevation_extract = function(m,
 #' sf::st_z_range(r)
 #' sf::st_z_range(r3d)
 #' plot(sf::st_coordinates(r3d)[, 3])
-#' # (r3d = slope_3d(r, et))
-#' # takes bandwidth and time and (currently) fails with:
-#' #   GDAL Error 1: No PROJ.4 translation for source SRS
-#' # https://github.com/ITSLeeds/slopes/runs/648128378#step:18:107
+#' plot_slope(r3d)
 #' # r3d_get = slope_3d(cyclestreets_route)
 #' # plot_slope(r3d_get)
 slope_3d = function(r, e = NULL, method = "bilinear", terra = has_terra() && methods::is(e, "SpatRaster")) {

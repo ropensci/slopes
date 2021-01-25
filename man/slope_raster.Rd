@@ -45,9 +45,8 @@ The \code{sf::st_cast()} function can convert from \code{MULTILINESTRING} (and o
 geometries to \code{LINESTRING}s as follows: \code{r_linestring = sf::st_cast(r, "LINESTRING")}.
 }
 \examples{
-# r = lisbon_road_segments[239, ]
-r = lisbon_road_segments
+r = lisbon_road_segments[1:3, ]
 e = dem_lisbon_raster
-(s = slope_raster(r, e))[1:5]
+(s = slope_raster(r, e))
 cor(r$Avg_Slope, s)
 }
