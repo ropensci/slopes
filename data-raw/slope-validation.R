@@ -3,6 +3,7 @@
 library(dplyr)
 library(slopes)
 
+# see https://data-seattlecitygis.opendata.arcgis.com/datasets/seattle-streets
 u = "https://opendata.arcgis.com/datasets/383027d103f042499693da22d72d10e3_0.kml"
 f = basename(u)
 download.file(u, f)
@@ -21,6 +22,10 @@ mapview::mapview(magnolia_sf)
 magnolia_buffer = stplanr::geo_buffer(shp = magnolia_sf, dist = 1000)
 s_magnolia = s[magnolia_buffer, , op = sf::st_within]
 mapview::mapview(s_magnolia["SLOPE_PCT"])
+magnolia_xyz = s_magnolia %>%
+  select(BLOCKNBR, SPEEDLIMIT, SLOPE_PCT)
+
+usethis::use_data(magnolia_xyz)
 
 s_magnolia_xyz = slope_3d(r = s_magnolia)
 s_magnolia_xyz$slopes = slope(s_magnolia_xyz)

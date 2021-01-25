@@ -152,18 +152,22 @@ slope_raster = function(r, e = NULL, lonlat = sf::st_is_longlat(r), method = "bi
   z = elevation_extract(m, e, method = method, terra = terra)
   m_xyz_df = data.frame(x = m[, "X"], y = m[, "Y"], z = z)
   # browser()
+  res = slope_xyz(m_xyz_df)
+  res
+}
+
+#' Extract slopes from xyz dataframe or sf objects
+#'
+#' @export
+#' r_xyz = slopes::lisbon_route_3d[1:3, ]
+slope_xyz = function(r_xyz) {
+  if(inherits())
   if("L1" %in% colnames(m)) {
     m_xyz_split = split(x = m_xyz_df, f = m[, "L1"])
     res = slope_matrices(m_xyz_split, lonlat = lonlat, fun = fun)
   } else {
     # todo: add content here
   }
-  res
-}
-
-
-slope_xyz = function(r_xyz) {
-
 }
 
 #' Extract elevations from coordinates
