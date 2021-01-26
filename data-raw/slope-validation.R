@@ -34,25 +34,26 @@ sf::st_crs(magnolia_xy)
 
 # slope_raster(magnolia_xy) # fails
 magnolia_xyz = slope_3d(r = magnolia_xy)
-magnolia_xyz$slopes = slope_xyz(magnolia_xyz)*100
+magnolia_xyz$slopes = round(slope_xyz(magnolia_xyz)*100)
 summary(magnolia_xyz$SLOPE_PCT)
 summary(magnolia_xyz$slopes)
 plot(magnolia_xyz$SLOPE_PCT, magnolia_xyz$slopes)
-cor.test(magnolia_xyz$SLOPE_PCT, magnolia_xyz$slopes) #0.8907462
+cor.test(magnolia_xyz$SLOPE_PCT, magnolia_xyz$slopes) #0.8888281 -- original vs. ceramic
 
 # test with slope_raster, and SRTM raster file
-# load("data-raw/dem_seattle_raster.rda")
-dem = raster::raster("~/itsleeds/pctLisbon-data/Seattle_clip_SRTM.tif") #not working
+load("data-raw/dem_seattle_raster.rda")
+# dem = raster::raster("~/itsleeds/pctLisbon-data/Seattle_clip_SRTM.tif")
 dem = seattleraster
 
 raster::plot(dem)
 plot(sf::st_geometry(magnolia_xyz), add = TRUE)
 magnolia_xyz$slope_srtm = slope_raster(magnolia_xyz, e = dem, lonlat = TRUE)
-summary(magnolia_xyz$slope_srtm) #??? weird results
+magnolia_xyz$slope_srtm = round(100 * magnolia_xyz$slope_srtm)
+summary(magnolia_xyz$slope_srtm)
 # Min.  1st Qu.   Median     Mean  3rd Qu.     Max.
-# 27.93  2159.20  4186.92  4810.97  6843.23 18889.29
+# 0.000   2.000   4.000   5.522   8.000  19.000
 mapview::mapview(magnolia_xyz["slope_srtm"])
 
-cor.test(magnolia_xyz$SLOPE_PCT, magnolia_xyz$slope_srtm) #0.7410727
-cor.test(magnolia_xyz$slopes, magnolia_xyz$slope_srtm) #0.7647319
+cor.test(magnolia_xyz$SLOPE_PCT, magnolia_xyz$slope_srtm) #0.8013725 -- original vs. SRTM
+cor.test(magnolia_xyz$slopes, magnolia_xyz$slope_srtm) #0.8284203 -- ceramic vs. SRTM
 
