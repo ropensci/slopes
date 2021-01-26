@@ -43,7 +43,7 @@ dem = seattleraster
 raster::plot(dem)
 plot(sf::st_geometry(s_magnolia_xyz), add = TRUE)
 s_magnolia_xyz$slope_srtm = slope_raster(s_magnolia_xyz, e = dem)
-summary(s_magnolia_xyz$slope_srtm) #??? weired results
+summary(s_magnolia_xyz$slope_srtm) #??? weird results
 # Min.  1st Qu.   Median     Mean  3rd Qu.     Max.
 # 27.93  2159.20  4186.92  4810.97  6843.23 18889.29
 mapview::mapview(s_magnolia_xyz["slope_srtm"])
