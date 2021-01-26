@@ -154,7 +154,7 @@ slope_raster = function(r, e = NULL, lonlat = sf::st_is_longlat(r), method = "bi
   # colnames(m)
   z = elevation_extract(m, e, method = method, terra = terra)
   m_xyz_df = data.frame(x = m[, "X"], y = m[, "Y"], z = z, L1 = m[, "L1"])
-  res = slope_xyz(m_xyz_df, fun = fun)
+  res = slope_xyz(m_xyz_df, fun = fun, lonlat = lonlat)
   res
 }
 

@@ -17,7 +17,10 @@ test_that("slope_* functions work", {
   s = slope_distance(d, e)
   expect_identical(round(s[1:3], 3), c(-0.047, -0.041, -0.025))
 
-  s = slope_distance(d, e)
-  expect_identical(round(s[1:3], 3), c(-0.047, -0.041, -0.025))
+  s = slope_distance_mean(d, e)
+  expect_identical(round(s, 3), 0.093)
+
+  s = slope_distance_weighted(d, e)
+  expect_identical(round(s, 3), 0.095)
 
 })

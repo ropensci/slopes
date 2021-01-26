@@ -57,6 +57,6 @@
 #' @format An object of class `sf`
 #' @source Produced by the website [data-seattlecitygis.opendata.arcgis.com](https://data-seattlecitygis.opendata.arcgis.com/datasets/seattle-streets)
 #' @examples
-#' names(magnolia_xyz)
-#' plot(magnolia_xyz["SLOPE_PCT"])
-"magnolia_xyz"
+#' names(magnolia_xy)
+#' plot(magnolia_xy["SLOPE_PCT"])
+"magnolia_xy"

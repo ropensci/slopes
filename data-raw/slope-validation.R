@@ -1,5 +1,8 @@
 # Aim: get incline data for validation of slopes package
 
+remotes::install_github("itsleeds/slopes")
+# remotes::install_github("itsleeds/slopes", "2c9ef51509ffc64309d5100148cbc21c212f5772")
+
 library(dplyr)
 library(slopes)
 
@@ -23,31 +26,33 @@ mapview::mapview(magnolia_sf)
 magnolia_buffer = stplanr::geo_buffer(shp = magnolia_sf, dist = 1000)
 s_magnolia = s[magnolia_buffer, , op = sf::st_within]
 mapview::mapview(s_magnolia["SLOPE_PCT"])
-magnolia_xyz = s_magnolia %>%
+magnolia_xy = s_magnolia %>%
   select(BLOCKNBR, SPEEDLIMIT, SLOPE_PCT)
 
-usethis::use_data(magnolia_xyz)
+usethis::use_data(magnolia_xy, overwrite = TRUE)
+sf::st_crs(magnolia_xy)
 
-s_magnolia_xyz = slope_3d(r = s_magnolia)
-s_magnolia_xyz$slopes = slope_xyz(s_magnolia_xyz)*100
-summary(s_magnolia_xyz$SLOPE_PCT)
-summary(s_magnolia_xyz$slopes)
-plot(s_magnolia_xyz$SLOPE_PCT, s_magnolia_xyz$slopes)
-cor.test(s_magnolia_xyz$SLOPE_PCT, s_magnolia_xyz$slopes) #0.8907462
+# slope_raster(magnolia_xy) # fails
+magnolia_xyz = slope_3d(r = magnolia_xy)
+magnolia_xyz$slopes = slope_xyz(magnolia_xyz)*100
+summary(magnolia_xyz$SLOPE_PCT)
+summary(magnolia_xyz$slopes)
+plot(magnolia_xyz$SLOPE_PCT, magnolia_xyz$slopes)
+cor.test(magnolia_xyz$SLOPE_PCT, magnolia_xyz$slopes) #0.8907462
 
-#test with slope_raster, and SRTM raster file
-# dem = load("data-raw/dem_seattle_raster.rda")
-# dem = raster::raster(dem) #not working
+# test with slope_raster, and SRTM raster file
+# load("data-raw/dem_seattle_raster.rda")
+dem = raster::raster("~/itsleeds/pctLisbon-data/Seattle_clip_SRTM.tif") #not working
 dem = seattleraster
 
 raster::plot(dem)
-plot(sf::st_geometry(s_magnolia_xyz), add = TRUE)
-s_magnolia_xyz$slope_srtm = slope_raster(s_magnolia_xyz, e = dem)
-summary(s_magnolia_xyz$slope_srtm) #??? weird results
+plot(sf::st_geometry(magnolia_xyz), add = TRUE)
+magnolia_xyz$slope_srtm = slope_raster(magnolia_xyz, e = dem, lonlat = TRUE)
+summary(magnolia_xyz$slope_srtm) #??? weird results
 # Min.  1st Qu.   Median     Mean  3rd Qu.     Max.
 # 27.93  2159.20  4186.92  4810.97  6843.23 18889.29
-mapview::mapview(s_magnolia_xyz["slope_srtm"])
+mapview::mapview(magnolia_xyz["slope_srtm"])
 
-cor.test(s_magnolia_xyz$SLOPE_PCT, s_magnolia_xyz$slope_srtm) #0.7410727
-cor.test(s_magnolia_xyz$slopes, s_magnolia_xyz$slope_srtm) #0.7647319
+cor.test(magnolia_xyz$SLOPE_PCT, magnolia_xyz$slope_srtm) #0.7410727
+cor.test(magnolia_xyz$slopes, magnolia_xyz$slope_srtm) #0.7647319
 
