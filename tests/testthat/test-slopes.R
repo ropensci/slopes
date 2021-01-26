@@ -23,4 +23,12 @@ test_that("slope_* functions work", {
   s = slope_distance_weighted(d, e)
   expect_identical(round(s, 3), 0.095)
 
+  x = c(0, 2, 3, 4, 5, 9)
+  y = c(0, 0, 0, 0, 0, 9)
+  z = c(1, 2, 2, 4, 3, 1) / 10
+  m = cbind(x, y, z)
+  gxy = slope_matrix(m, lonlat = FALSE)
+  # dput(round(gxy, 3))
+  expect_identical(round(gxy, 3), c(0.05, 0., 0.2, -0.1, -0.02))
+
 })
