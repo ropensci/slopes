@@ -48,3 +48,15 @@
 #' class(cyclestreets_route)
 #' # plot(cyclestreets_route)
 "cyclestreets_route"
+
+#' Road segments in Magnolia, Seattle
+#'
+#' A dataset representing road segments in the Magnolia area of Seattle
+#' with X, Y and Z (elevation) dimensions for each coordinate.
+#'
+#' @format An object of class `sf`
+#' @source Produced by the website [data-seattlecitygis.opendata.arcgis.com](https://data-seattlecitygis.opendata.arcgis.com/datasets/seattle-streets)
+#' @examples
+#' names(magnolia_xyz)
+#' plot(magnolia_xyz["SLOPE_PCT"])
+"magnolia_xyz"

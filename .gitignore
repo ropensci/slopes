@@ -4,3 +4,4 @@ docs/
 .Rhistory
 inst/doc
 .httr-oauth
+*.kml
