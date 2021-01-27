@@ -31,4 +31,9 @@ test_that("slope_* functions work", {
   # dput(round(gxy, 3))
   expect_identical(round(gxy, 3), c(0.05, 0., 0.2, -0.1, -0.02))
 
+  gxy = slope_matrix_weighted(m, lonlat = FALSE)
+  expect_identical(round(gxy, 3), 0.04)
+
+  d = sequential_dist(m, lonlat = FALSE)
+  expect_identical(round(d, 3), c(2, 1, 1, 1, 9.849))
 })
