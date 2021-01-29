@@ -36,4 +36,21 @@ test_that("slope_* functions work", {
 
   d = sequential_dist(m, lonlat = FALSE)
   expect_identical(round(d, 3), c(2, 1, 1, 1, 9.849))
+
+  d = sequential_dist(m, lonlat = TRUE)
+  expect_identical(round(d), c(221581, 110790, 110790, 110790, 1093977))
+
+  expect_error(slope_raster(1))
+  r = lisbon_road_segments[1:3, ]
+  e = dem_lisbon_raster
+  s = slope_raster(r, e)
+  expect_true(cor(r$Avg_Slope, s) > 0.9975)
+
+  r_xyz = lisbon_road_segment_3d
+  expect_equal(slope_xyz(r_xyz), 0.0950132312274622, ignore_attr = TRUE)
+
+  r = lisbon_road_segments[204, ]
+  r3d = slope_3d(r, e)
+  expect_equal(sf::st_z_range(r3d$geom), c(86, 92), ignore_attr = TRUE, tolerance = 1)
+
 })
