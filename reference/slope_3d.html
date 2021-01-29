@@ -187,11 +187,8 @@ if <code>e</code> is of class <code>SpatRast</code></p></td>
 </div><div class='output co'>#&gt; NULL</div><div class='input'><span class='fu'>sf</span><span class='fu'>::</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_z_range.html'>st_z_range</a></span><span class='op'>(</span><span class='va'>r3d</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;     zmin     zmax 
 #&gt; 86.49414 92.31126 </div><div class='input'><span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='fu'>sf</span><span class='fu'>::</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_coordinates.html'>st_coordinates</a></span><span class='op'>(</span><span class='va'>r3d</span><span class='op'>)</span><span class='op'>[</span>, <span class='fl'>3</span><span class='op'>]</span><span class='op'>)</span>
-</div><div class='img'><img src='slope_3d-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># (r3d = slope_3d(r, et))</span>
-<span class='co'># takes bandwidth and time and (currently) fails with:</span>
-<span class='co'>#   GDAL Error 1: No PROJ.4 translation for source SRS</span>
-<span class='co'># https://github.com/ITSLeeds/slopes/runs/648128378#step:18:107</span>
-<span class='co'># r3d_get = slope_3d(cyclestreets_route)</span>
+</div><div class='img'><img src='slope_3d-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='plot_slope.html'>plot_slope</a></span><span class='op'>(</span><span class='va'>r3d</span><span class='op'>)</span>
+</div><div class='img'><img src='slope_3d-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># r3d_get = slope_3d(cyclestreets_route)</span>
 <span class='co'># plot_slope(r3d_get)</span>
 </div></span></pre>
   </div>

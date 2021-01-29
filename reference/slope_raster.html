@@ -189,12 +189,12 @@ The <code><a href='https://r-spatial.github.io/sf/reference/st_cast.html'>sf::st
 geometries to <code>LINESTRING</code>s as follows: <code>r_linestring = sf::st_cast(r, "LINESTRING")</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># r = lisbon_road_segments[239, ]</span>
-<span class='va'>r</span> <span class='op'>=</span> <span class='va'>lisbon_road_segments</span>
+    <pre class="examples"><div class='input'><span class='va'>r</span> <span class='op'>=</span> <span class='va'>lisbon_road_segments</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, <span class='op'>]</span>
 <span class='va'>e</span> <span class='op'>=</span> <span class='va'>dem_lisbon_raster</span>
-<span class='op'>(</span><span class='va'>s</span> <span class='op'>=</span> <span class='fu'>slope_raster</span><span class='op'>(</span><span class='va'>r</span>, <span class='va'>e</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
-</div><div class='output co'>#&gt; [1] 0.003074005 0.010870459 0.004998315 0.014255667 0.005333236</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>r</span><span class='op'>$</span><span class='va'>Avg_Slope</span>, <span class='va'>s</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.9770436</div></pre>
+<span class='op'>(</span><span class='va'>s</span> <span class='op'>=</span> <span class='fu'>slope_raster</span><span class='op'>(</span><span class='va'>r</span>, <span class='va'>e</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;           1           2           3 
+#&gt; 0.003074005 0.010870459 0.004998315 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>r</span><span class='op'>$</span><span class='va'>Avg_Slope</span>, <span class='va'>s</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.9975107</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
