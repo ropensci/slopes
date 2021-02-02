@@ -1,5 +1,5 @@
 ---
-title: "An introdution to slopes"
+title: "An introduction to slopes"
 output: bookdown::html_vignette2
 vignette: >
   %\VignetteIndexEntry{An introdution to slopes}
@@ -30,7 +30,7 @@ $$
 s = \Delta z/l
 $$
 
-Depending on the purpouse of application, it might me relevant to understand how hilliness is estimated.  
+Depending on the purpose of application, it might me relevant to understand how hilliness is estimated.  
 
 # Implementation in the slopes package
 
@@ -48,7 +48,7 @@ library(slopes)
 
 ## Segments in a route: Cumulative slope 
 
-The length of a segment in a route is also a relevant factor to have in consideration. 
+The lenght of a segment in a route is also a relevant factor to have in consideration. 
 If it is ok to bike through a segment of 8% with $x$ lenght, it is not so ok to bike in four segments in a row like that one (8% for 4$x$ length), as illustrated in Figure \@ref(fig:cumulative-slopes).
 
 ```{r cumulative-slopes, fig.cap="Illustration of the importance of slope length. 4 segments with an 8% gradient is not the same as a single segment with a gradient of 8%.", out.width="40%", echo=FALSE}
@@ -83,7 +83,7 @@ title("Distance elevation profile",
 ## Measures of route hilliness
 
 There are many ways to measure hilliness, mean distance weighted hilliness being perhaps the most common.
-These measures, and their implemenation (or current lack thereof) in the package is summarised below.
+These measures, and their implementation (or current lack thereof) in the package is summarised below.
 
 - Mean distance weighted gradient. Perhaps the simplest and most widely applicable measure is the mean gradient of the route. This should be weighted by the distance of each segment. Implemented by default in the `slope_raster()` function.
 
@@ -93,7 +93,7 @@ These measures, and their implemenation (or current lack thereof) in the package
 
 - Xth percentile gradient. Since the maximum gradient gives no information about the rest of the route segments, other measures such as the 75th percentile gradient could be more informative. Not yet implemented.
 
-- Inverted harmonic mean. If we use the following formula we will get an index that (like the arithmetic mean) makes use of the full dataset, but that is weighted towards the higher gradient segments. Whether this index, the formular of which is shown below, is helpful, remains to be tested. Not yet implemented.
+- Inverted harmonic mean. If we use the following formula we will get an index that (like the arithmetic mean) makes use of the full dataset, but that is weighted towards the higher gradient segments. Whether this index, the formula of which is shown below, is helpful, remains to be tested. Not yet implemented.
 
 $$
 H(x) = 1 - distance.weighted.harmonic.mean(1-x)
