@@ -99,7 +99,6 @@ Imagine that we want to go from Santa Catarina to the East of the map to the Cas
 mapview::mapview(lisbon_route)
 ```
 
-
 We can convert the `lisbon_route` object into a 3d linestring object as follows:
 
 ```{r, warning=FALSE, echo=FALSE, eval=FALSE}
