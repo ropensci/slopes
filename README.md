@@ -78,7 +78,6 @@ Calculate the average gradient of each road segment as follows:
 
 ``` r
 lisbon_road_segments$slope = slope_raster(lisbon_road_segments, e = dem_lisbon_raster)
-#> [1] TRUE
 summary(lisbon_road_segments$slope)
 #>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 #> 0.00000 0.01246 0.03534 0.05462 0.08251 0.27583
@@ -131,7 +130,6 @@ follows:
 
 ``` r
 lisbon_route_3d = slope_3d(lisbon_route, dem_lisbon_raster)
-#> [1] TRUE
 ```
 
 We can now visualise the elevation profile of the route as follows:
@@ -149,7 +147,6 @@ automatically download them as follows.
 lisbon_route_3d_auto = slope_3d(r = lisbon_route)
 #> Preparing to download: 12 tiles at zoom = 15 from 
 #> https://api.mapbox.com/v4/mapbox.terrain-rgb/
-#> [1] TRUE
 plot_slope(lisbon_route_3d_auto)
 ```
 
@@ -183,15 +180,15 @@ res
 #> # A tibble: 2 x 6
 #>   expression        min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 slope_raster   39.3ms   44.5ms      22.6    32.7MB     9.02
-#> 2 slope_terra    60.5ms   61.6ms      14.4    29.2MB     4.80
+#> 1 slope_raster   52.3ms   58.4ms      17.5    5.72MB     5.01
+#> 2 slope_terra    79.8ms   80.6ms      12.4    2.21MB    12.4
 ```
 
 That is approximately
 
 ``` r
 round(res$`itr/sec` * nrow(r))
-#> [1] 6113 3900
+#> [1] 4748 3348
 ```
 
 routes per second using the `raster` and `terra` (the default if
@@ -220,8 +217,8 @@ res
 #> # A tibble: 4 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 bilinear1    38.5ms   40.6ms      24.2    32.7MB     2.20
-#> 2 bilinear2    61.7ms   63.4ms      15.8    29.2MB     5.25
-#> 3 simple1      31.2ms   32.4ms      30.6      29MB     5.09
-#> 4 simple2      61.9ms   63.3ms      15.8    29.2MB     5.26
+#> 1 bilinear1    60.6ms   63.7ms      15.8    5.72MB     5.26
+#> 2 bilinear2    94.2ms   97.5ms      10.3    2.17MB     5.15
+#> 3 simple1        53ms   55.8ms      18.2    2.05MB     5.19
+#> 4 simple2      90.8ms   96.2ms      10.4    2.17MB     6.94
 ```
