@@ -87,10 +87,7 @@ plot_dz = function(d,
       pal = p(n = length(b) - 1)
     }
     g = slope_vector(x = d, e = z)
-    colz = cut(x = g,
-               breaks = b,
-               labels = pal)
-    colz = as.character(colz)
+    colz = make_colz(g, b, pal)
     lapply(seq(d)[-(length(d))], function(i) {
       graphics::polygon(
         x = c(d[i:(i + 1)], d[(i + 1):i]),
@@ -100,20 +97,10 @@ plot_dz = function(d,
       )
     })
     graphics::lines(d, z, col = col, lwd = 2)
-    if(is.null(s)) {
-      s = seq(from = 3, to = length(b) - 2)
-    }
-    graphics::legend(
-      x = x,
-      legend = b[s] * 100,
-      fill = pal[s],
-      ...,
-      bg = bg,
-      title = title,
-      horiz = horiz,
-      ncol = ncol,
-      cex = cex
-    )
+    if(is.null(s)) s = seq(from = 3, to = length(b) - 2)
+    graphics::legend(x = x, legend = b[s] * 100, fill = pal[s],
+                     ..., bg = bg, title = title, horiz = horiz,
+                     ncol = ncol, cex = cex)
   }
 }
 # g = slope_matrix(m)
@@ -136,4 +123,13 @@ make_breaks = function(brks) {
   n = c(-rev(n), (n))
   b = n / 100
   b
+}
+
+make_colz = function(g, b, pal) {
+  colz = cut(
+    x = g,
+    breaks = b,
+    labels = pal
+    )
+  as.character(colz)
 }
