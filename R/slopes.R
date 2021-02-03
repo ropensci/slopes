@@ -126,7 +126,7 @@ slope_matrices = function(m_xyz_split, fun = slope_matrix_weighted, ...) {
 #'
 #' If calculating slopes associated with OSM data, the results may be better if the
 #' network is first split-up, e.g. using the function
-#' [stplanr::rnet_breakup_vertices()] from the
+#' `stplanr::rnet_breakup_vertices()` from the
 #' [`stplanr`](https://docs.ropensci.org/stplanr/reference/) package.
 #' **Note:** The `r` object must have a geometry type of `LINESTRING`.
 #' The `sf::st_cast()` function can convert from `MULTILINESTRING` (and other)
