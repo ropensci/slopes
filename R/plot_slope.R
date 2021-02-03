@@ -28,9 +28,7 @@ plot_slope = function(r,
                       s = 3:18,
                       ncol = 4) {
   dz = distance_z(r, lonlat = lonlat)
-  d = dz$d
-  z = dz$z
-  plot_dz(d, z, fill = fill)
+  plot_dz(dz$d, dz$z, fill = fill)
 }
 #' Plot a digital elevation profile based on xyz data
 #'
@@ -44,6 +42,8 @@ plot_slope = function(r,
 #' @param cex Legend size
 #' @param bg Legend background colour
 #' @param title Title of the legend
+#' @param brks Breaks in colour palette to show.
+#'   `c(1, 3, 6, 10, 20, 40, 100)` by default.
 #' @param s Sequence of numbers to show in legend
 #' @param ncol Number of columns in legend
 #' @param horiz Should the legend be horizontal (`FALSE` by default)
@@ -71,7 +71,8 @@ plot_dz = function(d,
                    cex = 0.9,
                    bg = grDevices::rgb(1, 1, 1, 0.8),
                    title = "Slope colors (percentage gradient)",
-                   s = 3:18,
+                   brks = c(3, 6, 10, 20, 40, 100),
+                   s = NULL,
                    ncol = 4) {
   graphics::plot(d,
                  z,
@@ -79,9 +80,7 @@ plot_dz = function(d,
                  col = "brown",
                  lwd = 2)
   if (fill) {
-    n = c(1, 3, 6, 10, 15, 21, 28, 36, 45, 100)
-    n = c(-rev(n), (n))
-    b = n / 100
+    b = make_breaks(brks)
     if (identical(p, colorspace::diverging_hcl)) {
       pal = p(n = length(b) - 1, palette = "Green-Brown")
     } else {
@@ -101,12 +100,12 @@ plot_dz = function(d,
       )
     })
     graphics::lines(d, z, col = col, lwd = 2)
-    # s = seq(from = 3, to = length(n) - 1, by = 2)
-    # s = c(3, 7, 9, 10, 11, 12, 13, 15, 19) # custom s
-    # s = seq(from = 3, to = length(n) - 2)
+    if(is.null(s)) {
+      s = seq(from = 3, to = length(b) - 2)
+    }
     graphics::legend(
       x = x,
-      legend = n[s],
+      legend = b[s] * 100,
       fill = pal[s],
       ...,
       bg = bg,
@@ -124,11 +123,17 @@ plot_dz = function(d,
 # title("Distance (in x coordinates) elevation profile",
 #       sub = "Points show calculated gradients of subsequent lines")
 
-
 distance_z = function(r, lonlat) {
   m = sf::st_coordinates(r)
   d = cumsum(sequential_dist(m, lonlat = lonlat))
   d = c(0, d)
   z = m[, 3]
   list(d = d, z = z)
+}
+
+make_breaks = function(brks) {
+  n = brks
+  n = c(-rev(n), (n))
+  b = n / 100
+  b
 }

@@ -17,7 +17,8 @@ plot_dz(
   cex = 0.9,
   bg = grDevices::rgb(1, 1, 1, 0.8),
   title = "Slope colors (percentage gradient)",
-  s = 3:18,
+  brks = c(3, 6, 10, 20, 40, 100),
+  s = NULL,
   ncol = 4
 )
 }
@@ -44,6 +45,9 @@ plot_dz(
 \item{bg}{Legend background colour}
 
 \item{title}{Title of the legend}
+
+\item{brks}{Breaks in colour palette to show.
+\code{c(1, 3, 6, 10, 20, 40, 100)} by default.}
 
 \item{s}{Sequence of numbers to show in legend}
 
