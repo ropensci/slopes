@@ -18,4 +18,8 @@ test_that("plotting functions work", {
     c("#6CCFC3", "#6CCFC3", "#6CCFC3", "#00AB9C", "#BAEAE4", "#BAEAE4",
       "#BAEAE4")
     )
+  p = colorspace::diverging_hcl
+  expect_equal(make_pal(p, b[1:4]), c("#004B40", "#F6F6F6", "#533600"))
+  p = rainbow
+  expect_equal(make_pal(p, b[1:4]), c("#FF0000", "#00FF00", "#0000FF"))
 })
