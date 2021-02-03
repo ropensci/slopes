@@ -44,11 +44,6 @@ library(sf)
 #> Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 7.0.0
 ```
 
-<!-- We will also use the `sf` package for representing road segments: -->
-<!-- ```{r} -->
-<!-- library(sf) -->
-<!-- ``` -->
-
 The minimum data requirements for using the package are elevation
 points, either as a vector, a matrix or as a digital elevation model
 (DEM) encoded as a raster dataset. Typically you will also have a
@@ -91,7 +86,7 @@ of slopes in the example data is just over 5%. This result is equivalent
 to that returned by ESRI’s `Slope_3d()` in the [3D Analyst
 extension](https://desktop.arcgis.com/en/arcmap/10.3/tools/3d-analyst-toolbox/slope.htm),
 with a correlation between the ArcMap implementation and our
-implementation of more than 0.95 on our test datast (we find higher
+implementation of more than 0.95 on our test dataset (we find higher
 correlations on larger datasets):
 
 ``` r
@@ -180,15 +175,15 @@ res
 #> # A tibble: 2 x 6
 #>   expression        min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 slope_raster   52.3ms   58.4ms      17.5    5.72MB     5.01
-#> 2 slope_terra    79.8ms   80.6ms      12.4    2.21MB    12.4
+#> 1 slope_raster   49.6ms     54ms      18.7    5.72MB     8.00
+#> 2 slope_terra    75.1ms   75.8ms      11.4    2.21MB     5.72
 ```
 
 That is approximately
 
 ``` r
 round(res$`itr/sec` * nrow(r))
-#> [1] 4748 3348
+#> [1] 5057 3100
 ```
 
 routes per second using the `raster` and `terra` (the default if
@@ -217,8 +212,8 @@ res
 #> # A tibble: 4 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 bilinear1    60.6ms   63.7ms      15.8    5.72MB     5.26
-#> 2 bilinear2    94.2ms   97.5ms      10.3    2.17MB     5.15
-#> 3 simple1        53ms   55.8ms      18.2    2.05MB     5.19
-#> 4 simple2      90.8ms   96.2ms      10.4    2.17MB     6.94
+#> 1 bilinear1    50.6ms   53.6ms      18.7    5.72MB     7.99
+#> 2 bilinear2    73.9ms   74.6ms      13.4    2.17MB     5.37
+#> 3 simple1      42.9ms   44.7ms      22.4    2.05MB     4.98
+#> 4 simple2      74.8ms   78.2ms      12.6    2.17MB     9.48
 ```
