@@ -120,10 +120,6 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span>
 <span class="co">#&gt; Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 7.0.0</span></code></pre></div>
-<!-- We will also use the `sf` package for representing road segments: -->
-<!-- ```{r} -->
-<!-- library(sf) -->
-<!-- ``` -->
 <p>The minimum data requirements for using the package are elevation points, either as a vector, a matrix or as a digital elevation model (DEM) encoded as a raster dataset. Typically you will also have a geographic object representing the roads or similar features. These two types of input data are represented in the code output and plot below.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># A raster dataset included in the package:</span>
@@ -147,7 +143,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lisbon_road_segments</span><span class="op">$</span><span class="va">slope</span><span class="op">)</span>
 <span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
 <span class="co">#&gt; 0.00000 0.01246 0.03534 0.05462 0.08251 0.27583</span></code></pre></div>
-<p>This created a new column, <code>slope</code> that represents the average, distance weighted slope associated with each road segment. The units represent the percentage incline, that is the change in elevation divided by distance. The summary of the result tells us that the average gradient of slopes in the example data is just over 5%. This result is equivalent to that returned by ESRI’s <code>Slope_3d()</code> in the <a href="https://desktop.arcgis.com/en/arcmap/10.3/tools/3d-analyst-toolbox/slope.htm">3D Analyst extension</a>, with a correlation between the ArcMap implementation and our implementation of more than 0.95 on our test datast (we find higher correlations on larger datasets):</p>
+<p>This created a new column, <code>slope</code> that represents the average, distance weighted slope associated with each road segment. The units represent the percentage incline, that is the change in elevation divided by distance. The summary of the result tells us that the average gradient of slopes in the example data is just over 5%. This result is equivalent to that returned by ESRI’s <code>Slope_3d()</code> in the <a href="https://desktop.arcgis.com/en/arcmap/10.3/tools/3d-analyst-toolbox/slope.htm">3D Analyst extension</a>, with a correlation between the ArcMap implementation and our implementation of more than 0.95 on our test dataset (we find higher correlations on larger datasets):</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span>
   <span class="va">lisbon_road_segments</span><span class="op">$</span><span class="va">slope</span>,    <span class="co"># slopes calculates by the slopes package</span>
@@ -202,12 +198,12 @@
 <span class="co">#&gt; # A tibble: 2 x 6</span>
 <span class="co">#&gt;   expression        min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;   &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 slope_raster   52.3ms   58.4ms      17.5    5.72MB     5.01</span>
-<span class="co">#&gt; 2 slope_terra    79.8ms   80.6ms      12.4    2.21MB    12.4</span></code></pre></div>
+<span class="co">#&gt; 1 slope_raster   49.6ms     54ms      18.7    5.72MB     8.00</span>
+<span class="co">#&gt; 2 slope_terra    75.1ms   75.8ms      11.4    2.21MB     5.72</span></code></pre></div>
 <p>That is approximately</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">`itr/sec`</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 4748 3348</span></code></pre></div>
+<span class="co">#&gt; [1] 5057 3100</span></code></pre></div>
 <p>routes per second using the <code>raster</code> and <code>terra</code> (the default if installed, using <code>RasterLayer</code> and native <code>SpatRaster</code> objects) packages to extract elevation estimates from the raster datasets, respectively.</p>
 <p>The message: use the <code>terra</code> package to read-in DEM data for slope extraction if speed is important.</p>
 <p>To go faster, you can chose the <code>simple</code> method to gain some speed at the expense of accuracy:</p>
@@ -225,10 +221,10 @@
 <span class="co">#&gt; # A tibble: 4 x 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 bilinear1    60.6ms   63.7ms      15.8    5.72MB     5.26</span>
-<span class="co">#&gt; 2 bilinear2    94.2ms   97.5ms      10.3    2.17MB     5.15</span>
-<span class="co">#&gt; 3 simple1        53ms   55.8ms      18.2    2.05MB     5.19</span>
-<span class="co">#&gt; 4 simple2      90.8ms   96.2ms      10.4    2.17MB     6.94</span></code></pre></div>
+<span class="co">#&gt; 1 bilinear1    50.6ms   53.6ms      18.7    5.72MB     7.99</span>
+<span class="co">#&gt; 2 bilinear2    73.9ms   74.6ms      13.4    2.17MB     5.37</span>
+<span class="co">#&gt; 3 simple1      42.9ms   44.7ms      22.4    2.05MB     4.98</span>
+<span class="co">#&gt; 4 simple2      74.8ms   78.2ms      12.6    2.17MB     9.48</span></code></pre></div>
 </div>
 
   </div>
