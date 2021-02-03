@@ -145,7 +145,8 @@
   cex <span class='op'>=</span> <span class='fl'>0.9</span>,
   bg <span class='op'>=</span> <span class='fu'>grDevices</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/grDevices/rgb.html'>rgb</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0.8</span><span class='op'>)</span>,
   title <span class='op'>=</span> <span class='st'>"Slope colors (percentage gradient)"</span>,
-  s <span class='op'>=</span> <span class='fl'>3</span><span class='op'>:</span><span class='fl'>18</span>,
+  brks <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>6</span>, <span class='fl'>10</span>, <span class='fl'>20</span>, <span class='fl'>40</span>, <span class='fl'>100</span><span class='op'>)</span>,
+  s <span class='op'>=</span> <span class='cn'>NULL</span>,
   ncol <span class='op'>=</span> <span class='fl'>4</span>
 <span class='op'>)</span></pre>
 
@@ -196,6 +197,11 @@
     <tr>
       <th>title</th>
       <td><p>Title of the legend</p></td>
+    </tr>
+    <tr>
+      <th>brks</th>
+      <td><p>Breaks in colour palette to show.
+<code><a href='https://rdrr.io/r/base/c.html'>c(1, 3, 6, 10, 20, 40, 100)</a></code> by default.</p></td>
     </tr>
     <tr>
       <th>s</th>
