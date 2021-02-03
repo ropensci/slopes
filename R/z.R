@@ -17,7 +17,7 @@
 slope_z_value = function(x) {
   coords = sf::st_coordinates(x)
   if(!"Z" %in% colnames(coords)) {
-    stop("Requires object that have XYZ geometries, see ?slope_raster for details")
+    stop("Requires object that have XYZ geometries, see ?slope_raster.")
   }
   coords[, "Z"]
 }
@@ -26,7 +26,7 @@ slope_z_value = function(x) {
 slope_z_start = function(x) {
   coords = sf::st_coordinates(x)
   if(!"Z" %in% colnames(coords)) {
-    stop("Requires object that have XYZ geometries, see ?slope_raster for details")
+    stop("Requires object that have XYZ geometries, see ?slope_raster.")
   }
   coords[, "Z"][1]
 }
@@ -35,7 +35,7 @@ slope_z_start = function(x) {
 slope_z_end = function(x) {
   coords = sf::st_coordinates(x)
   if(!"Z" %in% colnames(coords)) {
-    stop("Requires object that have XYZ geometries, see ?slope_raster for details")
+    stop("Requires object that have XYZ geometries, see ?slope_raster.")
   }
   coords[, "Z"][nrow(coords)]
 }
@@ -44,16 +44,16 @@ slope_z_end = function(x) {
 slope_z_mean = function(x) {
   coords = sf::st_coordinates(x)
   if(!"Z" %in% colnames(coords)) {
-    stop("Requires object that have XYZ geometries, see ?slope_raster for details")
+    stop("Requires object that have XYZ geometries, see ?slope_raster.")
   }
-  mean(coords[, "Z"], na.rm = T)
+  mean(coords[, "Z"], na.rm = TRUE)
 }
 #' @rdname slope_z_value
 #' @export
 slope_z_max = function(x) {
   coords = sf::st_coordinates(x)
   if(!"Z" %in% colnames(coords)) {
-    stop("Requires object that have XYZ geometries, see ?slope_raster for details")
+    stop("Requires object that have XYZ geometries, see ?slope_raster.")
   }
   max(coords[, "Z"])
 }
@@ -62,7 +62,7 @@ slope_z_max = function(x) {
 slope_z_min = function(x) {
   coords = sf::st_coordinates(x)
   if(!"Z" %in% colnames(coords)) {
-    stop("Requires object that have XYZ geometries, see ?slope_raster for details")
+    stop("Requires object that have XYZ geometries, see ?slope_raster.")
   }
   min(coords[, "Z"])
 }

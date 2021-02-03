@@ -15,10 +15,11 @@ slope_3d(
 \item{r}{Routes, the gradients of which are to be calculated.
 The object must be of class \code{sf} with \code{LINESTRING} geometries.}
 
-\item{e}{A raster object overlapping with \code{r} and values representing elevations}
+\item{e}{Raster overlapping with \code{r} and values representing elevations}
 
-\item{method}{The method of estimating elevation at points, passed to the \code{extract}
-function for extracting values from raster datasets. Default: \code{"bilinear"}.}
+\item{method}{The method of estimating elevation at points,
+passed to the \code{extract} function for extracting values from raster
+datasets. Default: \code{"bilinear"}.}
 
 \item{terra}{Should the \code{terra} package be used?
 \code{TRUE} by default if the package is installed \emph{and}

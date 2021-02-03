@@ -8,13 +8,15 @@
 An object of class \code{sf}
 }
 \source{
-Produced by ESRI's \href{https://pro.arcgis.com/en/pro-app/help/analysis/3d-analyst/get-started-with-3d-analyst-in-pro.htm}{3D Analyst extension}
+Produced by ESRI's
+\href{https://pro.arcgis.com/en/pro-app/help/analysis/}{3D Analyst extension}
 }
 \usage{
 lisbon_road_segments
 }
 \description{
-A dataset representing road segments in Lisbon, with X, Y and Z (elevation) dimensions for each coordinate.
+A dataset representing road segments in Lisbon,
+with X, Y and Z (elevation) dimensions for each coordinate.
 }
 \examples{
 names(lisbon_road_segments)

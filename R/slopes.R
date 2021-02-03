@@ -2,17 +2,21 @@
 #'
 #' @description
 #'
-#' [slope_vector()] calculates the slopes associated with consecutive elements in one dimensional distance
-#' and associated elevations (see examples).
+#' [slope_vector()] calculates the slopes associated with consecutive elements
+#'   in one dimensional distance and associated elevations (see examples).
 #'
-#' [slope_distance()] calculates the slopes associated with consecutive distances and elevations.
+#' [slope_distance()] calculates the slopes associated with consecutive
+#'   distances and elevations.
 #'
-#' [slope_distance_mean()] calculates the mean average slopes associated with consecutive distances and elevations.
+#' [slope_distance_mean()] calculates the mean average slopes associated with
+#'   consecutive distances and elevations.
 #'
-#' [slope_distance_weighted()] calculates the slopes associated with consecutive distances and elevations,
-#' with the mean value associated with each set of distance/elevation vectors weighted in
-#' proportion to the distance between each elevation measurement, so longer sections
-#' have proportionally more influence on the resulting gradient estimate (see examples).
+#' [slope_distance_weighted()] calculates the slopes associated with
+#'   consecutive distances and elevations,
+#'   with the mean value associated with each set of distance/elevation
+#'   vectors weighted in proportion to the distance between each elevation
+#'   measurement, so longer sections have proportionally more influence
+#'   on the resulting gradient estimate (see examples).
 #'
 #' @param x Vector of locations
 #' @param d Vector of distances between points
@@ -121,19 +125,22 @@ slope_matrices = function(m_xyz_split, fun = slope_matrix_weighted, ...) {
 #' It returns the average gradient of each route feature.
 #'
 #' If calculating slopes associated with OSM data, the results may be better if the
-#' network is first split-up, e.g. using the function [stplanr::rnet_breakup_vertices()] from the
-#' [`stplanr`](https://docs.ropensci.org/stplanr/reference/rnet_breakup_vertices.html) package.
+#' network is first split-up, e.g. using the function
+#' [stplanr::rnet_breakup_vertices()] from the
+#' [`stplanr`](https://docs.ropensci.org/stplanr/reference/) package.
 #' **Note:** The `r` object must have a geometry type of `LINESTRING`.
 #' The `sf::st_cast()` function can convert from `MULTILINESTRING` (and other)
-#' geometries to `LINESTRING`s as follows: `r_linestring = sf::st_cast(r, "LINESTRING")`.
+#' geometries to `LINESTRING`s as follows:
+#' `r_linestring = sf::st_cast(r, "LINESTRING")`.
 #'
 #' @inheritParams sequential_dist
 #' @inheritParams elevation_extract
 #' @param r Routes, the gradients of which are to be calculated.
 #'   The object must be of class `sf` with `LINESTRING` geometries.
-#' @param e A raster object overlapping with `r` and values representing elevations
-#' @param method The method of estimating elevation at points, passed to the `extract`
-#' function for extracting values from raster datasets. Default: `"bilinear"`.
+#' @param e Raster overlapping with `r` and values representing elevations
+#' @param method The method of estimating elevation at points,
+#'   passed to the `extract` function for extracting values from raster
+#'   datasets. Default: `"bilinear"`.
 #' @param fun The slope function to calculate per route,
 #'   `slope_matrix_weighted` by default.
 #' @export
@@ -142,11 +149,14 @@ slope_matrices = function(m_xyz_split, fun = slope_matrix_weighted, ...) {
 #' e = dem_lisbon_raster
 #' (s = slope_raster(r, e))
 #' cor(r$Avg_Slope, s)
-slope_raster = function(r, e = NULL, lonlat = sf::st_is_longlat(r), method = "bilinear",
-                        fun = slope_matrix_weighted
-                        , terra = has_terra() && methods::is(e, "SpatRaster")
-
-                        ) {
+slope_raster = function(
+  r,
+  e = NULL,
+  lonlat = sf::st_is_longlat(r),
+  method = "bilinear",
+  fun = slope_matrix_weighted,
+  terra = has_terra() && methods::is(e, "SpatRaster")
+  ) {
   stop_is_not_linestring(r)
   r = sf::st_geometry(r)
   # todo: split out this bit into slope_xyz function
@@ -233,7 +243,12 @@ elevation_extract = function(m,
 #' plot_slope(r3d)
 #' # r3d_get = slope_3d(cyclestreets_route)
 #' # plot_slope(r3d_get)
-slope_3d = function(r, e = NULL, method = "bilinear", terra = has_terra() && methods::is(e, "SpatRaster")) {
+slope_3d = function(
+  r,
+  e = NULL,
+  method = "bilinear",
+  terra = has_terra() && methods::is(e, "SpatRaster")
+  ) {
   # if("geom" %in% names(r)) {
   #   rgeom = r$geom
   # } else if("geometry" %in% names(r)) {
@@ -290,7 +305,7 @@ is_linestring = function(x) {
 stop_is_not_linestring = function(x) {
   if(isFALSE(is_linestring(x)))
   stop(
-    "Only works with LINESTRINGs. Try converting with sf::st_cast(object, 'LINESTRING') first"
+    "Only works with LINESTRINGs. Try converting with sf::st_cast() first."
   )
 }
 # # test:

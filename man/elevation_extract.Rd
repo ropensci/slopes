@@ -14,10 +14,11 @@ elevation_extract(
 \arguments{
 \item{m}{Matrix containing coordinates and elevations}
 
-\item{e}{A raster object overlapping with \code{r} and values representing elevations}
+\item{e}{Raster overlapping with \code{r} and values representing elevations}
 
-\item{method}{The method of estimating elevation at points, passed to the \code{extract}
-function for extracting values from raster datasets. Default: \code{"bilinear"}.}
+\item{method}{The method of estimating elevation at points,
+passed to the \code{extract} function for extracting values from raster
+datasets. Default: \code{"bilinear"}.}
 
 \item{terra}{Should the \code{terra} package be used?
 \code{TRUE} by default if the package is installed \emph{and}

@@ -23,17 +23,21 @@ slope_distance_weighted(d, e)
 \item{d}{Vector of distances between points}
 }
 \description{
-\code{\link[=slope_vector]{slope_vector()}} calculates the slopes associated with consecutive elements in one dimensional distance
-and associated elevations (see examples).
+\code{\link[=slope_vector]{slope_vector()}} calculates the slopes associated with consecutive elements
+in one dimensional distance and associated elevations (see examples).
 
-\code{\link[=slope_distance]{slope_distance()}} calculates the slopes associated with consecutive distances and elevations.
+\code{\link[=slope_distance]{slope_distance()}} calculates the slopes associated with consecutive
+distances and elevations.
 
-\code{\link[=slope_distance_mean]{slope_distance_mean()}} calculates the mean average slopes associated with consecutive distances and elevations.
+\code{\link[=slope_distance_mean]{slope_distance_mean()}} calculates the mean average slopes associated with
+consecutive distances and elevations.
 
-\code{\link[=slope_distance_weighted]{slope_distance_weighted()}} calculates the slopes associated with consecutive distances and elevations,
-with the mean value associated with each set of distance/elevation vectors weighted in
-proportion to the distance between each elevation measurement, so longer sections
-have proportionally more influence on the resulting gradient estimate (see examples).
+\code{\link[=slope_distance_weighted]{slope_distance_weighted()}} calculates the slopes associated with
+consecutive distances and elevations,
+with the mean value associated with each set of distance/elevation
+vectors weighted in proportion to the distance between each elevation
+measurement, so longer sections have proportionally more influence
+on the resulting gradient estimate (see examples).
 }
 \examples{
 x = c(0, 2, 3, 4, 5, 9)

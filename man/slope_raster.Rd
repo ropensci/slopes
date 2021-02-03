@@ -17,12 +17,13 @@ slope_raster(
 \item{r}{Routes, the gradients of which are to be calculated.
 The object must be of class \code{sf} with \code{LINESTRING} geometries.}
 
-\item{e}{A raster object overlapping with \code{r} and values representing elevations}
+\item{e}{Raster overlapping with \code{r} and values representing elevations}
 
 \item{lonlat}{Are the coordinates in lon/lat order? \code{TRUE} by default}
 
-\item{method}{The method of estimating elevation at points, passed to the \code{extract}
-function for extracting values from raster datasets. Default: \code{"bilinear"}.}
+\item{method}{The method of estimating elevation at points,
+passed to the \code{extract} function for extracting values from raster
+datasets. Default: \code{"bilinear"}.}
 
 \item{fun}{The slope function to calculate per route,
 \code{slope_matrix_weighted} by default.}
@@ -38,11 +39,13 @@ It returns the average gradient of each route feature.
 }
 \details{
 If calculating slopes associated with OSM data, the results may be better if the
-network is first split-up, e.g. using the function \code{\link[stplanr:rnet_breakup_vertices]{stplanr::rnet_breakup_vertices()}} from the
-\href{https://docs.ropensci.org/stplanr/reference/rnet_breakup_vertices.html}{\code{stplanr}} package.
+network is first split-up, e.g. using the function
+\code{\link[stplanr:rnet_breakup_vertices]{stplanr::rnet_breakup_vertices()}} from the
+\href{https://docs.ropensci.org/stplanr/reference/}{\code{stplanr}} package.
 \strong{Note:} The \code{r} object must have a geometry type of \code{LINESTRING}.
 The \code{sf::st_cast()} function can convert from \code{MULTILINESTRING} (and other)
-geometries to \code{LINESTRING}s as follows: \code{r_linestring = sf::st_cast(r, "LINESTRING")}.
+geometries to \code{LINESTRING}s as follows:
+\code{r_linestring = sf::st_cast(r, "LINESTRING")}.
 }
 \examples{
 r = lisbon_road_segments[1:3, ]

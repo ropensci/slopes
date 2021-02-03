@@ -47,6 +47,9 @@ sf_mid_ext_lonlat = function(r) {
   bb = sf::st_bbox(r)
   res$midpoint = c(mean(c(bb[1], bb[3])), mean(c(bb[2], bb[4])))
   res$width = geodist::geodist(c(x = bb[1], y = bb[2]), c(x = bb[3], y = bb[2]))
-  res$height = geodist::geodist(c(x = bb[1], y = bb[2]), c(x = bb[1], y = bb[4]))
+  res$height = geodist::geodist(
+    c(x = bb[1], y = bb[2]),
+    c(x = bb[1], y = bb[4])
+    )
   res
 }

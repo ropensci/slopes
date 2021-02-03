@@ -14,7 +14,8 @@ CycleStreets.net
 cyclestreets_route
 }
 \description{
-Road segments representing suggested route to cycle in Leeds, UK.
+Road segments representing suggested route to cycle
+in Leeds, UK.
 }
 \examples{
 # cyclestreets_route = cyclestreets::journey(

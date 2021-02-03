@@ -8,7 +8,8 @@
 An object of class \code{sf}
 }
 \source{
-Produced by the website \href{https://data-seattlecitygis.opendata.arcgis.com/datasets/seattle-streets}{data-seattlecitygis.opendata.arcgis.com}
+Produced by the website
+\href{https://data-seattlecitygis.opendata.arcgis.com/datasets/seattle-streets}{data-seattlecitygis.opendata.arcgis.com}
 }
 \usage{
 magnolia_xy

@@ -5,7 +5,8 @@
 \alias{dem_lisbon_raster}
 \title{Elevation in central Lisbon, Portugal}
 \format{
-A raster dataset containing elevation above sea level in a 1km bounding box in Lisbon, Portugal.
+A raster dataset containing elevation above sea level
+in a 1km bounding box in Lisbon, Portugal.
 }
 \source{
 \url{https://github.com/rspatial/terra/issues/29}
@@ -14,7 +15,8 @@ A raster dataset containing elevation above sea level in a 1km bounding box in L
 dem_lisbon_raster
 }
 \description{
-A dataset containing elevation in and around Lisbon with a geographic resolution of 10m.
+A dataset containing elevation in and around Lisbon
+with a geographic resolution of 10m.
 }
 \examples{
 names(dem_lisbon_raster)
