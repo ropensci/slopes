@@ -74,18 +74,10 @@ plot_dz = function(d,
                    brks = c(3, 6, 10, 20, 40, 100),
                    s = NULL,
                    ncol = 4) {
-  graphics::plot(d,
-                 z,
-                 type = "l",
-                 col = "brown",
-                 lwd = 2)
+  graphics::plot(d, z, type = "l", col = "brown", lwd = 2)
   if (fill) {
     b = make_breaks(brks)
-    if (identical(p, colorspace::diverging_hcl)) {
-      pal = p(n = length(b) - 1, palette = "Green-Brown")
-    } else {
-      pal = p(n = length(b) - 1)
-    }
+    pal = make_pal(p, b)
     g = slope_vector(x = d, e = z)
     colz = make_colz(g, b, pal)
     lapply(seq(d)[-(length(d))], function(i) {
@@ -132,4 +124,13 @@ make_colz = function(g, b, pal) {
     labels = pal
     )
   as.character(colz)
+}
+
+make_pal = function(p, b) {
+  if (identical(p, colorspace::diverging_hcl)) {
+    pal = p(n = length(b) - 1, palette = "Green-Brown")
+  } else {
+    pal = p(n = length(b) - 1)
+  }
+  pal
 }
