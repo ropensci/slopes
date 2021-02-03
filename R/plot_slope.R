@@ -27,10 +27,9 @@ plot_slope = function(r,
                       title = "Slope colors (percentage gradient)",
                       s = 3:18,
                       ncol = 4) {
-  m = sf::st_coordinates(r)
-  d = cumsum(sequential_dist(m, lonlat = lonlat))
-  d = c(0, d)
-  z = m[, 3]
+  dz = distance_z(r, lonlat = lonlat)
+  d = dz$d
+  z = dz$z
   plot_dz(d, z, fill = fill)
 }
 #' Plot a digital elevation profile based on xyz data
@@ -124,3 +123,12 @@ plot_dz = function(d,
 # points(x[-length(x)], gxy, col = "blue")
 # title("Distance (in x coordinates) elevation profile",
 #       sub = "Points show calculated gradients of subsequent lines")
+
+
+distance_z = function(r, lonlat) {
+  m = sf::st_coordinates(r)
+  d = cumsum(sequential_dist(m, lonlat = lonlat))
+  d = c(0, d)
+  z = m[, 3]
+  list(d = d, z = z)
+}
