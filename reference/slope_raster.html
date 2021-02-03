@@ -155,7 +155,7 @@ The object must be of class <code>sf</code> with <code>LINESTRING</code> geometr
     </tr>
     <tr>
       <th>e</th>
-      <td><p>A raster object overlapping with <code>r</code> and values representing elevations</p></td>
+      <td><p>Raster overlapping with <code>r</code> and values representing elevations</p></td>
     </tr>
     <tr>
       <th>lonlat</th>
@@ -163,8 +163,9 @@ The object must be of class <code>sf</code> with <code>LINESTRING</code> geometr
     </tr>
     <tr>
       <th>method</th>
-      <td><p>The method of estimating elevation at points, passed to the <code>extract</code>
-function for extracting values from raster datasets. Default: <code>"bilinear"</code>.</p></td>
+      <td><p>The method of estimating elevation at points,
+passed to the <code>extract</code> function for extracting values from raster
+datasets. Default: <code>"bilinear"</code>.</p></td>
     </tr>
     <tr>
       <th>fun</th>
@@ -182,11 +183,13 @@ if <code>e</code> is of class <code>SpatRast</code></p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If calculating slopes associated with OSM data, the results may be better if the
-network is first split-up, e.g. using the function <code>stplanr::rnet_breakup_vertices()</code> from the
-<a href='https://docs.ropensci.org/stplanr/reference/rnet_breakup_vertices.html'><code>stplanr</code></a> package.
+network is first split-up, e.g. using the function
+<code>stplanr::rnet_breakup_vertices()</code> from the
+<a href='https://docs.ropensci.org/stplanr/reference/'><code>stplanr</code></a> package.
 <strong>Note:</strong> The <code>r</code> object must have a geometry type of <code>LINESTRING</code>.
 The <code><a href='https://r-spatial.github.io/sf/reference/st_cast.html'>sf::st_cast()</a></code> function can convert from <code>MULTILINESTRING</code> (and other)
-geometries to <code>LINESTRING</code>s as follows: <code>r_linestring = sf::st_cast(r, "LINESTRING")</code>.</p>
+geometries to <code>LINESTRING</code>s as follows:
+<code>r_linestring = sf::st_cast(r, "LINESTRING")</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>r</span> <span class='op'>=</span> <span class='va'>lisbon_road_segments</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, <span class='op'>]</span>
