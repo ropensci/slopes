@@ -179,7 +179,8 @@ if <code>e</code> is of class <code>SpatRast</code></p></td>
 #&gt; [13] 3.507 3.400 3.389 3.374 3.363 3.352 3.341 3.341 3.330 3.319 3.308 3.296
 #&gt; [25] 3.285 3.274 3.263 3.252 3.252 3.241 3.230 3.219 3.208 3.315 3.451 3.451
 #&gt; [37] 3.560 3.560 3.543 3.652 3.762</div><div class='input'><span class='co'># uncomment the following lines to test with terra (experimental)</span>
-<span class='co'># u = "https://github.com/ITSLeeds/slopes/releases/download/0.0.0/dem_lisbon.tif"</span>
+<span class='co'># u = paste0("https://github.com/ITSLeeds/slopes/",</span>
+<span class='co'>#    "releases/download/0.0.0/dem_lisbon.tif" )</span>
 <span class='co'># if(!file.exists("dem_lisbon.tif")) download.file(u, "dem_lisbon.tif")</span>
 <span class='co'># et = terra::rast("dem_lisbon.tif")</span>
 <span class='co'># elevation_extract(m, et)</span>
