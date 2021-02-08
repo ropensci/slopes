@@ -61,8 +61,9 @@
 #' with X, Y and Z (elevation) dimensions for each coordinate.
 #'
 #' @format An object of class `sf`
-#' @source Produced by the website
-#'   [data-seattlecitygis.opendata.arcgis.com](https://data-seattlecitygis.opendata.arcgis.com/datasets/seattle-streets)
+#' @source Accessed in early 2021 from the `seattle-streets` layer from the
+#' [data-seattlecitygis](https://data-seattlecitygis.opendata.arcgis.com/)
+#' website.
 #' @examples
 #' names(magnolia_xy)
 #' plot(magnolia_xy["SLOPE_PCT"])

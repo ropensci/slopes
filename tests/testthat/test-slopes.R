@@ -51,10 +51,20 @@ test_that("slope_* functions work", {
 
   r = lisbon_road_segments[204, ]
   r3d = slope_3d(r, e)
-  expect_equal(sf::st_z_range(r3d$geom), c(86, 92), ignore_attr = TRUE, tolerance = 10)
+  expect_equal(
+    sf::st_z_range(r3d$geom),
+    c(86, 92),
+    ignore_attr = TRUE,
+    tolerance = 10
+    )
   if(nchar(Sys.getenv("MAPBOX")) < 8)
     skip(message = "Skipping test, MAPBOX token in .Renviron needed")
   r3d2 = slope_3d(r)
-  expect_equal(sf::st_z_range(r3d2$geom), c(86, 92), ignore_attr = TRUE, tolerance = 10)
+  expect_equal(
+    sf::st_z_range(r3d2$geom),
+    c(86, 92),
+    ignore_attr = TRUE,
+    tolerance = 10
+    )
 
 })

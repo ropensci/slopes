@@ -124,8 +124,8 @@ slope_matrices = function(m_xyz_split, fun = slope_matrix_weighted, ...) {
 #' and a raster dataset representing the terrain as inputs.
 #' It returns the average gradient of each route feature.
 #'
-#' If calculating slopes associated with OSM data, the results may be better if the
-#' network is first split-up, e.g. using the function
+#' If calculating slopes associated with OSM data, the results may be better
+#' if the network is first split-up, e.g. using the function
 #' `stplanr::rnet_breakup_vertices()` from the
 #' [`stplanr`](https://docs.ropensci.org/stplanr/reference/) package.
 #' **Note:** The `r` object must have a geometry type of `LINESTRING`.
@@ -211,7 +211,8 @@ slope_xyz = function(r_xyz, fun = slope_matrix_weighted, lonlat = NULL) {
 #' elevation_extract(m, e)
 #' elevation_extract(m, e, method = "simple")
 #' # uncomment the following lines to test with terra (experimental)
-#' # u = "https://github.com/ITSLeeds/slopes/releases/download/0.0.0/dem_lisbon.tif"
+#' # u = paste0("https://github.com/ITSLeeds/slopes/",
+#' #    "releases/download/0.0.0/dem_lisbon.tif" )
 #' # if(!file.exists("dem_lisbon.tif")) download.file(u, "dem_lisbon.tif")
 #' # et = terra::rast("dem_lisbon.tif")
 #' # elevation_extract(m, et)

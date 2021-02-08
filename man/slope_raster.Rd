@@ -38,9 +38,9 @@ and a raster dataset representing the terrain as inputs.
 It returns the average gradient of each route feature.
 }
 \details{
-If calculating slopes associated with OSM data, the results may be better if the
-network is first split-up, e.g. using the function
-\code{\link[stplanr:rnet_breakup_vertices]{stplanr::rnet_breakup_vertices()}} from the
+If calculating slopes associated with OSM data, the results may be better
+if the network is first split-up, e.g. using the function
+\code{stplanr::rnet_breakup_vertices()} from the
 \href{https://docs.ropensci.org/stplanr/reference/}{\code{stplanr}} package.
 \strong{Note:} The \code{r} object must have a geometry type of \code{LINESTRING}.
 The \code{sf::st_cast()} function can convert from \code{MULTILINESTRING} (and other)
