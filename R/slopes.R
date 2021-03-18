@@ -143,6 +143,7 @@ slope_matrices = function(m_xyz_split, fun = slope_matrix_weighted, ...) {
 #'   datasets. Default: `"bilinear"`.
 #' @param fun The slope function to calculate per route,
 #'   `slope_matrix_weighted` by default.
+#' @importFrom methods is
 #' @export
 #' @examples
 #' r = lisbon_road_segments[1:3, ]
