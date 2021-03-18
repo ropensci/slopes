@@ -57,7 +57,7 @@ test_that("slope_* functions work", {
     ignore_attr = TRUE,
     tolerance = 10
     )
-  if(nchar(Sys.getenv("MAPBOX")) < 8)
+  if(nchar(Sys.getenv("MAPBOX_API_KEY")) < 8)
     skip(message = "Skipping test, MAPBOX token in .Renviron needed")
   r3d2 = slope_3d(r)
   expect_equal(

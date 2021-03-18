@@ -1,5 +1,5 @@
 test_that("functions to get elevations from sf objects work", {
-  if(nchar(Sys.getenv("MAPBOX")) < 8)
+  if(nchar(Sys.getenv("MAPBOX_API_KEY")) < 8)
     skip(message = "Skipping test, MAPBOX token in .Renviron needed")
   r = cyclestreets_route
   e = elevations_get(r)

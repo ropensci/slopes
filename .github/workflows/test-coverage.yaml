@@ -15,7 +15,7 @@ jobs:
     runs-on: macOS-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      MAPBOX: ${{ secrets.MAPBOX }}
+      MAPBOX_API_KEY: ${{ secrets.MAPBOX }}
 
     steps:
       - uses: actions/checkout@v2
