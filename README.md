@@ -10,7 +10,7 @@
 coverage](https://codecov.io/gh/itsleeds/slopes/branch/master/graph/badge.svg)](https://codecov.io/gh/itsleeds/slopes?branch=master)
 <!-- badges: end -->
 
-The goal of slopes is to enable fast, accurate and user friendly
+The aim of this Rpackage is to enable fast, accurate and user friendly
 calculation longitudinal steepness of linear features such as roads and
 rivers, based on commonly available input datasets such as road
 geometries and digital elevation model (DEM) datasets.
@@ -41,7 +41,7 @@ We will also load the `sf` library:
 
 ``` r
 library(sf)
-#> Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 7.0.0
+#> Linking to GEOS 3.9.0, GDAL 3.2.1, PROJ 7.2.1
 ```
 
 The minimum data requirements for using the package are elevation
@@ -175,15 +175,15 @@ res
 #> # A tibble: 2 x 6
 #>   expression        min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 slope_raster   49.6ms     54ms      18.7    5.72MB     8.00
-#> 2 slope_terra    75.1ms   75.8ms      11.4    2.21MB     5.72
+#> 1 slope_raster   48.4ms   49.8ms      20.1    5.72MB     5.03
+#> 2 slope_terra    73.5ms     74ms      13.5    2.35MB     6.75
 ```
 
 That is approximately
 
 ``` r
 round(res$`itr/sec` * nrow(r))
-#> [1] 5057 3100
+#> [1] 5448 3658
 ```
 
 routes per second using the `raster` and `terra` (the default if
@@ -212,8 +212,8 @@ res
 #> # A tibble: 4 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 bilinear1    50.6ms   53.6ms      18.7    5.72MB     7.99
-#> 2 bilinear2    73.9ms   74.6ms      13.4    2.17MB     5.37
-#> 3 simple1      42.9ms   44.7ms      22.4    2.05MB     4.98
-#> 4 simple2      74.8ms   78.2ms      12.6    2.17MB     9.48
+#> 1 bilinear1    48.6ms   49.6ms      20.2    5.72MB     5.05
+#> 2 bilinear2    74.1ms   75.2ms      13.3    2.17MB     5.33
+#> 3 simple1      41.9ms   42.9ms      23.2    2.05MB     5.16
+#> 4 simple2      72.5ms   73.1ms      13.7    2.17MB     5.46
 ```
