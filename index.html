@@ -97,7 +97,7 @@
 <a href="#slopes" class="anchor"></a>slopes</h1></div>
 <!-- badges: start -->
 
-<p>The goal of slopes is to enable fast, accurate and user friendly calculation longitudinal steepness of linear features such as roads and rivers, based on commonly available input datasets such as road geometries and digital elevation model (DEM) datasets.</p>
+<p>The aim of this Rpackage is to enable fast, accurate and user friendly calculation longitudinal steepness of linear features such as roads and rivers, based on commonly available input datasets such as road geometries and digital elevation model (DEM) datasets.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -119,7 +119,7 @@
 <p>We will also load the <code>sf</code> library:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span>
-<span class="co">#&gt; Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 7.0.0</span></code></pre></div>
+<span class="co">#&gt; Linking to GEOS 3.9.0, GDAL 3.2.1, PROJ 7.2.1</span></code></pre></div>
 <p>The minimum data requirements for using the package are elevation points, either as a vector, a matrix or as a digital elevation model (DEM) encoded as a raster dataset. Typically you will also have a geographic object representing the roads or similar features. These two types of input data are represented in the code output and plot below.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># A raster dataset included in the package:</span>
@@ -198,12 +198,12 @@
 <span class="co">#&gt; # A tibble: 2 x 6</span>
 <span class="co">#&gt;   expression        min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;   &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 slope_raster   49.6ms     54ms      18.7    5.72MB     8.00</span>
-<span class="co">#&gt; 2 slope_terra    75.1ms   75.8ms      11.4    2.21MB     5.72</span></code></pre></div>
+<span class="co">#&gt; 1 slope_raster   48.4ms   49.8ms      20.1    5.72MB     5.03</span>
+<span class="co">#&gt; 2 slope_terra    73.5ms     74ms      13.5    2.35MB     6.75</span></code></pre></div>
 <p>That is approximately</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">`itr/sec`</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 5057 3100</span></code></pre></div>
+<span class="co">#&gt; [1] 5448 3658</span></code></pre></div>
 <p>routes per second using the <code>raster</code> and <code>terra</code> (the default if installed, using <code>RasterLayer</code> and native <code>SpatRaster</code> objects) packages to extract elevation estimates from the raster datasets, respectively.</p>
 <p>The message: use the <code>terra</code> package to read-in DEM data for slope extraction if speed is important.</p>
 <p>To go faster, you can chose the <code>simple</code> method to gain some speed at the expense of accuracy:</p>
@@ -221,10 +221,10 @@
 <span class="co">#&gt; # A tibble: 4 x 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 bilinear1    50.6ms   53.6ms      18.7    5.72MB     7.99</span>
-<span class="co">#&gt; 2 bilinear2    73.9ms   74.6ms      13.4    2.17MB     5.37</span>
-<span class="co">#&gt; 3 simple1      42.9ms   44.7ms      22.4    2.05MB     4.98</span>
-<span class="co">#&gt; 4 simple2      74.8ms   78.2ms      12.6    2.17MB     9.48</span></code></pre></div>
+<span class="co">#&gt; 1 bilinear1    48.6ms   49.6ms      20.2    5.72MB     5.05</span>
+<span class="co">#&gt; 2 bilinear2    74.1ms   75.2ms      13.3    2.17MB     5.33</span>
+<span class="co">#&gt; 3 simple1      41.9ms   42.9ms      23.2    2.05MB     5.16</span>
+<span class="co">#&gt; 4 simple2      72.5ms   73.1ms      13.7    2.17MB     5.46</span></code></pre></div>
 </div>
 
   </div>

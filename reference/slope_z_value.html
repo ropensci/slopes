@@ -160,11 +160,11 @@ in <code>sfc</code> objects with <code>XYZ</code> geometries.</p>
     <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>=</span> <span class='fu'>slopes</span><span class='fu'>::</span><span class='va'><a href='lisbon_road_segment.html'>lisbon_route_3d</a></span>
 <span class='fu'>sf</span><span class='fu'>::</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_geometry.html'>st_geometry</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Geometry set for 1 feature 
-#&gt; geometry type:  LINESTRING
-#&gt; dimension:      XYZ
-#&gt; bbox:           xmin: -88214.27 ymin: -106127.1 xmax: -86881.07 ymax: -105506.3
-#&gt; z_range:        zmin: 6.650858 zmax: 94.99939
-#&gt; projected CRS:  ETRS89 / Portugal TM06</div><div class='output co'>#&gt; <span class='message'>LINESTRING Z (-88202.31 -105757.6 55.91552, -88...</span></div><div class='input'><span class='fu'>slope_z_value</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
+#&gt; Geometry type: LINESTRING
+#&gt; Dimension:     XYZ
+#&gt; Bounding box:  xmin: -88214.27 ymin: -106127.1 xmax: -86881.07 ymax: -105506.3
+#&gt; z_range:       zmin: 6.650858 zmax: 94.99939
+#&gt; Projected CRS: ETRS89 / Portugal TM06</div><div class='output co'>#&gt; <span class='message'>LINESTRING Z (-88202.31 -105757.6 55.91552, -88...</span></div><div class='input'><span class='fu'>slope_z_value</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
 </div><div class='output co'>#&gt; [1] 55.91552 55.52176 54.62495 50.82914 50.76749</div><div class='input'><span class='va'>xy</span> <span class='op'>=</span> <span class='fu'>slopes</span><span class='fu'>::</span><span class='va'><a href='lisbon_road_segment.html'>lisbon_route</a></span>
 <span class='co'># slope_z_value(xy) # error message</span>
 <span class='fu'>slope_z_start</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
