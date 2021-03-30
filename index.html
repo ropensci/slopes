@@ -119,7 +119,7 @@
 <p>We will also load the <code>sf</code> library:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span>
-<span class="co">#&gt; Linking to GEOS 3.9.0, GDAL 3.2.1, PROJ 7.2.1</span></code></pre></div>
+<span class="co">#&gt; Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1</span></code></pre></div>
 <p>The minimum data requirements for using the package are elevation points, either as a vector, a matrix or as a digital elevation model (DEM) encoded as a raster dataset. Typically you will also have a geographic object representing the roads or similar features. These two types of input data are represented in the code output and plot below.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># A raster dataset included in the package:</span>
@@ -188,7 +188,8 @@
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">e</span> <span class="op">=</span> <span class="va">dem_lisbon_raster</span>
 <span class="va">r</span> <span class="op">=</span> <span class="va">lisbon_road_segments</span>
-<span class="va">et</span> <span class="op">=</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html">rast</a></span><span class="op">(</span><span class="st">"dem_lisbon.tif"</span><span class="op">)</span>
+<span class="co"># et = terra::rast("dem_lisbon.tif")</span>
+<span class="va">et</span> <span class="op">=</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html">rast</a></span><span class="op">(</span><span class="va">u</span><span class="op">)</span>
 <span class="va">res</span> <span class="op">=</span> <span class="fu">bench</span><span class="fu">::</span><span class="fu">mark</span><span class="op">(</span>check <span class="op">=</span> <span class="cn">FALSE</span>,
   slope_raster <span class="op">=</span> <span class="fu"><a href="reference/slope_raster.html">slope_raster</a></span><span class="op">(</span><span class="va">r</span>, <span class="va">e</span><span class="op">)</span>,
   slope_terra <span class="op">=</span> <span class="fu"><a href="reference/slope_raster.html">slope_raster</a></span><span class="op">(</span><span class="va">r</span>, <span class="va">et</span><span class="op">)</span>
@@ -198,12 +199,12 @@
 <span class="co">#&gt; # A tibble: 2 x 6</span>
 <span class="co">#&gt;   expression        min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;   &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 slope_raster   48.4ms   49.8ms      20.1    5.72MB     5.03</span>
-<span class="co">#&gt; 2 slope_terra    73.5ms     74ms      13.5    2.35MB     6.75</span></code></pre></div>
+<span class="co">#&gt; 1 slope_raster   76.2ms   79.4ms     12.5     5.72MB     5.01</span>
+<span class="co">#&gt; 2 slope_terra   608.8ms  608.8ms      1.64    2.21MB     0</span></code></pre></div>
 <p>That is approximately</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">`itr/sec`</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 5448 3658</span></code></pre></div>
+<span class="co">#&gt; [1] 3394  445</span></code></pre></div>
 <p>routes per second using the <code>raster</code> and <code>terra</code> (the default if installed, using <code>RasterLayer</code> and native <code>SpatRaster</code> objects) packages to extract elevation estimates from the raster datasets, respectively.</p>
 <p>The message: use the <code>terra</code> package to read-in DEM data for slope extraction if speed is important.</p>
 <p>To go faster, you can chose the <code>simple</code> method to gain some speed at the expense of accuracy:</p>
@@ -221,10 +222,10 @@
 <span class="co">#&gt; # A tibble: 4 x 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 bilinear1    48.6ms   49.6ms      20.2    5.72MB     5.05</span>
-<span class="co">#&gt; 2 bilinear2    74.1ms   75.2ms      13.3    2.17MB     5.33</span>
-<span class="co">#&gt; 3 simple1      41.9ms   42.9ms      23.2    2.05MB     5.16</span>
-<span class="co">#&gt; 4 simple2      72.5ms   73.1ms      13.7    2.17MB     5.46</span></code></pre></div>
+<span class="co">#&gt; 1 bilinear1    76.9ms     79ms     12.7     5.72MB     5.07</span>
+<span class="co">#&gt; 2 bilinear2   491.4ms  491.4ms      2.03    2.16MB     2.03</span>
+<span class="co">#&gt; 3 simple1      67.8ms   73.1ms     13.9     2.05MB     5.56</span>
+<span class="co">#&gt; 4 simple2     555.5ms  555.5ms      1.80    2.17MB     0</span></code></pre></div>
 </div>
 
   </div>
@@ -260,6 +261,7 @@
 <ul class="list-unstyled">
 <li><a href="https://github.com/itsleeds/slopes/actions"><img src="https://github.com/itsleeds/slopes/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://codecov.io/gh/itsleeds/slopes?branch=master"><img src="https://codecov.io/gh/itsleeds/slopes/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/ropensci/software-review/issues/420"><img src="https://badges.ropensci.org/420_status.svg" alt="Status at rOpenSci Software Peer Review"></a></li>
 </ul>
 </div>
 </div>
