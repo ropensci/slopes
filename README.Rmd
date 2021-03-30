@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/itsleeds/slopes/workflows/R-CMD-check/badge.svg)](https://github.com/itsleeds/slopes/actions)
 [![Codecov test coverage](https://codecov.io/gh/itsleeds/slopes/branch/master/graph/badge.svg)](https://codecov.io/gh/itsleeds/slopes?branch=master)
+[![Status at rOpenSci Software Peer Review](https://badges.ropensci.org/420_status.svg)](https://github.com/ropensci/software-review/issues/420)
 <!-- badges: end -->
 
 The aim of this  Rpackage is to enable fast, accurate and user friendly calculation longitudinal steepness of linear features such as roads and rivers, based on commonly available input datasets such as road geometries and digital elevation model (DEM) datasets.
@@ -150,7 +151,8 @@ A benchmark can reveal how many route gradients can be calculated per second:
 ```{r, results='hide'}
 e = dem_lisbon_raster
 r = lisbon_road_segments
-et = terra::rast("dem_lisbon.tif")
+# et = terra::rast("dem_lisbon.tif")
+et = terra::rast(u)
 res = bench::mark(check = FALSE,
   slope_raster = slope_raster(r, e),
   slope_terra = slope_raster(r, et)

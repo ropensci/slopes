@@ -8,6 +8,8 @@
 [![R-CMD-check](https://github.com/itsleeds/slopes/workflows/R-CMD-check/badge.svg)](https://github.com/itsleeds/slopes/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/itsleeds/slopes/branch/master/graph/badge.svg)](https://codecov.io/gh/itsleeds/slopes?branch=master)
+[![Status at rOpenSci Software Peer
+Review](https://badges.ropensci.org/420_status.svg)](https://github.com/ropensci/software-review/issues/420)
 <!-- badges: end -->
 
 The aim of this Rpackage is to enable fast, accurate and user friendly
@@ -41,7 +43,7 @@ We will also load the `sf` library:
 
 ``` r
 library(sf)
-#> Linking to GEOS 3.9.0, GDAL 3.2.1, PROJ 7.2.1
+#> Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
 ```
 
 The minimum data requirements for using the package are elevation
@@ -163,7 +165,8 @@ second:
 ``` r
 e = dem_lisbon_raster
 r = lisbon_road_segments
-et = terra::rast("dem_lisbon.tif")
+# et = terra::rast("dem_lisbon.tif")
+et = terra::rast(u)
 res = bench::mark(check = FALSE,
   slope_raster = slope_raster(r, e),
   slope_terra = slope_raster(r, et)
@@ -175,15 +178,15 @@ res
 #> # A tibble: 2 x 6
 #>   expression        min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 slope_raster   48.4ms   49.8ms      20.1    5.72MB     5.03
-#> 2 slope_terra    73.5ms     74ms      13.5    2.35MB     6.75
+#> 1 slope_raster   76.2ms   79.4ms     12.5     5.72MB     5.01
+#> 2 slope_terra   608.8ms  608.8ms      1.64    2.21MB     0
 ```
 
 That is approximately
 
 ``` r
 round(res$`itr/sec` * nrow(r))
-#> [1] 5448 3658
+#> [1] 3394  445
 ```
 
 routes per second using the `raster` and `terra` (the default if
@@ -212,8 +215,8 @@ res
 #> # A tibble: 4 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 bilinear1    48.6ms   49.6ms      20.2    5.72MB     5.05
-#> 2 bilinear2    74.1ms   75.2ms      13.3    2.17MB     5.33
-#> 3 simple1      41.9ms   42.9ms      23.2    2.05MB     5.16
-#> 4 simple2      72.5ms   73.1ms      13.7    2.17MB     5.46
+#> 1 bilinear1    76.9ms     79ms     12.7     5.72MB     5.07
+#> 2 bilinear2   491.4ms  491.4ms      2.03    2.16MB     2.03
+#> 3 simple1      67.8ms   73.1ms     13.9     2.05MB     5.56
+#> 4 simple2     555.5ms  555.5ms      1.80    2.17MB     0
 ```
