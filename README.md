@@ -12,10 +12,9 @@ coverage](https://codecov.io/gh/itsleeds/slopes/branch/master/graph/badge.svg)](
 Review](https://badges.ropensci.org/420_status.svg)](https://github.com/ropensci/software-review/issues/420)
 <!-- badges: end -->
 
-The aim of this Rpackage is to enable fast, accurate and user friendly
-calculation longitudinal steepness of linear features such as roads and
-rivers, based on commonly available input datasets such as road
-geometries and digital elevation model (DEM) datasets.
+This package calculates longitudinal steepness of linear features such
+as roads and rivers, based on two main inputs: vector linestring
+geometries and raster digital elevation model (DEM) datasets.
 
 ## Installation
 
@@ -43,7 +42,7 @@ We will also load the `sf` library:
 
 ``` r
 library(sf)
-#> Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+#> Linking to GEOS 3.9.0, GDAL 3.2.1, PROJ 7.2.1
 ```
 
 The minimum data requirements for using the package are elevation
@@ -117,7 +116,10 @@ Imagine that we want to go from Santa Catarina to the East of the map to
 the Castelo de Sao Jorge to the West of the map:
 
 ``` r
-mapview::mapview(lisbon_route)
+library(tmap)
+tmap_mode("view")
+#> tmap mode set to interactive viewing
+qtm(lisbon_route)
 ```
 
 <img src="man/figures/README-route-1.png" width="100%" />
@@ -147,7 +149,7 @@ lisbon_route_3d_auto = slope_3d(r = lisbon_route)
 plot_slope(lisbon_route_3d_auto)
 ```
 
-<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
 
 # Performance
 
@@ -156,7 +158,10 @@ For this benchmark we will download the following small (&lt; 100 kB)
 
 ``` r
 u = "https://github.com/ITSLeeds/slopes/releases/download/0.0.0/dem_lisbon.tif"
-if(!file.exists("dem_lisbon.tif")) download.file(u, "dem_lisbon.tif")
+f = basename(u)
+if(!file.exists(f)) {
+ download.file(u, f) 
+}
 ```
 
 A benchmark can reveal how many route gradients can be calculated per
@@ -165,8 +170,7 @@ second:
 ``` r
 e = dem_lisbon_raster
 r = lisbon_road_segments
-# et = terra::rast("dem_lisbon.tif")
-et = terra::rast(u)
+et = terra::rast(f)
 res = bench::mark(check = FALSE,
   slope_raster = slope_raster(r, e),
   slope_terra = slope_raster(r, et)
@@ -178,15 +182,15 @@ res
 #> # A tibble: 2 x 6
 #>   expression        min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 slope_raster   76.2ms   79.4ms     12.5     5.72MB     5.01
-#> 2 slope_terra   608.8ms  608.8ms      1.64    2.21MB     0
+#> 1 slope_raster   49.4ms   50.4ms      19.9    5.72MB     4.97
+#> 2 slope_terra    51.7ms   52.6ms      18.9    2.17MB     5.41
 ```
 
 That is approximately
 
 ``` r
 round(res$`itr/sec` * nrow(r))
-#> [1] 3394  445
+#> [1] 5391 5127
 ```
 
 routes per second using the `raster` and `terra` (the default if
@@ -215,8 +219,8 @@ res
 #> # A tibble: 4 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 bilinear1    76.9ms     79ms     12.7     5.72MB     5.07
-#> 2 bilinear2   491.4ms  491.4ms      2.03    2.16MB     2.03
-#> 3 simple1      67.8ms   73.1ms     13.9     2.05MB     5.56
-#> 4 simple2     555.5ms  555.5ms      1.80    2.17MB     0
+#> 1 bilinear1    49.7ms   50.7ms      19.8    5.72MB     8.47
+#> 2 bilinear2    52.1ms   52.6ms      18.9    2.12MB     4.73
+#> 3 simple1      42.9ms   43.6ms      22.8    2.05MB     4.56
+#> 4 simple2      50.2ms   51.2ms      19.4    2.12MB     4.84
 ```
