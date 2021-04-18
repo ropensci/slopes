@@ -97,7 +97,7 @@
 <a href="#slopes" class="anchor"></a>slopes</h1></div>
 <!-- badges: start -->
 
-<p>The aim of this Rpackage is to enable fast, accurate and user friendly calculation longitudinal steepness of linear features such as roads and rivers, based on commonly available input datasets such as road geometries and digital elevation model (DEM) datasets.</p>
+<p>This package calculates longitudinal steepness of linear features such as roads and rivers, based on two main inputs: vector linestring geometries and raster digital elevation model (DEM) datasets.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -119,7 +119,7 @@
 <p>We will also load the <code>sf</code> library:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span>
-<span class="co">#&gt; Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1</span></code></pre></div>
+<span class="co">#&gt; Linking to GEOS 3.9.0, GDAL 3.2.1, PROJ 7.2.1</span></code></pre></div>
 <p>The minimum data requirements for using the package are elevation points, either as a vector, a matrix or as a digital elevation model (DEM) encoded as a raster dataset. Typically you will also have a geographic object representing the roads or similar features. These two types of input data are represented in the code output and plot below.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># A raster dataset included in the package:</span>
@@ -159,7 +159,10 @@
 <code class="sourceCode R"><span class="co"># mapview::mapview(lisbon_road_segments["slope"], map.types = "Esri.WorldStreetMap")</span></code></pre></div>
 <p>Imagine that we want to go from Santa Catarina to the East of the map to the Castelo de Sao Jorge to the West of the map:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">mapview</span><span class="fu">::</span><span class="fu">mapview</span><span class="op">(</span><span class="va">lisbon_route</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">tmap</span><span class="op">)</span>
+<span class="fu">tmap_mode</span><span class="op">(</span><span class="st">"view"</span><span class="op">)</span>
+<span class="co">#&gt; tmap mode set to interactive viewing</span>
+<span class="fu">qtm</span><span class="op">(</span><span class="va">lisbon_route</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-route-1.png" width="100%"></p>
 <p>We can convert the <code>lisbon_route</code> object into a 3d linestring object as follows:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -174,7 +177,7 @@
 <span class="co">#&gt; Preparing to download: 12 tiles at zoom = 15 from </span>
 <span class="co">#&gt; https://api.mapbox.com/v4/mapbox.terrain-rgb/</span>
 <span class="fu"><a href="reference/plot_slope.html">plot_slope</a></span><span class="op">(</span><span class="va">lisbon_route_3d_auto</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-9-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-10-1.png" width="100%"></p>
 </div>
 </div>
 <div id="performance" class="section level1">
@@ -183,13 +186,15 @@
 <p>For this benchmark we will download the following small (&lt; 100 kB) <code>.tif</code> file:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">u</span> <span class="op">=</span> <span class="st">"https://github.com/ITSLeeds/slopes/releases/download/0.0.0/dem_lisbon.tif"</span>
-<span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files.html">file.exists</a></span><span class="op">(</span><span class="st">"dem_lisbon.tif"</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="va">u</span>, <span class="st">"dem_lisbon.tif"</span><span class="op">)</span></code></pre></div>
+<span class="va">f</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html">basename</a></span><span class="op">(</span><span class="va">u</span><span class="op">)</span>
+<span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files.html">file.exists</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+ <span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="va">u</span>, <span class="va">f</span><span class="op">)</span> 
+<span class="op">}</span></code></pre></div>
 <p>A benchmark can reveal how many route gradients can be calculated per second:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">e</span> <span class="op">=</span> <span class="va">dem_lisbon_raster</span>
 <span class="va">r</span> <span class="op">=</span> <span class="va">lisbon_road_segments</span>
-<span class="co"># et = terra::rast("dem_lisbon.tif")</span>
-<span class="va">et</span> <span class="op">=</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html">rast</a></span><span class="op">(</span><span class="va">u</span><span class="op">)</span>
+<span class="va">et</span> <span class="op">=</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu">rast</span><span class="op">(</span><span class="va">f</span><span class="op">)</span>
 <span class="va">res</span> <span class="op">=</span> <span class="fu">bench</span><span class="fu">::</span><span class="fu">mark</span><span class="op">(</span>check <span class="op">=</span> <span class="cn">FALSE</span>,
   slope_raster <span class="op">=</span> <span class="fu"><a href="reference/slope_raster.html">slope_raster</a></span><span class="op">(</span><span class="va">r</span>, <span class="va">e</span><span class="op">)</span>,
   slope_terra <span class="op">=</span> <span class="fu"><a href="reference/slope_raster.html">slope_raster</a></span><span class="op">(</span><span class="va">r</span>, <span class="va">et</span><span class="op">)</span>
@@ -199,12 +204,12 @@
 <span class="co">#&gt; # A tibble: 2 x 6</span>
 <span class="co">#&gt;   expression        min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;   &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 slope_raster   76.2ms   79.4ms     12.5     5.72MB     5.01</span>
-<span class="co">#&gt; 2 slope_terra   608.8ms  608.8ms      1.64    2.21MB     0</span></code></pre></div>
+<span class="co">#&gt; 1 slope_raster   49.4ms   50.4ms      19.9    5.72MB     4.97</span>
+<span class="co">#&gt; 2 slope_terra    51.7ms   52.6ms      18.9    2.17MB     5.41</span></code></pre></div>
 <p>That is approximately</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">`itr/sec`</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 3394  445</span></code></pre></div>
+<span class="co">#&gt; [1] 5391 5127</span></code></pre></div>
 <p>routes per second using the <code>raster</code> and <code>terra</code> (the default if installed, using <code>RasterLayer</code> and native <code>SpatRaster</code> objects) packages to extract elevation estimates from the raster datasets, respectively.</p>
 <p>The message: use the <code>terra</code> package to read-in DEM data for slope extraction if speed is important.</p>
 <p>To go faster, you can chose the <code>simple</code> method to gain some speed at the expense of accuracy:</p>
@@ -222,10 +227,10 @@
 <span class="co">#&gt; # A tibble: 4 x 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 bilinear1    76.9ms     79ms     12.7     5.72MB     5.07</span>
-<span class="co">#&gt; 2 bilinear2   491.4ms  491.4ms      2.03    2.16MB     2.03</span>
-<span class="co">#&gt; 3 simple1      67.8ms   73.1ms     13.9     2.05MB     5.56</span>
-<span class="co">#&gt; 4 simple2     555.5ms  555.5ms      1.80    2.17MB     0</span></code></pre></div>
+<span class="co">#&gt; 1 bilinear1    49.7ms   50.7ms      19.8    5.72MB     8.47</span>
+<span class="co">#&gt; 2 bilinear2    52.1ms   52.6ms      18.9    2.12MB     4.73</span>
+<span class="co">#&gt; 3 simple1      42.9ms   43.6ms      22.8    2.05MB     4.56</span>
+<span class="co">#&gt; 4 simple2      50.2ms   51.2ms      19.4    2.12MB     4.84</span></code></pre></div>
 </div>
 
   </div>
