@@ -1,10 +1,8 @@
 ---
-title: "Presentation Ninja"
-subtitle: "&#x2694;&#xFE0F; xaringan +<br/>&#x1F60E; xaringanthemer"  
-author: 
-  - "Yihui Xie"
-  - "Garrick Aden-Buie"
-date: '`r Sys.Date()`'
+# title: "slopes: a package for calculating slopes<br>📈🎢🗻🛣️"
+title: "slopes: a package for calculating slopes "
+subtitle: "📈 of roads, rivers and other linear (simple) features 📉"  
+author: "Robin Lovelace & Rosa Félix, UseR 2021<br><br><br><br><br><br><br><br><br><br>"
 output:
   xaringan::moon_reader:
     css: xaringan-themer.css
@@ -15,6 +13,17 @@ output:
       ratio: 16:9
       countIncrementalSlides: true
 ---
+
+```{r, eval=FALSE, echo=FALSE}
+# to run these slides locally:
+xaringan::inf_mr("data-raw/slides.Rmd")
+```
+
+```{r xaringanExtra, echo=FALSE}
+# From https://github.com/gadenbuie/xaringanExtra
+xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"))
+```
+
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
@@ -33,292 +42,61 @@ knitr::opts_chunk$set(
 ```{r xaringan-themer, include=FALSE, warning=FALSE}
 library(xaringanthemer)
 style_duo_accent(
-  primary_color = "#1381B0",
+  title_slide_background_color = "#FFFFFF",
+  title_slide_background_size = "100%",
+  title_slide_background_image = "https://user-images.githubusercontent.com/1825120/121391204-04c75c80-c946-11eb-8d46-ab5d8ada55c2.png",
+  title_slide_background_position = "bottom",
+  title_slide_text_color = "#080808",
+  primary_color = "#080808",
   secondary_color = "#FF961C",
   inverse_header_color = "#FFFFFF"
 )
 ```
 
-## Typography
+background-image: url(https://camo.githubusercontent.com/30a3b814dd72aef5b51db635f2ab6e1b6b6c57b856d239822788967a4932d655/68747470733a2f2f7062732e7477696d672e636f6d2f6d656469612f45724a32647238574d414948774d6e3f666f726d61743d6a7067266e616d653d6c61726765)
+background-position: center
+background-size: 100%
 
-Text can be **bold**, _italic_, ~~strikethrough~~, or `inline code`.
+--
+<br>
+# Structure:
 
-[Link to another slide](#colors).
-
-### Lorem Ipsum
-
-Dolor imperdiet nostra sapien scelerisque praesent curae metus facilisis dignissim tortor. 
-Lacinia neque mollis nascetur neque urna velit bibendum. 
-Himenaeos suspendisse leo varius mus risus sagittis aliquet venenatis duis nec.
-
-- Dolor cubilia nostra nunc sodales
-
-- Consectetur aliquet mauris blandit
-
-- Ipsum dis nec porttitor urna sed
-
----
-name: colors
-
-## Colors
-
-- <span style="color: var(--text-color)">Text Color</span>
-
-- <span style="color: var(--header-color); font-family: var(--header-font-family);">Header Color</span>
-
-- <span style="color: var(--link-color)">Link Color</span>
-
-- <span style="color: var(--text-bold-color); font-weight: bold;">Bold Color</span>
-
-- `inline code color`
-
----
-
-# Big Topic or Inverse Slides `#`
-
-## Slide Headings `##`
-
-### Sub-slide Headings `###`
-
-#### Bold Call-Out `####`
-
-This is a normal paragraph text. Only use header levels 1-4.
-
-##### Possible, but not recommended `#####`
-
-###### Definitely don't use h6 `######`
-
----
-class: inverse center middle
-
-# Topic Changing Interstitial
+## Uses
 
 --
 
-```
-class: inverse center middle
-```
-
----
-layout: true
-
-## Blocks
-
----
-
-### Blockquote
-
-> This is a blockquote following a header.
->
-> When something is important enough, you do it even if the odds are not in your favor.
-
----
-
-### Code Blocks
-
-#### R Code
-
-```{r eval=FALSE}
-ggplot(gapminder) +
-  aes(x = gdpPercap, y = lifeExp, size = pop, color = country) +
-  geom_point() +
-  facet_wrap(~year)
-```
-
-#### JavaScript
-
-```js
-var fun = function lang(l) {
-  dateformat.i18n = require('./lang/' + l)
-  return true;
-}
-```
-
----
-
-### More R Code
-
-```{r eval=FALSE}
-dplyr::starwars %>% dplyr::slice_sample(n = 4)
-```
-
----
-
-```{r message=TRUE}
-cli::cli_alert_success("It worked!")
-```
+## Key functions
 
 --
 
-```{r message=TRUE}
-message("Just a friendly message")
-```
-
---
-
-```{r warning=TRUE}
-warning("This could be bad...")
-```
-
---
-
-```{r error=TRUE}
-stop("I hope you're sitting down for this")
-```
+## Some results
 
 
 ---
-layout: true
 
-## Tables
-
----
-
-```{r}
-tibble::as_tibble(mtcars)
-```
+# Transport planning
 
 ---
 
-```{r}
-knitr::kable(head(mtcars), format = 'html')
-```
+# River/flooding research
 
 ---
 
-```{r}
-DT::datatable(head(mtcars), fillContainer = FALSE, options = list(pageLength = 4))
-```
-
----
-layout: true
-
-## Lists
+# Civil engineering
 
 ---
 
-.pull-left[
-#### Here is an unordered list:
+background-image: url(https://raw.githubusercontent.com/ITSLeeds/slopes/master/man/figures/README-slope-vis-1.png)
+background-size: 70%
+background-position: bottom
 
-*   Item foo
-*   Item bar
-*   Item baz
-*   Item zip
-]
-
-.pull-right[
-
-#### And an ordered list:
-
-1.  Item one
-1.  Item two
-1.  Item three
-1.  Item four
-]
+# Key functions
 
 ---
 
-### And a nested list:
-
-- level 1 item
-  - level 2 item
-  - level 2 item
-    - level 3 item
-    - level 3 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-- level 1 item
+# Next slide title
 
 ---
-
-### Nesting an ol in ul in an ol
-
-- level 1 item (ul)
-  1. level 2 item (ol)
-  1. level 2 item (ol)
-    - level 3 item (ul)
-    - level 3 item (ul)
-- level 1 item (ul)
-  1. level 2 item (ol)
-  1. level 2 item (ol)
-    - level 3 item (ul)
-    - level 3 item (ul)
-  1. level 4 item (ol)
-  1. level 4 item (ol)
-    - level 3 item (ul)
-    - level 3 item (ul)
-- level 1 item (ul)
-
----
-layout: true
-
-## Plots
-
----
-
-```{r plot-example}
-library(ggplot2)
-(g <- ggplot(mpg) + aes(hwy, cty, color = class) + geom_point())
-```
-
----
-
-```{r plot-example-themed}
-g + xaringanthemer::theme_xaringan(text_font_size = 16, title_font_size = 18) +
-  ggtitle("A Plot About Cars")
-```
-
----
-layout: false
-
-## Square image
-
-<center><img src="https://octodex.github.com/images/labtocat.png" height="400px" /></center>
-
-.footnote[GitHub Octocat]
-
----
-
-### Wide image
-
-![](https://guides.github.com/activities/hello-world/branching.png)
-
-.footnote[Wide images scale to 100% slide width]
-
----
-
-## Two images
-
-.pull-left[
-![](https://octodex.github.com/images/motherhubbertocat.png)
-]
-
-.pull-right[
-![](https://octodex.github.com/images/dinotocat.png)
-]
-
----
-
-### Definition lists can be used with HTML syntax.
-
-<dl>
-<dt>Name</dt>
-<dd>Godzilla</dd>
-<dt>Born</dt>
-<dd>1952</dd>
-<dt>Birthplace</dt>
-<dd>Japan</dd>
-<dt>Color</dt>
-<dd>Green</dd>
-</dl>
-
----
-class: center, middle
 
 # Thanks!
 
