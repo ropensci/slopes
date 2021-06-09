@@ -6,3 +6,6 @@ inst/doc
 .httr-oauth
 *.kml
 .RData
+data-raw/slides.html
+data-raw/slides_*
+data-raw/xaringan-themer.css
