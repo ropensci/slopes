@@ -1,0 +1,44 @@
+<!-- Brief: https://callforpapers.2021.foss4g.org/foss4g-2021-academic/ -->
+
+## Slopes: a package for reproducible slope calculation, analysis and visualisation
+
+Slopes are important for many purposes, including flood risk, agriculture, geology, and infrastructure constructions.
+In transport planning, consideration of gradient is especially important for walking and cycling routes, which provided our initial motivation for developing this package.
+Slopes can be calculated using proprietary products such as ArcMap but we wanted to calculate slopes using free and open source software to enable transparency, reproducibility and accessibility of our methods.
+We developed the software in R because of prior experience with the language and the mature 'R-spatial' community which has developed mature codebases for working with geographic data in a reproducible command line environment, including `sf` (for working with vector datasets representing roads and other linear features) and `raster` (for representing digital elevation models, DEMs).
+
+Building on these foundations the package is now working and has been used to calculate slopes on hundreds of roads in several cities.
+Comparison with ArcMap's 3D analyst show that the approach is competitive with the go-to proprietary produce in terms of computational speed and that we can reproduce ArcMap's results: tests show an R-squared value of 0.99.
+We hope the package will be of use and interest to the FOSS4G and in the talk will discuss ideas for taking the work forward, e.g. by implementing the logic into other languages/environments such as Rust, Python and even as a QGIS plugin.
+Could there be scope for an inter-disciplinary and language-agnostic community interested in slope analysis?
+We would like support efforts to strengthen links between geospatial developers who use R and the wider FOSS4G community, for example by comparing the slopes package with other open source approaches for slope calculation and analysis for mutually beneficial learning.
+We will conclude with discussion of possible future directions of travel for the project, including possibilities for 3D visualisation, auto-download of elevation point data sampled across linear features (currently the package automates the download of DEM data but requires a MapBox API key) and using the slope values to generate evidence in support of sustainable transport policies. 
+
+# Description
+
+The package calculates longitudinal steepness of linear features such as roads and rivers, based on two main inputs: vector linestring geometries and raster digital elevation model (DEM) datasets.
+
+After installing R, it can be installed as follows:
+
+```{r, eval=FALSE}
+remotes::install_github("itsleeds/slopes")
+```
+
+The minimum data requirements for using the package are elevation points, either as a vector, a matrix or as a digital elevation model (DEM) encoded as a raster dataset. Typically you will also have a geographic object representing the roads or similar features. These two types of input data are represented in the code output and plot below.
+
+# Notes
+
+
+# Authors
+
+
+Rosa Félix (1)
+
+Robin Lovelace (2)
+
+(1) University of Lisbon
+
+(1) University of Leeds
+
+
+
