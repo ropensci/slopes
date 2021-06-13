@@ -70,7 +70,7 @@ library(stplanr)
 ```{r filter}
 # filter unconnected roads
 iow_network$group = rnet_group(iow_network)
-iow_network_clean = iow_network %>% filter(group == 1) #the network with more connected segments
+iow_network_clean = iow_network %>% filter(group == 1) # the network with more connected segments
 ```
 
 ### Break the segments on vertices
@@ -95,12 +95,15 @@ Alternatively, **COPERNICUS** ESA's mission also provides [freely available](htt
 Depending of how large is your road network, you can use `slope_3d()` [function](https://itsleeds.github.io/slopes/reference/slope_3d.html) - this will require a valid [Mapbox api key](https://docs.mapbox.com/api/overview/).
 
 ```{r import_dem, message=FALSE}
-# Import DEM
-dem = raster::raster("https://github.com/U-Shift/Declives-RedeViaria/releases/download/0.2/IsleOfWightNASA_clip.tif")
+# Import and plot DEM
+u = "https://github.com/U-Shift/Declives-RedeViaria/releases/download/0.2/IsleOfWightNASA_clip.tif"
+f = basename(u)
+download.file(url = u, destfile = f, mode = "wb")
+dem = raster::raster(f)
 # res(dem) #27m of resolution
 network = iow_network_segments
-
-raster::plot(dem)
+library(raster)
+plot(dem)
 plot(sf::st_geometry(network), add = TRUE) #check if they overlay
 ```
 
@@ -132,16 +135,16 @@ round(prop.table(table(network$slope_class))*100,1)
 ```
 It means that **`r round(prop.table(table(network$slope_class))[[1]]*100)`%** of the roads are flat or almost flat (0-3%) and about **`r round(prop.table(table(network$slope_class))[[1]]*100)+round(prop.table(table(network$slope_class))[[2]]*100)`%** of the roads are easily cyclable (0-5%).
 
-Now let us put this information on a map.
+Now let us put this information on a map (see [here](https://rpubs.com/RobinLovelace/781081) for interactive version).
 
-```{r map, message = FALSE}
+```{r map, message = FALSE, eval=FALSE}
 # more useful information
 network$length = st_length(network)
 
 # make an interactive map
 library(tmap)
 palredgreen = c("#267300", "#70A800", "#FFAA00", "#E60000", "#A80000", "#730000") #color palette
-tmap_mode("view")
+# tmap_mode("view")
 tmap_options(basemaps = leaflet::providers$CartoDB.Positron) #basemap
 
 slopemap =
@@ -187,5 +190,6 @@ st_write(network, "shapefiles/SlopesIoW.gpkg", append=F)
 
 ```{r tidyup, include=FALSE}
 rm(iow_osm,iow_network_clean,iow_network_segments, iow_network, slopemap)
+file.remove(f) # remove the file, tidy up
 ```
 
