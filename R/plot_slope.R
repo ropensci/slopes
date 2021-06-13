@@ -1,17 +1,17 @@
 #' Plot slope data for a 3d linestring with base R graphics
 #'
-#' @param r A linestring with xyz dimensions
+#' @inheritParams slope_raster
 #' @inheritParams plot_dz
 #' @inheritParams sequential_dist
 #'
 #' @export
 #' @examples
 #' plot_slope(lisbon_route_3d)
-#' r = lisbon_road_segment_3d
-#' plot_slope(r)
-#' r = lisbon_road_segment_3d
-plot_slope = function(r,
-                      lonlat = sf::st_is_longlat(r),
+#' routes = lisbon_road_segment_3d
+#' plot_slope(routes)
+#' routes = lisbon_road_segment_3d
+plot_slope = function(routes,
+                      lonlat = sf::st_is_longlat(routes),
                       fill = TRUE,
                       horiz = FALSE,
                       p = ifelse(
@@ -27,7 +27,7 @@ plot_slope = function(r,
                       title = "Slope colors (percentage gradient)",
                       s = 3:18,
                       ncol = 4) {
-  dz = distance_z(r, lonlat = lonlat)
+  dz = distance_z(routes, lonlat = lonlat)
   plot_dz(dz$d, dz$z, fill = fill)
 }
 #' Plot a digital elevation profile based on xyz data
@@ -50,8 +50,8 @@ plot_slope = function(r,
 #' @param ... Additional parameters to pass to legend
 #' @export
 #' @examples
-#' r = lisbon_road_segment_3d
-#' m = sf::st_coordinates(r)
+#' routes = lisbon_road_segment_3d
+#' m = sf::st_coordinates(routes)
 #' d = cumsum(sequential_dist(m, lonlat = FALSE))
 #' d = c(0, d)
 #' z = m[, 3]
@@ -95,15 +95,9 @@ plot_dz = function(d,
                      ncol = ncol, cex = cex)
   }
 }
-# g = slope_matrix(m)
-# abline(h = 0, lty = 2)
-# points(x[-length(x)], gx, col = "red")
-# points(x[-length(x)], gxy, col = "blue")
-# title("Distance (in x coordinates) elevation profile",
-#       sub = "Points show calculated gradients of subsequent lines")
 
-distance_z = function(r, lonlat) {
-  m = sf::st_coordinates(r)
+distance_z = function(routes, lonlat) {
+  m = sf::st_coordinates(routes)
   d = cumsum(sequential_dist(m, lonlat = lonlat))
   d = c(0, d)
   z = m[, 3]

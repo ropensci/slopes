@@ -57,8 +57,8 @@ plot_dz(
 Plot a digital elevation profile based on xyz data
 }
 \examples{
-r = lisbon_road_segment_3d
-m = sf::st_coordinates(r)
+routes = lisbon_road_segment_3d
+m = sf::st_coordinates(routes)
 d = cumsum(sequential_dist(m, lonlat = FALSE))
 d = c(0, d)
 z = m[, 3]

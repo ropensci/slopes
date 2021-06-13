@@ -5,8 +5,8 @@
 \title{Plot slope data for a 3d linestring with base R graphics}
 \usage{
 plot_slope(
-  r,
-  lonlat = sf::st_is_longlat(r),
+  routes,
+  lonlat = sf::st_is_longlat(routes),
   fill = TRUE,
   horiz = FALSE,
   p = ifelse(test = requireNamespace("colorspace", quietly = TRUE),
@@ -22,7 +22,8 @@ plot_slope(
 )
 }
 \arguments{
-\item{r}{A linestring with xyz dimensions}
+\item{routes}{Routes, the gradients of which are to be calculated.
+The object must be of class \code{sf} with \code{LINESTRING} geometries.}
 
 \item{lonlat}{Are the coordinates in lon/lat order? \code{TRUE} by default}
 
@@ -54,7 +55,7 @@ Plot slope data for a 3d linestring with base R graphics
 }
 \examples{
 plot_slope(lisbon_route_3d)
-r = lisbon_road_segment_3d
-plot_slope(r)
-r = lisbon_road_segment_3d
+routes = lisbon_road_segment_3d
+plot_slope(routes)
+routes = lisbon_road_segment_3d
 }
