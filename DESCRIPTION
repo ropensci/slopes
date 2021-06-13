@@ -44,6 +44,8 @@ Suggests:
     bookdown,
     covr,
     testthat,
-    osmextract
+    osmextract,
+    stplanr,
+    dplyr
 VignetteBuilder: knitr
 Config/testthat/edition: 3
