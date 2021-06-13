@@ -11,8 +11,9 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width=7, fig.height=5, fig.align = "center",
-  eval = FALSE
+  fig.width=7, fig.height=5, fig.align = "center"
+  # ,
+  # eval = FALSE
 )
 ```
 
@@ -83,7 +84,11 @@ The [`rnet_breakup_vertices`](https://docs.ropensci.org/stplanr/reference/rnet_b
 ```{r breaking, warning=FALSE, message = FALSE}
 iow_network_segments = rnet_breakup_vertices(iow_network_clean)
 ```
-In this case, there are more `r round(nrow(iow_network_segments)/nrow(iow_network_clean),2)`x segments than the original network.
+
+In this case, there are 1.6 times more segments than the original network.
+
+
+`r # round(nrow(iow_network_segments)/nrow(iow_network_clean),2)`
 
 ## Get slope values for each segment
 
@@ -97,11 +102,14 @@ Depending of how large is your road network, you can use `slope_3d()` [function]
 
 ```{r import_dem, message=FALSE}
 # Import DEM
-dem = raster::raster("https://github.com/U-Shift/Declives-RedeViaria/releases/download/0.2/IsleOfWightNASA_clip.tif")
+u = "https://github.com/U-Shift/Declives-RedeViaria/releases/download/0.2/IsleOfWightNASA_clip.tif"
+f = basename(u)
+download.file(url = u, destfile = f, mode = "wb")
+dem = raster::raster(f)
 # res(dem) #27m of resolution
 network = iow_network_segments
 
-raster::plot(dem)
+raster::plot(dem) # awesome!
 plot(sf::st_geometry(network), add = TRUE) #check if they overlay
 ```
 
@@ -116,7 +124,9 @@ network$slope = network$slope*100 #percentage
 summary(network$slope) #check the values
 ```
 
-Half of the road segments in Isle of Wight have a gradient bellow `r round(median(network$slope),1)`%.
+Half of the road segments in Isle of Wight have a gradient bellow 3.1%.
+
+`r # round(median(network$slope),1)`
 
 We will adopt a simplistic qualitative classification for **cycling effort uphill**, and compare the number of segments in each class.
 
