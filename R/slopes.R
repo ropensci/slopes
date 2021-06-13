@@ -278,7 +278,7 @@ slope_3d = function(
     rgeom3d_sfc = sf::st_sfc(linestrings, crs = sf::st_crs(routes))
     sf::st_geometry(routes) = rgeom3d_sfc
   }
-  r
+  routes
 }
 
 # unexported function to check if the user has terra package installed
@@ -297,9 +297,3 @@ stop_is_not_linestring = function(x) {
     "Only works with LINESTRINGs. Try converting with sf::st_cast() first."
   )
 }
-# # test:
-# x = sf::st_cast(lisbon_road_segment, "MULTILINESTRING")
-# is_linestring(lisbon_road_segment)
-# is_linestring(x)
-# stop_is_not_linestring(x)
-# stop_is_not_linestring(lisbon_road_segment)
