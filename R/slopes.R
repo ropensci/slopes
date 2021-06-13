@@ -178,7 +178,11 @@ slope_raster = function(
 #' @examples
 #' r_xyz = lisbon_road_segment_3d
 #' slope_xyz(r_xyz)
-slope_xyz = function(r_xyz, fun = slope_matrix_weighted, lonlat = NULL) {
+slope_xyz = function(
+  r_xyz,
+  fun = slope_matrix_weighted,
+  lonlat = sf::st_is_longlat(r_xyz)
+  ) {
   # browser()
   if(inherits(r_xyz, "sf") | inherits(r_xyz, "sfc")) {
     if(is.null(lonlat)) {
