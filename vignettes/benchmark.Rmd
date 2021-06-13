@@ -10,13 +10,17 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  eval = FALSE
 )
 ```
 
 ```{r setup}
 library(slopes)
+library(bench)
 ```
+
+**Note: benchmarks do not currently evaluate on actions for faster build times.**
 
 # Performance
 
