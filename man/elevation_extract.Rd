@@ -14,7 +14,7 @@ elevation_extract(
 \arguments{
 \item{m}{Matrix containing coordinates and elevations}
 
-\item{e}{Raster overlapping with \code{r} and values representing elevations}
+\item{e}{Raster overlapping with \code{routes} and values representing elevations}
 
 \item{method}{The method of estimating elevation at points,
 passed to the \code{extract} function for extracting values from raster

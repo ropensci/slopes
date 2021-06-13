@@ -128,16 +128,16 @@ slope_matrices = function(m_xyz_split, fun = slope_matrix_weighted, ...) {
 #' if the network is first split-up, e.g. using the function
 #' `stplanr::rnet_breakup_vertices()` from the
 #' [`stplanr`](https://docs.ropensci.org/stplanr/reference/) package.
-#' **Note:** The `r` object must have a geometry type of `LINESTRING`.
+#' **Note:** The `routes` object must have a geometry type of `LINESTRING`.
 #' The `sf::st_cast()` function can convert from `MULTILINESTRING` (and other)
 #' geometries to `LINESTRING`s as follows:
-#' `r_linestring = sf::st_cast(r, "LINESTRING")`.
+#' `r_linestring = sf::st_cast(routes, "LINESTRING")`.
 #'
 #' @inheritParams sequential_dist
 #' @inheritParams elevation_extract
-#' @param r Routes, the gradients of which are to be calculated.
+#' @param routes Routes, the gradients of which are to be calculated.
 #'   The object must be of class `sf` with `LINESTRING` geometries.
-#' @param e Raster overlapping with `r` and values representing elevations
+#' @param e Raster overlapping with `routes` and values representing elevations
 #' @param method The method of estimating elevation at points,
 #'   passed to the `extract` function for extracting values from raster
 #'   datasets. Default: `"bilinear"`.
@@ -146,22 +146,22 @@ slope_matrices = function(m_xyz_split, fun = slope_matrix_weighted, ...) {
 #' @importFrom methods is
 #' @export
 #' @examples
-#' r = lisbon_road_segments[1:3, ]
+#' routes = lisbon_road_segments[1:3, ]
 #' e = dem_lisbon_raster
-#' (s = slope_raster(r, e))
-#' cor(r$Avg_Slope, s)
+#' (s = slope_raster(routes, e))
+#' cor(routes$Avg_Slope, s)
 slope_raster = function(
-  r,
+ routes,
   e = NULL,
-  lonlat = sf::st_is_longlat(r),
+  lonlat = sf::st_is_longlat(routes),
   method = "bilinear",
   fun = slope_matrix_weighted,
   terra = has_terra() && methods::is(e, "SpatRaster")
   ) {
-  stop_is_not_linestring(r)
-  r = sf::st_geometry(r)
+  stop_is_not_linestring(routes)
+  routes = sf::st_geometry(routes)
   # todo: split out this bit into slope_xyz function
-  m = sf::st_coordinates(r)
+  m = sf::st_coordinates(routes)
   # colnames(m)
   z = elevation_extract(m, e, method = method, terra = terra)
   m_xyz_df = data.frame(x = m[, "X"], y = m[, "Y"], z = z, L1 = m[, "L1"])
@@ -236,65 +236,52 @@ elevation_extract = function(m,
 #' @inheritParams elevation_extract
 #' @export
 #' @examples
-#' r = lisbon_road_segments[204, ]
+#' routes = lisbon_road_segments[204, ]
 #' e = dem_lisbon_raster
-#' (r3d = slope_3d(r, e))
-#' sf::st_z_range(r)
+#' (r3d = slope_3d(routes, e))
+#' sf::st_z_range(routes)
 #' sf::st_z_range(r3d)
 #' plot(sf::st_coordinates(r3d)[, 3])
 #' plot_slope(r3d)
 #' # r3d_get = slope_3d(cyclestreets_route)
 #' # plot_slope(r3d_get)
 slope_3d = function(
-  r,
+ routes,
   e = NULL,
   method = "bilinear",
   terra = has_terra() && methods::is(e, "SpatRaster")
   ) {
-  # if("geom" %in% names(r)) {
-  #   rgeom = r$geom
-  # } else if("geometry" %in% names(r)) {
-  #   rgeom = r$geometry
-  # } else {
-  #   rgeom = sf::st_geometry(r)
-  # }
   if(is.null(e)) {
-    e = elevations_get(r)
-    r_original = r # create copy to deal with projection issues
-    r = sf::st_transform(r, raster::crs(e))
-    suppressWarnings({sf::st_crs(r) = sf::st_crs(r_original)})
-    # plot(e)
-    # plot(r$geometry, add = TRUE)
-    m = sf::st_coordinates(r)
+    e = elevations_get(routes)
+    r_original = routes # create copy to deal with projection issues
+    routes = sf::st_transform(routes, raster::crs(e))
+    suppressWarnings({sf::st_crs(routes) = sf::st_crs(r_original)})
+    m = sf::st_coordinates(routes)
     mo = sf::st_coordinates(r_original)
     z = as.numeric(elevation_extract(m, e, method = method, terra = terra))
     m_xyz = cbind(mo[, 1:2], z)
   } else {
-    m = sf::st_coordinates(r)
+    m = sf::st_coordinates(routes)
     z = as.numeric(elevation_extract(m, e, method = method, terra = terra))
     m_xyz = cbind(m[, 1:2], z)
   }
-  n = nrow(r)
+  n = nrow(routes)
 
   if(n == 1) {
-    # currently only works for 1 line, to be generalised
-
     rgeom3d_line = sf::st_linestring(m_xyz)
-    rgeom3d_sfc = sf::st_sfc(rgeom3d_line, crs = sf::st_crs(r))
-    # message("Original geometry: ", ncol(rgeom[[1]]))
-    sf::st_geometry(r) = rgeom3d_sfc
-    # message("New geometry: ", ncol(r$geom[[1]]))
+    rgeom3d_sfc = sf::st_sfc(rgeom3d_line, crs = sf::st_crs(routes))
+    sf::st_geometry(routes) = rgeom3d_sfc
   } else {
     linestrings = lapply(seq(n), function(i){
       rgeom3d_line = sf::st_linestring(m_xyz[m[, 3] == i, ])
     })
-    rgeom3d_sfc = sf::st_sfc(linestrings, crs = sf::st_crs(r))
-    sf::st_geometry(r) = rgeom3d_sfc
+    rgeom3d_sfc = sf::st_sfc(linestrings, crs = sf::st_crs(routes))
+    sf::st_geometry(routes) = rgeom3d_sfc
   }
   r
 }
-# terra = has_terra() && methods::is(e, "SpatRaster")
-# terra
+
+# unexported function to check if the user has terra package installed
 has_terra = function() {
   res = requireNamespace("terra", quietly = TRUE)
   # print(res)

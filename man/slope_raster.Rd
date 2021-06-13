@@ -5,19 +5,19 @@
 \title{Calculate the gradient of line segments from a raster dataset}
 \usage{
 slope_raster(
-  r,
+  routes,
   e = NULL,
-  lonlat = sf::st_is_longlat(r),
+  lonlat = sf::st_is_longlat(routes),
   method = "bilinear",
   fun = slope_matrix_weighted,
   terra = has_terra() && methods::is(e, "SpatRaster")
 )
 }
 \arguments{
-\item{r}{Routes, the gradients of which are to be calculated.
+\item{routes}{Routes, the gradients of which are to be calculated.
 The object must be of class \code{sf} with \code{LINESTRING} geometries.}
 
-\item{e}{Raster overlapping with \code{r} and values representing elevations}
+\item{e}{Raster overlapping with \code{routes} and values representing elevations}
 
 \item{lonlat}{Are the coordinates in lon/lat order? \code{TRUE} by default}
 
@@ -42,14 +42,14 @@ If calculating slopes associated with OSM data, the results may be better
 if the network is first split-up, e.g. using the function
 \code{stplanr::rnet_breakup_vertices()} from the
 \href{https://docs.ropensci.org/stplanr/reference/}{\code{stplanr}} package.
-\strong{Note:} The \code{r} object must have a geometry type of \code{LINESTRING}.
+\strong{Note:} The \code{routes} object must have a geometry type of \code{LINESTRING}.
 The \code{sf::st_cast()} function can convert from \code{MULTILINESTRING} (and other)
 geometries to \code{LINESTRING}s as follows:
-\code{r_linestring = sf::st_cast(r, "LINESTRING")}.
+\code{r_linestring = sf::st_cast(routes, "LINESTRING")}.
 }
 \examples{
-r = lisbon_road_segments[1:3, ]
+routes = lisbon_road_segments[1:3, ]
 e = dem_lisbon_raster
-(s = slope_raster(r, e))
-cor(r$Avg_Slope, s)
+(s = slope_raster(routes, e))
+cor(routes$Avg_Slope, s)
 }
