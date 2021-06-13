@@ -140,7 +140,7 @@ plot_slope(lisbon_route_3d)
 If you do not have a raster dataset representing elevations, you can automatically download them as follows.
 
 ```{r, message=FALSE, warning=FALSE}
-lisbon_route_3d_auto = slope_3d(r = lisbon_route)
+lisbon_route_3d_auto = slope_3d(routes = lisbon_route)
 plot_slope(lisbon_route_3d_auto)
 ```
 
