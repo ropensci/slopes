@@ -48,7 +48,6 @@ plot_slope = function(routes,
 #' @param ncol Number of columns in legend
 #' @param horiz Should the legend be horizontal (`FALSE` by default)
 #' @param ... Additional parameters to pass to legend
-#' @export
 #' @examples
 #' routes = lisbon_road_segment_3d
 #' m = sf::st_coordinates(routes)
