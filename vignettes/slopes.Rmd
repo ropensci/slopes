@@ -1,8 +1,8 @@
 ---
-title: "An introduction to slopes"
+title: "An introduction to the slopes package"
 output: bookdown::html_vignette2
 vignette: >
-  %\VignetteIndexEntry{An introdution to slopes}
+  %\VignetteIndexEntry{An introduction to the slopes package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 bibliography: slope-references.bib
