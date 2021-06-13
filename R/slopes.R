@@ -169,7 +169,7 @@ slope_raster = function(
   res
 }
 
-#' Extract slopes from xyz dataframe or sf objects
+#' Extract slopes from xyz data frame or sf objects
 #'
 #' @param r_xyz An sf object with x, y, z dimensions
 #' @inheritParams slope_raster

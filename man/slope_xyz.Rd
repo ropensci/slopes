@@ -2,7 +2,7 @@
 % Please edit documentation in R/slopes.R
 \name{slope_xyz}
 \alias{slope_xyz}
-\title{Extract slopes from xyz dataframe or sf objects}
+\title{Extract slopes from xyz data frame or sf objects}
 \usage{
 slope_xyz(r_xyz, fun = slope_matrix_weighted, lonlat = NULL)
 }
@@ -15,7 +15,7 @@ slope_xyz(r_xyz, fun = slope_matrix_weighted, lonlat = NULL)
 \item{lonlat}{Are the coordinates in lon/lat order? \code{TRUE} by default}
 }
 \description{
-Extract slopes from xyz dataframe or sf objects
+Extract slopes from xyz data frame or sf objects
 }
 \examples{
 r_xyz = lisbon_road_segment_3d
