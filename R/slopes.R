@@ -251,7 +251,6 @@ slope_3d = function(
   method = "bilinear",
   terra = has_terra() && methods::is(e, "SpatRaster")
   ) {
-  browser()
   if(is.null(e)) {
     e = elevations_get(routes)
     r_original = routes # create copy to deal with projection issues
