@@ -23,6 +23,7 @@ geometries and raster digital elevation model (DEM) datasets.
 <!-- install.packages("slopes") -->
 <!-- ``` -->
 
+
 Install the development version from [GitHub](https://github.com/) with:
 
 ``` r
