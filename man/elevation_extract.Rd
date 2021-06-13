@@ -6,15 +6,15 @@
 \usage{
 elevation_extract(
   m,
-  e,
+  dem,
   method = "bilinear",
-  terra = has_terra() && methods::is(e, "SpatRaster")
+  terra = has_terra() && methods::is(dem, "SpatRaster")
 )
 }
 \arguments{
 \item{m}{Matrix containing coordinates and elevations}
 
-\item{e}{Raster overlapping with \code{routes} and values representing elevations}
+\item{dem}{Raster overlapping with \code{routes} and values representing elevations}
 
 \item{method}{The method of estimating elevation at points,
 passed to the \code{extract} function for extracting values from raster
@@ -22,16 +22,16 @@ datasets. Default: \code{"bilinear"}.}
 
 \item{terra}{Should the \code{terra} package be used?
 \code{TRUE} by default if the package is installed \emph{and}
-if \code{e} is of class \code{SpatRast}}
+if \code{dem} is of class \code{SpatRast}}
 }
 \description{
 Extract elevations from coordinates
 }
 \examples{
 m = sf::st_coordinates(lisbon_road_segments[1, ])
-e = dem_lisbon_raster
-elevation_extract(m, e)
-elevation_extract(m, e, method = "simple")
+dem = dem_lisbon_raster
+elevation_extract(m, dem)
+elevation_extract(m, dem, method = "simple")
 # uncomment the following lines to test with terra (experimental)
 # u = paste0("https://github.com/ITSLeeds/slopes/",
 #    "releases/download/0.0.0/dem_lisbon.tif" )

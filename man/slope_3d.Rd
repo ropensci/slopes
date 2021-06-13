@@ -6,16 +6,16 @@
 \usage{
 slope_3d(
   routes,
-  e = NULL,
+  dem = NULL,
   method = "bilinear",
-  terra = has_terra() && methods::is(e, "SpatRaster")
+  terra = has_terra() && methods::is(dem, "SpatRaster")
 )
 }
 \arguments{
 \item{routes}{Routes, the gradients of which are to be calculated.
 The object must be of class \code{sf} with \code{LINESTRING} geometries.}
 
-\item{e}{Raster overlapping with \code{routes} and values representing elevations}
+\item{dem}{Raster overlapping with \code{routes} and values representing elevations}
 
 \item{method}{The method of estimating elevation at points,
 passed to the \code{extract} function for extracting values from raster
@@ -23,15 +23,15 @@ datasets. Default: \code{"bilinear"}.}
 
 \item{terra}{Should the \code{terra} package be used?
 \code{TRUE} by default if the package is installed \emph{and}
-if \code{e} is of class \code{SpatRast}}
+if \code{dem} is of class \code{SpatRast}}
 }
 \description{
 Take a linestring and add a third (z) dimension to its coordinates
 }
 \examples{
 routes = lisbon_road_segments[204, ]
-e = dem_lisbon_raster
-(r3d = slope_3d(routes, e))
+dem = dem_lisbon_raster
+(r3d = slope_3d(routes, dem))
 sf::st_z_range(routes)
 sf::st_z_range(r3d)
 plot(sf::st_coordinates(r3d)[, 3])

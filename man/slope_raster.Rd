@@ -6,18 +6,18 @@
 \usage{
 slope_raster(
   routes,
-  e = NULL,
+  dem = NULL,
   lonlat = sf::st_is_longlat(routes),
   method = "bilinear",
   fun = slope_matrix_weighted,
-  terra = has_terra() && methods::is(e, "SpatRaster")
+  terra = has_terra() && methods::is(dem, "SpatRaster")
 )
 }
 \arguments{
 \item{routes}{Routes, the gradients of which are to be calculated.
 The object must be of class \code{sf} with \code{LINESTRING} geometries.}
 
-\item{e}{Raster overlapping with \code{routes} and values representing elevations}
+\item{dem}{Raster overlapping with \code{routes} and values representing elevations}
 
 \item{lonlat}{Are the coordinates in lon/lat order? \code{TRUE} by default}
 
@@ -30,7 +30,7 @@ datasets. Default: \code{"bilinear"}.}
 
 \item{terra}{Should the \code{terra} package be used?
 \code{TRUE} by default if the package is installed \emph{and}
-if \code{e} is of class \code{SpatRast}}
+if \code{dem} is of class \code{SpatRast}}
 }
 \description{
 This function takes an \code{sf} representing routes over geographical space
@@ -49,7 +49,7 @@ geometries to \code{LINESTRING}s as follows:
 }
 \examples{
 routes = lisbon_road_segments[1:3, ]
-e = dem_lisbon_raster
-(s = slope_raster(routes, e))
+dem = dem_lisbon_raster
+(s = slope_raster(routes, dem))
 cor(routes$Avg_Slope, s)
 }

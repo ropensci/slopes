@@ -5,14 +5,14 @@
 \alias{slope_matrix_weighted}
 \title{Calculate the gradient of line segments from a 3D matrix of coordinates}
 \usage{
-slope_matrix(m, e = m[, 3], lonlat = TRUE)
+slope_matrix(m, elevations = m[, 3], lonlat = TRUE)
 
-slope_matrix_weighted(m, e = m[, 3], lonlat = TRUE)
+slope_matrix_weighted(m, elevations = m[, 3], lonlat = TRUE)
 }
 \arguments{
 \item{m}{Matrix containing coordinates and elevations}
 
-\item{e}{Elevations in same units as x (assumed to be metres)}
+\item{elevations}{Elevations in same units as x (assumed to be metres)}
 
 \item{lonlat}{Are the coordinates in lon/lat order? \code{TRUE} by default}
 }

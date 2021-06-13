@@ -7,18 +7,18 @@
 \alias{slope_distance_weighted}
 \title{Calculate the gradient of line segments from distance and elevation vectors}
 \usage{
-slope_vector(x, e)
+slope_vector(x, elevations)
 
-slope_distance(d, e)
+slope_distance(d, elevations)
 
-slope_distance_mean(d, e)
+slope_distance_mean(d, elevations)
 
-slope_distance_weighted(d, e)
+slope_distance_weighted(d, elevations)
 }
 \arguments{
 \item{x}{Vector of locations}
 
-\item{e}{Elevations in same units as x (assumed to be metres)}
+\item{elevations}{Elevations in same units as x (assumed to be metres)}
 
 \item{d}{Vector of distances between points}
 }
@@ -41,12 +41,12 @@ on the resulting gradient estimate (see examples).
 }
 \examples{
 x = c(0, 2, 3, 4, 5, 9)
-e = c(1, 2, 2, 4, 3, 1) / 10
-slope_vector(x, e)
+elevations = c(1, 2, 2, 4, 3, 1) / 10
+slope_vector(x, elevations)
 m = sf::st_coordinates(lisbon_road_segment)
 d = sequential_dist(m, lonlat = FALSE)
-e = elevation_extract(m, dem_lisbon_raster)
-slope_distance(d, e)
-slope_distance_mean(d, e)
-slope_distance_weighted(d, e)
+elevations = elevation_extract(m, dem_lisbon_raster)
+slope_distance(d, elevations)
+slope_distance_mean(d, elevations)
+slope_distance_weighted(d, elevations)
 }
