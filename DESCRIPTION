@@ -43,6 +43,7 @@ Suggests:
     ceramic,
     bookdown,
     covr,
-    testthat
+    testthat,
+    osmextract
 VignetteBuilder: knitr
 Config/testthat/edition: 3
