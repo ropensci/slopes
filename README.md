@@ -73,7 +73,7 @@ plot(sf::st_geometry(lisbon_road_segments), add = TRUE)
 Calculate the average gradient of each road segment as follows:
 
 ``` r
-lisbon_road_segments$slope = slope_raster(lisbon_road_segments, e = dem_lisbon_raster)
+lisbon_road_segments$slope = slope_raster(lisbon_road_segments, dem = dem_lisbon_raster)
 summary(lisbon_road_segments$slope)
 #>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 #> 0.00000 0.01246 0.03534 0.05462 0.08251 0.27583

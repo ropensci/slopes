@@ -78,7 +78,7 @@ plot_dz = function(d,
   if (fill) {
     b = make_breaks(brks)
     pal = make_pal(p, b)
-    g = slope_vector(x = d, e = z)
+    g = slope_vector(x = d, elevations = z)
     colz = make_colz(g, b, pal)
     lapply(seq(d)[-(length(d))], function(i) {
       graphics::polygon(
