@@ -14,7 +14,11 @@ slope_matrix_weighted(m, elevations = m[, 3], lonlat = TRUE)
 
 \item{elevations}{Elevations in same units as x (assumed to be metres)}
 
-\item{lonlat}{Are the coordinates in lon/lat order? \code{TRUE} by default}
+\item{lonlat}{Are the coordinates in lon/lat (geographic) coordinates?
+Set this to \code{FALSE} if you have projected data, e.g. with coordinates
+representing distance in meters, not degrees. Lonlat coodinates are assumed
+(\code{lonlat = TRUE}) is the default. In \code{slope_raster()} and \code{plot_slope()}
+it is taken from the CRS of the routes (\code{sf::st_is_longlat(routes)}).}
 }
 \description{
 Calculate the gradient of line segments from a 3D matrix of coordinates

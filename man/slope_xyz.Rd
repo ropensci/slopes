@@ -4,7 +4,7 @@
 \alias{slope_xyz}
 \title{Extract slopes from xyz data frame or sf objects}
 \usage{
-slope_xyz(r_xyz, fun = slope_matrix_weighted, lonlat = NULL)
+slope_xyz(r_xyz, fun = slope_matrix_weighted, lonlat = TRUE)
 }
 \arguments{
 \item{r_xyz}{An sf object with x, y, z dimensions}
@@ -12,12 +12,16 @@ slope_xyz(r_xyz, fun = slope_matrix_weighted, lonlat = NULL)
 \item{fun}{The slope function to calculate per route,
 \code{slope_matrix_weighted} by default.}
 
-\item{lonlat}{Are the coordinates in lon/lat order? \code{TRUE} by default}
+\item{lonlat}{Are the coordinates in lon/lat (geographic) coordinates?
+Set this to \code{FALSE} if you have projected data, e.g. with coordinates
+representing distance in meters, not degrees. Lonlat coodinates are assumed
+(\code{lonlat = TRUE}) is the default. In \code{slope_raster()} and \code{plot_slope()}
+it is taken from the CRS of the routes (\code{sf::st_is_longlat(routes)}).}
 }
 \description{
 Extract slopes from xyz data frame or sf objects
 }
 \examples{
 r_xyz = lisbon_road_segment_3d
-slope_xyz(r_xyz)
+slope_xyz(r_xyz, lonlat = FALSE)
 }

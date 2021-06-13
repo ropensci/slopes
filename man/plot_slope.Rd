@@ -25,7 +25,11 @@ plot_slope(
 \item{routes}{Routes, the gradients of which are to be calculated.
 The object must be of class \code{sf} with \code{LINESTRING} geometries.}
 
-\item{lonlat}{Are the coordinates in lon/lat order? \code{TRUE} by default}
+\item{lonlat}{Are the coordinates in lon/lat (geographic) coordinates?
+Set this to \code{FALSE} if you have projected data, e.g. with coordinates
+representing distance in meters, not degrees. Lonlat coodinates are assumed
+(\code{lonlat = TRUE}) is the default. In \code{slope_raster()} and \code{plot_slope()}
+it is taken from the CRS of the routes (\code{sf::st_is_longlat(routes)}).}
 
 \item{fill}{Should the profile be filled? \code{TRUE} by default}
 
