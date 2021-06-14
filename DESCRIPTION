@@ -46,6 +46,7 @@ Suggests:
     testthat,
     osmextract,
     stplanr,
-    dplyr
+    dplyr,
+    rgdal
 VignetteBuilder: knitr
 Config/testthat/edition: 3

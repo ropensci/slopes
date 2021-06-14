@@ -102,6 +102,7 @@ download.file(url = u, destfile = f, mode = "wb")
 dem = raster::raster(f)
 # res(dem) #27m of resolution
 network = iow_network_segments
+
 library(raster)
 plot(dem)
 plot(sf::st_geometry(network), add = TRUE) #check if they overlay
