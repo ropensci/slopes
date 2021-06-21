@@ -61,13 +61,41 @@ background-size: 100%
 <br>
 # Structure:
 
-## Uses
+## Why slopes?
+
+--
 
 --
 
 ## Key functions
 
 --
+
+---
+
+
+![](slope-edinburgh-bridge.png)
+
+???
+
+- RL
+
+- My research into tools for prioritising cycling investment
+
+- UK not very hilly but models fail slightly in hilly areas
+
+
+---
+
+...
+
+
+???
+
+- Rosa motivation
+
+---
+
 
 ## Some results
 
