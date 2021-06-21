@@ -98,6 +98,12 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/benchmark.html">Benchmarking slopes calculation</a>
+    </li>
+    <li>
+      <a href="../articles/roadnetworkcycling.html">Example: gradients of a road network for a given city</a>
+    </li>
+    <li>
       <a href="../articles/verification.html">Verification of slopes</a>
     </li>
   </ul>
@@ -132,9 +138,9 @@
     <p>Calculate the gradient of line segments from a 3D matrix of coordinates</p>
     </div>
 
-    <pre class="usage"><span class='fu'>slope_matrix</span><span class='op'>(</span><span class='va'>m</span>, e <span class='op'>=</span> <span class='va'>m</span><span class='op'>[</span>, <span class='fl'>3</span><span class='op'>]</span>, lonlat <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>slope_matrix</span><span class='op'>(</span><span class='va'>m</span>, elevations <span class='op'>=</span> <span class='va'>m</span><span class='op'>[</span>, <span class='fl'>3</span><span class='op'>]</span>, lonlat <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
-<span class='fu'>slope_matrix_weighted</span><span class='op'>(</span><span class='va'>m</span>, e <span class='op'>=</span> <span class='va'>m</span><span class='op'>[</span>, <span class='fl'>3</span><span class='op'>]</span>, lonlat <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+<span class='fu'>slope_matrix_weighted</span><span class='op'>(</span><span class='va'>m</span>, elevations <span class='op'>=</span> <span class='va'>m</span><span class='op'>[</span>, <span class='fl'>3</span><span class='op'>]</span>, lonlat <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -144,12 +150,16 @@
       <td><p>Matrix containing coordinates and elevations</p></td>
     </tr>
     <tr>
-      <th>e</th>
+      <th>elevations</th>
       <td><p>Elevations in same units as x (assumed to be metres)</p></td>
     </tr>
     <tr>
       <th>lonlat</th>
-      <td><p>Are the coordinates in lon/lat order? <code>TRUE</code> by default</p></td>
+      <td><p>Are the coordinates in lon/lat (geographic) coordinates?
+Set this to <code>FALSE</code> if you have projected data, e.g. with coordinates
+representing distance in meters, not degrees. Lonlat coodinates are assumed
+(<code>lonlat = TRUE</code>) is the default. In <code><a href='slope_raster.html'>slope_raster()</a></code> and <code><a href='plot_slope.html'>plot_slope()</a></code>
+it is taken from the CRS of the routes (<code><a href='https://r-spatial.github.io/sf/reference/st_is_longlat.html'>sf::st_is_longlat(routes)</a></code>).</p></td>
     </tr>
     </table>
 

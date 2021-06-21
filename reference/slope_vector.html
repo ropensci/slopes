@@ -109,6 +109,12 @@ on the resulting gradient estimate (see examples)." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/benchmark.html">Benchmarking slopes calculation</a>
+    </li>
+    <li>
+      <a href="../articles/roadnetworkcycling.html">Example: gradients of a road network for a given city</a>
+    </li>
+    <li>
       <a href="../articles/verification.html">Verification of slopes</a>
     </li>
   </ul>
@@ -154,13 +160,13 @@ measurement, so longer sections have proportionally more influence
 on the resulting gradient estimate (see examples).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>slope_vector</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>e</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>slope_vector</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>elevations</span><span class='op'>)</span>
 
-<span class='fu'>slope_distance</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>e</span><span class='op'>)</span>
+<span class='fu'>slope_distance</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>elevations</span><span class='op'>)</span>
 
-<span class='fu'>slope_distance_mean</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>e</span><span class='op'>)</span>
+<span class='fu'>slope_distance_mean</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>elevations</span><span class='op'>)</span>
 
-<span class='fu'>slope_distance_weighted</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>e</span><span class='op'>)</span></pre>
+<span class='fu'>slope_distance_weighted</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>elevations</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -170,7 +176,7 @@ on the resulting gradient estimate (see examples).</p>
       <td><p>Vector of locations</p></td>
     </tr>
     <tr>
-      <th>e</th>
+      <th>elevations</th>
       <td><p>Elevations in same units as x (assumed to be metres)</p></td>
     </tr>
     <tr>
@@ -182,17 +188,17 @@ on the resulting gradient estimate (see examples).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>5</span>, <span class='fl'>9</span><span class='op'>)</span>
-<span class='va'>e</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>)</span> <span class='op'>/</span> <span class='fl'>10</span>
-<span class='fu'>slope_vector</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>e</span><span class='op'>)</span>
+<span class='va'>elevations</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>)</span> <span class='op'>/</span> <span class='fl'>10</span>
+<span class='fu'>slope_vector</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>elevations</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1]  0.05  0.00  0.20 -0.10 -0.05</div><div class='input'><span class='va'>m</span> <span class='op'>=</span> <span class='fu'>sf</span><span class='fu'>::</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_coordinates.html'>st_coordinates</a></span><span class='op'>(</span><span class='va'>lisbon_road_segment</span><span class='op'>)</span>
 <span class='va'>d</span> <span class='op'>=</span> <span class='fu'><a href='sequential_dist.html'>sequential_dist</a></span><span class='op'>(</span><span class='va'>m</span>, lonlat <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='va'>e</span> <span class='op'>=</span> <span class='fu'><a href='elevation_extract.html'>elevation_extract</a></span><span class='op'>(</span><span class='va'>m</span>, <span class='va'>dem_lisbon_raster</span><span class='op'>)</span>
-<span class='fu'>slope_distance</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>e</span><span class='op'>)</span>
+<span class='va'>elevations</span> <span class='op'>=</span> <span class='fu'><a href='elevation_extract.html'>elevation_extract</a></span><span class='op'>(</span><span class='va'>m</span>, <span class='va'>dem_lisbon_raster</span><span class='op'>)</span>
+<span class='fu'>slope_distance</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>elevations</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;  [1] -0.047226259 -0.040883072 -0.025032918 -0.061124557 -0.017447060
 #&gt;  [6] -0.062426272 -0.123580541  0.033705378  0.004292243 -0.040360003
 #&gt; [11] -0.151671893 -0.182367906  0.409246854 -0.034463974 -0.098406640
-#&gt; [16] -0.161798173  0.076261379  0.100654228</div><div class='input'><span class='fu'>slope_distance_mean</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>e</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.09283052</div><div class='input'><span class='fu'>slope_distance_weighted</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>e</span><span class='op'>)</span>
+#&gt; [16] -0.161798173  0.076261379  0.100654228</div><div class='input'><span class='fu'>slope_distance_mean</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>elevations</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.09283052</div><div class='input'><span class='fu'>slope_distance_weighted</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>elevations</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 0.09501323</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

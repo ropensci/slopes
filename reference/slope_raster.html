@@ -100,6 +100,12 @@ It returns the average gradient of each route feature." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/benchmark.html">Benchmarking slopes calculation</a>
+    </li>
+    <li>
+      <a href="../articles/roadnetworkcycling.html">Example: gradients of a road network for a given city</a>
+    </li>
+    <li>
       <a href="../articles/verification.html">Verification of slopes</a>
     </li>
   </ul>
@@ -137,29 +143,33 @@ It returns the average gradient of each route feature.</p>
     </div>
 
     <pre class="usage"><span class='fu'>slope_raster</span><span class='op'>(</span>
-  <span class='va'>r</span>,
-  e <span class='op'>=</span> <span class='cn'>NULL</span>,
-  lonlat <span class='op'>=</span> <span class='fu'>sf</span><span class='fu'>::</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_is_longlat.html'>st_is_longlat</a></span><span class='op'>(</span><span class='va'>r</span><span class='op'>)</span>,
+  <span class='va'>routes</span>,
+  dem <span class='op'>=</span> <span class='cn'>NULL</span>,
+  lonlat <span class='op'>=</span> <span class='fu'>sf</span><span class='fu'>::</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_is_longlat.html'>st_is_longlat</a></span><span class='op'>(</span><span class='va'>routes</span><span class='op'>)</span>,
   method <span class='op'>=</span> <span class='st'>"bilinear"</span>,
   fun <span class='op'>=</span> <span class='va'>slope_matrix_weighted</span>,
-  terra <span class='op'>=</span> <span class='fu'>has_terra</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='fu'>methods</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/methods/is.html'>is</a></span><span class='op'>(</span><span class='va'>e</span>, <span class='st'>"SpatRaster"</span><span class='op'>)</span>
+  terra <span class='op'>=</span> <span class='fu'>has_terra</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='fu'>methods</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/methods/is.html'>is</a></span><span class='op'>(</span><span class='va'>dem</span>, <span class='st'>"SpatRaster"</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>r</th>
+      <th>routes</th>
       <td><p>Routes, the gradients of which are to be calculated.
 The object must be of class <code>sf</code> with <code>LINESTRING</code> geometries.</p></td>
     </tr>
     <tr>
-      <th>e</th>
-      <td><p>Raster overlapping with <code>r</code> and values representing elevations</p></td>
+      <th>dem</th>
+      <td><p>Raster overlapping with <code>routes</code> and values representing elevations</p></td>
     </tr>
     <tr>
       <th>lonlat</th>
-      <td><p>Are the coordinates in lon/lat order? <code>TRUE</code> by default</p></td>
+      <td><p>Are the coordinates in lon/lat (geographic) coordinates?
+Set this to <code>FALSE</code> if you have projected data, e.g. with coordinates
+representing distance in meters, not degrees. Lonlat coodinates are assumed
+(<code>lonlat = TRUE</code>) is the default. In <code>slope_raster()</code> and <code><a href='plot_slope.html'>plot_slope()</a></code>
+it is taken from the CRS of the routes (<code><a href='https://r-spatial.github.io/sf/reference/st_is_longlat.html'>sf::st_is_longlat(routes)</a></code>).</p></td>
     </tr>
     <tr>
       <th>method</th>
@@ -176,7 +186,7 @@ datasets. Default: <code>"bilinear"</code>.</p></td>
       <th>terra</th>
       <td><p>Should the <code>terra</code> package be used?
 <code>TRUE</code> by default if the package is installed <em>and</em>
-if <code>e</code> is of class <code>SpatRast</code></p></td>
+if <code>dem</code> is of class <code>SpatRast</code></p></td>
     </tr>
     </table>
 
@@ -184,19 +194,19 @@ if <code>e</code> is of class <code>SpatRast</code></p></td>
 
     <p>If calculating slopes associated with OSM data, the results may be better
 if the network is first split-up, e.g. using the function
-<code>stplanr::rnet_breakup_vertices()</code> from the
+<code><a href='https://docs.ropensci.org/stplanr/reference/rnet_breakup_vertices.html'>stplanr::rnet_breakup_vertices()</a></code> from the
 <a href='https://docs.ropensci.org/stplanr/reference/'><code>stplanr</code></a> package.
-<strong>Note:</strong> The <code>r</code> object must have a geometry type of <code>LINESTRING</code>.
+<strong>Note:</strong> The <code>routes</code> object must have a geometry type of <code>LINESTRING</code>.
 The <code><a href='https://r-spatial.github.io/sf/reference/st_cast.html'>sf::st_cast()</a></code> function can convert from <code>MULTILINESTRING</code> (and other)
 geometries to <code>LINESTRING</code>s as follows:
-<code>r_linestring = sf::st_cast(r, "LINESTRING")</code>.</p>
+<code>r_linestring = sf::st_cast(routes, "LINESTRING")</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>r</span> <span class='op'>=</span> <span class='va'>lisbon_road_segments</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, <span class='op'>]</span>
-<span class='va'>e</span> <span class='op'>=</span> <span class='va'>dem_lisbon_raster</span>
-<span class='op'>(</span><span class='va'>s</span> <span class='op'>=</span> <span class='fu'>slope_raster</span><span class='op'>(</span><span class='va'>r</span>, <span class='va'>e</span><span class='op'>)</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='va'>routes</span> <span class='op'>=</span> <span class='va'>lisbon_road_segments</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, <span class='op'>]</span>
+<span class='va'>dem</span> <span class='op'>=</span> <span class='va'>dem_lisbon_raster</span>
+<span class='op'>(</span><span class='va'>s</span> <span class='op'>=</span> <span class='fu'>slope_raster</span><span class='op'>(</span><span class='va'>routes</span>, <span class='va'>dem</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;           1           2           3 
-#&gt; 0.003074005 0.010870459 0.004998315 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>r</span><span class='op'>$</span><span class='va'>Avg_Slope</span>, <span class='va'>s</span><span class='op'>)</span>
+#&gt; 0.003074005 0.010870459 0.004998315 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>routes</span><span class='op'>$</span><span class='va'>Avg_Slope</span>, <span class='va'>s</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 0.9975107</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

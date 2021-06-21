@@ -98,6 +98,12 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/benchmark.html">Benchmarking slopes calculation</a>
+    </li>
+    <li>
+      <a href="../articles/roadnetworkcycling.html">Example: gradients of a road network for a given city</a>
+    </li>
+    <li>
       <a href="../articles/verification.html">Verification of slopes</a>
     </li>
   </ul>
@@ -132,13 +138,13 @@
     <p>Get elevation data from hosted maptile services</p>
     </div>
 
-    <pre class="usage"><span class='fu'>elevations_get</span><span class='op'>(</span><span class='va'>r</span>, file <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>elevations_get</span><span class='op'>(</span><span class='va'>routes</span>, file <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>r</th>
+      <th>routes</th>
       <td><p>Routes, the gradients of which are to be calculated.
 The object must be of class <code>sf</code> with <code>LINESTRING</code> geometries.</p></td>
     </tr>
@@ -156,12 +162,12 @@ The object must be of class <code>sf</code> with <code>LINESTRING</code> geometr
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># time-consuming, and see</span>
 <span class='co'># https://github.com/ITSLeeds/slopes/runs/648128378#step:18:107</span>
-<span class='va'>r</span> <span class='op'>=</span> <span class='va'>cyclestreets_route</span>
-<span class='co'># e = elevations_get(r)</span>
+<span class='va'>routes</span> <span class='op'>=</span> <span class='va'>cyclestreets_route</span>
+<span class='co'># e = elevations_get(routes)</span>
 <span class='co'># class(e)</span>
 <span class='co'># e</span>
 <span class='co'># plot(e)</span>
-<span class='co'># plot(sf::st_geometry(r), add = TRUE)</span>
+<span class='co'># plot(sf::st_geometry(routes), add = TRUE)</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

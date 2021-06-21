@@ -98,6 +98,12 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/benchmark.html">Benchmarking slopes calculation</a>
+    </li>
+    <li>
+      <a href="../articles/roadnetworkcycling.html">Example: gradients of a road network for a given city</a>
+    </li>
+    <li>
       <a href="../articles/verification.html">Verification of slopes</a>
     </li>
   </ul>
@@ -138,7 +144,7 @@
   fill <span class='op'>=</span> <span class='cn'>TRUE</span>,
   horiz <span class='op'>=</span> <span class='cn'>FALSE</span>,
   p <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span>test <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"colorspace"</span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
-    <span class='fu'>colorspace</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/colorspace/man/hcl_palettes.html'>diverging_hcl</a></span>, <span class='fu'>grDevices</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/r/grDevices/palettes.html'>terrain.colors</a></span><span class='op'>)</span>,
+    <span class='fu'>colorspace</span><span class='fu'>::</span><span class='va'><a href='https://colorspace.R-Forge.R-project.org//reference/hcl_palettes.html'>diverging_hcl</a></span>, <span class='fu'>grDevices</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/r/grDevices/palettes.html'>terrain.colors</a></span><span class='op'>)</span>,
   <span class='va'>...</span>,
   x <span class='op'>=</span> <span class='st'>"top"</span>,
   col <span class='op'>=</span> <span class='st'>"black"</span>,
@@ -215,13 +221,14 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>r</span> <span class='op'>=</span> <span class='va'>lisbon_road_segment_3d</span>
-<span class='va'>m</span> <span class='op'>=</span> <span class='fu'>sf</span><span class='fu'>::</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_coordinates.html'>st_coordinates</a></span><span class='op'>(</span><span class='va'>r</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='va'>routes</span> <span class='op'>=</span> <span class='va'>lisbon_road_segment_3d</span>
+<span class='va'>m</span> <span class='op'>=</span> <span class='fu'>sf</span><span class='fu'>::</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_coordinates.html'>st_coordinates</a></span><span class='op'>(</span><span class='va'>routes</span><span class='op'>)</span>
 <span class='va'>d</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/cumsum.html'>cumsum</a></span><span class='op'>(</span><span class='fu'><a href='sequential_dist.html'>sequential_dist</a></span><span class='op'>(</span><span class='va'>m</span>, lonlat <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>d</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='va'>d</span><span class='op'>)</span>
 <span class='va'>z</span> <span class='op'>=</span> <span class='va'>m</span><span class='op'>[</span>, <span class='fl'>3</span><span class='op'>]</span>
-<span class='fu'>plot_dz</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>z</span><span class='op'>)</span>
-</div><div class='img'><img src='plot_dz-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='co'># not exported</span>
+<span class='co'># plot_dz(d, z)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
