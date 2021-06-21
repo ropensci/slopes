@@ -115,11 +115,7 @@ sequential_dist = function(m, lonlat = TRUE) {
 }
 
 slope_matrices = function(m_xyz_split, fun = slope_matrix_weighted, ...) {
-  if (requireNamespace("pbapply", quietly = TRUE)) {
-    slope_list = pbapply::pblapply(m_xyz_split, fun, ...)
-  } else {
-    slope_list = lapply(m_xyz_split, fun, ...)
-  }
+  slope_list = pbapply::pblapply(m_xyz_split, fun, ...)
   unlist(slope_list)
 }
 #' Calculate the gradient of line segments from a raster dataset
