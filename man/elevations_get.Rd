@@ -4,10 +4,10 @@
 \alias{elevations_get}
 \title{Get elevation data from hosted maptile services}
 \usage{
-elevations_get(r, file = NULL, ...)
+elevations_get(routes, file = NULL, ...)
 }
 \arguments{
-\item{r}{Routes, the gradients of which are to be calculated.
+\item{routes}{Routes, the gradients of which are to be calculated.
 The object must be of class \code{sf} with \code{LINESTRING} geometries.}
 
 \item{file}{Where to save the resulting data if specified (not implemented)}
@@ -20,10 +20,10 @@ Get elevation data from hosted maptile services
 \examples{
 # time-consuming, and see
 # https://github.com/ITSLeeds/slopes/runs/648128378#step:18:107
-r = cyclestreets_route
-# e = elevations_get(r)
+routes = cyclestreets_route
+# e = elevations_get(routes)
 # class(e)
 # e
 # plot(e)
-# plot(sf::st_geometry(r), add = TRUE)
+# plot(sf::st_geometry(routes), add = TRUE)
 }

@@ -5,21 +5,25 @@
 \title{Calculate the gradient of line segments from a raster dataset}
 \usage{
 slope_raster(
-  r,
-  e = NULL,
-  lonlat = sf::st_is_longlat(r),
+  routes,
+  dem = NULL,
+  lonlat = sf::st_is_longlat(routes),
   method = "bilinear",
   fun = slope_matrix_weighted,
-  terra = has_terra() && methods::is(e, "SpatRaster")
+  terra = has_terra() && methods::is(dem, "SpatRaster")
 )
 }
 \arguments{
-\item{r}{Routes, the gradients of which are to be calculated.
+\item{routes}{Routes, the gradients of which are to be calculated.
 The object must be of class \code{sf} with \code{LINESTRING} geometries.}
 
-\item{e}{Raster overlapping with \code{r} and values representing elevations}
+\item{dem}{Raster overlapping with \code{routes} and values representing elevations}
 
-\item{lonlat}{Are the coordinates in lon/lat order? \code{TRUE} by default}
+\item{lonlat}{Are the coordinates in lon/lat (geographic) coordinates?
+Set this to \code{FALSE} if you have projected data, e.g. with coordinates
+representing distance in meters, not degrees. Lonlat coodinates are assumed
+(\code{lonlat = TRUE}) is the default. In \code{slope_raster()} and \code{plot_slope()}
+it is taken from the CRS of the routes (\code{sf::st_is_longlat(routes)}).}
 
 \item{method}{The method of estimating elevation at points,
 passed to the \code{extract} function for extracting values from raster
@@ -30,7 +34,7 @@ datasets. Default: \code{"bilinear"}.}
 
 \item{terra}{Should the \code{terra} package be used?
 \code{TRUE} by default if the package is installed \emph{and}
-if \code{e} is of class \code{SpatRast}}
+if \code{dem} is of class \code{SpatRast}}
 }
 \description{
 This function takes an \code{sf} representing routes over geographical space
@@ -42,14 +46,14 @@ If calculating slopes associated with OSM data, the results may be better
 if the network is first split-up, e.g. using the function
 \code{stplanr::rnet_breakup_vertices()} from the
 \href{https://docs.ropensci.org/stplanr/reference/}{\code{stplanr}} package.
-\strong{Note:} The \code{r} object must have a geometry type of \code{LINESTRING}.
+\strong{Note:} The \code{routes} object must have a geometry type of \code{LINESTRING}.
 The \code{sf::st_cast()} function can convert from \code{MULTILINESTRING} (and other)
 geometries to \code{LINESTRING}s as follows:
-\code{r_linestring = sf::st_cast(r, "LINESTRING")}.
+\code{r_linestring = sf::st_cast(routes, "LINESTRING")}.
 }
 \examples{
-r = lisbon_road_segments[1:3, ]
-e = dem_lisbon_raster
-(s = slope_raster(r, e))
-cor(r$Avg_Slope, s)
+routes = lisbon_road_segments[1:3, ]
+dem = dem_lisbon_raster
+(s = slope_raster(routes, dem))
+cor(routes$Avg_Slope, s)
 }

@@ -23,7 +23,6 @@ geometries and raster digital elevation model (DEM) datasets.
 <!-- install.packages("slopes") -->
 <!-- ``` -->
 
-
 Install the development version from [GitHub](https://github.com/) with:
 
 ``` r
@@ -74,7 +73,7 @@ plot(sf::st_geometry(lisbon_road_segments), add = TRUE)
 Calculate the average gradient of each road segment as follows:
 
 ``` r
-lisbon_road_segments$slope = slope_raster(lisbon_road_segments, e = dem_lisbon_raster)
+lisbon_road_segments$slope = slope_raster(lisbon_road_segments, dem = dem_lisbon_raster)
 summary(lisbon_road_segments$slope)
 #>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 #> 0.00000 0.01246 0.03534 0.05462 0.08251 0.27583
@@ -144,84 +143,10 @@ If you do not have a raster dataset representing elevations, you can
 automatically download them as follows.
 
 ``` r
-lisbon_route_3d_auto = slope_3d(r = lisbon_route)
+lisbon_route_3d_auto = slope_3d(lisbon_route)
 #> Preparing to download: 12 tiles at zoom = 15 from 
 #> https://api.mapbox.com/v4/mapbox.terrain-rgb/
 plot_slope(lisbon_route_3d_auto)
 ```
 
 <img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
-
-# Performance
-
-For this benchmark we will download the following small (&lt; 100 kB)
-`.tif` file:
-
-``` r
-u = "https://github.com/ITSLeeds/slopes/releases/download/0.0.0/dem_lisbon.tif"
-f = basename(u)
-if(!file.exists(f)) {
- download.file(u, f) 
-}
-```
-
-A benchmark can reveal how many route gradients can be calculated per
-second:
-
-``` r
-e = dem_lisbon_raster
-r = lisbon_road_segments
-et = terra::rast(f)
-res = bench::mark(check = FALSE,
-  slope_raster = slope_raster(r, e),
-  slope_terra = slope_raster(r, et)
-)
-```
-
-``` r
-res
-#> # A tibble: 2 x 6
-#>   expression        min   median `itr/sec` mem_alloc `gc/sec`
-#>   <bch:expr>   <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 slope_raster   49.4ms   50.4ms      19.9    5.72MB     4.97
-#> 2 slope_terra    51.7ms   52.6ms      18.9    2.17MB     5.41
-```
-
-That is approximately
-
-``` r
-round(res$`itr/sec` * nrow(r))
-#> [1] 5391 5127
-```
-
-routes per second using the `raster` and `terra` (the default if
-installed, using `RasterLayer` and native `SpatRaster` objects) packages
-to extract elevation estimates from the raster datasets, respectively.
-
-The message: use the `terra` package to read-in DEM data for slope
-extraction if speed is important.
-
-To go faster, you can chose the `simple` method to gain some speed at
-the expense of accuracy:
-
-``` r
-e = dem_lisbon_raster
-r = lisbon_road_segments
-res = bench::mark(check = FALSE,
-  bilinear1 = slope_raster(r, e),
-  bilinear2 = slope_raster(r, et),
-  simple1 = slope_raster(r, e, method = "simple"),
-  simple2 = slope_raster(r, et, method = "simple")
-)
-```
-
-``` r
-res
-#> # A tibble: 4 x 6
-#>   expression      min   median `itr/sec` mem_alloc `gc/sec`
-#>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 bilinear1    49.7ms   50.7ms      19.8    5.72MB     8.47
-#> 2 bilinear2    52.1ms   52.6ms      18.9    2.12MB     4.73
-#> 3 simple1      42.9ms   43.6ms      22.8    2.05MB     4.56
-#> 4 simple2      50.2ms   51.2ms      19.4    2.12MB     4.84
-```

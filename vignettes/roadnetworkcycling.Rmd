@@ -1,0 +1,196 @@
+---
+title: "Example: gradients of a road network for a given city"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Example: gradients of a road network for a given city}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width=7, fig.height=5, fig.align = "center" 
+)
+```
+
+An example of the demand for data provided by the `slopes` package is a map showing gradients across São Paulo (Brazil, see image below), with a simplistic classification for cycling difficulty.
+
+![using slopes() to create a road network gradient for cycling for São Paulo (Brazil)](https://pbs.twimg.com/media/ErJ2dr8WMAIHwMn?format=jpg&name=small)
+
+This vignette will guide through the production of an interactive slope map for a road network, using `slopes`, `osmextract`, `sf`, `stplanr` and `tmap`.  
+
+For the convenience of sample, we will use (Isle of Wight)[https://en.wikipedia.org/wiki/Isle_of_Wight] case, with 384 km2. See [Other examples] below.
+
+This will follow three steps:
+
+1.  Download of road network from [OpenStreetMap](https://www.openstreetmap.org/)
+2.  Prepare the network
+3.  Compute slopes and export the map in html
+
+
+## Extract the OSM network from geofabrik
+
+For this step you may use `osmextract` [package](https://itsleeds.github.io/osmextract/articles/osmextract.html) which downloads the most recent information available at OSM (https://download.geofabrik.de/index.html) and converts to _GeoPackage_ (.gpkg), the equivalent to _shapefile_.
+
+```{r setup1, warning=FALSE, message = FALSE}
+library(dplyr)
+library(sf)
+# remotes::install_github("ITSLeeds/osmextract")
+library(osmextract)
+```
+
+```{r get_iow, warning=FALSE, message = FALSE}
+# get the network
+iow_osm = oe_get("Isle of Wight", provider = "geofabrik", stringsAsFactors = FALSE, 
+                 quiet = FALSE, force_download = TRUE, force_vectortranslate = TRUE) # 7 MB
+
+# filter the major roads
+iow_network = iow_osm %>% 
+  dplyr::filter(highway %in% c('primary', "primary_link", 'secondary',"secondary_link", 
+                               'tertiary', "tertiary_link", "trunk", "trunk_link", 
+                               "residential", "cycleway", "living_street", "unclassified", 
+                               "motorway", "motorway_link", "pedestrian", "steps", "track")) #remove: "service"
+```
+
+## Clean the road network
+
+These are optional steps that give better results, although they may slow down the process since they increase the number of segments present in the network.
+
+### Filter the unconnected segments
+
+The [`rnet_group()`](https://docs.ropensci.org/stplanr/reference/rnet_group.html) function from `stplanar` package assesses the connectivity of each segment assigns a group number (similar to a clustering process). Then we may filter the main group, the one with more connected segments.
+
+```{r setup2, warning=FALSE, message = FALSE}
+# remotes::install_github("ropensci/stplanr")
+library(stplanr)
+```
+
+```{r filter}
+# filter unconnected roads
+iow_network$group = rnet_group(iow_network)
+iow_network_clean = iow_network %>% filter(group == 1) # the network with more connected segments
+```
+
+### Break the segments on vertices
+
+A very long segment will have an assigned average slope, but a very long segment can be broken into its nodes and have its own slope in each part of the segment. On one hand, we want the segments to break at their nodes. On the other hand, we don't want artificial *nodes* to be created where two lines cross, in particular where they have different **z** levels (_eg._ *brunels*: bridges and tunnels).  
+
+The [`rnet_breakup_vertices`](https://docs.ropensci.org/stplanr/reference/rnet_breakup_vertices.html) from `stplanr` breaks the segments at their inner vertices, preserving the **brunels**.
+
+```{r breaking, warning=FALSE, message = FALSE}
+iow_network_segments = rnet_breakup_vertices(iow_network_clean)
+```
+In this case, there are more `r round(nrow(iow_network_segments)/nrow(iow_network_clean),2)`x segments than the original network.
+
+## Get slope values for each segment
+
+For this case we will use `slope_raster()` [function](https://itsleeds.github.io/slopes/reference/slope_raster.html), to retrieve the z values from a digital elevation model. This raster was obtained from STRM NASA mission.
+
+The **SRTM** (*Shuttle Radar Topography Mission*) NASA’s mission provides [freely available](https://gisgeography.com/srtm-shuttle-radar-topography-mission/) worldwide DEM, with a resolution of 25 to 30m and with a vertical accuracy of 16m - [more](https://www2.jpl.nasa.gov/srtm/). The resolution for USA might be better.
+
+Alternatively, **COPERNICUS** ESA's mission also provides [freely available](https://land.copernicus.eu/imagery-in-situ/eu-dem) DEM for all Europe, with a 25m resolution and a vertical accuracy of 7m - [more](https://land.copernicus.eu/user-corner/publications/eu-dem-flyer/view).
+
+Depending of how large is your road network, you can use `slope_3d()` [function](https://itsleeds.github.io/slopes/reference/slope_3d.html) - this will require a valid [Mapbox api key](https://docs.mapbox.com/api/overview/).
+
+```{r import_dem, message=FALSE}
+# Import and plot DEM
+u = "https://github.com/U-Shift/Declives-RedeViaria/releases/download/0.2/IsleOfWightNASA_clip.tif"
+f = basename(u)
+download.file(url = u, destfile = f, mode = "wb")
+dem = raster::raster(f)
+# res(dem) #27m of resolution
+network = iow_network_segments
+
+library(raster)
+plot(dem)
+plot(sf::st_geometry(network), add = TRUE) #check if they overlay
+```
+
+All the required data is prepared to estimate the road segments' gradient.
+
+```{r slopes_values}
+# Get the slope value for each segment (abs), using slopes package
+library(slopes)
+library(geodist)
+network$slope = slope_raster(network, dem)
+network$slope = network$slope*100 #percentage
+summary(network$slope) #check the values
+```
+
+Half of the road segments in Isle of Wight have a gradient bellow `r round(median(network$slope),1)`%.
+
+We will adopt a simplistic qualitative classification for **cycling effort uphill**, and compare the number of segments in each class.
+
+```{r classify}
+# Classify slopes
+network$slope_class = network$slope %>%
+  cut(
+    breaks = c(0, 3, 5, 8, 10, 20, Inf),
+    labels = c("0-3: flat", "3-5: mild", "5-8: medium", "8-10: hard", 
+               "10-20: extreme", ">20: impossible"),
+    right = F
+  )
+round(prop.table(table(network$slope_class))*100,1)
+```
+It means that **`r round(prop.table(table(network$slope_class))[[1]]*100)`%** of the roads are flat or almost flat (0-3%) and about **`r round(prop.table(table(network$slope_class))[[1]]*100)+round(prop.table(table(network$slope_class))[[2]]*100)`%** of the roads are easily cyclable (0-5%).
+
+Now let us put this information on a map (see [here](https://rpubs.com/RobinLovelace/781081) for interactive version).
+
+```{r map, message = FALSE, eval=FALSE}
+# more useful information
+network$length = st_length(network)
+
+# make an interactive map
+library(tmap)
+palredgreen = c("#267300", "#70A800", "#FFAA00", "#E60000", "#A80000", "#730000") #color palette
+# tmap_mode("view")
+tmap_options(basemaps = leaflet::providers$CartoDB.Positron) #basemap
+
+slopemap =
+  tm_shape(network) +
+  tm_lines(
+    col = "slope_class",
+    palette = palredgreen,
+    lwd = 2, #line width
+    title.col = "Slope [%]",
+    popup.vars = c("Highway" = "highway",
+                   "Length" = "length",
+                  "Slope: " = "slope",
+                  "Class: " = "slope_class"),
+    popup.format = list(digits = 1),
+    # id = "slope"
+    id = "name" #if it gets too memory consuming, delete this line
+  )
+
+slopemap
+```
+
+
+```{r export, echo=TRUE, eval=FALSE}
+#export to html
+tmap_save(slopemap, "html/SlopesIoW.html") 
+
+# export information as geopackage
+st_write(network, "shapefiles/SlopesIoW.gpkg", append=F)
+```
+
+#### Result:
+
+-   [Isle of Wight (UK)](http://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/SlopesIoW.html)
+
+## Other examples
+
+-   [São Paulo (Brazil)](http://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/DeclivesSaoPaulo.html)
+-   [Lisbon (Portugal)](http://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/DeclivesLisboa.html)
+-   [Oporto (Portugal)](http://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/DeclivesPorto_EU.html)
+-   Bristol (UK)
+-   Sheffield (UK)
+
+
+```{r tidyup, include=FALSE}
+rm(iow_osm,iow_network_clean,iow_network_segments, iow_network, slopemap)
+file.remove(f) # remove the file, tidy up
+```
+
