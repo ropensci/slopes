@@ -59,11 +59,10 @@ background-size: 100%
 
 --
 <br>
-# Structure:
+
+# Contents:
 
 ## Why slopes?
-
---
 
 --
 
@@ -71,24 +70,34 @@ background-size: 100%
 
 --
 
----
+## Future plans
 
-
-![](slope-edinburgh-bridge.png)
-
-???
-
-- RL
-
-- My research into tools for prioritising cycling investment
-
-- UK not very hilly but models fail slightly in hilly areas
-
+--
 
 ---
 
-...
+# Why we developed the slopes package
 
+.left-column[
+
+- Real world problems to solve involving slopes
+- Existing tools were not up to the job
+  - Expensive and hard to reproduce findings (ESRI's 3D analyst)
+  - Hard to scale-up (online services)
+
+- R programming challenge
+
+]
+
+--
+
+.right-column[
+
+Real world problem: infrastructure prioritisation. Source: [paper](https://www.jtlu.org/index.php/jtlu/article/view/862) and www.pct.bike
+
+![](https://user-images.githubusercontent.com/1825120/123165723-805bfa00-d46c-11eb-8446-969ea69e0287.png)
+
+]
 
 ???
 
@@ -125,6 +134,45 @@ background-position: bottom
 # Next slide title
 
 ---
+
+background-image: url("https://www.thestar.co.uk/jp-ct.co.uk/image/onecms:9b91244b-bef9-44d5-af34-56943ea0a809:1bd497fc-203b-4814-8905-1268a2c6c2a5/NSST-16-01-20-blake-NMSYupload.jpeg?&width=1200")
+
+# Future plans
+
+--
+
+Blake Street, Sheffield. Source: [thestar.co.uk](https://www.thestar.co.uk/news/people/which-sheffields-steepest-street-these-are-ones-you-think-are-worst-1368220)
+
+---
+
+## Estimating slopes of bridges
+
+```{r, out.width="80%", fig.show='hold', echo=FALSE}
+knitr::include_graphics(c(
+  "slope-edinburgh-bridge.png"
+  # "slope-edinburgh-bridge2.png"
+))
+```
+
+
+???
+
+- RL
+
+- My research into tools for prioritising cycling investment
+
+- UK not very hilly but models fail slightly in hilly areas
+
+---
+
+```{r, out.width="80%", fig.show='hold', echo=FALSE}
+knitr::include_graphics(c(
+  # "slope-edinburgh-bridge.png",
+  "slope-edinburgh-bridge2.png"
+))
+```
+
+
 
 # Thanks!
 
