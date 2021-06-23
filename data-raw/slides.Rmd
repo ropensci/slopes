@@ -105,6 +105,11 @@ Real world problem: infrastructure prioritisation. Source: [paper](https://www.j
 
 ---
 
+## How the package works
+
+Key functions:
+
+---
 
 ## Some results
 
