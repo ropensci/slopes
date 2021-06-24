@@ -164,6 +164,17 @@ network$slope = network$slope * 100 # percentage
 summary(network$slope) # check the values
 ```
 
+---
+
+## Steep segments
+
+```{r}
+steep_segment = network %>% 
+  filter(slope > 100)
+mapview::mapview(steep_segment)
+```
+
+
 
 
 
