@@ -109,9 +109,62 @@ Real world problem: infrastructure prioritisation. Source: [paper](https://www.j
 
 Key functions:
 
+1. 
+
 ---
 
-## Some results
+
+.pull-left[
+
+###  Worked example
+
+
+Load packages
+
+```{r}
+# Get linear features you want the gradients of
+# See vignette: https://itsleeds.github.io/slopes/articles/roadnetworkcycling.html 
+library(slopes)
+library(dplyr)
+library(sf)
+# remotes::install_github("ITSLeeds/osmextract")
+library(osmextract) # see UseR talk on osmextract package
+library(tmap)
+network = oe_get("Isle of Wight", vectortranslate_options = c("-where", "highway IS NOT NULL")) 
+```
+
+]
+
+.pull-right[
+
+```{r, fig.height=9}
+u = "https://github.com/U-Shift/Declives-RedeViaria/releases/download/0.2/IsleOfWightNASA_clip.tif"
+f = basename(u) # Get digital elevation data
+download.file(url = u, destfile = f, mode = "wb")
+dem = raster::raster(f)
+library(raster)
+plot(dem)
+plot(sf::st_geometry(network), add = TRUE) #check if they overlay
+```
+
+
+]
+
+---
+
+## Calculating slopes
+
+```{r}
+sys_time = system.time({
+  network$slope = slope_raster(network, dem)
+})
+nrow(network) / sys_time[3]
+
+network$slope = network$slope * 100 # percentage
+summary(network$slope) # check the values
+```
+
+
 
 
 ---
