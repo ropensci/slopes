@@ -21,7 +21,7 @@ An example of the demand for data provided by the `slopes` package is a map show
 
 This vignette will guide through the production of an interactive slope map for a road network, using `slopes`, `osmextract`, `sf`, `stplanr` and `tmap`.  
 
-For the convenience of sample, we will use (Isle of Wight)[https://en.wikipedia.org/wiki/Isle_of_Wight] case, with 384 km2. See [Other examples] below.
+For the convenience of sample, we will use [Isle of Wight](https://en.wikipedia.org/wiki/Isle_of_Wight) case, with 384 km^2^. See [Other examples] below.
 
 This will follow three steps:
 
@@ -177,6 +177,8 @@ st_write(network, "shapefiles/SlopesIoW.gpkg", append=F)
 ```
 
 #### Result:
+
+![](https://user-images.githubusercontent.com/1825120/121820334-2435f080-cc8a-11eb-962c-79dcba97e459.png)
 
 -   [Isle of Wight (UK)](http://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/SlopesIoW.html)
 
