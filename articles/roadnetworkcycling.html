@@ -103,7 +103,7 @@
 <img src="https://pbs.twimg.com/media/ErJ2dr8WMAIHwMn?format=jpg&amp;name=small" alt=""><p class="caption">using slopes() to create a road network gradient for cycling for São Paulo (Brazil)</p>
 </div>
 <p>This vignette will guide through the production of an interactive slope map for a road network, using <code>slopes</code>, <code>osmextract</code>, <code>sf</code>, <code>stplanr</code> and <code>tmap</code>.</p>
-<p>For the convenience of sample, we will use (Isle of Wight)[<a href="https://en.wikipedia.org/wiki/Isle_of_Wight" class="uri">https://en.wikipedia.org/wiki/Isle_of_Wight</a>] case, with 384 km2. See <a href="#other-examples">Other examples</a> below.</p>
+<p>For the convenience of sample, we will use <a href="https://en.wikipedia.org/wiki/Isle_of_Wight">Isle of Wight</a> case, with 384 km<sup>2</sup>. See <a href="#other-examples">Other examples</a> below.</p>
 <p>This will follow three steps:</p>
 <ol style="list-style-type: decimal">
 <li>Download of road network from <a href="https://www.openstreetmap.org/">OpenStreetMap</a>
@@ -126,7 +126,7 @@
                  quiet <span class="op">=</span> <span class="cn">FALSE</span>, force_download <span class="op">=</span> <span class="cn">TRUE</span>, force_vectortranslate <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># 7 MB</span>
 <span class="co">#&gt; 0...10...20...30...40...50...60...70...80...90...100 - done.</span>
 <span class="co">#&gt; Reading layer `lines' from data source </span>
-<span class="co">#&gt;   `/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmp4QW8L5/geofabrik_isle-of-wight-latest.gpkg' </span>
+<span class="co">#&gt;   `/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmpyvr9Wm/geofabrik_isle-of-wight-latest.gpkg' </span>
 <span class="co">#&gt;   using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 46423 features and 9 fields</span>
 <span class="co">#&gt; Geometry type: LINESTRING</span>
@@ -252,6 +252,7 @@
 <div id="result" class="section level4">
 <h4 class="hasAnchor">
 <a href="#result" class="anchor"></a>Result:</h4>
+<p><img src="https://user-images.githubusercontent.com/1825120/121820334-2435f080-cc8a-11eb-962c-79dcba97e459.png"></p>
 <ul>
 <li><a href="http://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/SlopesIoW.html">Isle of Wight (UK)</a></li>
 </ul>
