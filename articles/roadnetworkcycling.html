@@ -126,7 +126,7 @@
                  quiet <span class="op">=</span> <span class="cn">FALSE</span>, force_download <span class="op">=</span> <span class="cn">TRUE</span>, force_vectortranslate <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># 7 MB</span>
 <span class="co">#&gt; 0...10...20...30...40...50...60...70...80...90...100 - done.</span>
 <span class="co">#&gt; Reading layer `lines' from data source </span>
-<span class="co">#&gt;   `/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmpyvr9Wm/geofabrik_isle-of-wight-latest.gpkg' </span>
+<span class="co">#&gt;   `/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmp0WjfIb/geofabrik_isle-of-wight-latest.gpkg' </span>
 <span class="co">#&gt;   using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 46423 features and 9 fields</span>
 <span class="co">#&gt; Geometry type: LINESTRING</span>
@@ -196,7 +196,7 @@
 <span class="va">network</span><span class="op">$</span><span class="va">slope</span> <span class="op">=</span> <span class="va">network</span><span class="op">$</span><span class="va">slope</span><span class="op">*</span><span class="fl">100</span> <span class="co">#percentage</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">network</span><span class="op">$</span><span class="va">slope</span><span class="op">)</span> <span class="co">#check the values</span>
 <span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
-<span class="co">#&gt;   0.000   1.719   3.070   3.872   5.035 152.888</span></code></pre></div>
+<span class="co">#&gt;   0.000   1.720   3.072   3.873   5.037 152.888</span></code></pre></div>
 <p>Half of the road segments in Isle of Wight have a gradient bellow 3.1%.</p>
 <p>We will adopt a simplistic qualitative classification for <strong>cycling effort uphill</strong>, and compare the number of segments in each class.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -211,7 +211,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">network</span><span class="op">$</span><span class="va">slope_class</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fl">100</span>,<span class="fl">1</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;       0-3: flat       3-5: mild     5-8: medium      8-10: hard  10-20: extreme </span>
-<span class="co">#&gt;            48.7            25.9            16.5             4.1             4.4 </span>
+<span class="co">#&gt;            48.7            25.9            16.5             4.1             4.3 </span>
 <span class="co">#&gt; &gt;20: impossible </span>
 <span class="co">#&gt;             0.4</span></code></pre></div>
 <p>It means that <strong>49%</strong> of the roads are flat or almost flat (0-3%) and about <strong>75%</strong> of the roads are easily cyclable (0-5%).</p>
