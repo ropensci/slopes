@@ -30,7 +30,7 @@ options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(
   fig.width=9, fig.height=3.5, fig.retina=3,
   out.width = "100%",
-  cache = FALSE,
+  cache = TRUE,
   echo = TRUE,
   message = FALSE, 
   warning = FALSE,
@@ -107,11 +107,130 @@ Real world problem: infrastructure prioritisation. Source: [paper](https://www.j
 
 ---
 
+# Applications
+
+-   Transport planning
+-   River/flooding research
+-   Civil engineering
+
+---
+
 ## How the package works
 
 Key functions:
 
-1. 
+1. `slope_3d()`: Adds a third dimension to your linestring coordinates
+2. `plot_slope()`
+
+---
+
+# Package data
+
+Todo: add maps showing 2 main inputs, vector and raster
+
+
+---
+
+# Adding the Z dimension
+
+```{r}
+lisbon_route
+```
+
+#### `Dimension:     XY`
+
+```{r}
+lisbon_route_slopes = slope_3d(routes = lisbon_route, dem = slopes::dem_lisbon_raster)
+```
+
+```{r, eval=FALSE}
+lisbon_route_slopes
+## Simple feature collection with 1 feature and 3 fields
+## Geometry type: LINESTRING
+## Dimension:     XYZ
+```
+
+
+#### `Dimension:     XYZ`
+
+---
+
+# Plotting the Z dimension
+
+.pull-left[
+
+```{r, error=TRUE}
+plot_slope(lisbon_route)
+```
+
+]
+
+.pull-right[
+
+
+```{r}
+plot_slope(lisbon_route_slopes)
+```
+
+]
+
+---
+
+### Find slopes when you don't have a DEM
+
+```{r, eval=FALSE}
+usethis::edit_r_environ()
+# Type in (register on the mapbox website):
+MAPBOX_API_KEY=xxxxx
+```
+
+```{r}
+library(stplanr)
+origin = tmaptools::geocode_OSM("rail station zurich", as.sf = TRUE)
+destination = tmaptools::geocode_OSM("eth zurich", as.sf = TRUE)
+route = osrm::osrmRoute(src = origin, dst = destination, returnclass = "sf")
+library(stplanr)
+route = route(origin, destination, route_fun = cyclestreets::journey)
+route_3d = slope_3d(route, dem = NULL)
+```
+
+```{r}
+route_3d$gradient_slopes = slope_xyz(route_3d) # todo: calculate slopes in slope_3d by default?
+```
+
+---
+
+.pull-left[
+
+
+```{r}
+m = tm_shape(route_3d) + 
+  tm_lines("gradient_slopes", lwd = 3,
+           palette = "viridis")
+tmap_mode("plot")
+m
+# Todo: add slope_map function with default palette?
+```
+
+]
+
+.pull-right[
+
+```{r}
+tmap_mode("view")
+m
+```
+
+]
+
+---
+
+Uses ceramic / mapbox api
+
+
+#### other sources for elevation 
+
+
 
 ---
 
@@ -120,12 +239,12 @@ Key functions:
 
 ###  Worked example
 
+See [vignette](https://itsleeds.github.io/slopes/articles/roadnetworkcycling.html) 
 
 Load packages
 
 ```{r}
 # Get linear features you want the gradients of
-# See vignette: https://itsleeds.github.io/slopes/articles/roadnetworkcycling.html 
 library(slopes)
 library(dplyr)
 library(sf)
@@ -166,9 +285,13 @@ network$slope = network$slope * 100 # percentage
 summary(network$slope) # check the values
 ```
 
---
+---
 
-## Result with interactive map?
+```{r, eval=FALSE}
+qtm(network, "slope") # with a few extra arguments...
+```
+
+![](https://user-images.githubusercontent.com/1825120/121820334-2435f080-cc8a-11eb-962c-79dcba97e459.png)
 
 
 ---
@@ -184,46 +307,35 @@ mapview::mapview(steep_segment)
 
 ---
 
-## Plot segment example
-
----
-
-### find slope with native function
-Uses ceramic / mapbox api
-
-
-#### other sources for elevation 
-
-
-
-
----
-
-# Applications
-
--   Transport planning
--   River/flooding research
--   Civil engineering
-
-
----
-
 background-image: url(https://raw.githubusercontent.com/ITSLeeds/slopes/master/man/figures/README-slope-vis-1.png)
 background-size: 70%
 background-position: bottom
 
-# Key functions
-
 ---
-
-background-image: url("https://www.thestar.co.uk/jp-ct.co.uk/image/onecms:9b91244b-bef9-44d5-af34-56943ea0a809:1bd497fc-203b-4814-8905-1268a2c6c2a5/NSST-16-01-20-blake-NMSYupload.jpeg?&width=1200")
 
 # Future plans
 
--   Include functions to extract digital elevation models for the assessed area?
--   Improve `plot_3d()` visualization
--   Add other elevation sources using api keys?
--   ...
+.pull-left[
+
+
+-   `slope_get_dem()` to get digital elevation model data
+-   Add other elevation sources using api keys (e.g Google, others)?
+-   Improve `plot_slope()` visualization
+-   Explore accuracy of data vs 'ground truth'
+-   Finish review, publish in JOSS and on CRAN
+-   See [itsleeds/slopes](https://github.com/ITSLeeds/slopes) on github to get involved!
+-   Research!
+
+]
+
+--
+
+.pull-right[
+
+![](https://www.thestar.co.uk/jp-ct.co.uk/image/onecms:9b91244b-bef9-44d5-af34-56943ea0a809:1bd497fc-203b-4814-8905-1268a2c6c2a5/NSST-16-01-20-blake-NMSYupload.jpeg?&width=1200)
+
+]
+
 
 ???
 
@@ -232,6 +344,21 @@ invite people to help in github?
 --
 
 Blake Street, Sheffield. Source: [thestar.co.uk](https://www.thestar.co.uk/news/people/which-sheffields-steepest-street-these-are-ones-you-think-are-worst-1368220)
+
+---
+
+
+# Where is the ground truth? 
+
+-Not from CycleStreets
+
+```{r}
+route_3d$elevation_change
+route_3d$distances
+plot(route_3d$gradient_smooth, route_3d$gradient_slopes)
+```
+
+Issue with cyclestreets data
 
 ---
 
