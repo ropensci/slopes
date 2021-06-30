@@ -87,6 +87,8 @@ background-size: 100%
 
 - R programming challenge
 
+- Support for route planning in active transportation
+
 ]
 
 --
@@ -164,6 +166,11 @@ network$slope = network$slope * 100 # percentage
 summary(network$slope) # check the values
 ```
 
+--
+
+## Result with interactive map?
+
+
 ---
 
 ## Steep segments
@@ -175,20 +182,29 @@ mapview::mapview(steep_segment)
 ```
 
 
+---
+
+## Plot segment example
+
+---
+
+### find slope with native function
+Uses ceramic / mapbox api
+
+
+#### other sources for elevation 
+
 
 
 
 ---
 
-# Transport planning
+# Applications
 
----
+-   Transport planning
+-   River/flooding research
+-   Civil engineering
 
-# River/flooding research
-
----
-
-# Civil engineering
 
 ---
 
@@ -200,13 +216,18 @@ background-position: bottom
 
 ---
 
-# Next slide title
-
----
-
 background-image: url("https://www.thestar.co.uk/jp-ct.co.uk/image/onecms:9b91244b-bef9-44d5-af34-56943ea0a809:1bd497fc-203b-4814-8905-1268a2c6c2a5/NSST-16-01-20-blake-NMSYupload.jpeg?&width=1200")
 
 # Future plans
+
+-   Include functions to extract digital elevation models for the assessed area?
+-   Improve `plot_3d()` visualization
+-   Add other elevation sources using api keys?
+-   ...
+
+???
+
+invite people to help in github?
 
 --
 
