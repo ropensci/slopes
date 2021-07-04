@@ -357,9 +357,15 @@ See [`roadnetworkcycling`](https://itsleeds.github.io/slopes/articles/roadnetwor
 
 ---
 
-background-image: url(https://raw.githubusercontent.com/ITSLeeds/slopes/master/man/figures/README-slope-vis-1.png)
-background-size: 70%
-background-position: bottom
+## A smaller example using packaged data
+
+```{r}
+routes = lisbon_road_segments
+dem = dem_lisbon_raster
+routes$slope = slope_raster(routes, dem)
+plot(dem)
+plot(routes["slope"], add = TRUE)
+```
 
 ---
 
