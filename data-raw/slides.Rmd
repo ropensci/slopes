@@ -220,7 +220,7 @@ lisbon_route_slopes
 
 ---
 
-# Plotting the Z dimension
+## Plotting the Z dimension
 
 .pull-left[
 
