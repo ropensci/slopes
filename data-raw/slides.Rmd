@@ -30,7 +30,7 @@ options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(
   fig.width=9, fig.height=3.5, fig.retina=3,
   out.width = "100%",
-  cache = TRUE,
+  # cache = TRUE,
   echo = TRUE,
   message = FALSE, 
   warning = FALSE,
@@ -134,6 +134,7 @@ Todo: add maps showing 2 main inputs, vector and raster
 # Adding the Z dimension
 
 ```{r}
+library(slopes)
 lisbon_route
 ```
 
@@ -204,6 +205,7 @@ route_3d$gradient_slopes = slope_xyz(route_3d) # todo: calculate slopes in slope
 
 
 ```{r}
+library(tmap)
 m = tm_shape(route_3d) + 
   tm_lines("gradient_slopes", lwd = 3,
            palette = "viridis")
@@ -301,7 +303,7 @@ qtm(network, "slope") # with a few extra arguments...
 ```{r}
 steep_segment = network %>% 
   filter(slope > 100)
-mapview::mapview(steep_segment)
+# qtm(steep_segment)
 ```
 
 
