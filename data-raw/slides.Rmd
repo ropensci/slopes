@@ -113,6 +113,9 @@ Real world problem: infrastructure prioritisation. Source: [paper](https://www.j
 .left-column[
 
 -   Transport planning
+  - Active travel planning
+  - Logistics/route planning
+  - Emergency services
 -   River/flooding research
 -   Civil engineering
 
@@ -141,18 +144,17 @@ library(tmap)
 tmap_mode("view")
 ```
 
-
 ---
 
-## How the package works
+#### How the package works
 
 Key functions:
 
 1. `slope_xyz()`: calculates the slope associated with linestrings that have xyz coordinates
+1. `slope_raster()`: Calculate slopes of linestrings based on local raster map
 1. `slope_3d()`: Adds a third dimension to linestring coordinates
-2. `plot_slope()`: Plots the slope profile associated with a linestring
-3. `map_slope()` (to be created)
-4. `slope_z_value()`: returns the Z component of coordinates
+1. `plot_slope()`: Plots the slope profile associated with a linestring
+1. See https://itsleeds.github.io/slopes/reference/index.html for more
 
 
 ```{r}
@@ -196,7 +198,7 @@ tm_shape(dem_lisbon_raster) + tm_raster(palette = "BrBG", alpha = 0.3)
 
 ---
 
-# Adding the Z dimension
+### Adding the Z dimension
 
 ```{r}
 lisbon_route
@@ -224,7 +226,7 @@ lisbon_route_slopes
 
 .pull-left[
 
-```{r, error=TRUE}
+```{r, error=TRUE, fig.height=6}
 plot_slope(lisbon_route)
 ```
 
@@ -233,7 +235,7 @@ plot_slope(lisbon_route)
 .pull-right[
 
 
-```{r}
+```{r, fig.height=6}
 plot_slope(lisbon_route_slopes)
 ```
 
@@ -290,16 +292,6 @@ m
 
 ---
 
-Uses ceramic / mapbox api
-
-
-#### other sources for elevation 
-
-
-
----
-
-
 .pull-left[
 
 ###  Worked example
@@ -343,6 +335,8 @@ plot(sf::st_geometry(network), add = TRUE) #check if they overlay
 sys_time = system.time({
   network$slope = slope_raster(network, dem)
 })
+sys_time
+nrow(network)
 nrow(network) / sys_time[3]
 
 network$slope = network$slope * 100 # percentage
@@ -351,22 +345,15 @@ summary(network$slope) # check the values
 
 ---
 
+## Results
+
 ```{r, eval=FALSE}
 qtm(network, "slope") # with a few extra arguments...
 ```
 
+See [`roadnetworkcycling`](https://itsleeds.github.io/slopes/articles/roadnetworkcycling.html) vignette for details and here for interactive map: http://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/SlopesIoW.html
+
 ![](https://user-images.githubusercontent.com/1825120/121820334-2435f080-cc8a-11eb-962c-79dcba97e459.png)
-
----
-
-## Steep segments
-
-```{r}
-steep_segment = network %>% 
-  filter(slope > 100)
-# qtm(steep_segment)
-```
-
 
 ---
 
@@ -380,14 +367,12 @@ background-position: bottom
 
 .pull-left[
 
-
 -   `slope_get_dem()` to get digital elevation model data
 -   Add other elevation sources using api keys (e.g Google, others)?
 -   Improve `plot_slope()` visualization
 -   Explore accuracy of data vs 'ground truth'
 -   Finish review, publish in JOSS and on CRAN
 -   See [itsleeds/slopes](https://github.com/ITSLeeds/slopes) on github to get involved!
--   Research!
 
 ]
 
