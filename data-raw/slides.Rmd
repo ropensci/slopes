@@ -203,7 +203,6 @@ route_3d$gradient_slopes = slope_xyz(route_3d) # todo: calculate slopes in slope
 
 .pull-left[
 
-
 ```{r}
 library(tmap)
 m = tm_shape(route_3d) + 
@@ -270,7 +269,6 @@ plot(dem)
 plot(sf::st_geometry(network), add = TRUE) #check if they overlay
 ```
 
-
 ]
 
 ---
@@ -294,7 +292,6 @@ qtm(network, "slope") # with a few extra arguments...
 ```
 
 ![](https://user-images.githubusercontent.com/1825120/121820334-2435f080-cc8a-11eb-962c-79dcba97e459.png)
-
 
 ---
 
@@ -352,15 +349,25 @@ Blake Street, Sheffield. Source: [thestar.co.uk](https://www.thestar.co.uk/news/
 
 # Where is the ground truth? 
 
--Not from CycleStreets
+.pull-left[
 
-```{r}
-route_3d$elevation_change
-route_3d$distances
+- Comparison of gradients from the slopes packages and an online routing service
+
+```{r, echo=FALSE}
+# route_3d$elevation_change
+# route_3d$distances
 plot(route_3d$gradient_smooth, route_3d$gradient_slopes)
 ```
 
-Issue with cyclestreets data
+]
+
+.pull-right[
+
+- How to get ground truth data? Quite hard!
+
+![](https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fs41597-019-0147-x/MediaObjects/41597_2019_147_Fig5_HTML.png)
+
+]
 
 ---
 
