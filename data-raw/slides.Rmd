@@ -15,6 +15,7 @@ output:
 ---
 
 ```{r, eval=FALSE, echo=FALSE}
+# see slides manually uploaded online: https://slopes-slides.netlify.app/slides.html#1
 # to run these slides locally:
 xaringan::inf_mr("data-raw/slides.Rmd")
 ```
