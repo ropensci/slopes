@@ -110,9 +110,37 @@ Real world problem: infrastructure prioritisation. Source: [paper](https://www.j
 
 # Applications
 
+.left-column[
+
 -   Transport planning
 -   River/flooding research
 -   Civil engineering
+
+]
+
+.right-column[
+
+![](https://onlinelibrary.wiley.com/cms/asset/d3b27e5b-fb41-4169-94d3-633aa23a5ccc/gean12253-fig-0003-m.png)
+
+Image source: Goodchild ([2020](https://doi.org/10.1111/gean.12253)): Beyond Tobler’s Hiking Function 
+
+]
+
+---
+
+# Installation and set-up
+
+```{r, eval=FALSE}
+remotes::install_github("itsleeds/slopes")
+```
+
+
+```{r}
+library(slopes)
+library(tmap)
+tmap_mode("view")
+```
+
 
 ---
 
@@ -120,14 +148,50 @@ Real world problem: infrastructure prioritisation. Source: [paper](https://www.j
 
 Key functions:
 
-1. `slope_3d()`: Adds a third dimension to your linestring coordinates
-2. `plot_slope()`
+1. `slope_xyz()`: calculates the slope associated with linestrings that have xyz coordinates
+1. `slope_3d()`: Adds a third dimension to linestring coordinates
+2. `plot_slope()`: Plots the slope profile associated with a linestring
+3. `map_slope()` (to be created)
+4. `slope_z_value()`: returns the Z component of coordinates
+
+
+```{r}
+lisbon_route_3d_segments = stplanr::rnet_breakup_vertices(lisbon_route_3d)
+lisbon_route_3d_segments$slope = slope_xyz(lisbon_route_3d_segments)
+tm_shape(lisbon_route_3d_segments) +
+  tm_lines(col = "slope", lwd = 3, palette = "viridis")
+```
+
 
 ---
 
 # Package data
 
-Todo: add maps showing 2 main inputs, vector and raster
+The key input datasets are:
+
+--
+
+.pull-left[
+
+linestrings representing roads/rivers/other, and...
+
+```{r maps}
+tm_shape(lisbon_road_segments) + tm_lines()
+```
+
+]
+
+--
+
+.pull-right[
+
+and digital elevations:
+
+```{r}
+tm_shape(dem_lisbon_raster) + tm_raster(palette = "BrBG", alpha = 0.3)
+```
+
+]
 
 
 ---
@@ -135,7 +199,6 @@ Todo: add maps showing 2 main inputs, vector and raster
 # Adding the Z dimension
 
 ```{r}
-library(slopes)
 lisbon_route
 ```
 
@@ -407,5 +470,7 @@ Slides created via the R packages:
 
 [**xaringan**](https://github.com/yihui/xaringan)<br>
 [gadenbuie/xaringanthemer](https://github.com/gadenbuie/xaringanthemer)
+(And the [Sharing Xaringan Slides](https://www.garrickadenbuie.com/blog/sharing-xaringan-slides/) blog post!)
 
 The chakra comes from [remark.js](https://remarkjs.com), [**knitr**](http://yihui.name/knitr), and [R Markdown](https://rmarkdown.rstudio.com).
+
