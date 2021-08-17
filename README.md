@@ -30,6 +30,26 @@ Install the development version from [GitHub](https://github.com/) with:
 remotes::install_github("itsleeds/slopes")
 ```
 
+If you do not already have DEM data and want to make use of the
+package’s ability to download them using the `ceramic` package, install
+the package with suggested dependencies as follows:
+
+``` r
+# install.packages("remotes")
+remotes::install_github("itsleeds/slopes", dependencies = "Suggests")
+```
+
+Furthermore, you will need to add a MapBox API key to be able to get DEM
+datasets, by signing up and registering for a key at
+<https://account.mapbox.com/access-tokens/> and then following these
+steps:
+
+``` r
+usethis::edit_r_environ()
+# Type in (register on the mapbox website):
+MAPBOX_API_KEY=xxxxx
+```
+
 ## Usage
 
 Load the package in the usual way:
@@ -149,4 +169,4 @@ lisbon_route_3d_auto = slope_3d(lisbon_route)
 plot_slope(lisbon_route_3d_auto)
 ```
 
-<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
