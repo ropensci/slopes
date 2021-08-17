@@ -133,6 +133,7 @@
 <p>We will also load the <code>sf</code> library:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span>
+<span class="co">#&gt; Warning: package 'sf' was built under R version 4.0.5</span>
 <span class="co">#&gt; Linking to GEOS 3.9.0, GDAL 3.2.1, PROJ 7.2.1</span></code></pre></div>
 <p>The minimum data requirements for using the package are elevation points, either as a vector, a matrix or as a digital elevation model (DEM) encoded as a raster dataset. Typically you will also have a geographic object representing the roads or similar features. These two types of input data are represented in the code output and plot below.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -157,7 +158,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lisbon_road_segments</span><span class="op">$</span><span class="va">slope</span><span class="op">)</span>
 <span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
 <span class="co">#&gt; 0.00000 0.01246 0.03534 0.05462 0.08251 0.27583</span></code></pre></div>
-<p>This created a new column, <code>slope</code> that represents the average, distance weighted slope associated with each road segment. The units represent the percentage incline, that is the change in elevation divided by distance. The summary of the result tells us that the average gradient of slopes in the example data is just over 5%. This result is equivalent to that returned by ESRI’s <code>Slope_3d()</code> in the <a href="https://desktop.arcgis.com/en/arcmap/10.3/tools/3d-analyst-toolbox/slope.htm">3D Analyst extension</a>, with a correlation between the ArcMap implementation and our implementation of more than 0.95 on our test dataset (we find higher correlations on larger datasets):</p>
+<p>This created a new column, <code>slope</code> that represents the average, distance weighted slope associated with each road segment. The units represent the percentage incline, that is the change in elevation divided by distance. The summary of the result tells us that the average gradient of slopes in the example data is just over 5%. This result is equivalent to that returned by ESRI’s <code><a href="reference/elevation_add.html">elevation_add()</a></code> in the <a href="https://desktop.arcgis.com/en/arcmap/10.3/tools/3d-analyst-toolbox/slope.htm">3D Analyst extension</a>, with a correlation between the ArcMap implementation and our implementation of more than 0.95 on our test dataset (we find higher correlations on larger datasets):</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span>
   <span class="va">lisbon_road_segments</span><span class="op">$</span><span class="va">slope</span>,    <span class="co"># slopes calculates by the slopes package</span>
@@ -174,20 +175,21 @@
 <p>Imagine that we want to go from Santa Catarina to the East of the map to the Castelo de Sao Jorge to the West of the map:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">tmap</span><span class="op">)</span>
+<span class="co">#&gt; Warning: package 'tmap' was built under R version 4.1.0</span>
 <span class="fu">tmap_mode</span><span class="op">(</span><span class="st">"view"</span><span class="op">)</span>
 <span class="co">#&gt; tmap mode set to interactive viewing</span>
 <span class="fu">qtm</span><span class="op">(</span><span class="va">lisbon_route</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-route-1.png" width="100%"></p>
 <p>We can convert the <code>lisbon_route</code> object into a 3d linestring object as follows:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lisbon_route_3d</span> <span class="op">=</span> <span class="fu">slope_3d</span><span class="op">(</span><span class="va">lisbon_route</span>, <span class="va">dem_lisbon_raster</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">lisbon_route_3d</span> <span class="op">=</span> <span class="fu"><a href="reference/elevation_add.html">elevation_add</a></span><span class="op">(</span><span class="va">lisbon_route</span>, <span class="va">dem_lisbon_raster</span><span class="op">)</span></code></pre></div>
 <p>We can now visualise the elevation profile of the route as follows:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/plot_slope.html">plot_slope</a></span><span class="op">(</span><span class="va">lisbon_route_3d</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-plot_slope-1.png" width="100%"></p>
 <p>If you do not have a raster dataset representing elevations, you can automatically download them as follows.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lisbon_route_3d_auto</span> <span class="op">=</span> <span class="fu">slope_3d</span><span class="op">(</span><span class="va">lisbon_route</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">lisbon_route_3d_auto</span> <span class="op">=</span> <span class="fu"><a href="reference/elevation_add.html">elevation_add</a></span><span class="op">(</span><span class="va">lisbon_route</span><span class="op">)</span>
 <span class="co">#&gt; Preparing to download: 12 tiles at zoom = 15 from </span>
 <span class="co">#&gt; https://api.mapbox.com/v4/mapbox.terrain-rgb/</span>
 <span class="fu"><a href="reference/plot_slope.html">plot_slope</a></span><span class="op">(</span><span class="va">lisbon_route_3d_auto</span><span class="op">)</span></code></pre></div>
