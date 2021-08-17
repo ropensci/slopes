@@ -62,6 +62,7 @@ We will also load the `sf` library:
 
 ``` r
 library(sf)
+#> Warning: package 'sf' was built under R version 4.0.5
 #> Linking to GEOS 3.9.0, GDAL 3.2.1, PROJ 7.2.1
 ```
 
@@ -104,7 +105,7 @@ weighted slope associated with each road segment. The units represent
 the percentage incline, that is the change in elevation divided by
 distance. The summary of the result tells us that the average gradient
 of slopes in the example data is just over 5%. This result is equivalent
-to that returned by ESRI’s `Slope_3d()` in the [3D Analyst
+to that returned by ESRI’s `elevation_add()` in the [3D Analyst
 extension](https://desktop.arcgis.com/en/arcmap/10.3/tools/3d-analyst-toolbox/slope.htm),
 with a correlation between the ArcMap implementation and our
 implementation of more than 0.95 on our test dataset (we find higher
@@ -137,6 +138,7 @@ the Castelo de Sao Jorge to the West of the map:
 
 ``` r
 library(tmap)
+#> Warning: package 'tmap' was built under R version 4.1.0
 tmap_mode("view")
 #> tmap mode set to interactive viewing
 qtm(lisbon_route)
@@ -148,7 +150,7 @@ We can convert the `lisbon_route` object into a 3d linestring object as
 follows:
 
 ``` r
-lisbon_route_3d = slope_3d(lisbon_route, dem_lisbon_raster)
+lisbon_route_3d = elevation_add(lisbon_route, dem_lisbon_raster)
 ```
 
 We can now visualise the elevation profile of the route as follows:
@@ -163,7 +165,7 @@ If you do not have a raster dataset representing elevations, you can
 automatically download them as follows.
 
 ``` r
-lisbon_route_3d_auto = slope_3d(lisbon_route)
+lisbon_route_3d_auto = elevation_add(lisbon_route)
 #> Preparing to download: 12 tiles at zoom = 15 from 
 #> https://api.mapbox.com/v4/mapbox.terrain-rgb/
 plot_slope(lisbon_route_3d_auto)
