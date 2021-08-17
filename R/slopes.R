@@ -230,14 +230,14 @@ elevation_extract = function(m,
 #' @examples
 #' routes = lisbon_road_segments[204, ]
 #' dem = dem_lisbon_raster
-#' (r3d = slope_3d(routes, dem))
+#' (r3d = elevation_add(routes, dem))
 #' sf::st_z_range(routes)
 #' sf::st_z_range(r3d)
 #' plot(sf::st_coordinates(r3d)[, 3])
 #' plot_slope(r3d)
-#' # r3d_get = slope_3d(cyclestreets_route)
+#' # r3d_get = elevation_add(cyclestreets_route)
 #' # plot_slope(r3d_get)
-slope_3d = function(
+elevation_add = function(
  routes,
   dem = NULL,
   method = "bilinear",

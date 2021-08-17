@@ -152,7 +152,7 @@ Key functions:
 
 1. `slope_xyz()`: calculates the slope associated with linestrings that have xyz coordinates
 1. `slope_raster()`: Calculate slopes of linestrings based on local raster map
-1. `slope_3d()`: Adds a third dimension to linestring coordinates
+1. `elevation_add()`: Adds a third dimension to linestring coordinates
 1. `plot_slope()`: Plots the slope profile associated with a linestring
 1. See https://itsleeds.github.io/slopes/reference/index.html for more
 
@@ -207,7 +207,7 @@ lisbon_route
 #### `Dimension:     XY`
 
 ```{r}
-lisbon_route_slopes = slope_3d(routes = lisbon_route, dem = slopes::dem_lisbon_raster)
+lisbon_route_slopes = elevation_add(routes = lisbon_route, dem = slopes::dem_lisbon_raster)
 ```
 
 ```{r, eval=FALSE}
@@ -258,11 +258,11 @@ destination = tmaptools::geocode_OSM("eth zurich", as.sf = TRUE)
 route = osrm::osrmRoute(src = origin, dst = destination, returnclass = "sf")
 library(stplanr)
 route = route(origin, destination, route_fun = cyclestreets::journey)
-route_3d = slope_3d(route, dem = NULL)
+route_3d = elevation_add(route, dem = NULL)
 ```
 
 ```{r}
-route_3d$gradient_slopes = slope_xyz(route_3d) # todo: calculate slopes in slope_3d by default?
+route_3d$gradient_slopes = slope_xyz(route_3d) # todo: calculate slopes in elevation_add by default?
 ```
 
 ---

@@ -33,7 +33,7 @@ usethis::use_data(magnolia_xy, overwrite = TRUE)
 sf::st_crs(magnolia_xy)
 
 # slope_raster(magnolia_xy) # fails
-magnolia_xyz = slope_3d(magnolia_xy)
+magnolia_xyz = elevation_add(magnolia_xy)
 magnolia_xyz$slopes = round(slope_xyz(magnolia_xyz)*100)
 summary(magnolia_xyz$SLOPE_PCT)
 summary(magnolia_xyz$slopes)

@@ -106,7 +106,7 @@ start_coords = stplanr::geo_code("bramley park")
 end_coods = stplanr::geo_code("university of leeds")
 rj = cyclestreets::journey(from = start_coords, to = end_coods)
 mapview::mapview(rj)
-rj_3d = slope_3d(rj)
+rj_3d = elevation_add(rj)
 plot_slope(rj_3d)
 plot(cumsum(rj$distances), cumsum(rj$elevation_change))
 ```

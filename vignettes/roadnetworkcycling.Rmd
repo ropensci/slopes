@@ -92,7 +92,7 @@ The **SRTM** (*Shuttle Radar Topography Mission*) NASA’s mission provides [fre
 
 Alternatively, **COPERNICUS** ESA's mission also provides [freely available](https://land.copernicus.eu/imagery-in-situ/eu-dem) DEM for all Europe, with a 25m resolution and a vertical accuracy of 7m - [more](https://land.copernicus.eu/user-corner/publications/eu-dem-flyer/view).
 
-Depending of how large is your road network, you can use `slope_3d()` [function](https://itsleeds.github.io/slopes/reference/slope_3d.html) - this will require a valid [Mapbox api key](https://docs.mapbox.com/api/overview/).
+Depending of how large is your road network, you can use `elevation_add()` [function](https://itsleeds.github.io/slopes/reference/elevation_add.html) - this will require a valid [Mapbox api key](https://docs.mapbox.com/api/overview/).
 
 ```{r import_dem, message=FALSE}
 # Import and plot DEM

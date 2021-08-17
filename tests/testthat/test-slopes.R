@@ -50,7 +50,7 @@ test_that("slope_* functions work", {
   expect_equal(slope_xyz(r_xyz), 0.0950132312274622, ignore_attr = TRUE)
 
   r = lisbon_road_segments[204, ]
-  r3d = slope_3d(r, e)
+  r3d = elevation_add(r, e)
   expect_equal(
     sf::st_z_range(r3d$geom),
     c(86, 92),
@@ -59,7 +59,7 @@ test_that("slope_* functions work", {
     )
   if(nchar(Sys.getenv("MAPBOX_API_KEY")) < 8)
     skip(message = "Skipping test, MAPBOX token in .Renviron needed")
-  r3d2 = slope_3d(r)
+  r3d2 = elevation_add(r)
   expect_equal(
     sf::st_z_range(r3d2$geom),
     c(86, 92),
