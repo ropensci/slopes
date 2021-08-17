@@ -5,17 +5,18 @@
 #' @param fill Should the profile be filled? `TRUE` by default
 #' @param horiz Should the legend be horizontal (`FALSE` by default)
 #' @param pal Color palette to use, `colorspace::diverging_hcl` by default.
-#' @param x Keyword, one of "bottomright", "bottom",
-#' "bottomleft", "left", "topleft", "top", "topright", "right" and "center"
+#' @param legend_position The legend position. One of "bottomright", "bottom",
+#'   "bottomleft", "left", "topleft", "top" (the default), "topright", "right"
+#'   and "center".
 #' @param col Line colour, black by default
 #' @param cex Legend size, 0.9 by default
 #' @param bg Legend background colour, `grDevices::rgb(1, 1, 1, 0.8)` by default.
-#' @param title Title of the legend
+#' @param title Title of the legend, `NULL` by default.
 #' @param brks Breaks in colour palette to show.
 #'   `c(1, 3, 6, 10, 20, 40, 100)` by default.
 #' @param seq_brks Sequence of breaks to show in legend.
 #'   Includes negative numbers and omits zero by default
-#' @param ncol Number of columns in legend
+#' @param ncol Number of columns in legend, 4 by default.
 #' @param ... Additional parameters to pass to legend
 #' @inheritParams slope_raster
 #' @inheritParams sequential_dist
@@ -33,7 +34,7 @@ plot_slope = function(
   fill = TRUE,
   horiz = FALSE,
   pal =colorspace::diverging_hcl,
-  x = "top",
+  legend_position = "top",
   col = "black",
   cex = 0.9,
   bg = grDevices::rgb(1, 1, 1, 0.8),
@@ -65,7 +66,7 @@ plot_dz = function(
   horiz = FALSE,
   pal = colorspace::diverging_hcl,
   ...,
-  x = "top",
+  legend_position = "top",
   col = "black",
   cex = 0.9,
   bg = grDevices::rgb(1, 1, 1, 0.8),
@@ -91,7 +92,7 @@ plot_dz = function(
     graphics::lines(d, z, col = col, lwd = 2)
     if(is.null(seq_brks)) seq_brks = seq(from = 3, to = length(b) - 2)
     s = c(seq_brks[-(length(seq_brks) / 2) -1], max(seq_brks) + 1)
-    graphics::legend(x = x, legend = b[s] * 100, fill = pal[s],
+    graphics::legend(x = legend_position, legend = b[s] * 100, fill = pal[s],
                      ..., bg = bg, title = title, horiz = horiz,
                      ncol = ncol, cex = cex)
   }

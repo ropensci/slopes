@@ -11,7 +11,7 @@ plot_dz(
   horiz = FALSE,
   pal = colorspace::diverging_hcl,
   ...,
-  x = "top",
+  legend_position = "top",
   col = "black",
   cex = 0.9,
   bg = grDevices::rgb(1, 1, 1, 0.8),
@@ -34,8 +34,9 @@ plot_dz(
 
 \item{...}{Additional parameters to pass to legend}
 
-\item{x}{Keyword, one of "bottomright", "bottom",
-"bottomleft", "left", "topleft", "top", "topright", "right" and "center"}
+\item{legend_position}{The legend position. One of "bottomright", "bottom",
+"bottomleft", "left", "topleft", "top" (the default), "topright", "right"
+and "center".}
 
 \item{col}{Line colour, black by default}
 
@@ -43,7 +44,7 @@ plot_dz(
 
 \item{bg}{Legend background colour, \code{grDevices::rgb(1, 1, 1, 0.8)} by default.}
 
-\item{title}{Title of the legend}
+\item{title}{Title of the legend, \code{NULL} by default.}
 
 \item{brks}{Breaks in colour palette to show.
 \code{c(1, 3, 6, 10, 20, 40, 100)} by default.}
@@ -51,7 +52,7 @@ plot_dz(
 \item{seq_brks}{Sequence of breaks to show in legend.
 Includes negative numbers and omits zero by default}
 
-\item{ncol}{Number of columns in legend}
+\item{ncol}{Number of columns in legend, 4 by default.}
 }
 \description{
 Plot a digital elevation profile based on xyz data
