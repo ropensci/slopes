@@ -3,15 +3,16 @@
 #' @inheritParams slope_raster
 #' @inheritParams plot_dz
 #' @inheritParams sequential_dist
+#' @param route_xyz An sf linestring with x, y and z coordinates,
+#'   representing a route or other linear object.
 #'
 #' @export
 #' @examples
 #' plot_slope(lisbon_route_3d)
-#' routes = lisbon_road_segment_3d
-#' plot_slope(routes)
-#' routes = lisbon_road_segment_3d
-plot_slope = function(routes,
-                      lonlat = sf::st_is_longlat(routes),
+#' route_xyz = lisbon_road_segment_3d
+#' plot_slope(route_xyz)
+plot_slope = function(route_xyz,
+                      lonlat = sf::st_is_longlat(route_xyz),
                       fill = TRUE,
                       horiz = FALSE,
                       p = colorspace::diverging_hcl,
@@ -23,7 +24,7 @@ plot_slope = function(routes,
                       title = "Slope colors (percentage gradient)",
                       s = 3:18,
                       ncol = 4) {
-  dz = distance_z(routes, lonlat = lonlat)
+  dz = distance_z(route_xyz, lonlat = lonlat)
   plot_dz(dz$d, dz$z, fill = fill)
 }
 #' Plot a digital elevation profile based on xyz data
@@ -45,8 +46,8 @@ plot_slope = function(routes,
 #' @param horiz Should the legend be horizontal (`FALSE` by default)
 #' @param ... Additional parameters to pass to legend
 #' @examples
-#' routes = lisbon_road_segment_3d
-#' m = sf::st_coordinates(routes)
+#' route_xyz = lisbon_road_segment_3d
+#' m = sf::st_coordinates(route_xyz)
 #' d = cumsum(sequential_dist(m, lonlat = FALSE))
 #' d = c(0, d)
 #' z = m[, 3]
@@ -88,8 +89,8 @@ plot_dz = function(d,
   }
 }
 
-distance_z = function(routes, lonlat) {
-  m = sf::st_coordinates(routes)
+distance_z = function(route_xyz, lonlat) {
+  m = sf::st_coordinates(route_xyz)
   d = cumsum(sequential_dist(m, lonlat = lonlat))
   d = c(0, d)
   z = m[, 3]
