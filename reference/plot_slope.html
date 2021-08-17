@@ -144,7 +144,7 @@
   fill <span class='op'>=</span> <span class='cn'>TRUE</span>,
   horiz <span class='op'>=</span> <span class='cn'>FALSE</span>,
   pal <span class='op'>=</span> <span class='fu'>colorspace</span><span class='fu'>::</span><span class='va'><a href='https://colorspace.R-Forge.R-project.org//reference/hcl_palettes.html'>diverging_hcl</a></span>,
-  x <span class='op'>=</span> <span class='st'>"top"</span>,
+  legend_position <span class='op'>=</span> <span class='st'>"top"</span>,
   col <span class='op'>=</span> <span class='st'>"black"</span>,
   cex <span class='op'>=</span> <span class='fl'>0.9</span>,
   bg <span class='op'>=</span> <span class='fu'>grDevices</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/grDevices/rgb.html'>rgb</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0.8</span><span class='op'>)</span>,
@@ -181,9 +181,10 @@ By default, value is from the CRS of the routes (<code><a href='https://r-spatia
       <td><p>Color palette to use, <code><a href='https://colorspace.R-Forge.R-project.org//reference/hcl_palettes.html'>colorspace::diverging_hcl</a></code> by default.</p></td>
     </tr>
     <tr>
-      <th>x</th>
-      <td><p>Keyword, one of "bottomright", "bottom",
-"bottomleft", "left", "topleft", "top", "topright", "right" and "center"</p></td>
+      <th>legend_position</th>
+      <td><p>The legend position. One of "bottomright", "bottom",
+"bottomleft", "left", "topleft", "top" (the default), "topright", "right"
+and "center".</p></td>
     </tr>
     <tr>
       <th>col</th>
@@ -199,7 +200,7 @@ By default, value is from the CRS of the routes (<code><a href='https://r-spatia
     </tr>
     <tr>
       <th>title</th>
-      <td><p>Title of the legend</p></td>
+      <td><p>Title of the legend, <code>NULL</code> by default.</p></td>
     </tr>
     <tr>
       <th>brks</th>
@@ -213,7 +214,7 @@ Includes negative numbers and omits zero by default</p></td>
     </tr>
     <tr>
       <th>ncol</th>
-      <td><p>Number of columns in legend</p></td>
+      <td><p>Number of columns in legend, 4 by default.</p></td>
     </tr>
     <tr>
       <th>...</th>
