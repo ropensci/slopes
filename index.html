@@ -180,14 +180,14 @@
 <p><img src="reference/figures/README-route-1.png" width="100%"></p>
 <p>We can convert the <code>lisbon_route</code> object into a 3d linestring object as follows:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lisbon_route_3d</span> <span class="op">=</span> <span class="fu"><a href="reference/slope_3d.html">slope_3d</a></span><span class="op">(</span><span class="va">lisbon_route</span>, <span class="va">dem_lisbon_raster</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">lisbon_route_3d</span> <span class="op">=</span> <span class="fu">slope_3d</span><span class="op">(</span><span class="va">lisbon_route</span>, <span class="va">dem_lisbon_raster</span><span class="op">)</span></code></pre></div>
 <p>We can now visualise the elevation profile of the route as follows:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/plot_slope.html">plot_slope</a></span><span class="op">(</span><span class="va">lisbon_route_3d</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-plot_slope-1.png" width="100%"></p>
 <p>If you do not have a raster dataset representing elevations, you can automatically download them as follows.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lisbon_route_3d_auto</span> <span class="op">=</span> <span class="fu"><a href="reference/slope_3d.html">slope_3d</a></span><span class="op">(</span><span class="va">lisbon_route</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">lisbon_route_3d_auto</span> <span class="op">=</span> <span class="fu">slope_3d</span><span class="op">(</span><span class="va">lisbon_route</span><span class="op">)</span>
 <span class="co">#&gt; Preparing to download: 12 tiles at zoom = 15 from </span>
 <span class="co">#&gt; https://api.mapbox.com/v4/mapbox.terrain-rgb/</span>
 <span class="fu"><a href="reference/plot_slope.html">plot_slope</a></span><span class="op">(</span><span class="va">lisbon_route_3d_auto</span><span class="op">)</span></code></pre></div>

@@ -126,7 +126,7 @@
                  quiet <span class="op">=</span> <span class="cn">FALSE</span>, force_download <span class="op">=</span> <span class="cn">TRUE</span>, force_vectortranslate <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># 7 MB</span>
 <span class="co">#&gt; 0...10...20...30...40...50...60...70...80...90...100 - done.</span>
 <span class="co">#&gt; Reading layer `lines' from data source </span>
-<span class="co">#&gt;   `/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmp11Gyfn/geofabrik_isle-of-wight-latest.gpkg' </span>
+<span class="co">#&gt;   `/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpvRePw6/geofabrik_isle-of-wight-latest.gpkg' </span>
 <span class="co">#&gt;   using driver `GPKG'</span>
 <span class="co">#&gt; Simple feature collection with 47639 features and 9 fields</span>
 <span class="co">#&gt; Geometry type: LINESTRING</span>
@@ -173,7 +173,7 @@
 <p>For this case we will use <code><a href="../reference/slope_raster.html">slope_raster()</a></code> <a href="https://itsleeds.github.io/slopes/reference/slope_raster.html">function</a>, to retrieve the z values from a digital elevation model. This raster was obtained from STRM NASA mission.</p>
 <p>The <strong>SRTM</strong> (<em>Shuttle Radar Topography Mission</em>) NASA’s mission provides <a href="https://gisgeography.com/srtm-shuttle-radar-topography-mission/">freely available</a> worldwide DEM, with a resolution of 25 to 30m and with a vertical accuracy of 16m - <a href="https://www2.jpl.nasa.gov/srtm/">more</a>. The resolution for USA might be better.</p>
 <p>Alternatively, <strong>COPERNICUS</strong> ESA’s mission also provides <a href="https://land.copernicus.eu/imagery-in-situ/eu-dem">freely available</a> DEM for all Europe, with a 25m resolution and a vertical accuracy of 7m - <a href="https://land.copernicus.eu/user-corner/publications/eu-dem-flyer/view">more</a>.</p>
-<p>Depending of how large is your road network, you can use <code><a href="../reference/slope_3d.html">slope_3d()</a></code> <a href="https://itsleeds.github.io/slopes/reference/slope_3d.html">function</a> - this will require a valid <a href="https://docs.mapbox.com/api/overview/">Mapbox api key</a>.</p>
+<p>Depending of how large is your road network, you can use <code><a href="../reference/elevation_add.html">elevation_add()</a></code> <a href="https://itsleeds.github.io/slopes/reference/elevation_add.html">function</a> - this will require a valid <a href="https://docs.mapbox.com/api/overview/">Mapbox api key</a>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Import and plot DEM</span>
 <span class="va">u</span> <span class="op">=</span> <span class="st">"https://github.com/U-Shift/Declives-RedeViaria/releases/download/0.2/IsleOfWightNASA_clip.tif"</span>
