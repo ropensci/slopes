@@ -31,11 +31,11 @@ Imports:
     sf,
     raster,
     methods,
-    pbapply
+    pbapply,
+    geodist
 Depends: 
     R (>= 2.10)
 Suggests: 
-    geodist,
     terra,
     colorspace,
     knitr,

@@ -104,11 +104,7 @@ slope_matrix_weighted = function(m, elevations = m[, 3], lonlat = TRUE) {
 #' sequential_dist(m)
 sequential_dist = function(m, lonlat = TRUE) {
   if(lonlat) {
-    if(requireNamespace("geodist")) {
-      geodist::geodist(m[, 1:2], sequential = TRUE) # lon lat
-    } else {
-      message("Install geodist")
-    }
+    geodist::geodist(m[, 1:2], sequential = TRUE) # lon lat
   } else {
     sqrt(diff(m[, 1])^2 + diff(m[, 2])^2)
   }
