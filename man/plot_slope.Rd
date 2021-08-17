@@ -5,60 +5,63 @@
 \title{Plot slope data for a 3d linestring with base R graphics}
 \usage{
 plot_slope(
-  routes,
-  lonlat = sf::st_is_longlat(routes),
+  route_xyz,
+  lonlat = sf::st_is_longlat(route_xyz),
   fill = TRUE,
   horiz = FALSE,
-  p = colorspace::diverging_hcl,
-  ...,
+  pal = colorspace::diverging_hcl,
   x = "top",
   col = "black",
   cex = 0.9,
   bg = grDevices::rgb(1, 1, 1, 0.8),
   title = "Slope colors (percentage gradient)",
-  s = 3:18,
-  ncol = 4
+  brks = c(3, 6, 10, 20, 40, 100),
+  seq_brks = seq(from = 3, to = length(brks) * 2 - 2),
+  ncol = 4,
+  ...
 )
 }
 \arguments{
-\item{routes}{Routes, the gradients of which are to be calculated.
-The object must be of class \code{sf} with \code{LINESTRING} geometries.}
+\item{route_xyz}{An sf linestring with x, y and z coordinates,
+representing a route or other linear object.}
 
-\item{lonlat}{Are the coordinates in lon/lat (geographic) coordinates?
-Set this to \code{FALSE} if you have projected data, e.g. with coordinates
-representing distance in meters, not degrees. Lonlat coodinates are assumed
-(\code{lonlat = TRUE}) is the default. In \code{slope_raster()} and \code{plot_slope()}
-it is taken from the CRS of the routes (\code{sf::st_is_longlat(routes)}).}
+\item{lonlat}{Are the routes provided in longitude/latitude coordinates?
+By default, value is from the CRS of the routes (\code{sf::st_is_longlat(routes)}).}
 
 \item{fill}{Should the profile be filled? \code{TRUE} by default}
 
 \item{horiz}{Should the legend be horizontal (\code{FALSE} by default)}
 
-\item{p}{Color palette to use}
-
-\item{...}{Additional parameters to pass to legend}
+\item{pal}{Color palette to use, \code{colorspace::diverging_hcl} by default.}
 
 \item{x}{Keyword, one of "bottomright", "bottom",
 "bottomleft", "left", "topleft", "top", "topright", "right" and "center"}
 
-\item{col}{Line colour}
+\item{col}{Line colour, black by default}
 
-\item{cex}{Legend size}
+\item{cex}{Legend size, 0.9 by default}
 
-\item{bg}{Legend background colour}
+\item{bg}{Legend background colour, \code{grDevices::rgb(1, 1, 1, 0.8)} by default.}
 
 \item{title}{Title of the legend}
 
-\item{s}{Sequence of numbers to show in legend}
+\item{brks}{Breaks in colour palette to show.
+\code{c(1, 3, 6, 10, 20, 40, 100)} by default.}
+
+\item{seq_brks}{Sequence of breaks to show in legend.
+Includes negative numbers and omits zero by default}
 
 \item{ncol}{Number of columns in legend}
+
+\item{...}{Additional parameters to pass to legend}
 }
 \description{
 Plot slope data for a 3d linestring with base R graphics
 }
 \examples{
 plot_slope(lisbon_route_3d)
-routes = lisbon_road_segment_3d
-plot_slope(routes)
-routes = lisbon_road_segment_3d
+route_xyz = lisbon_road_segment_3d
+plot_slope(route_xyz)
+plot_slope(route_xyz, brks = c(1, 2, 4, 8, 16, 30))
+plot_slope(route_xyz, s = 5:8)
 }

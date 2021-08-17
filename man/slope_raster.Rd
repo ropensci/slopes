@@ -19,11 +19,8 @@ The object must be of class \code{sf} with \code{LINESTRING} geometries.}
 
 \item{dem}{Raster overlapping with \code{routes} and values representing elevations}
 
-\item{lonlat}{Are the coordinates in lon/lat (geographic) coordinates?
-Set this to \code{FALSE} if you have projected data, e.g. with coordinates
-representing distance in meters, not degrees. Lonlat coodinates are assumed
-(\code{lonlat = TRUE}) is the default. In \code{slope_raster()} and \code{plot_slope()}
-it is taken from the CRS of the routes (\code{sf::st_is_longlat(routes)}).}
+\item{lonlat}{Are the routes provided in longitude/latitude coordinates?
+By default, value is from the CRS of the routes (\code{sf::st_is_longlat(routes)}).}
 
 \item{method}{The method of estimating elevation at points,
 passed to the \code{extract} function for extracting values from raster
