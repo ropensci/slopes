@@ -32,12 +32,12 @@ Imports:
     raster,
     methods,
     pbapply,
-    geodist
+    geodist,
+    colorspace
 Depends: 
     R (>= 2.10)
 Suggests: 
     terra,
-    colorspace,
     knitr,
     rmarkdown,
     ceramic,
