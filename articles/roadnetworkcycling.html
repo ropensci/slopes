@@ -124,15 +124,6 @@
 <code class="sourceCode R"><span class="co"># get the network</span>
 <span class="va">iow_osm</span> <span class="op">=</span> <span class="fu"><a href="https://docs.ropensci.org/osmextract/reference/oe_get.html">oe_get</a></span><span class="op">(</span><span class="st">"Isle of Wight"</span>, provider <span class="op">=</span> <span class="st">"geofabrik"</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span>, 
                  quiet <span class="op">=</span> <span class="cn">FALSE</span>, force_download <span class="op">=</span> <span class="cn">TRUE</span>, force_vectortranslate <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># 7 MB</span>
-<span class="co">#&gt; 0...10...20...30...40...50...60...70...80...90...100 - done.</span>
-<span class="co">#&gt; Reading layer `lines' from data source </span>
-<span class="co">#&gt;   `/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmpgcrpj1/geofabrik_isle-of-wight-latest.gpkg' </span>
-<span class="co">#&gt;   using driver `GPKG'</span>
-<span class="co">#&gt; Simple feature collection with 47639 features and 9 fields</span>
-<span class="co">#&gt; Geometry type: LINESTRING</span>
-<span class="co">#&gt; Dimension:     XY</span>
-<span class="co">#&gt; Bounding box:  xmin: -5.715479 ymin: 43.35489 xmax: 1.92832 ymax: 51.16517</span>
-<span class="co">#&gt; Geodetic CRS:  WGS 84</span>
 
 <span class="co"># filter the major roads</span>
 <span class="va">iow_network</span> <span class="op">=</span> <span class="va">iow_osm</span> <span class="op">%&gt;%</span> 
@@ -164,7 +155,8 @@
 <p>The <a href="https://docs.ropensci.org/stplanr/reference/rnet_breakup_vertices.html"><code>rnet_breakup_vertices</code></a> from <code>stplanr</code> breaks the segments at their inner vertices, preserving the <strong>brunels</strong>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">iow_network_segments</span> <span class="op">=</span> <span class="fu"><a href="https://docs.ropensci.org/stplanr/reference/rnet_breakup_vertices.html">rnet_breakup_vertices</a></span><span class="op">(</span><span class="va">iow_network_clean</span><span class="op">)</span></code></pre></div>
-<p>In this case, there are more 1.59x segments than the original network.</p>
+<p>In this case, there are around 1.6 x the number of segments than in the original network.</p>
+<!-- x segments than the original network. -->
 </div>
 </div>
 <div id="get-slope-values-for-each-segment" class="section level2">
@@ -186,7 +178,6 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/raster">raster</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/plot.html">plot</a></span><span class="op">(</span><span class="va">dem</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/plot.html">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html">st_geometry</a></span><span class="op">(</span><span class="va">network</span><span class="op">)</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co">#check if they overlay</span></code></pre></div>
-<p><img src="roadnetworkcycling_files/figure-html/import_dem-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>All the required data is prepared to estimate the road segments’ gradient.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get the slope value for each segment (abs), using slopes package</span>
@@ -194,10 +185,8 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hypertidy/geodist">geodist</a></span><span class="op">)</span>
 <span class="va">network</span><span class="op">$</span><span class="va">slope</span> <span class="op">=</span> <span class="fu"><a href="../reference/slope_raster.html">slope_raster</a></span><span class="op">(</span><span class="va">network</span>, <span class="va">dem</span><span class="op">)</span>
 <span class="va">network</span><span class="op">$</span><span class="va">slope</span> <span class="op">=</span> <span class="va">network</span><span class="op">$</span><span class="va">slope</span><span class="op">*</span><span class="fl">100</span> <span class="co">#percentage</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">network</span><span class="op">$</span><span class="va">slope</span><span class="op">)</span> <span class="co">#check the values</span>
-<span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
-<span class="co">#&gt;   0.000   1.718   3.073   3.874   5.036 152.888</span></code></pre></div>
-<p>Half of the road segments in Isle of Wight have a gradient bellow 3.1%.</p>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">network</span><span class="op">$</span><span class="va">slope</span><span class="op">)</span> <span class="co">#check the values</span></code></pre></div>
+<p>Half of the road segments in Isle of Wight have a gradient below 3.1%. <!-- %. --></p>
 <p>We will adopt a simplistic qualitative classification for <strong>cycling effort uphill</strong>, and compare the number of segments in each class.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Classify slopes</span>
@@ -208,12 +197,8 @@
                <span class="st">"10-20: extreme"</span>, <span class="st">"&gt;20: impossible"</span><span class="op">)</span>,
     right <span class="op">=</span> <span class="cn">F</span>
   <span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">network</span><span class="op">$</span><span class="va">slope_class</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fl">100</span>,<span class="fl">1</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;       0-3: flat       3-5: mild     5-8: medium      8-10: hard  10-20: extreme </span>
-<span class="co">#&gt;            48.7            25.9            16.5             4.2             4.3 </span>
-<span class="co">#&gt; &gt;20: impossible </span>
-<span class="co">#&gt;             0.4</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">network</span><span class="op">$</span><span class="va">slope_class</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fl">100</span>,<span class="fl">1</span><span class="op">)</span></code></pre></div>
+<!-- It means that **%** of the roads are flat or almost flat (0-3%) and about **%** of the roads are easily cyclable (0-5%). -->
 <p>It means that <strong>49%</strong> of the roads are flat or almost flat (0-3%) and about <strong>75%</strong> of the roads are easily cyclable (0-5%).</p>
 <p>Now let us put this information on a map (see <a href="https://rpubs.com/RobinLovelace/781081">here</a> for interactive version).</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">

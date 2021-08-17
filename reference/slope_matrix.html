@@ -151,15 +151,13 @@
     </tr>
     <tr>
       <th>elevations</th>
-      <td><p>Elevations in same units as x (assumed to be metres)</p></td>
+      <td><p>Elevations in same units as x (assumed to be metres).
+Default value: <code>m[, 3]</code>, meaning the 'z' coordinate in a matrix of
+coordinates.</p></td>
     </tr>
     <tr>
       <th>lonlat</th>
-      <td><p>Are the coordinates in lon/lat (geographic) coordinates?
-Set this to <code>FALSE</code> if you have projected data, e.g. with coordinates
-representing distance in meters, not degrees. Lonlat coodinates are assumed
-(<code>lonlat = TRUE</code>) is the default. In <code><a href='slope_raster.html'>slope_raster()</a></code> and <code><a href='plot_slope.html'>plot_slope()</a></code>
-it is taken from the CRS of the routes (<code><a href='https://r-spatial.github.io/sf/reference/st_is_longlat.html'>sf::st_is_longlat(routes)</a></code>).</p></td>
+      <td><p>Are the coordinates in lon/lat (geographic) coordinates? TRUE by default.</p></td>
     </tr>
     </table>
 

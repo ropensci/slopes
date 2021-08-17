@@ -165,11 +165,8 @@ The object must be of class <code>sf</code> with <code>LINESTRING</code> geometr
     </tr>
     <tr>
       <th>lonlat</th>
-      <td><p>Are the coordinates in lon/lat (geographic) coordinates?
-Set this to <code>FALSE</code> if you have projected data, e.g. with coordinates
-representing distance in meters, not degrees. Lonlat coodinates are assumed
-(<code>lonlat = TRUE</code>) is the default. In <code>slope_raster()</code> and <code><a href='plot_slope.html'>plot_slope()</a></code>
-it is taken from the CRS of the routes (<code><a href='https://r-spatial.github.io/sf/reference/st_is_longlat.html'>sf::st_is_longlat(routes)</a></code>).</p></td>
+      <td><p>Are the routes provided in longitude/latitude coordinates?
+By default, value is from the CRS of the routes (<code><a href='https://r-spatial.github.io/sf/reference/st_is_longlat.html'>sf::st_is_longlat(routes)</a></code>).</p></td>
     </tr>
     <tr>
       <th>method</th>

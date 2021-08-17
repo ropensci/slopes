@@ -143,15 +143,15 @@
   <span class='va'>z</span>,
   fill <span class='op'>=</span> <span class='cn'>TRUE</span>,
   horiz <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  p <span class='op'>=</span> <span class='fu'>colorspace</span><span class='fu'>::</span><span class='va'><a href='https://colorspace.R-Forge.R-project.org//reference/hcl_palettes.html'>diverging_hcl</a></span>,
+  pal <span class='op'>=</span> <span class='fu'>colorspace</span><span class='fu'>::</span><span class='va'><a href='https://colorspace.R-Forge.R-project.org//reference/hcl_palettes.html'>diverging_hcl</a></span>,
   <span class='va'>...</span>,
   x <span class='op'>=</span> <span class='st'>"top"</span>,
   col <span class='op'>=</span> <span class='st'>"black"</span>,
   cex <span class='op'>=</span> <span class='fl'>0.9</span>,
   bg <span class='op'>=</span> <span class='fu'>grDevices</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/grDevices/rgb.html'>rgb</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0.8</span><span class='op'>)</span>,
   title <span class='op'>=</span> <span class='st'>"Slope colors (percentage gradient)"</span>,
-  brks <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>6</span>, <span class='fl'>10</span>, <span class='fl'>20</span>, <span class='fl'>40</span>, <span class='fl'>100</span><span class='op'>)</span>,
-  s <span class='op'>=</span> <span class='cn'>NULL</span>,
+  brks <span class='op'>=</span> <span class='cn'>NULL</span>,
+  seq_brks <span class='op'>=</span> <span class='cn'>NULL</span>,
   ncol <span class='op'>=</span> <span class='fl'>4</span>
 <span class='op'>)</span></pre>
 
@@ -175,8 +175,8 @@
       <td><p>Should the legend be horizontal (<code>FALSE</code> by default)</p></td>
     </tr>
     <tr>
-      <th>p</th>
-      <td><p>Color palette to use</p></td>
+      <th>pal</th>
+      <td><p>Color palette to use, <code><a href='https://colorspace.R-Forge.R-project.org//reference/hcl_palettes.html'>colorspace::diverging_hcl</a></code> by default.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -189,15 +189,15 @@
     </tr>
     <tr>
       <th>col</th>
-      <td><p>Line colour</p></td>
+      <td><p>Line colour, black by default</p></td>
     </tr>
     <tr>
       <th>cex</th>
-      <td><p>Legend size</p></td>
+      <td><p>Legend size, 0.9 by default</p></td>
     </tr>
     <tr>
       <th>bg</th>
-      <td><p>Legend background colour</p></td>
+      <td><p>Legend background colour, <code><a href='https://rdrr.io/r/grDevices/rgb.html'>grDevices::rgb(1, 1, 1, 0.8)</a></code> by default.</p></td>
     </tr>
     <tr>
       <th>title</th>
@@ -209,8 +209,9 @@
 <code><a href='https://rdrr.io/r/base/c.html'>c(1, 3, 6, 10, 20, 40, 100)</a></code> by default.</p></td>
     </tr>
     <tr>
-      <th>s</th>
-      <td><p>Sequence of numbers to show in legend</p></td>
+      <th>seq_brks</th>
+      <td><p>Sequence of breaks to show in legend.
+Includes negative numbers and omits zero by default</p></td>
     </tr>
     <tr>
       <th>ncol</th>
@@ -220,14 +221,13 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>routes</span> <span class='op'>=</span> <span class='va'>lisbon_road_segment_3d</span>
-<span class='va'>m</span> <span class='op'>=</span> <span class='fu'>sf</span><span class='fu'>::</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_coordinates.html'>st_coordinates</a></span><span class='op'>(</span><span class='va'>routes</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='va'>route_xyz</span> <span class='op'>=</span> <span class='va'>lisbon_road_segment_3d</span>
+<span class='va'>m</span> <span class='op'>=</span> <span class='fu'>sf</span><span class='fu'>::</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_coordinates.html'>st_coordinates</a></span><span class='op'>(</span><span class='va'>route_xyz</span><span class='op'>)</span>
 <span class='va'>d</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/cumsum.html'>cumsum</a></span><span class='op'>(</span><span class='fu'><a href='sequential_dist.html'>sequential_dist</a></span><span class='op'>(</span><span class='va'>m</span>, lonlat <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>d</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='va'>d</span><span class='op'>)</span>
 <span class='va'>z</span> <span class='op'>=</span> <span class='va'>m</span><span class='op'>[</span>, <span class='fl'>3</span><span class='op'>]</span>
-<span class='co'># not exported</span>
-<span class='co'># plot_dz(d, z)</span>
-</div></pre>
+<span class='fu'>slopes</span><span class='fu'>:::</span><span class='fu'>plot_dz</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>z</span>, brks <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>6</span>, <span class='fl'>10</span>, <span class='fl'>20</span>, <span class='fl'>40</span>, <span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='plot_dz-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

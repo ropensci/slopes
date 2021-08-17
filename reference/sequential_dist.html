@@ -40,7 +40,9 @@
 
 
 <meta property="og:title" content="Calculate the sequential distances between sequential coordinate pairs — sequential_dist" />
-<meta property="og:description" content="Calculate the sequential distances between sequential coordinate pairs" />
+<meta property="og:description" content="Set lonlat to FALSE if you have projected data, e.g. with coordinates
+representing distance in meters, not degrees. Lonlat coodinates are assumed
+(lonlat = TRUE is the default)." />
 
 
 
@@ -135,7 +137,9 @@
     </div>
 
     <div class="ref-description">
-    <p>Calculate the sequential distances between sequential coordinate pairs</p>
+    <p>Set <code>lonlat</code> to <code>FALSE</code> if you have projected data, e.g. with coordinates
+representing distance in meters, not degrees. Lonlat coodinates are assumed
+(<code>lonlat = TRUE</code> is the default).</p>
     </div>
 
     <pre class="usage"><span class='fu'>sequential_dist</span><span class='op'>(</span><span class='va'>m</span>, lonlat <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
@@ -149,11 +153,7 @@
     </tr>
     <tr>
       <th>lonlat</th>
-      <td><p>Are the coordinates in lon/lat (geographic) coordinates?
-Set this to <code>FALSE</code> if you have projected data, e.g. with coordinates
-representing distance in meters, not degrees. Lonlat coodinates are assumed
-(<code>lonlat = TRUE</code>) is the default. In <code><a href='slope_raster.html'>slope_raster()</a></code> and <code><a href='plot_slope.html'>plot_slope()</a></code>
-it is taken from the CRS of the routes (<code><a href='https://r-spatial.github.io/sf/reference/st_is_longlat.html'>sf::st_is_longlat(routes)</a></code>).</p></td>
+      <td><p>Are the coordinates in lon/lat (geographic) coordinates? TRUE by default.</p></td>
     </tr>
     </table>
 
