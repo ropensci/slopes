@@ -160,14 +160,26 @@ The object must be of class <code>sf</code> with <code>LINESTRING</code> geometr
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># time-consuming, and see</span>
-<span class='co'># https://github.com/ITSLeeds/slopes/runs/648128378#step:18:107</span>
+    <pre class="examples"><div class='input'><span class='co'># Time-consuming examples that require an internet connectioin and API key:</span>
+<span class='co'># \donttest{</span>
 <span class='va'>routes</span> <span class='op'>=</span> <span class='va'>cyclestreets_route</span>
-<span class='co'># e = elevation_get(routes)</span>
-<span class='co'># class(e)</span>
-<span class='co'># e</span>
-<span class='co'># plot(e)</span>
-<span class='co'># plot(sf::st_geometry(routes), add = TRUE)</span>
+<span class='va'>e</span> <span class='op'>=</span> <span class='fu'>elevation_get</span><span class='op'>(</span><span class='va'>routes</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: no mapbox key found</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>To set your Mapbox API key obtain a key from https://account.mapbox.com/access-tokens/</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>1) Run this to set for the session 'Sys.setenv(MAPBOX_API_KEY=&lt;yourkey&gt;)'</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>OR,</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>2) To set peramanently store 'MAPBOX_API_KEY=&lt;yourkey&gt;' in ~/.Renviron</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>See 'help(ceramic::get_api_key)'</span></div><div class='output co'>#&gt; Preparing to download: 6 tiles at zoom = 14 from 
+#&gt; https://api.mapbox.com/v4/mapbox.terrain-rgb/</div><div class='output co'>#&gt; <span class='error'>Error in curl::curl_download(url = api_query, outfile): HTTP error 401.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>e</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'e' not found</span></div><div class='input'><span class='va'>e</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'e' not found</span></div><div class='input'><span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>e</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'e' not found</span></div><div class='input'><span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='fu'>sf</span><span class='fu'>::</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_geometry.html'>st_geometry</a></span><span class='op'>(</span><span class='va'>routes</span><span class='op'>)</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in plot.xy(xy.coords(x, y), type = type, ...): plot.new has not been called yet</span></div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
