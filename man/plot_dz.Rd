@@ -9,15 +9,15 @@ plot_dz(
   z,
   fill = TRUE,
   horiz = FALSE,
-  p = colorspace::diverging_hcl,
+  pal = colorspace::diverging_hcl,
   ...,
   x = "top",
   col = "black",
   cex = 0.9,
   bg = grDevices::rgb(1, 1, 1, 0.8),
   title = "Slope colors (percentage gradient)",
-  brks = c(3, 6, 10, 20, 40, 100),
-  s = NULL,
+  brks = NULL,
+  seq_brks = NULL,
   ncol = 4
 )
 }
@@ -30,25 +30,26 @@ plot_dz(
 
 \item{horiz}{Should the legend be horizontal (\code{FALSE} by default)}
 
-\item{p}{Color palette to use}
+\item{pal}{Color palette to use, \code{colorspace::diverging_hcl} by default.}
 
 \item{...}{Additional parameters to pass to legend}
 
 \item{x}{Keyword, one of "bottomright", "bottom",
 "bottomleft", "left", "topleft", "top", "topright", "right" and "center"}
 
-\item{col}{Line colour}
+\item{col}{Line colour, black by default}
 
-\item{cex}{Legend size}
+\item{cex}{Legend size, 0.9 by default}
 
-\item{bg}{Legend background colour}
+\item{bg}{Legend background colour, \code{grDevices::rgb(1, 1, 1, 0.8)} by default.}
 
 \item{title}{Title of the legend}
 
 \item{brks}{Breaks in colour palette to show.
 \code{c(1, 3, 6, 10, 20, 40, 100)} by default.}
 
-\item{s}{Sequence of numbers to show in legend}
+\item{seq_brks}{Sequence of breaks to show in legend.
+Includes negative numbers and omits zero by default}
 
 \item{ncol}{Number of columns in legend}
 }
@@ -61,6 +62,5 @@ m = sf::st_coordinates(route_xyz)
 d = cumsum(sequential_dist(m, lonlat = FALSE))
 d = c(0, d)
 z = m[, 3]
-# not exported
-# plot_dz(d, z)
+slopes:::plot_dz(d, z, brks = c(3, 6, 10, 20, 40, 100))
 }
