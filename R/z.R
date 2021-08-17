@@ -55,7 +55,7 @@ z_max = function(x) {
   if(!"Z" %in% colnames(coords)) {
     stop("Requires object that have XYZ geometries, see ?slope_raster.")
   }
-  max(coords[, "Z"])
+  max(coords[, "Z"], na.rm = TRUE)
 }
 #' @rdname z_value
 #' @export
@@ -64,7 +64,7 @@ z_min = function(x) {
   if(!"Z" %in% colnames(coords)) {
     stop("Requires object that have XYZ geometries, see ?slope_raster.")
   }
-  min(coords[, "Z"])
+  min(coords[, "Z"], na.rm = TRUE)
 }
 z_direction = function(x) {
   # ...
