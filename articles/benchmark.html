@@ -125,7 +125,7 @@
 <code class="sourceCode R"><span class="va">res</span></code></pre></div>
 <p>That is approximately</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">`itr/sec`</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">`itr/sec`</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/ncell.html">nrow</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>routes per second using the <code>raster</code> and <code>terra</code> (the default if installed, using <code>RasterLayer</code> and native <code>SpatRaster</code> objects) packages to extract elevation estimates from the raster datasets, respectively.</p>
 <p>The message: use the <code>terra</code> package to read-in DEM data for slope extraction if speed is important.</p>
 <p>To go faster, you can chose the <code>simple</code> method to gain some speed at the expense of accuracy:</p>

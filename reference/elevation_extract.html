@@ -186,7 +186,7 @@ if <code>dem</code> is of class <code>SpatRast</code></p></td>
 #&gt; [25] 3.285 3.274 3.263 3.252 3.252 3.241 3.230 3.219 3.208 3.315 3.451 3.451
 #&gt; [37] 3.560 3.560 3.543 3.652 3.762</div><div class='input'><span class='co'># Test with terra (requires internet connection):</span>
 <span class='co'># \donttest{</span>
-<span class='kw'>if</span><span class='op'>(</span><span class='fu'>has_terra</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='kw'>if</span><span class='op'>(</span><span class='fu'>slopes</span><span class='fu'>:::</span><span class='fu'>has_terra</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='va'>u</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"https://github.com/ITSLeeds/slopes/"</span>,
    <span class='st'>"releases/download/0.0.0/dem_lisbon.tif"</span> <span class='op'>)</span>
 <span class='kw'>if</span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.exists</a></span><span class='op'>(</span><span class='st'>"dem_lisbon.tif"</span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/utils/download.file.html'>download.file</a></span><span class='op'>(</span><span class='va'>u</span>, <span class='st'>"dem_lisbon.tif"</span><span class='op'>)</span>
@@ -194,7 +194,7 @@ if <code>dem</code> is of class <code>SpatRast</code></p></td>
 <span class='fu'>elevation_extract</span><span class='op'>(</span><span class='va'>m</span>, <span class='va'>et</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.remove</a></span><span class='op'>(</span><span class='st'>"dem_lisbon.tif"</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in has_terra(): could not find function "has_terra"</span></div><div class='input'><span class='co'># }</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
