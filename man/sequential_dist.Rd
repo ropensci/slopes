@@ -9,14 +9,12 @@ sequential_dist(m, lonlat = TRUE)
 \arguments{
 \item{m}{Matrix containing coordinates and elevations}
 
-\item{lonlat}{Are the coordinates in lon/lat (geographic) coordinates?
-Set this to \code{FALSE} if you have projected data, e.g. with coordinates
-representing distance in meters, not degrees. Lonlat coodinates are assumed
-(\code{lonlat = TRUE}) is the default. In \code{slope_raster()} and \code{plot_slope()}
-it is taken from the CRS of the routes (\code{sf::st_is_longlat(routes)}).}
+\item{lonlat}{Are the coordinates in lon/lat (geographic) coordinates? TRUE by default.}
 }
 \description{
-Calculate the sequential distances between sequential coordinate pairs
+Set \code{lonlat} to \code{FALSE} if you have projected data, e.g. with coordinates
+representing distance in meters, not degrees. Lonlat coodinates are assumed
+(\code{lonlat = TRUE} is the default).
 }
 \examples{
 x = c(0, 2, 3, 4, 5, 9)

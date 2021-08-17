@@ -25,11 +25,8 @@ plot_slope(
 \item{route_xyz}{An sf linestring with x, y and z coordinates,
 representing a route or other linear object.}
 
-\item{lonlat}{Are the coordinates in lon/lat (geographic) coordinates?
-Set this to \code{FALSE} if you have projected data, e.g. with coordinates
-representing distance in meters, not degrees. Lonlat coodinates are assumed
-(\code{lonlat = TRUE}) is the default. In \code{slope_raster()} and \code{plot_slope()}
-it is taken from the CRS of the routes (\code{sf::st_is_longlat(routes)}).}
+\item{lonlat}{Are the routes provided in longitude/latitude coordinates?
+By default, value is from the CRS of the routes (\code{sf::st_is_longlat(routes)}).}
 
 \item{fill}{Should the profile be filled? \code{TRUE} by default}
 
