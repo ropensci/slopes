@@ -20,6 +20,8 @@ Get elevation data from hosted maptile services
 \examples{
 # Time-consuming examples that require an internet connectioin and API key:
 \donttest{
+library(sf)
+library(raster)
 routes = cyclestreets_route
 e = elevation_get(routes)
 class(e)

@@ -34,7 +34,7 @@ elevation_extract(m, dem)
 elevation_extract(m, dem, method = "simple")
 # Test with terra (requires internet connection):
 \donttest{
-if(has_terra()) {
+if(slopes:::has_terra()) {
 u = paste0("https://github.com/ITSLeeds/slopes/",
    "releases/download/0.0.0/dem_lisbon.tif" )
 if(!file.exists("dem_lisbon.tif")) download.file(u, "dem_lisbon.tif")

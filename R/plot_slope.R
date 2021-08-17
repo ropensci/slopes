@@ -51,7 +51,22 @@ plot_slope = function(
     )
   }
   dz = distance_z(route_xyz, lonlat = lonlat)
-  plot_dz(dz$d, dz$z, seq_brks = seq_brks, brks = brks, ...)
+  plot_dz(
+    d = dz$d,
+    z = dz$z,
+    fill = fill,
+    horiz = horiz,
+    pal = pal,
+    legend_position = legend_position,
+    col = col,
+    cex = cex,
+    bg = bg,
+    title = title,
+    brks = brks,
+    seq_brks = seq_brks,
+    ncol = ncol,
+    ...
+    )
 }
 #' Plot a digital elevation profile based on xyz data
 #'
