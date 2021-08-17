@@ -33,7 +33,7 @@ x = slopes::lisbon_route_3d
 sf::st_geometry(x)
 z_value(x)[1:5]
 xy = slopes::lisbon_route
-# z_value(xy) # error message
+try(z_value(xy)) # error message
 z_start(x)
 z_end(x)
 }

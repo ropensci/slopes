@@ -207,12 +207,17 @@ slope_xyz = function(route_xyz, fun = slope_matrix_weighted, lonlat = TRUE) {
 #' dem = dem_lisbon_raster
 #' elevation_extract(m, dem)
 #' elevation_extract(m, dem, method = "simple")
-#' # uncomment the following lines to test with terra (experimental)
-#' # u = paste0("https://github.com/ITSLeeds/slopes/",
-#' #    "releases/download/0.0.0/dem_lisbon.tif" )
-#' # if(!file.exists("dem_lisbon.tif")) download.file(u, "dem_lisbon.tif")
-#' # et = terra::rast("dem_lisbon.tif")
-#' # elevation_extract(m, et)
+#' # Test with terra (requires internet connection):
+#' \donttest{
+#' if(has_terra()) {
+#' u = paste0("https://github.com/ITSLeeds/slopes/",
+#'    "releases/download/0.0.0/dem_lisbon.tif" )
+#' if(!file.exists("dem_lisbon.tif")) download.file(u, "dem_lisbon.tif")
+#' et = terra::rast("dem_lisbon.tif")
+#' elevation_extract(m, et)
+#' file.remove("dem_lisbon.tif")
+#' }
+#' }
 elevation_extract = function(m,
                              dem,
                              method = "bilinear",
@@ -240,8 +245,11 @@ elevation_extract = function(m,
 #' sf::st_z_range(r3d)
 #' plot(sf::st_coordinates(r3d)[, 3])
 #' plot_slope(r3d)
-#' # r3d_get = elevation_add(cyclestreets_route)
-#' # plot_slope(r3d_get)
+#' \donttest{
+#' # Get elevation data (requires internet connection and API key):
+#' r3d_get = elevation_add(cyclestreets_route)
+#' plot_slope(r3d_get)
+#' }
 elevation_add = function(
  routes,
   dem = NULL,

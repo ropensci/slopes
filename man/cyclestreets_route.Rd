@@ -17,13 +17,14 @@ cyclestreets_route
 Road segments representing suggested route to cycle
 in Leeds, UK.
 }
+\details{
+Simple feature collection with 30 features and 32 fields
+
+See \code{data-raw} folder in the package's github repo for details.
+}
 \examples{
-# cyclestreets_route = cyclestreets::journey(
-#   stplanr::geo_code("Potternewton Park Leeds"),
-#   stplanr::geo_code("University of Leeds")
-# )
-# usethis::use_data(cyclestreets_route)
+library(sf)
 class(cyclestreets_route)
-# plot(cyclestreets_route)
+plot(cyclestreets_route$geometry)
 }
 \keyword{datasets}

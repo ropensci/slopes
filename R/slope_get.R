@@ -5,14 +5,15 @@
 #' @inheritParams slope_raster
 #' @export
 #' @examples
-#' # time-consuming, and see
-#' # https://github.com/ITSLeeds/slopes/runs/648128378#step:18:107
+#' # Time-consuming examples that require an internet connectioin and API key:
+#' \donttest{
 #' routes = cyclestreets_route
-#' # e = elevation_get(routes)
-#' # class(e)
-#' # e
-#' # plot(e)
-#' # plot(sf::st_geometry(routes), add = TRUE)
+#' e = elevation_get(routes)
+#' class(e)
+#' e
+#' plot(e)
+#' plot(sf::st_geometry(routes), add = TRUE)
+#' }
 elevation_get = function(routes, file = NULL, ...) {
   if(requireNamespace("ceramic")) {
     mid_ext = sf_mid_ext_lonlat(routes)

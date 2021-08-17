@@ -37,6 +37,9 @@ sf::st_z_range(routes)
 sf::st_z_range(r3d)
 plot(sf::st_coordinates(r3d)[, 3])
 plot_slope(r3d)
-# r3d_get = elevation_add(cyclestreets_route)
-# plot_slope(r3d_get)
+\donttest{
+# Get elevation data (requires internet connection and API key):
+r3d_get = elevation_add(cyclestreets_route)
+plot_slope(r3d_get)
+}
 }
