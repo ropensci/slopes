@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • slopes</title>
+<title>Get elevation data from hosted maptile services — elevation_get • slopes</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,8 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Get elevation data from hosted maptile services — elevation_get" />
+<meta property="og:description" content="Get elevation data from hosted maptile services" />
 
 
 
@@ -58,7 +59,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -126,132 +127,49 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Get elevation data from hosted maptile services</h1>
+    <small class="dont-index">Source: <a href='https://github.com/itsleeds/slopes/blob/master/R/slope_get.R'><code>R/slope_get.R</code></a></small>
+    <div class="hidden name"><code>elevation_get.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Get elevation data from hosted maptile services</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>elevation_get</span><span class='op'>(</span><span class='va'>routes</span>, file <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="cyclestreets_route.html">cyclestreets_route</a></code> </p>
-        </td>
-        <td><p>A journey from CycleStreets.net</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="dem_lisbon_raster.html">dem_lisbon_raster</a></code> </p>
-        </td>
-        <td><p>Elevation in central Lisbon, Portugal</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="elevation_extract.html">elevation_extract()</a></code> </p>
-        </td>
-        <td><p>Extract elevations from coordinates</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="elevation_get.html">elevation_get()</a></code> </p>
-        </td>
-        <td><p>Get elevation data from hosted maptile services</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="lisbon_road_segment.html">lisbon_road_segment</a></code> </p>
-        </td>
-        <td><p>A road segment in Lisbon, Portugal</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="lisbon_road_segments.html">lisbon_road_segments</a></code> </p>
-        </td>
-        <td><p>Road segments in Lisbon</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="magnolia_xy.html">magnolia_xy</a></code> </p>
-        </td>
-        <td><p>Road segments in Magnolia, Seattle</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot_dz.html">plot_dz()</a></code> </p>
-        </td>
-        <td><p>Plot a digital elevation profile based on xyz data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot_slope.html">plot_slope()</a></code> </p>
-        </td>
-        <td><p>Plot slope data for a 3d linestring with base R graphics</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="sequential_dist.html">sequential_dist()</a></code> </p>
-        </td>
-        <td><p>Calculate the sequential distances between sequential coordinate pairs</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slope_3d.html">slope_3d()</a></code> </p>
-        </td>
-        <td><p>Take a linestring and add a third (z) dimension to its coordinates</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slope_matrix.html">slope_matrix()</a></code> <code><a href="slope_matrix.html">slope_matrix_weighted()</a></code> </p>
-        </td>
-        <td><p>Calculate the gradient of line segments from a 3D matrix of coordinates</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slope_raster.html">slope_raster()</a></code> </p>
-        </td>
-        <td><p>Calculate the gradient of line segments from a raster dataset</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slope_vector.html">slope_vector()</a></code> <code><a href="slope_vector.html">slope_distance()</a></code> <code><a href="slope_vector.html">slope_distance_mean()</a></code> <code><a href="slope_vector.html">slope_distance_weighted()</a></code> </p>
-        </td>
-        <td><p>Calculate the gradient of line segments from distance and elevation vectors</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slope_xyz.html">slope_xyz()</a></code> </p>
-        </td>
-        <td><p>Extract slopes from xyz data frame or sf objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slope_z_value.html">slope_z_value()</a></code> <code><a href="slope_z_value.html">slope_z_start()</a></code> <code><a href="slope_z_value.html">slope_z_end()</a></code> <code><a href="slope_z_value.html">slope_z_mean()</a></code> <code><a href="slope_z_value.html">slope_z_max()</a></code> <code><a href="slope_z_value.html">slope_z_min()</a></code> </p>
-        </td>
-        <td><p>Calculate summary values for 'Z' elevation attributes</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>routes</th>
+      <td><p>Routes, the gradients of which are to be calculated.
+The object must be of class <code>sf</code> with <code>LINESTRING</code> geometries.</p></td>
+    </tr>
+    <tr>
+      <th>file</th>
+      <td><p>Where to save the resulting data if specified (not implemented)</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Options passed to <code>cc_elevation()</code></p></td>
+    </tr>
     </table>
-  </div>
 
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># time-consuming, and see</span>
+<span class='co'># https://github.com/ITSLeeds/slopes/runs/648128378#step:18:107</span>
+<span class='va'>routes</span> <span class='op'>=</span> <span class='va'>cyclestreets_route</span>
+<span class='co'># e = elevation_get(routes)</span>
+<span class='co'># class(e)</span>
+<span class='co'># e</span>
+<span class='co'># plot(e)</span>
+<span class='co'># plot(sf::st_geometry(routes), add = TRUE)</span>
+</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
