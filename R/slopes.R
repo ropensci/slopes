@@ -132,7 +132,9 @@ slope_matrices = function(m_xyz_split, fun = slope_matrix_weighted, ...) {
 #' geometries to `LINESTRING`s as follows:
 #' `r_linestring = sf::st_cast(routes, "LINESTRING")`.
 #'
-#' @inheritParams sequential_dist
+#' @param terra Should the `terra` package be used?
+#'   `TRUE` by default if the package is installed *and*
+#'   if `dem` is of class `SpatRast`
 #' @param lonlat Are the routes provided in longitude/latitude coordinates?
 #'   By default, value is from the CRS of the routes (`sf::st_is_longlat(routes)`).
 #' @param routes Routes, the gradients of which are to be calculated.
@@ -197,9 +199,6 @@ slope_xyz = function(route_xyz, fun = slope_matrix_weighted, lonlat = TRUE) {
 
 #' Extract elevations from coordinates
 #'
-#' @param terra Should the `terra` package be used?
-#' `TRUE` by default if the package is installed *and*
-#' if `dem` is of class `SpatRast`
 #' @inheritParams slope_raster
 #' @inheritParams slope_matrix
 #' @export

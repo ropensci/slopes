@@ -28,6 +28,10 @@ datasets. Default: \code{"bilinear"}.}
 
 \item{fun}{The slope function to calculate per route,
 \code{slope_matrix_weighted} by default.}
+
+\item{terra}{Should the \code{terra} package be used?
+\code{TRUE} by default if the package is installed \emph{and}
+if \code{dem} is of class \code{SpatRast}}
 }
 \description{
 This function takes an \code{sf} representing routes over geographical space
