@@ -218,7 +218,8 @@ slope_xyz = function(route_xyz, fun = slope_matrix_weighted, lonlat = TRUE) {
 #' if(slopes:::has_terra()) {
 #' u = paste0("https://github.com/ITSLeeds/slopes/",
 #'    "releases/download/0.0.0/dem_lisbon.tif" )
-#' if(!file.exists("dem_lisbon.tif")) download.file(u, "dem_lisbon.tif")
+#' f = "dem_lisbon.tif"
+#' if(!file.exists(f)) download.file(u, f, mode = "wb")
 #' et = terra::rast("dem_lisbon.tif")
 #' elevation_extract(m, et)
 #' file.remove("dem_lisbon.tif")
