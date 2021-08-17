@@ -244,7 +244,7 @@ slope_3d = function(
   terra = has_terra() && methods::is(dem, "SpatRaster")
   ) {
   if(is.null(dem)) {
-    dem = elevations_get(routes)
+    dem = elevation_get(routes)
     r_original = routes # create copy to deal with projection issues
     routes = sf::st_transform(routes, raster::crs(dem))
     suppressWarnings({sf::st_crs(routes) = sf::st_crs(r_original)})

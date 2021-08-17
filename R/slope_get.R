@@ -8,12 +8,12 @@
 #' # time-consuming, and see
 #' # https://github.com/ITSLeeds/slopes/runs/648128378#step:18:107
 #' routes = cyclestreets_route
-#' # e = elevations_get(routes)
+#' # e = elevation_get(routes)
 #' # class(e)
 #' # e
 #' # plot(e)
 #' # plot(sf::st_geometry(routes), add = TRUE)
-elevations_get = function(routes, file = NULL, ...) {
+elevation_get = function(routes, file = NULL, ...) {
   if(requireNamespace("ceramic")) {
     mid_ext = sf_mid_ext_lonlat(routes)
     bw = max(c(mid_ext$width, mid_ext$height)) / 1 # buffer width
