@@ -228,6 +228,7 @@ elevation_extract = function(m,
 #' @inheritParams elevation_extract
 #' @export
 #' @examples
+#' library(sf)
 #' routes = lisbon_road_segments[204, ]
 #' dem = dem_lisbon_raster
 #' (r3d = elevation_add(routes, dem))
