@@ -160,6 +160,12 @@ slope_raster = function(
   fun = slope_matrix_weighted,
   terra = has_terra() && methods::is(dem, "SpatRaster")
   ) {
+  if(is.na(lonlat)) {
+    stop(
+      "CRS of routes not known. Set the CRS, e.g. as follows:\n",
+      "sf::st_crs(routes) = 4326 # if the routes are in lon/lat coordinates"
+      )
+  }
   stop_is_not_linestring(routes)
   routes = sf::st_geometry(routes)
   # todo: split out this bit into slope_xyz function
