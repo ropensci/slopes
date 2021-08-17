@@ -11,7 +11,8 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width=7, fig.height=5, fig.align = "center" 
+  fig.width=7, fig.height=5, fig.align = "center",
+  eval = FALSE
 )
 ```
 
@@ -82,7 +83,10 @@ The [`rnet_breakup_vertices`](https://docs.ropensci.org/stplanr/reference/rnet_b
 ```{r breaking, warning=FALSE, message = FALSE}
 iow_network_segments = rnet_breakup_vertices(iow_network_clean)
 ```
-In this case, there are more `r round(nrow(iow_network_segments)/nrow(iow_network_clean),2)`x segments than the original network.
+
+In this case, there are around 1.6 x the number of segments than in the original network. 
+
+<!-- `r # round(nrow(iow_network_segments)/nrow(iow_network_clean),2)`x segments than the original network. -->
 
 ## Get slope values for each segment
 
@@ -119,7 +123,8 @@ network$slope = network$slope*100 #percentage
 summary(network$slope) #check the values
 ```
 
-Half of the road segments in Isle of Wight have a gradient bellow `r round(median(network$slope),1)`%.
+Half of the road segments in Isle of Wight have a gradient below 3.1%.
+<!-- `r # round(median(network$slope),1)`%. -->
 
 We will adopt a simplistic qualitative classification for **cycling effort uphill**, and compare the number of segments in each class.
 
@@ -134,7 +139,8 @@ network$slope_class = network$slope %>%
   )
 round(prop.table(table(network$slope_class))*100,1)
 ```
-It means that **`r round(prop.table(table(network$slope_class))[[1]]*100)`%** of the roads are flat or almost flat (0-3%) and about **`r round(prop.table(table(network$slope_class))[[1]]*100)+round(prop.table(table(network$slope_class))[[2]]*100)`%** of the roads are easily cyclable (0-5%).
+<!-- It means that **`r # round(prop.table(table(network$slope_class))[[1]]*100)`%** of the roads are flat or almost flat (0-3%) and about **`r # round(prop.table(table(network$slope_class))[[1]]*100)+round(prop.table(table(network$slope_class))[[2]]*100)`%** of the roads are easily cyclable (0-5%). -->
+It means that **49%** of the roads are flat or almost flat (0-3%) and about **75%** of the roads are easily cyclable (0-5%).
 
 Now let us put this information on a map (see [here](https://rpubs.com/RobinLovelace/781081) for interactive version).
 
