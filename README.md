@@ -172,3 +172,10 @@ plot_slope(lisbon_route_3d_auto)
 ```
 
 <img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
+
+## Code of Conduct
+
+Please note that the slopes project is released with a [Contributor Code
+of
+Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.

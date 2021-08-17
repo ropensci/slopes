@@ -13,3 +13,4 @@
 ^README\.Rmd$
 ^\.httr-oauth$
 ^codecov\.yml$
+^CODE_OF_CONDUCT\.md$
