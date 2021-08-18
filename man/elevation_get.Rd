@@ -4,21 +4,29 @@
 \alias{elevation_get}
 \title{Get elevation data from hosted maptile services}
 \usage{
-elevation_get(routes, file = NULL, ...)
+elevation_get(routes, ...)
 }
 \arguments{
 \item{routes}{Routes, the gradients of which are to be calculated.
 The object must be of class \code{sf} with \code{LINESTRING} geometries.}
 
-\item{file}{Where to save the resulting data if specified (not implemented)}
-
 \item{...}{Options passed to \code{cc_elevation()}}
+
+\item{file}{Where to save the resulting data if specified (not implemented)}
 }
 \description{
-Get elevation data from hosted maptile services
+\code{elevation_get()} uses the \verb{[ceramic::cc_elevation()]} function to get
+DEM data in raster format anywhere worldwide.
+It requires an API that can be added by following guidance in the package's
+\href{https://github.com/ITSLeeds/slopes#installation-for-dem-downloads}{README}.
+}
+\details{
+Note: if you use the \code{cc_elevation()} function directly to get DEM data,
+you can cache the data, as described in the package's
+\href{https://github.com/hypertidy/ceramic#local-caching-of-tiles}{README}.
 }
 \examples{
-# Time-consuming examples that require an internet connectioin and API key:
+# Time-consuming examples that require an internet connection and API key:
 \donttest{
 library(sf)
 library(raster)

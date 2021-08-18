@@ -6,7 +6,7 @@
 \usage{
 slope_raster(
   routes,
-  dem = NULL,
+  dem,
   lonlat = sf::st_is_longlat(routes),
   method = "bilinear",
   fun = slope_matrix_weighted,

@@ -1,11 +1,21 @@
 #' Get elevation data from hosted maptile services
 #'
+#' `elevation_get()` uses the `[ceramic::cc_elevation()]` function to get
+#' DEM data in raster format anywhere worldwide.
+#' It requires an API that can be added by following guidance in the package's
+#' [README](https://github.com/ITSLeeds/slopes#installation-for-dem-downloads).
+#'
+#'
+#' Note: if you use the `cc_elevation()` function directly to get DEM data,
+#' you can cache the data, as described in the package's
+#' [README](https://github.com/hypertidy/ceramic#local-caching-of-tiles).
+#'
 #' @param file Where to save the resulting data if specified (not implemented)
 #' @param ... Options passed to `cc_elevation()`
 #' @inheritParams slope_raster
 #' @export
 #' @examples
-#' # Time-consuming examples that require an internet connectioin and API key:
+#' # Time-consuming examples that require an internet connection and API key:
 #' \donttest{
 #' library(sf)
 #' library(raster)
@@ -16,7 +26,7 @@
 #' plot(e)
 #' plot(sf::st_geometry(routes), add = TRUE)
 #' }
-elevation_get = function(routes, file = NULL, ...) {
+elevation_get = function(routes, ...) {
   if(requireNamespace("ceramic")) {
     mid_ext = sf_mid_ext_lonlat(routes)
     bw = max(c(mid_ext$width, mid_ext$height)) / 1 # buffer width
