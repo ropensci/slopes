@@ -43,6 +43,8 @@ Install the development version from [GitHub](https://github.com/) with:
 remotes::install_github("itsleeds/slopes")
 ```
 
+### Installation for DEM downloads
+
 If you do not already have DEM data and want to make use of the
 package’s ability to download them using the `ceramic` package, install
 the package with suggested dependencies as follows:
