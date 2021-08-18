@@ -20,7 +20,9 @@ elevation_get = function(routes, file = NULL, ...) {
   if(requireNamespace("ceramic")) {
     mid_ext = sf_mid_ext_lonlat(routes)
     bw = max(c(mid_ext$width, mid_ext$height)) / 1 # buffer width
-    e = ceramic::cc_elevation(loc = mid_ext$midpoint, buffer = bw, ...)
+    suppressWarnings({
+      e = ceramic::cc_elevation(loc = mid_ext$midpoint, buffer = bw, ...)
+    })
   } else {
     message("Install the package ceramic")
   }
