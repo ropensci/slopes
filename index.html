@@ -102,7 +102,15 @@
 <a href="#slopes" class="anchor"></a>slopes</h1></div>
 <!-- badges: start -->
 
-<p>This package calculates longitudinal steepness of linear features such as roads and rivers, based on two main inputs: vector linestring geometries and raster digital elevation model (DEM) datasets.</p>
+<p>The <strong>slopes</strong> R package calculates the slope (longitudinal steepness, also known as gradient) of linear features such as roads and rivers, based on two main inputs:</p>
+<ul>
+<li>
+<a href="https://geocompr.robinlovelace.net/spatial-class.html#vector-data">vector</a> linestring geometries defined by classes in the <a href="https://r-spatial.github.io/sf/"><code>sf</code> package</a>
+</li>
+<li>
+<a href="https://geocompr.robinlovelace.net/spatial-class.html#raster-data">raster</a> objects with pixel values reporting average height, commonly known as digital elevation model (DEM) datasets, defined by classes in the <a href="https://cran.r-project.org/package=raster"><code>raster</code></a> or more recent <a href="https://rspatial.org/terra"><code>terra</code></a> packages</li>
+</ul>
+<p>This README covers installation and basic usage. For more information about slopes and how to use the package to calculate them, see the <a href="https://itsleeds.github.io/slopes/">slopes vignette</a>.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -124,19 +132,86 @@
 <span class="co"># Type in (register on the mapbox website):</span>
 <span class="va">MAPBOX_API_KEY</span><span class="op">=</span><span class="va">xxxxx</span></code></pre></div>
 </div>
-<div id="usage" class="section level2">
+<div id="basic-example" class="section level2">
 <h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
+<a href="#basic-example" class="anchor"></a>Basic example</h2>
 <p>Load the package in the usual way:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/itsleeds/slopes/">slopes</a></span><span class="op">)</span></code></pre></div>
 <p>We will also load the <code>sf</code> library:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span>
-<span class="co">#&gt; Warning: package 'sf' was built under R version 4.0.5</span>
 <span class="co">#&gt; Linking to GEOS 3.9.0, GDAL 3.2.1, PROJ 7.2.1</span></code></pre></div>
-<p>The minimum data requirements for using the package are elevation points, either as a vector, a matrix or as a digital elevation model (DEM) encoded as a raster dataset. Typically you will also have a geographic object representing the roads or similar features. These two types of input data are represented in the code output and plot below.</p>
+<p>The minimum input data requirement for using the package is an <code>sf</code> object containing LINESTRING geometries. You can check your input dataset is suitable with the functions <code><a href="https://rdrr.io/r/base/class.html">class()</a></code> from base R and <code><a href="https://r-spatial.github.io/sf/reference/st_geometry_type.html">st_geometry_type()</a></code> from the <code>sf</code> package, as demonstrated below on the object <code>lisbon_road_segment</code> that is contained within the package:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">lisbon_road_segment</span><span class="op">)</span>
+<span class="co">#&gt; [1] "sf"         "tbl_df"     "tbl"        "data.frame"</span>
+<span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry_type.html">st_geometry_type</a></span><span class="op">(</span><span class="va">lisbon_road_segment</span><span class="op">)</span>
+<span class="co">#&gt; [1] LINESTRING</span>
+<span class="co">#&gt; 18 Levels: GEOMETRY POINT LINESTRING POLYGON MULTIPOINT ... TRIANGLE</span></code></pre></div>
+<p>Don’t worry if you don’t yet have your linear features in this class: you can read-in data from a wide range of formats into an <code>sf</code> object. You can also create <code>sf</code> objects from a matrix of coordinates, as illustrated below (don’t worry about the details for now, you can read up on how all this works in the <code>sf</code> package <a href="https://r-spatial.github.io/sf/articles/sf1.html">documentation</a>):</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">m</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">9.1333</span>, <span class="op">-</span><span class="fl">9.134</span>, <span class="op">-</span><span class="fl">9.13</span><span class="op">)</span>,
+  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">38.714</span>, <span class="fl">38.712</span>, <span class="fl">38.710</span><span class="op">)</span>
+<span class="op">)</span>
+<span class="va">sf_linestring</span> <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/sf.html">st_sf</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
+  geometry <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/sfc.html">st_sfc</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html">st_linestring</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span><span class="op">)</span>,
+  crs <span class="op">=</span> <span class="fl">4326</span>
+<span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">sf_linestring</span><span class="op">)</span>
+<span class="co">#&gt; [1] "sf"         "data.frame"</span>
+<span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry_type.html">st_geometry_type</a></span><span class="op">(</span><span class="va">sf_linestring</span><span class="op">)</span>
+<span class="co">#&gt; [1] LINESTRING</span>
+<span class="co">#&gt; 18 Levels: GEOMETRY POINT LINESTRING POLYGON MULTIPOINT ... TRIANGLE</span></code></pre></div>
+<p>A quick way of testing if your object can have slopes calculated for it is to plot it in an interactive map and to check that underneath the object there is indeed terrain that will give the linestrings gradient:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">tmap</span><span class="op">)</span>
+<span class="fu">tmap_mode</span><span class="op">(</span><span class="st">"view"</span><span class="op">)</span>
+<span class="co">#&gt; tmap mode set to interactive viewing</span>
+<span class="fu">tm_shape</span><span class="op">(</span><span class="va">sf_linestring</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">tm_lines</span><span class="op">(</span>lwd <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">tm_basemap</span><span class="op">(</span><span class="fu">leaflet</span><span class="fu">::</span><span class="va">providers</span><span class="op">$</span><span class="va">Esri.WorldTopoMap</span><span class="op">)</span></code></pre></div>
+<p><img src="reference/figures/README-linestringmap-1.png" width="100%"></p>
+<p>Imagine you want to calculate the gradient of the imaginary route shown above, starting at the Castelo de São Jorge and descending towards the coast.</p>
+<p>You can do this as a two step process as follows.</p>
+<p>Step 1: add elevations to each coordinate in the linestring (requires a MapBox API key):</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sf_linestring_xyz</span> <span class="op">=</span> <span class="fu"><a href="reference/elevation_add.html">elevation_add</a></span><span class="op">(</span><span class="va">sf_linestring</span><span class="op">)</span>
+<span class="co">#&gt; Loading required namespace: ceramic</span>
+<span class="co">#&gt; Preparing to download: 16 tiles at zoom = 17 from </span>
+<span class="co">#&gt; https://api.mapbox.com/v4/mapbox.terrain-rgb/</span></code></pre></div>
+<p>You can check the elevations added to the new <code>sf_linestring_xyz</code> object by printing its coordinates, as follows (note the new Z column that goes from above 90 m above sea level to only 24 m in a short distance):</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_coordinates.html">st_coordinates</a></span><span class="op">(</span><span class="va">sf_linestring_xyz</span><span class="op">)</span>
+<span class="co">#&gt;            X      Y    Z L1</span>
+<span class="co">#&gt; [1,] -9.1333 38.714 91.4  1</span>
+<span class="co">#&gt; [2,] -9.1340 38.712 66.9  1</span>
+<span class="co">#&gt; [3,] -9.1300 38.710 24.0  1</span></code></pre></div>
+<p>Step 2: calculate the average slope of the linestring</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/slope_xyz.html">slope_xyz</a></span><span class="op">(</span><span class="va">sf_linestring_xyz</span><span class="op">)</span>
+<span class="co">#&gt;        1 </span>
+<span class="co">#&gt; 0.104923</span></code></pre></div>
+<p>The result, just over 0.1, tells us that it’s quite a steep slope, a 10% gradient <em>on average</em>.</p>
+<p>If you already have a DEM, you can calculate the slopes directly as follows, with <code><a href="reference/slope_raster.html">slope_raster()</a></code>:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">dem_lisbon_raster</span><span class="op">)</span>
+<span class="co">#&gt; [1] "RasterLayer"</span>
+<span class="co">#&gt; attr(,"package")</span>
+<span class="co">#&gt; [1] "raster"</span>
+<span class="va">sf_linestring_proj</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html">st_transform</a></span><span class="op">(</span><span class="va">sf_linestring</span>, <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="va">lisbon_road_segment</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="reference/slope_raster.html">slope_raster</a></span><span class="op">(</span>routes <span class="op">=</span> <span class="va">sf_linestring_proj</span>, dem <span class="op">=</span> <span class="va">dem_lisbon_raster</span><span class="op">)</span>
+<span class="co">#&gt;         1 </span>
+<span class="co">#&gt; 0.1218691</span></code></pre></div>
+<p>Likewise, if your linestring object already has X, Y and Z coordinates (e.g. from a GPS device), you can use the <code>slope_</code> functions directly. In any case, to use the <code>slopes</code> package you need elevation points, either as a vector, a matrix or as a digital elevation model (DEM) encoded as a raster dataset.</p>
+</div>
+<div id="calculating-the-gradient-of-roads" class="section level2">
+<h2 class="hasAnchor">
+<a href="#calculating-the-gradient-of-roads" class="anchor"></a>Calculating the gradient of roads</h2>
+<p>Typical use cases for the package are calculating the slopes of geographic objects representing roads or other linear features (not the imaginary line shown in the previous section). These two types of input data are represented in the code output and plot below.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># A raster dataset included in the package:</span>
 <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">dem_lisbon_raster</span><span class="op">)</span> <span class="co"># digital elevation model</span>
 <span class="co">#&gt; [1] "RasterLayer"</span>
@@ -153,47 +228,52 @@
 <span class="fu"><a href="https://r-spatial.github.io/sf/reference/plot.html">plot</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html">st_geometry</a></span><span class="op">(</span><span class="va">lisbon_road_segments</span><span class="op">)</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-dem-lisbon-1.png" width="100%"></p>
 <p>Calculate the average gradient of each road segment as follows:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lisbon_road_segments</span><span class="op">$</span><span class="va">slope</span> <span class="op">=</span> <span class="fu"><a href="reference/slope_raster.html">slope_raster</a></span><span class="op">(</span><span class="va">lisbon_road_segments</span>, dem <span class="op">=</span> <span class="va">dem_lisbon_raster</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lisbon_road_segments</span><span class="op">$</span><span class="va">slope</span><span class="op">)</span>
 <span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
 <span class="co">#&gt; 0.00000 0.01246 0.03534 0.05462 0.08251 0.27583</span></code></pre></div>
-<p>This created a new column, <code>slope</code> that represents the average, distance weighted slope associated with each road segment. The units represent the percentage incline, that is the change in elevation divided by distance. The summary of the result tells us that the average gradient of slopes in the example data is just over 5%. This result is equivalent to that returned by ESRI’s <code><a href="reference/elevation_add.html">elevation_add()</a></code> in the <a href="https://desktop.arcgis.com/en/arcmap/10.3/tools/3d-analyst-toolbox/slope.htm">3D Analyst extension</a>, with a correlation between the ArcMap implementation and our implementation of more than 0.95 on our test dataset (we find higher correlations on larger datasets):</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<p>This created a new column, <code>slope</code> that represents the average, distance weighted slope associated with each road segment. The units represent the percentage incline, that is the change in elevation divided by distance. The summary of the result tells us that the average gradient of slopes in the example data is just over 5%. This result is equivalent to that returned by ESRI’s <code>Slope_3d()</code> in the <a href="https://desktop.arcgis.com/en/arcmap/10.3/tools/3d-analyst-toolbox/slope.htm">3D Analyst extension</a>, with a correlation between the ArcMap implementation and our implementation of more than 0.95 on our test dataset (we find higher correlations on larger datasets):</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span>
   <span class="va">lisbon_road_segments</span><span class="op">$</span><span class="va">slope</span>,    <span class="co"># slopes calculates by the slopes package</span>
   <span class="va">lisbon_road_segments</span><span class="op">$</span><span class="va">Avg_Slope</span> <span class="co"># slopes calculated by ArcMap's 3D Analyst extension</span>
 <span class="op">)</span>
 <span class="co">#&gt; [1] 0.9770436</span></code></pre></div>
 <p>We can now visualise the slopes calculated by the <code>slopes</code> package as follows:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/plot.html">plot</a></span><span class="op">(</span><span class="va">dem_lisbon_raster</span><span class="op">)</span>
 <span class="fu"><a href="https://r-spatial.github.io/sf/reference/plot.html">plot</a></span><span class="op">(</span><span class="va">lisbon_road_segments</span><span class="op">[</span><span class="st">"slope"</span><span class="op">]</span>, add <span class="op">=</span> <span class="cn">TRUE</span>, lwd <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-slope-vis-1.png" width="100%"></p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># mapview::mapview(lisbon_road_segments["slope"], map.types = "Esri.WorldStreetMap")</span></code></pre></div>
 <p>Imagine that we want to go from Santa Catarina to the East of the map to the Castelo de Sao Jorge to the West of the map:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">tmap</span><span class="op">)</span>
-<span class="co">#&gt; Warning: package 'tmap' was built under R version 4.1.0</span>
 <span class="fu">tmap_mode</span><span class="op">(</span><span class="st">"view"</span><span class="op">)</span>
 <span class="co">#&gt; tmap mode set to interactive viewing</span>
 <span class="fu">qtm</span><span class="op">(</span><span class="va">lisbon_route</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-route-1.png" width="100%"></p>
-<p>We can convert the <code>lisbon_route</code> object into a 3d linestring object as follows:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lisbon_route_3d</span> <span class="op">=</span> <span class="fu"><a href="reference/elevation_add.html">elevation_add</a></span><span class="op">(</span><span class="va">lisbon_route</span>, <span class="va">dem_lisbon_raster</span><span class="op">)</span></code></pre></div>
+<p>We can convert the <code>lisbon_route</code> object into a 3d linestring object with X, Y and Z coordinates, as follows:</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">lisbon_route_xyz</span> <span class="op">=</span> <span class="fu"><a href="reference/elevation_add.html">elevation_add</a></span><span class="op">(</span><span class="va">lisbon_route</span>, <span class="va">dem_lisbon_raster</span><span class="op">)</span></code></pre></div>
 <p>We can now visualise the elevation profile of the route as follows:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/plot_slope.html">plot_slope</a></span><span class="op">(</span><span class="va">lisbon_route_3d</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/plot_slope.html">plot_slope</a></span><span class="op">(</span><span class="va">lisbon_route_xyz</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-plot_slope-1.png" width="100%"></p>
-<p>If you do not have a raster dataset representing elevations, you can automatically download them as follows.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lisbon_route_3d_auto</span> <span class="op">=</span> <span class="fu"><a href="reference/elevation_add.html">elevation_add</a></span><span class="op">(</span><span class="va">lisbon_route</span><span class="op">)</span>
+<p>If you do not have a raster dataset representing elevations, you can automatically download them as follows (a step that is automatically done in the function <code><a href="reference/elevation_add.html">elevation_add()</a></code> shown in the basic example above, results of the subsequent code chunk not shown):</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dem_mapbox</span> <span class="op">=</span> <span class="fu"><a href="reference/elevation_get.html">elevation_get</a></span><span class="op">(</span><span class="va">lisbon_route</span><span class="op">)</span>
+<span class="va">lisbon_road_proj</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html">st_transform</a></span><span class="op">(</span><span class="va">lisbon_route</span>, <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/projection.html">crs</a></span><span class="op">(</span><span class="va">dem_mapbox</span><span class="op">)</span><span class="op">)</span>
+<span class="va">lisbon_route_xyz_mapbox</span> <span class="op">=</span> <span class="fu"><a href="reference/elevation_add.html">elevation_add</a></span><span class="op">(</span><span class="va">lisbon_road_proj</span>, dem <span class="op">=</span> <span class="va">dem_mapbox</span><span class="op">)</span>
+<span class="fu"><a href="reference/plot_slope.html">plot_slope</a></span><span class="op">(</span><span class="va">lisbon_route_xyz_mapbox</span><span class="op">)</span></code></pre></div>
+<p>As outlined in the basic example above this can be done more concisely, as:</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">lisbon_route_xyz_auto</span> <span class="op">=</span> <span class="fu"><a href="reference/elevation_add.html">elevation_add</a></span><span class="op">(</span><span class="va">lisbon_route</span><span class="op">)</span>
 <span class="co">#&gt; Preparing to download: 12 tiles at zoom = 15 from </span>
 <span class="co">#&gt; https://api.mapbox.com/v4/mapbox.terrain-rgb/</span>
-<span class="fu"><a href="reference/plot_slope.html">plot_slope</a></span><span class="op">(</span><span class="va">lisbon_route_3d_auto</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-12-1.png" width="100%"></p>
+<span class="fu"><a href="reference/plot_slope.html">plot_slope</a></span><span class="op">(</span><span class="va">lisbon_route_xyz_auto</span><span class="op">)</span></code></pre></div>
+<p><img src="reference/figures/README-plotauto-1.png" width="100%"></p>
 </div>
 <div id="code-of-conduct" class="section level2">
 <h2 class="hasAnchor">
