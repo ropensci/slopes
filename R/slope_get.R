@@ -10,7 +10,6 @@
 #' you can cache the data, as described in the package's
 #' [README](https://github.com/hypertidy/ceramic#local-caching-of-tiles).
 #'
-#' @param file Where to save the resulting data if specified (not implemented)
 #' @param ... Options passed to `cc_elevation()`
 #' @inheritParams slope_raster
 #' @export

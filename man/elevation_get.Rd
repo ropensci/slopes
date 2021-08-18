@@ -11,8 +11,6 @@ elevation_get(routes, ...)
 The object must be of class \code{sf} with \code{LINESTRING} geometries.}
 
 \item{...}{Options passed to \code{cc_elevation()}}
-
-\item{file}{Where to save the resulting data if specified (not implemented)}
 }
 \description{
 \code{elevation_get()} uses the \verb{[ceramic::cc_elevation()]} function to get
