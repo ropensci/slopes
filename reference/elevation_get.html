@@ -40,7 +40,10 @@
 
 
 <meta property="og:title" content="Get elevation data from hosted maptile services — elevation_get" />
-<meta property="og:description" content="Get elevation data from hosted maptile services" />
+<meta property="og:description" content="elevation_get() uses the [ceramic::cc_elevation()] function to get
+DEM data in raster format anywhere worldwide.
+It requires an API that can be added by following guidance in the package's
+README." />
 
 
 
@@ -135,10 +138,13 @@
     </div>
 
     <div class="ref-description">
-    <p>Get elevation data from hosted maptile services</p>
+    <p><code>elevation_get()</code> uses the <code>[ceramic::cc_elevation()]</code> function to get
+DEM data in raster format anywhere worldwide.
+It requires an API that can be added by following guidance in the package's
+<a href='https://github.com/ITSLeeds/slopes#installation-for-dem-downloads'>README</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>elevation_get</span><span class='op'>(</span><span class='va'>routes</span>, file <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>elevation_get</span><span class='op'>(</span><span class='va'>routes</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -149,18 +155,23 @@
 The object must be of class <code>sf</code> with <code>LINESTRING</code> geometries.</p></td>
     </tr>
     <tr>
-      <th>file</th>
-      <td><p>Where to save the resulting data if specified (not implemented)</p></td>
-    </tr>
-    <tr>
       <th>...</th>
       <td><p>Options passed to <code>cc_elevation()</code></p></td>
     </tr>
+    <tr>
+      <th>file</th>
+      <td><p>Where to save the resulting data if specified (not implemented)</p></td>
+    </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Note: if you use the <code>cc_elevation()</code> function directly to get DEM data,
+you can cache the data, as described in the package's
+<a href='https://github.com/hypertidy/ceramic#local-caching-of-tiles'>README</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Time-consuming examples that require an internet connectioin and API key:</span>
+    <pre class="examples"><div class='input'><span class='co'># Time-consuming examples that require an internet connection and API key:</span>
 <span class='co'># \donttest{</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://r-spatial.github.io/sf/'>sf</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://rspatial.org/raster'>raster</a></span><span class='op'>)</span>
