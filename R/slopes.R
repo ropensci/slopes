@@ -154,7 +154,7 @@ slope_matrices = function(m_xyz_split, fun = slope_matrix_weighted, ...) {
 #' cor(routes$Avg_Slope, s)
 slope_raster = function(
   routes,
-  dem = NULL,
+  dem,
   lonlat = sf::st_is_longlat(routes),
   method = "bilinear",
   fun = slope_matrix_weighted,
