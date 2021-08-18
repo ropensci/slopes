@@ -199,17 +199,7 @@ if <code>dem</code> is of class <code>SpatRast</code></p></td>
 </div><div class='img'><img src='elevation_add-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># \donttest{</span>
 <span class='co'># Get elevation data (requires internet connection and API key):</span>
 <span class='va'>r3d_get</span> <span class='op'>=</span> <span class='fu'>elevation_add</span><span class='op'>(</span><span class='va'>cyclestreets_route</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: ceramic</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no mapbox key found</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>To set your Mapbox API key obtain a key from https://account.mapbox.com/access-tokens/</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>1) Run this to set for the session 'Sys.setenv(MAPBOX_API_KEY=&lt;yourkey&gt;)'</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>OR,</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>2) To set peramanently store 'MAPBOX_API_KEY=&lt;yourkey&gt;' in ~/.Renviron</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>See 'help(ceramic::get_api_key)'</span></div><div class='output co'>#&gt; Preparing to download: 6 tiles at zoom = 14 from 
+</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: ceramic</span></div><div class='output co'>#&gt; Preparing to download: 6 tiles at zoom = 14 from 
 #&gt; https://api.mapbox.com/v4/mapbox.terrain-rgb/</div><div class='output co'>#&gt; <span class='error'>Error in curl::curl_download(url = api_query, outfile): HTTP error 401.</span></div><div class='input'><span class='fu'><a href='plot_slope.html'>plot_slope</a></span><span class='op'>(</span><span class='va'>r3d_get</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='error'>Error in st_crs(x): object 'r3d_get' not found</span></div><div class='input'><span class='co'># }</span>
 </div></pre>
