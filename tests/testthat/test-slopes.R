@@ -41,7 +41,7 @@ test_that("slope_* functions work", {
   expect_identical(round(d), c(221581, 110790, 110790, 110790, 1093977))
 
   expect_error(slope_raster(1))
-  r = lisbon_road_segments[1:3, ]
+  r = lisbon_road_network[1:3, ]
   e = dem_lisbon_raster
   s = slope_raster(r, e)
   expect_true(cor(r$Avg_Slope, s) > 0.9975)
@@ -49,7 +49,7 @@ test_that("slope_* functions work", {
   r_xyz = lisbon_road_segment_3d
   expect_equal(slope_xyz(r_xyz), 0.0950132312274622, ignore_attr = TRUE)
 
-  r = lisbon_road_segments[204, ]
+  r = lisbon_road_network[204, ]
   r3d = elevation_add(r, e)
   expect_equal(
     sf::st_z_range(r3d$geom),

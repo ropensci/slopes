@@ -178,7 +178,7 @@ The key input datasets are:
 linestrings representing roads/rivers/other, and...
 
 ```{r maps}
-tm_shape(lisbon_road_segments) + tm_lines()
+tm_shape(lisbon_road_network) + tm_lines()
 ```
 
 ]
@@ -360,7 +360,7 @@ See [`roadnetworkcycling`](https://itsleeds.github.io/slopes/articles/roadnetwor
 ## A smaller example using packaged data
 
 ```{r}
-routes = lisbon_road_segments
+routes = lisbon_road_network
 dem = dem_lisbon_raster
 routes$slope = slope_raster(routes, dem)
 plot(dem)

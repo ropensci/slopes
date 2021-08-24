@@ -21,6 +21,6 @@ with a geographic resolution of 10m.
 \examples{
 names(dem_lisbon_raster)
 raster::plot(dem_lisbon_raster)
-plot(lisbon_road_segments["Avg_Slope"], add = TRUE)
+plot(lisbon_road_network["Avg_Slope"], add = TRUE)
 }
 \keyword{datasets}

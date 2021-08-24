@@ -49,7 +49,7 @@ geometries to \code{LINESTRING}s as follows:
 \code{r_linestring = sf::st_cast(routes, "LINESTRING")}.
 }
 \examples{
-routes = lisbon_road_segments[1:3, ]
+routes = lisbon_road_network[1:3, ]
 dem = dem_lisbon_raster
 (s = slope_raster(routes, dem))
 cor(routes$Avg_Slope, s)

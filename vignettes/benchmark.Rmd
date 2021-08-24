@@ -38,7 +38,7 @@ A benchmark can reveal how many route gradients can be calculated per second:
 
 ```{r, results='hide'}
 e = dem_lisbon_raster
-r = lisbon_road_segments
+r = lisbon_road_network
 et = terra::rast(f)
 res = bench::mark(check = FALSE,
   slope_raster = slope_raster(r, e),
@@ -65,7 +65,7 @@ To go faster, you can chose the `simple` method to gain some speed at the expens
 
 ```{r, results='hide'}
 e = dem_lisbon_raster
-r = lisbon_road_segments
+r = lisbon_road_network
 res = bench::mark(check = FALSE,
   bilinear1 = slope_raster(r, e),
   bilinear2 = slope_raster(r, et),
