@@ -16,67 +16,373 @@ knitr::opts_chunk$set(
 ```
 
 ## Installation
-(again)
+
+<!-- You can install the released version of slopes from [CRAN](https://CRAN.R-project.org) with: -->
+
+<!-- ``` r -->
+<!-- install.packages("slopes") -->
+<!-- ``` -->
+
+Install the development version from [GitHub](https://github.com/) with:
+
+```{r, eval=FALSE}
+# install.packages("remotes")
+remotes::install_github("itsleeds/slopes")
+```
+
+#### Installation for DEM downloads
+
+If you do not already have DEM data and want to make use of the package's ability to download them using the `ceramic` package, install the package with suggested dependencies, as follows:
+
+```{r, eval=FALSE}
+# install.packages("remotes")
+remotes::install_github("itsleeds/slopes", dependencies = "Suggests")
+```
+
+Furthermore, you will need to add a MapBox API key to be able to get DEM datasets, by signing up and registering for a key at https://account.mapbox.com/access-tokens/ and then following these steps:
+
+```{r, eval=FALSE}
+usethis::edit_r_environ()
+MAPBOX_API_KEY=xxxxx # replace XXX with your api key
+```
+
 
 ## Functions 
 
 ### Elevation
 
-elevation_add() Take a linestring and add a third dimension (z) to its coordinates
-elevation_get() Get elevation data from hosted maptile services
-elevation_extract() Extract elevations from coordinates
+- `elevation_add()` Take a linestring and add a third dimension (z) to its coordinates
+- `elevation_get()` Get elevation data from hosted maptile services
+- `elevation_extract()` Extract elevations from coordinates
 
-z_value() retrieves elevation values for each z (as vector of sequential vertices)
-z_start() retrieves the elevation value of the first linestring vertice
-z_end() retrieves the elevation value of the last linestring vertice
-z_mean() retrieves the elevation mean value 
-z_max()  retrieves the elevation max value 
-z_min()  retrieves the elevation min value 
+- `z_value()` retrieves elevation values for each z (as vector of sequential vertices)
+- `z_start()` retrieves the elevation value of the first linestring vertice
+- `z_end()` retrieves the elevation value of the last linestring vertice
+- `z_mean()` retrieves the elevation mean value 
+- `z_max()`  retrieves the elevation max value 
+- `z_min()`  retrieves the elevation min value 
 
 ### Distance
 
-sequential_dist() Calculate the sequential distances between sequential coordinate pairs
+- `sequential_dist()` Calculate the sequential distances between sequential coordinate pairs
 
 ### Slope
 
-slope_vector() calculates the slopes associated with consecutive elements in one dimensional distance and associated elevations.
-slope_distance() calculates the slopes associated with consecutive distances and elevations.
-slope_distance_mean() calculates the mean average slopes associated with consecutive distances and elevations.
-slope_distance_weighted() calculates the slopes associated with consecutive distances and elevations, with the mean value associated with each set of distance/elevation vectors weighted in proportion to the distance between each elevation measurement, so longer sections have proportionally more influence on the resulting gradient estimate.
+- `slope_vector()` calculates the slopes associated with consecutive elements in one dimensional distance and associated elevations.
+- `slope_distance()` calculates the slopes associated with consecutive distances and elevations.
+- `slope_distance_mean()` calculates the mean average slopes associated with consecutive distances and elevations.
+- `slope_distance_weighted()` calculates the slopes associated with consecutive distances and elevations, with the mean value associated with each set of distance/elevation vectors weighted in proportion to the distance between each elevation measurement, so longer sections have proportionally more influence on the resulting gradient estimate.
 
-slope_raster() Calculate slopes of linestrings based on local raster map
-slope_matrix() Calculate the gradient of line segments from a 3D matrix of coordinates
-slope_matrix_weighted() Calculate the weighted gradient of line segments from a 3D matrix of coordinates
+- `slope_raster()` Calculate slopes of linestrings based on local raster map
+- `slope_matrix()` Calculate the gradient of line segments from a 3D matrix of coordinates
+- `slope_matrix_weighted()` Calculate the weighted gradient of line segments from a 3D matrix of coordinates
 
-slope_xyz() Calculates the slope associated with linestrings that have xyz coordinates
+- `slope_xyz()` Calculates the slope associated with linestrings that have xyz coordinates
 
 ### Plot
 
-plot_dz() Plot a digital elevation profile based on xyz data
-plot_slope() Plots the slope profile associated with a linestring with base R graphics
+- `plot_dz()` Plot a digital elevation profile based on xyz data
+- `plot_slope()` Plots the slope profile associated with a linestring with base R graphics
 
-## Datasets
+## Package datasets
 
-The key input datasets are:
-    linestrings representing roads
-    single linestring
-https://itsleeds.github.io/slopes/reference/lisbon_road_segment.html
-https://itsleeds.github.io/slopes/reference/cyclestreets_route.html
-lisbon_route
-road network
-https://itsleeds.github.io/slopes/reference/lisbon_road_segments.html
-https://itsleeds.github.io/slopes/reference/magnolia_xy.html
+The `slopes` package comes with some datasets to play with:
 
-digital elevation model
-https://itsleeds.github.io/slopes/reference/dem_lisbon_raster.html
+**Linestrings:**
 
+- `lisbon_road_segment`: a single road segment in Lisbon (XY)
+- `lisbon_route`: a route with some variation in elevation in Lisbon (XY)
+- `cyclestreets_route`: a bike route in Leeds (XY)
+
+**Road network:**
+
+- `lisbon_road_segments`: a sample of road segments in downtown Lisbon
+- `magnolia_xy`: a sample of road segments in center Seattle, in the Magnolia neighborhood
+
+**Digital elevation model (DEM):**
+
+- `dem_lisbon_raster` a DEM of downtown Lisbo (EPSG:3763)
 
 
 ## Examples
 
-One example for a single linestring
+Load the package in the usual way. We will also load the `sf` library:
+
+```{r message=FALSE, warning=FALSE}
+library(slopes)
+library(sf)
+```
+
+The minimum input data requirement for using the package is an `sf` object containing LINESTRING geometries.  
+
+You can also create `sf` objects from a matrix of coordinates, as illustrated below (don't worry about the details for now, you can read up on how all this works in the `sf` package [documentation](https://r-spatial.github.io/sf/articles/sf1.html)):
 
 ```{r, eval=FALSE, echo=FALSE}
+m = st_coordinates(sf::st_transform(lisbon_road_segment, 4326))
+s = seq(from = 1, to = nrow(m), length.out = 4)
+round(m[s, 1:2], 5)
+dput(round(m[s, 1], 4))
+dput(round(m[s, 2], 4))
+```
+
+```{r}
+m = cbind(
+  c(-9.1333, -9.134, -9.13),
+  c(38.714, 38.712, 38.710)
+)
+sf_linestring = sf::st_sf(
+  data.frame(id = 1),
+  geometry = st_sfc(st_linestring(m)),
+  crs = 4326
+)
+class(sf_linestring)
+st_geometry_type(sf_linestring)
+```
+
+> maybe remove this? or add step 1 and step 2 again.
+
+### Sinlge road segment + no DEM
+
+You can check your input dataset is suitable with the functions `class()` from base R and `st_geometry_type()` from the `sf` package, as demonstrated below on the example object `lisbon_road_segment` that is contained within the package:
+
+```{r}
+sf_linestring = lisbon_road_segment
+class(sf_linestring)
+st_geometry_type(sf_linestring)
+```
+
+
+A quick way of testing if your object can have slopes calculated for it is to plot it in an interactive map and to check that underneath the object there is indeed terrain that will give the linestrings gradient:
+
+```{r linestringmap, message=FALSE, warning=FALSE}
+library(tmap)
+tmap_mode("view")
+tm_shape(sf_linestring) +
+  tm_lines(lwd = 5) +
+  tm_basemap(leaflet::providers$Esri.WorldTopoMap)
+```
+
+Imagine you want to calculate the gradient of the route shown above. 
+You can do this as a two step process as follows.
+
+**Step 1**: add elevations to each coordinate in the linestring (requires a [MapBox API](https://account.mapbox.com/access-tokens/) key):
+
+```{r}
+sf_linestring_xyz = elevation_add(sf_linestring)
+```
+
+You can check the elevations added to the new `sf_linestring_xyz` object by printing its coordinates, as follows (note the new Z column that goes from above 87 m above sea level to only 79 m in a short distance).
+
+```{r}
+st_coordinates(sf_linestring_xyz)
+```
+
+You can use the `z_` functions to extract such values:
+
+```{r}
+z_value(sf_linestring_xyz) # returns all the elevation values between xy coordinates
+
+z_mean(sf_linestring_xyz) # elevation mean value
+z_min(sf_linestring_xyz) # elevation min value 
+z_max(sf_linestring_xyz) # elevation max value 
+z_start(sf_linestring_xyz) # first z
+z_end(sf_linestring_xyz) # last z
+```
+
+
+**Step 2**: calculate the average slope of the linestring
+
+```{r}
+slope_xyz(sf_linestring_xyz)
+```
+
+The result, just over 0.2, tells us that it's quite a steep slope: a 21% gradient *on average*.
+
+### Route + available DEM
+
+Using the slopes package we can estimate the gradient of individual road segments. When these segments are combined into routes, we then need a means of assessing the hilliness of the entire route. A range of indices can be used to represent route hilliness. The choice of which index is most appropriate may be context dependent (see the [introducion to slopes](https://itsleeds.github.io/intro-to-slopes/) vignette).
+  
+Again, let us use the same function with a entire route, `lisbon_route`, also available in the package:
+
+```{r message=FALSE, warning=FALSE}
+sf_route = lisbon_route
+class(sf_route)
+st_geometry_type(sf_route)
+
+tm_shape(sf_route) +
+  tm_lines(lwd = 3) +
+  tm_basemap(leaflet::providers$Esri.WorldTopoMap)
+```
+
+**Step 1**: add elevations to each coordinate in the route:
+
+```{r}
+sf_route_xyz = elevation_add(sf_route)
+```
+
+**Step 2**: calculate the average slope of the route
+
+```{r}
+slope_xyz(sf_route_xyz)
+```
+
+The result shows a 7.7% gradient *on average*.
+
+Now, if you already have a DEM, you can calculate the slopes directly as follows, with `slope_raster()`:
+
+```{r}
+class(dem_lisbon_raster)
+slope_raster(routes = sf_route,
+             dem = dem_lisbon_raster)
+```
+The result shows a 7.8% gradient *on average*.
+As you can see, the retrieved result from elevation information available in mapbox and in this Digital Elevation Model, is quite similar. (See more about these differences in [Verification of slopes](https://itsleeds.github.io/slopes/articles/verification.html).) 
+
+### Route with xyz coordinates
+
+If your linestring object already has X, Y and Z coordinates (e.g. from a GPS device), you can use the `slope_` functions directly. 
+
+```{r eval=FALSE, include=FALSE}
+#not to use like this... it would ge good to have a gps example to demonstrate
+
+slope_vector(sf_route_xyz)
+slope_distance(sf_route_xyz)
+slope_distance_mean(sf_route_xyz)
+slope_distance_weighted(sf_route_xyz)
+
+slope_vector(sf_linestring_xyz)
+slope_distance(sf_linestring_xyz)
+slope_distance_mean(sf_linestring_xyz)
+slope_distance_weighted(sf_linestring_xyz)
+```
+```{r}
+# for a line xz
+x = c(0, 2, 3, 4, 5, 9)
+elevations = c(1, 2, 2, 4, 3, 1) / 10
+slope_vector(x, elevations)
+
+
+# for a path xyz
+xy = st_coordinates(sf_linestring)
+dist = sequential_dist(xy, lonlat = FALSE)
+elevations = elevation_extract(xy, dem_lisbon_raster)
+
+slope_distance(dist, elevations)
+slope_distance_mean(dist, elevations)
+slope_distance_weighted(dist, elevations)
+```
+
+
+In any case, to use the `slopes` package you need **elevation points**, either as a vector, a matrix or as a digital elevation model (DEM) encoded as a raster dataset.
+
+## Calculating and plotting the gradient of roads
+
+Typical use cases for the package are calculating the slopes of geographic objects representing roads or other linear features.
+These two types of input data are represented in the code output and plot below.
+
+```{r dem-lisbon}
+# A raster dataset included in the package:
+class(dem_lisbon_raster) # digital elevation model
+summary(raster::values(dem_lisbon_raster)) # heights range from 0 to ~100m
+raster::plot(dem_lisbon_raster)
+
+# A vector dataset included in the package:
+class(lisbon_road_segments)
+plot(sf::st_geometry(lisbon_road_segments), add = TRUE)
+```
+
+Calculate the average gradient of **each road segment** as follows:
+
+```{r}
+lisbon_road_segments$slope = slope_raster(lisbon_road_segments, dem = dem_lisbon_raster)
+summary(lisbon_road_segments$slope)
+```
+
+This created a new column, `slope` that represents the average, distance weighted slope associated with each road segment.
+The units represent the percentage incline, that is the change in elevation divided by distance.
+The summary of the result tells us that the average gradient of slopes in the example data is just over 5%.
+  
+This result is equivalent to that returned by ESRI's `Slope_3d()` in the [3D Analyst extension](https://desktop.arcgis.com/en/arcmap/10.3/tools/3d-analyst-toolbox/slope.htm), with a correlation between the ArcMap implementation and our implementation of more than 0.95 on our test dataset (we find higher correlations on larger datasets - see the [verification of slopes](https://itsleeds.github.io/slopes/articles/verification.html article):
+
+```{r}
+cor(
+  lisbon_road_segments$slope,    # slopes calculates by the slopes package
+  lisbon_road_segments$Avg_Slope # slopes calculated by ArcMap's 3D Analyst extension
+)
+```
+
+We can now visualise the average slopes of each route calculated by the `slopes` package as follows:
+
+```{r slope-vis}
+raster::plot(dem_lisbon_raster)
+plot(lisbon_road_segments["slope"], add = TRUE, lwd = 5)
+```
+
+Imagine that we want to go from East hilly area of the map (Santa Catarina) to the West hilly area of the map (Castelo de São Jorge):
+
+```{r route}
+# library(tmap)
+# tmap_mode("view")
+qtm(lisbon_route)
+```
+
+```{r, echo=FALSE, eval=FALSE}
+# Removed because it's not rendering in RMarkdown
+mapview::mapview(lisbon_road_segments["slope"], map.types = "Esri.WorldStreetMap")
+mapview::mapview(lisbon_route)
+```
+
+We can convert the `lisbon_route` object into a 3d linestring object with X, Y and Z coordinates, using the elevation values stored in the DEM, as follows:
+
+```{r, warning=FALSE, echo=FALSE, eval=FALSE}
+sln = stplanr::SpatialLinesNetwork(lisbon_road_segments)
+points = sf::st_as_sf(crs = 4326, coords = c("X1", "X2"), data.frame(rbind(
+  stplanr::geo_code("Santa Catarina, Lisbon"),
+  stplanr::geo_code("Castelo, Lisbon")
+)))
+points_proj = sf::st_transform(points, sf::st_crs(lisbon_road_segments))
+coords = sf::st_coordinates(points_proj)
+nodes = stplanr::find_network_nodes(sln, coords[, 1], coords[, 2])
+lisbon_route = stplanr::sum_network_routes(sln = sln, start = nodes[1], end = nodes[2])
+mapview::mapview(lisbon_route) +
+  mapview::mapview(lisbon_road_segments["slope"])
+lisbon_route_3d = elevation_add(lisbon_route, dem_lisbon_raster)
+usethis::use_data(lisbon_route, overwrite = TRUE)
+usethis::use_data(lisbon_route_3d, overwrite = TRUE)
+```
+
+```{r}
+lisbon_route_xyz = elevation_add(lisbon_route, dem_lisbon_raster)
+```
+
+We can now visualise the **elevation profile** of the route as follows:
+
+```{r plot_slope}
+plot_slope(lisbon_route_xyz)
+```
+
+If you do not have a raster dataset representing elevations, you can automatically download them as follows (a step that is automatically done in the function `elevation_add()` shown in the basic example above, results of the subsequent code chunk not shown):
+
+```{r, message=FALSE, warning=FALSE, eval=FALSE}
+dem_mapbox = elevation_get(lisbon_route)
+lisbon_road_proj = st_transform(lisbon_route, raster::crs(dem_mapbox))
+lisbon_route_xyz_mapbox = elevation_add(lisbon_road_proj, dem = dem_mapbox)
+plot_slope(lisbon_route_xyz_mapbox)
+```
+
+As outlined in the basic example above this can be done more concisely, as:
+
+```{r plotauto}
+lisbon_route_xyz_auto = elevation_add(lisbon_route)
+plot_slope(lisbon_route_xyz_auto)
+```
+
+
+
+
+A route in Leeds!
+
+```{r}
 start_coords = stplanr::geo_code("bramley park")
 end_coods = stplanr::geo_code("university of leeds")
 rj = cyclestreets::journey(from = start_coords, to = end_coods)
@@ -87,28 +393,17 @@ plot_slope(rj_3d)
 plot(cumsum(rj$distances), cumsum(rj$elevation_change))
 ```
 
-Adding the Z dimension
-
-lisbon_route
-lisbon_route_slopes = slope_3d(routes = lisbon_route, dem = slopes::dem_lisbon_raster)
-lisbon_route_slopes
 
 
-from local raster:
-routes = lisbon_road_segments
-dem = dem_lisbon_raster
-routes$slope = slope_raster(routes, dem)
 
-get from mapbox + get from local raster
 
-### Find slopes when you don't have a DEM
 
-usethis::edit_r_environ()
-MAPBOX_API_KEY=xxxxx
+## See more in vignettes
 
- plot viz
-plot_slope(lisbon_route_slopes)
+-   [slopes package](https://itsleeds.github.io/slopes/index.html)
+-   [An introduction to slopes](https://itsleeds.github.io/slopes/articles/intro-to-slopes.html)
+-   [Reproducible example: gradients of a road network for a given city](https://itsleeds.github.io/slopes/articles/roadnetworkcycling.html)
+-   [Verification of slopes](https://itsleeds.github.io/slopes/articles/verification.html)
+-   [Benchmarking slopes calculation](https://itsleeds.github.io/slopes/articles/benchmark.html)
 
-One example for small network
 
-see vignettes
