@@ -148,7 +148,7 @@ slope_matrices = function(m_xyz_split, fun = slope_matrix_weighted, ...) {
 #' @importFrom methods is
 #' @export
 #' @examples
-#' routes = lisbon_road_segments[1:3, ]
+#' routes = lisbon_road_network[1:3, ]
 #' dem = dem_lisbon_raster
 #' (s = slope_raster(routes, dem))
 #' cor(routes$Avg_Slope, s)
@@ -209,7 +209,7 @@ slope_xyz = function(route_xyz, fun = slope_matrix_weighted, lonlat = TRUE) {
 #' @inheritParams slope_matrix
 #' @export
 #' @examples
-#' m = sf::st_coordinates(lisbon_road_segments[1, ])
+#' m = sf::st_coordinates(lisbon_road_network[1, ])
 #' dem = dem_lisbon_raster
 #' elevation_extract(m, dem)
 #' elevation_extract(m, dem, method = "simple")
@@ -245,7 +245,7 @@ elevation_extract = function(m,
 #' @export
 #' @examples
 #' library(sf)
-#' routes = lisbon_road_segments[204, ]
+#' routes = lisbon_road_network[204, ]
 #' dem = dem_lisbon_raster
 #' (r3d = elevation_add(routes, dem))
 #' sf::st_z_range(routes)

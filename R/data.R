@@ -9,7 +9,7 @@
 #' @examples
 #' names(dem_lisbon_raster)
 #' raster::plot(dem_lisbon_raster)
-#' plot(lisbon_road_segments["Avg_Slope"], add = TRUE)
+#' plot(lisbon_road_network["Avg_Slope"], add = TRUE)
 "dem_lisbon_raster"
 
 #' Road segments in Lisbon
@@ -21,9 +21,9 @@
 #' @source Produced by ESRI's
 #'  [3D Analyst extension](https://pro.arcgis.com/en/pro-app/help/analysis/)
 #' @examples
-#' names(lisbon_road_segments)
-#' plot(lisbon_road_segments["Avg_Slope"])
-"lisbon_road_segments"
+#' names(lisbon_road_network)
+#' plot(lisbon_road_network["Avg_Slope"])
+"lisbon_road_network"
 
 #' A road segment in Lisbon, Portugal
 #'

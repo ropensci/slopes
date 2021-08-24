@@ -30,7 +30,7 @@ Take a linestring and add a third (z) dimension to its coordinates
 }
 \examples{
 library(sf)
-routes = lisbon_road_segments[204, ]
+routes = lisbon_road_network[204, ]
 dem = dem_lisbon_raster
 (r3d = elevation_add(routes, dem))
 sf::st_z_range(routes)

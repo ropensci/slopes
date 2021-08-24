@@ -28,7 +28,7 @@ if \code{dem} is of class \code{SpatRast}}
 Extract elevations from coordinates
 }
 \examples{
-m = sf::st_coordinates(lisbon_road_segments[1, ])
+m = sf::st_coordinates(lisbon_road_network[1, ])
 dem = dem_lisbon_raster
 elevation_extract(m, dem)
 elevation_extract(m, dem, method = "simple")

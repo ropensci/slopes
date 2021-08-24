@@ -95,12 +95,12 @@ The `slopes` package comes with some datasets to play with:
 
 **Road network:**
 
-- `lisbon_road_segments`: a sample of road segments in downtown Lisbon
+- `lisbon_road_network`: a sample of road segments in downtown Lisbon
 - `magnolia_xy`: a sample of road segments in center Seattle, in the Magnolia neighborhood
 
 **Digital elevation model (DEM):**
 
-- `dem_lisbon_raster` a DEM of downtown Lisbo (EPSG:3763)
+- `dem_lisbon_raster` a DEM of downtown Lisbon (EPSG:3763)
 
 
 ## Examples
@@ -286,15 +286,15 @@ summary(raster::values(dem_lisbon_raster)) # heights range from 0 to ~100m
 raster::plot(dem_lisbon_raster)
 
 # A vector dataset included in the package:
-class(lisbon_road_segments)
-plot(sf::st_geometry(lisbon_road_segments), add = TRUE)
+class(lisbon_road_network)
+plot(sf::st_geometry(lisbon_road_network), add = TRUE)
 ```
 
 Calculate the average gradient of **each road segment** as follows:
 
 ```{r}
-lisbon_road_segments$slope = slope_raster(lisbon_road_segments, dem = dem_lisbon_raster)
-summary(lisbon_road_segments$slope)
+lisbon_road_network$slope = slope_raster(lisbon_road_network, dem = dem_lisbon_raster)
+summary(lisbon_road_network$slope)
 ```
 
 This created a new column, `slope` that represents the average, distance weighted slope associated with each road segment.
@@ -305,8 +305,8 @@ This result is equivalent to that returned by ESRI's `Slope_3d()` in the [3D Ana
 
 ```{r}
 cor(
-  lisbon_road_segments$slope,    # slopes calculates by the slopes package
-  lisbon_road_segments$Avg_Slope # slopes calculated by ArcMap's 3D Analyst extension
+  lisbon_road_network$slope,    # slopes calculates by the slopes package
+  lisbon_road_network$Avg_Slope # slopes calculated by ArcMap's 3D Analyst extension
 )
 ```
 
@@ -314,7 +314,7 @@ We can now visualise the average slopes of each route calculated by the `slopes`
 
 ```{r slope-vis}
 raster::plot(dem_lisbon_raster)
-plot(lisbon_road_segments["slope"], add = TRUE, lwd = 5)
+plot(lisbon_road_network["slope"], add = TRUE, lwd = 5)
 ```
 
 Imagine that we want to go from East hilly area of the map (Santa Catarina) to the West hilly area of the map (Castelo de São Jorge):
@@ -327,24 +327,24 @@ qtm(lisbon_route)
 
 ```{r, echo=FALSE, eval=FALSE}
 # Removed because it's not rendering in RMarkdown
-mapview::mapview(lisbon_road_segments["slope"], map.types = "Esri.WorldStreetMap")
+mapview::mapview(lisbon_road_network["slope"], map.types = "Esri.WorldStreetMap")
 mapview::mapview(lisbon_route)
 ```
 
 We can convert the `lisbon_route` object into a 3d linestring object with X, Y and Z coordinates, using the elevation values stored in the DEM, as follows:
 
 ```{r, warning=FALSE, echo=FALSE, eval=FALSE}
-sln = stplanr::SpatialLinesNetwork(lisbon_road_segments)
+sln = stplanr::SpatialLinesNetwork(lisbon_road_network)
 points = sf::st_as_sf(crs = 4326, coords = c("X1", "X2"), data.frame(rbind(
   stplanr::geo_code("Santa Catarina, Lisbon"),
   stplanr::geo_code("Castelo, Lisbon")
 )))
-points_proj = sf::st_transform(points, sf::st_crs(lisbon_road_segments))
+points_proj = sf::st_transform(points, sf::st_crs(lisbon_road_network))
 coords = sf::st_coordinates(points_proj)
 nodes = stplanr::find_network_nodes(sln, coords[, 1], coords[, 2])
 lisbon_route = stplanr::sum_network_routes(sln = sln, start = nodes[1], end = nodes[2])
 mapview::mapview(lisbon_route) +
-  mapview::mapview(lisbon_road_segments["slope"])
+  mapview::mapview(lisbon_road_network["slope"])
 lisbon_route_3d = elevation_add(lisbon_route, dem_lisbon_raster)
 usethis::use_data(lisbon_route, overwrite = TRUE)
 usethis::use_data(lisbon_route_3d, overwrite = TRUE)
