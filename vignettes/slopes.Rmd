@@ -5,7 +5,6 @@ vignette: >
   %\VignetteIndexEntry{Get started}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-bibliography: slope-references.bib
 ---
 
 ```{r, include = FALSE}
