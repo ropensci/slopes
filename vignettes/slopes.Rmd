@@ -382,14 +382,9 @@ plot_slope(lisbon_route_xyz_auto)
 A route in Leeds!
 
 ```{r}
-start_coords = stplanr::geo_code("bramley park")
-end_coods = stplanr::geo_code("university of leeds")
-rj = cyclestreets::journey(from = start_coords, to = end_coods)
-mapview::mapview(rj)
-
-rj_3d = elevation_add(rj)
-plot_slope(rj_3d)
-plot(cumsum(rj$distances), cumsum(rj$elevation_change))
+cyclestreets_xyz = elevation_add(cyclestreets_route)
+plot_slope(cyclestreets_xyz)
+plot(cumsum(cyclestreets_xyz$distances), cumsum(cyclestreets_xyz$elevation_change))
 ```
 
 
