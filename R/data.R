@@ -33,23 +33,43 @@
 #' plot(lisbon_road_network["Avg_Slope"])
 "lisbon_road_network"
 
+#' A route composed of a single linestring in Lisbon, Portugal
+#'
+#' A route representing a trip from the Santa Catarina area
+#' in the East of central Lisbon the map to the Castelo de São Jorge
+#' in the West of central Lisbon.
+#'
+#' Different versions of this dataset are provided.
+#'
+#' The `lisbon_route` object has 1 row and 4 columns.
+#'
+#' The `lisbon_route_xyz_mapbox` was created with:
+#' `lisbon_route_xyz_mapbox = elevation_add(lisbon_route)`.
+#'
+#' @format An object of class `sf`
+#' @source Produced by ESRI's
+#'  [3D Analyst extension](https://pro.arcgis.com/en/pro-app/help/analysis/)
+#' @aliases lisbon_route_3d lisbon_route_xyz_mapbox
+#' @examples
+#' lisbon_route
+#' lisbon_route_3d
+#' lisbon_route_xyz_mapbox
+"lisbon_route"
+
 #' A road segment in Lisbon, Portugal
 #'
 #' A single road segment and a 3d version.
 #' Different versions of this dataset are provided.
 #'
-#' The `lisbon_road_segment` has ... columns and ... rows.
+#' The `lisbon_road_segment` has 23 columns and 1 row.
 #'
 #' The `lisbon_road_segment_xyz_mapbox` was created with:
 #' `lisbon_road_segment_xyz_mapbox = elevation_add(lisbon_road_segment)`.
 #'
-#'
-#'
 #' @format An object of class `sf`
 #' @source Produced by ESRI's
 #'  [3D Analyst extension](https://pro.arcgis.com/en/pro-app/help/analysis/)
-#' @aliases lisbon_road_segment_3d lisbon_route lisbon_route_3d
-#'   lisbon_road_segment_xyz_mapbox
+#' @aliases lisbon_road_segment_3d lisbon_road_segment_xyz_mapbox
 #' @examples
 #' lisbon_road_segment
 #' lisbon_road_segment_3d

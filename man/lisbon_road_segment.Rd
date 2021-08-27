@@ -4,8 +4,6 @@
 \name{lisbon_road_segment}
 \alias{lisbon_road_segment}
 \alias{lisbon_road_segment_3d}
-\alias{lisbon_route}
-\alias{lisbon_route_3d}
 \alias{lisbon_road_segment_xyz_mapbox}
 \title{A road segment in Lisbon, Portugal}
 \format{
@@ -23,7 +21,7 @@ A single road segment and a 3d version.
 Different versions of this dataset are provided.
 }
 \details{
-The \code{lisbon_road_segment} has ... columns and ... rows.
+The \code{lisbon_road_segment} has 23 columns and 1 row.
 
 The \code{lisbon_road_segment_xyz_mapbox} was created with:
 \code{lisbon_road_segment_xyz_mapbox = elevation_add(lisbon_road_segment)}.
