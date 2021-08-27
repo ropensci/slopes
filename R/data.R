@@ -28,9 +28,14 @@
 #' A road segment in Lisbon, Portugal
 #'
 #' A single road segment and a 3d version.
+#' Different versions of this dataset are provided.
+#'
+#' The `lisbon_road_segment` has ... columns and ... rows.
 #'
 #' The `lisbon_road_segment_xyz_mapbox` was created with:
 #' `lisbon_road_segment_xyz_mapbox = elevation_add(lisbon_road_segment)`.
+#'
+#'
 #'
 #' @format An object of class `sf`
 #' @source Produced by ESRI's
