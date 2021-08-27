@@ -358,8 +358,12 @@ usethis::use_data(lisbon_route, overwrite = TRUE)
 usethis::use_data(lisbon_route_3d, overwrite = TRUE)
 ```
 
-```{r}
+```{r, eval=FALSE}
 lisbon_route_xyz = elevation_add(lisbon_route, dem_lisbon_raster)
+```
+
+```{r, echo=FALSE}
+lisbon_route_xyz = lisbon_route_xyz_mapbox
 ```
 
 We can now visualise the **elevation profile** of the route as follows:
@@ -377,19 +381,9 @@ lisbon_route_xyz_mapbox = elevation_add(lisbon_road_proj, dem = dem_mapbox)
 plot_slope(lisbon_route_xyz_mapbox)
 ```
 
-As outlined in the basic example above this can be done more concisely, as:
+The following commands calculate the elevations of a route in Leeds (not evaluated).
 
-```{r plotauto}
-lisbon_route_xyz_auto = elevation_add(lisbon_route)
-plot_slope(lisbon_route_xyz_auto)
-```
-
-
-
-
-A route in Leeds!
-
-```{r}
+```{r, eval=FALSE}
 cyclestreets_xyz = elevation_add(cyclestreets_route)
 plot_slope(cyclestreets_xyz)
 plot(cumsum(cyclestreets_xyz$distances), cumsum(cyclestreets_xyz$elevation_change))
