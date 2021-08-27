@@ -3,8 +3,16 @@
 #' A dataset containing elevation in and around Lisbon
 #' with a geographic resolution of 10m.
 #'
+#' The dataset orginates from This DEM was acquired by Instituto Superior
+#' Técnico (University of Lisbon) by 2012, covers all the Northern
+#' Metropolitan Area of Lisbon, and has a 10m cell resolution,
+#' when projected at the official Portuguese EPSG: 3763 - TM06/ETRS89.
+#' The dataset was released as an open access dataset with permission from the
+#' University of Lisbon to support this project.
+#'
 #' @format A raster dataset containing elevation above sea level
 #'   in a 1km bounding box in Lisbon, Portugal.
+#'
 #' @source \url{https://github.com/rspatial/terra/issues/29}
 #' @examples
 #' names(dem_lisbon_raster)
