@@ -6,6 +6,7 @@
 \alias{lisbon_road_segment_3d}
 \alias{lisbon_route}
 \alias{lisbon_route_3d}
+\alias{lisbon_road_segment_xyz_mapbox}
 \title{A road segment in Lisbon, Portugal}
 \format{
 An object of class \code{sf}
@@ -20,8 +21,13 @@ lisbon_road_segment
 \description{
 A single road segment and a 3d version.
 }
+\details{
+The \code{lisbon_road_segment_xyz_mapbox} was created with:
+\code{lisbon_road_segment_xyz_mapbox = elevation_add(lisbon_road_segment)}.
+}
 \examples{
 lisbon_road_segment
 lisbon_road_segment_3d
+lisbon_road_segment_xyz_mapbox
 }
 \keyword{datasets}

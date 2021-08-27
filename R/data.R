@@ -29,13 +29,18 @@
 #'
 #' A single road segment and a 3d version.
 #'
+#' The `lisbon_road_segment_xyz_mapbox` was created with:
+#' `lisbon_road_segment_xyz_mapbox = elevation_add(lisbon_road_segment)`.
+#'
 #' @format An object of class `sf`
 #' @source Produced by ESRI's
 #'  [3D Analyst extension](https://pro.arcgis.com/en/pro-app/help/analysis/)
 #' @aliases lisbon_road_segment_3d lisbon_route lisbon_route_3d
+#'   lisbon_road_segment_xyz_mapbox
 #' @examples
 #' lisbon_road_segment
 #' lisbon_road_segment_3d
+#' lisbon_road_segment_xyz_mapbox
 "lisbon_road_segment"
 
 #' A journey from CycleStreets.net

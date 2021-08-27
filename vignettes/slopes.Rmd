@@ -166,8 +166,17 @@ You can do this as a two step process as follows.
 
 **Step 1**: add elevations to each coordinate in the linestring (requires a [MapBox API](https://account.mapbox.com/access-tokens/) key):
 
-```{r}
+```{r, eval=FALSE}
 sf_linestring_xyz = elevation_add(sf_linestring)
+#> Loading required namespace: ceramic
+#> Preparing to download: 9 tiles at zoom = 18 from 
+#> https://api.mapbox.com/v4/mapbox.terrain-rgb/
+```
+
+```{r, echo=FALSE}
+# note: the following should be TRUE
+# identical(sf_linestring_xyz, lisbon_road_segment_xyz_mapbox)
+sf_linestring_xyz = lisbon_road_segment_xyz_mapbox
 ```
 
 You can check the elevations added to the new `sf_linestring_xyz` object by printing its coordinates, as follows (note the new Z column that goes from above 87 m above sea level to only 79 m in a short distance).
@@ -187,7 +196,6 @@ z_max(sf_linestring_xyz) # elevation max value
 z_start(sf_linestring_xyz) # first z
 z_end(sf_linestring_xyz) # last z
 ```
-
 
 **Step 2**: calculate the average slope of the linestring
 
