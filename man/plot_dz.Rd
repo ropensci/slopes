@@ -54,6 +54,9 @@ Includes negative numbers and omits zero by default}
 
 \item{ncol}{Number of columns in legend, 4 by default.}
 }
+\value{
+A plot showing the elevation profile associated with a linestring.
+}
 \description{
 Plot a digital elevation profile based on xyz data
 }

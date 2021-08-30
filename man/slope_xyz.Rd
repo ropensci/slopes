@@ -14,6 +14,10 @@ slope_xyz(route_xyz, fun = slope_matrix_weighted, lonlat = TRUE)
 
 \item{lonlat}{Are the coordinates in lon/lat order? TRUE by default}
 }
+\value{
+A vector of slopes equal in length to the number simple features
+(rows representing linestrings) in the input object.
+}
 \description{
 Extract slopes from xyz data frame or sf objects
 }

@@ -24,6 +24,9 @@ datasets. Default: \code{"bilinear"}.}
 \code{TRUE} by default if the package is installed \emph{and}
 if \code{dem} is of class \code{SpatRast}}
 }
+\value{
+A vector of elevation values.
+}
 \description{
 Extract elevations from coordinates
 }

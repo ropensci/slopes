@@ -21,6 +21,15 @@
 #' @param x Vector of locations
 #' @param d Vector of distances between points
 #' @param elevations Elevations in same units as x (assumed to be metres)
+#' @return A vector of slope gradients associated with each linear element
+#'   (each line between consecutive vertices) associated with linear features.
+#'   Returned values for `slope_distance_mean()` and
+#'   `slope_distance_mean_weighted()` are summary statistics for all
+#'   linear elements in the linestring.
+#'   The output value is a proportion representing the change in elevation
+#'   for a given change in horizontal movement along the linestring.
+#'   0.02, for example, represents a low gradient of 2% while 0.08 represents
+#'   a steep gradient of 8%.
 #' @export
 #' @examples
 #' x = c(0, 2, 3, 4, 5, 9)
@@ -63,12 +72,23 @@ slope_distance_weighted = function(d, elevations) {
 #' @param m Matrix containing coordinates and elevations
 #' @inheritParams slope_vector
 #' @inheritParams sequential_dist
+#' @return A vector of slope gradients associated with each linear element
+#'   (each line between consecutive vertices) associated with linear features.
+#'   Returned values for `slope_matrix_mean()` and
+#'   `slope_matrix_weighted()` are summary statistics for all
+#'   linear elements in the linestring.
+#'   The output value is a proportion representing the change in elevation
+#'   for a given change in horizontal movement along the linestring.
+#'   0.02, for example, represents a low gradient of 2% while 0.08 represents
+#'   a steep gradient of 8%.
 #' @export
 #' @examples
 #' x = c(0, 2, 3, 4, 5, 9)
 #' y = c(0, 0, 0, 0, 0, 9)
 #' z = c(1, 2, 2, 4, 3, 1) / 10
 #' m = cbind(x, y, z)
+#' slope_matrix_weighted(m, lonlat = FALSE)
+#' slope_matrix_mean(m, lonlat = FALSE)
 #' plot(x, z, ylim = c(-0.5, 0.5), type = "l")
 #' (gx = slope_vector(x, z))
 #' (gxy = slope_matrix(m, lonlat = FALSE))
@@ -82,6 +102,13 @@ slope_matrix = function(m, elevations = m[, 3], lonlat = TRUE) {
   e_change = diff(elevations)
   g = e_change / d
   g
+}
+#' @rdname slope_matrix
+#' @export
+slope_matrix_mean = function(m, elevations = m[, 3], lonlat = TRUE) {
+  g1 = slope_matrix(m, elevations = elevations, lonlat = lonlat)
+  d = sequential_dist(m = m, lonlat = lonlat)
+  mean(abs(g1), na.rm = TRUE)
 }
 #' @rdname slope_matrix
 #' @export
@@ -99,12 +126,18 @@ slope_matrix_weighted = function(m, elevations = m[, 3], lonlat = TRUE) {
 #'
 #' @param lonlat Are the coordinates in lon/lat (geographic) coordinates? TRUE by default.
 #' @inheritParams slope_matrix
+#' @return A vector of distance values in meters if `lonlat = TRUE`
+#'   or the map units of the input data if `lonlat = FALSE` between
+#'   consecutive vertices.
 #' @export
 #' @examples
 #' x = c(0, 2, 3, 4, 5, 9)
 #' y = c(0, 0, 0, 0, 0, 1)
 #' m = cbind(x, y)
-#' sequential_dist(m)
+#' d = sequential_dist(m, lonlat = FALSE)
+#' d
+#' nrow(m)
+#' length(d)
 sequential_dist = function(m, lonlat = TRUE) {
   if(lonlat) {
     geodist::geodist(m[, 1:2], sequential = TRUE) # lon lat
@@ -146,6 +179,8 @@ slope_matrices = function(m_xyz_split, fun = slope_matrix_weighted, ...) {
 #' @param fun The slope function to calculate per route,
 #'   `slope_matrix_weighted` by default.
 #' @importFrom methods is
+#' @return A vector of slopes equal in length to the number simple features
+#'   (rows representing linestrings) in the input object.
 #' @export
 #' @examples
 #' routes = lisbon_road_network[1:3, ]
@@ -182,7 +217,8 @@ slope_raster = function(
 #' @param route_xyz An sf object with x, y, z dimensions
 #' @param lonlat Are the coordinates in lon/lat order? TRUE by default
 #' @inheritParams slope_raster
-#'
+#' @return A vector of slopes equal in length to the number simple features
+#'   (rows representing linestrings) in the input object.
 #' @export
 #' @examples
 #' route_xyz = lisbon_road_segment_3d
@@ -207,6 +243,7 @@ slope_xyz = function(route_xyz, fun = slope_matrix_weighted, lonlat = TRUE) {
 #'
 #' @inheritParams slope_raster
 #' @inheritParams slope_matrix
+#' @return A vector of elevation values.
 #' @export
 #' @examples
 #' m = sf::st_coordinates(lisbon_road_network[1, ])
@@ -225,11 +262,12 @@ slope_xyz = function(route_xyz, fun = slope_matrix_weighted, lonlat = TRUE) {
 #' file.remove("dem_lisbon.tif")
 #' }
 #' }
-elevation_extract = function(m,
-                             dem,
-                             method = "bilinear",
-                             terra = has_terra() && methods::is(dem, "SpatRaster")
-                             ) {
+elevation_extract = function(
+  m,
+  dem,
+  method = "bilinear",
+  terra = has_terra() && methods::is(dem, "SpatRaster")
+  ) {
   if(terra) {
     res = terra::extract(dem, m[, 1:2], method = method)[[1]]
   } else {
@@ -242,6 +280,9 @@ elevation_extract = function(m,
 #' Take a linestring and add a third (z) dimension to its coordinates
 #' @inheritParams slope_raster
 #' @inheritParams elevation_extract
+#' @return An sf object that is identical to the input `routes`, except that
+#'   the coordinate values in the ouput has a third `z` dimension representing
+#'   the elevation of each vertex that defines a linear feature such as a road.
 #' @export
 #' @examples
 #' library(sf)

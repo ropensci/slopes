@@ -22,6 +22,7 @@
 #' @inheritParams sequential_dist
 #'
 #' @export
+#' @return A plot showing the elevation profile associated with a linestring.
 #' @examples
 #' plot_slope(lisbon_route_3d)
 #' route_xyz = lisbon_road_segment_3d

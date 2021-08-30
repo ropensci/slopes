@@ -25,6 +25,11 @@ datasets. Default: \code{"bilinear"}.}
 \code{TRUE} by default if the package is installed \emph{and}
 if \code{dem} is of class \code{SpatRast}}
 }
+\value{
+An sf object that is identical to the input \code{routes}, except that
+the coordinate values in the ouput has a third \code{z} dimension representing
+the elevation of each vertex that defines a linear feature such as a road.
+}
 \description{
 Take a linestring and add a third (z) dimension to its coordinates
 }

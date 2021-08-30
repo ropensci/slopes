@@ -33,6 +33,10 @@ datasets. Default: \code{"bilinear"}.}
 \code{TRUE} by default if the package is installed \emph{and}
 if \code{dem} is of class \code{SpatRast}}
 }
+\value{
+A vector of slopes equal in length to the number simple features
+(rows representing linestrings) in the input object.
+}
 \description{
 This function takes an \code{sf} representing routes over geographical space
 and a raster dataset representing the terrain as inputs.

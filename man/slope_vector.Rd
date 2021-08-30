@@ -22,6 +22,17 @@ slope_distance_weighted(d, elevations)
 
 \item{d}{Vector of distances between points}
 }
+\value{
+A vector of slope gradients associated with each linear element
+(each line between consecutive vertices) associated with linear features.
+Returned values for \code{slope_distance_mean()} and
+\code{slope_distance_mean_weighted()} are summary statistics for all
+linear elements in the linestring.
+The output value is a proportion representing the change in elevation
+for a given change in horizontal movement along the linestring.
+0.02, for example, represents a low gradient of 2\% while 0.08 represents
+a steep gradient of 8\%.
+}
 \description{
 \code{\link[=slope_vector]{slope_vector()}} calculates the slopes associated with consecutive elements
 in one dimensional distance and associated elevations (see examples).

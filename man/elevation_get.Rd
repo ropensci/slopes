@@ -12,6 +12,10 @@ The object must be of class \code{sf} with \code{LINESTRING} geometries.}
 
 \item{...}{Options passed to \code{cc_elevation()}}
 }
+\value{
+A raster object with cell values representing elevations in the
+bounding box of the input \code{routes} object.
+}
 \description{
 \code{elevation_get()} uses the \verb{[ceramic::cc_elevation()]} function to get
 DEM data in raster format anywhere worldwide.

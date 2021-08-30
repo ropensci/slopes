@@ -11,6 +11,11 @@ sequential_dist(m, lonlat = TRUE)
 
 \item{lonlat}{Are the coordinates in lon/lat (geographic) coordinates? TRUE by default.}
 }
+\value{
+A vector of distance values in meters if \code{lonlat = TRUE}
+or the map units of the input data if \code{lonlat = FALSE} between
+consecutive vertices.
+}
 \description{
 Set \code{lonlat} to \code{FALSE} if you have projected data, e.g. with coordinates
 representing distance in meters, not degrees. Lonlat coodinates are assumed
@@ -20,5 +25,8 @@ representing distance in meters, not degrees. Lonlat coodinates are assumed
 x = c(0, 2, 3, 4, 5, 9)
 y = c(0, 0, 0, 0, 0, 1)
 m = cbind(x, y)
-sequential_dist(m)
+d = sequential_dist(m, lonlat = FALSE)
+d
+nrow(m)
+length(d)
 }

@@ -12,6 +12,8 @@
 #'
 #' @param ... Options passed to `cc_elevation()`
 #' @inheritParams slope_raster
+#' @return A raster object with cell values representing elevations in the
+#'   bounding box of the input `routes` object.
 #' @export
 #' @examples
 #' # Time-consuming examples that require an internet connection and API key:

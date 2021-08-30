@@ -24,6 +24,10 @@ z_min(x)
 \arguments{
 \item{x}{An \code{sfc} object with 'XYZ' coordinates}
 }
+\value{
+A vector of values representing elevations associated with
+simple feature geometries that have elevations (XYZ coordinates).
+}
 \description{
 The \verb{slope_z*()} functions calculate summary values for the Z axis
 in \code{sfc} objects with \code{XYZ} geometries.

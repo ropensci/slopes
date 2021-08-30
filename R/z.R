@@ -4,7 +4,8 @@
 #' in `sfc` objects with `XYZ` geometries.
 #'
 #' @param x An `sfc` object with 'XYZ' coordinates
-#'
+#' @return A vector of values representing elevations associated with
+#'   simple feature geometries that have elevations (XYZ coordinates).
 #' @export
 #' @examples
 #' x = slopes::lisbon_route_3d
