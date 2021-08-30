@@ -40,7 +40,14 @@
 
 
 <meta property="og:title" content="Extract elevations from coordinates — elevation_extract" />
-<meta property="og:description" content="Extract elevations from coordinates" />
+<meta property="og:description" content="This function takes a series of points located in geographical space
+and a digital elevation model as inputs and returns a vector of
+elevation estimates associated with each point.
+The function takes locations
+represented as a matrix of XY (or longitude latitude) coordinates
+and a digital elevation model (DEM) with class raster or terra.
+It returns a vector of values representing estimates of elevation
+associated with each of the points." />
 
 
 
@@ -138,7 +145,14 @@
     </div>
 
     <div class="ref-description">
-    <p>Extract elevations from coordinates</p>
+    <p>This function takes a series of points located in geographical space
+and a digital elevation model as inputs and returns a vector of
+elevation estimates associated with each point.
+The function takes locations
+represented as a matrix of XY (or longitude latitude) coordinates
+and a digital elevation model (DEM) with class <code>raster</code> or <code>terra</code>.
+It returns a vector of values representing estimates of elevation
+associated with each of the points.</p>
     </div>
 
     <pre class="usage"><span class='fu'>elevation_extract</span><span class='op'>(</span>
@@ -176,6 +190,27 @@ if <code>dem</code> is of class <code>SpatRast</code></p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A vector of elevation values.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>By default, the elevations are estimated using
+<a href='https://en.wikipedia.org/wiki/Bilinear_interpolation'>bilinear interpolation</a>
+(<code>method = "bilinear"</code>)
+which calculates point height based on proximity to the centroids of
+surrounging cells.
+The value of the <code>method</code> argument is passed to the <code>method</code> argument in
+<a href='https://rspatial.github.io/raster/reference/extract.html'><code><a href='https://rdrr.io/pkg/raster/man/extract.html'>raster::extract()</a></code></a>
+or
+<a href='https://rspatial.github.io/terra/reference/extract.html'><code><a href='https://rdrr.io/pkg/terra/man/extract.html'>terra::extract()</a></code></a>
+depending on the class of the input raster dataset.</p>
+<p>See Kidner et al. (1999)
+for descriptions of alternative elevation interpolation and extrapolation
+algorithms.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Kidner, David, Mark Dorey, and Derek Smith.
+"What’s the point? Interpolation and extrapolation with a regular grid DEM."
+Fourth International Conference on GeoComputation, Fredericksburg,
+VA, USA. 1999.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>m</span> <span class='op'>=</span> <span class='fu'>sf</span><span class='fu'>::</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_coordinates.html'>st_coordinates</a></span><span class='op'>(</span><span class='va'>lisbon_road_network</span><span class='op'>[</span><span class='fl'>1</span>, <span class='op'>]</span><span class='op'>)</span>
