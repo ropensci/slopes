@@ -13,7 +13,13 @@ slope_matrix_mean(m, elevations = m[, 3], lonlat = TRUE)
 slope_matrix_weighted(m, elevations = m[, 3], lonlat = TRUE)
 }
 \arguments{
-\item{m}{Matrix containing coordinates and elevations}
+\item{m}{Matrix containing coordinates and elevations.
+The matrix should have three columns: x, y, and z. Typically
+these correspond to location in the West-East, South-North, and vertical
+elevation axes respectively.
+In data with geographic coordinates, Z values are assumed to be in
+metres. In data with projected coordinates, Z values are assumed to have
+the same units as the X and Y coordinates.}
 
 \item{elevations}{Elevations in same units as x (assumed to be metres).
 Default value: \code{m[, 3]}, meaning the 'z' coordinate in a matrix of
