@@ -17,10 +17,14 @@ A raster object with cell values representing elevations in the
 bounding box of the input \code{routes} object.
 }
 \description{
-\code{elevation_get()} uses the \verb{[ceramic::cc_elevation()]} function to get
+\code{elevation_get()} uses the
+\href{https://hypertidy.github.io/ceramic/reference/cc_location.html}{\code{cc_elevation()}}
+function from the \code{ceramic} package to get
 DEM data in raster format anywhere worldwide.
 It requires an API that can be added by following guidance in the package's
-\href{https://github.com/ITSLeeds/slopes#installation-for-dem-downloads}{README}.
+\href{https://github.com/ITSLeeds/slopes#installation-for-dem-downloads}{README}
+and in the
+\href{https://itsleeds.github.io/slopes/articles/slopes.html}{\code{slopes} vignette}.
 }
 \details{
 Note: if you use the \code{cc_elevation()} function directly to get DEM data,

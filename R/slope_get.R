@@ -1,9 +1,13 @@
 #' Get elevation data from hosted maptile services
 #'
-#' `elevation_get()` uses the `[ceramic::cc_elevation()]` function to get
+#' `elevation_get()` uses the
+#' [`cc_elevation()`](https://hypertidy.github.io/ceramic/reference/cc_location.html)
+#' function from the `ceramic` package to get
 #' DEM data in raster format anywhere worldwide.
 #' It requires an API that can be added by following guidance in the package's
-#' [README](https://github.com/ITSLeeds/slopes#installation-for-dem-downloads).
+#' [README](https://github.com/ITSLeeds/slopes#installation-for-dem-downloads)
+#' and in the
+#' [`slopes` vignette](https://itsleeds.github.io/slopes/articles/slopes.html).
 #'
 #'
 #' Note: if you use the `cc_elevation()` function directly to get DEM data,
