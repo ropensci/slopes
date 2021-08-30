@@ -2,16 +2,16 @@
 #'
 #' @description
 #'
-#' [slope_vector()] calculates the slopes associated with consecutive elements
+#' `slope_vector()` calculates the slopes associated with consecutive elements
 #'   in one dimensional distance and associated elevations (see examples).
 #'
-#' [slope_distance()] calculates the slopes associated with consecutive
+#' `slope_distance()` calculates the slopes associated with consecutive
 #'   distances and elevations.
 #'
-#' [slope_distance_mean()] calculates the mean average slopes associated with
+#' `slope_distance_mean()` calculates the mean average slopes associated with
 #'   consecutive distances and elevations.
 #'
-#' [slope_distance_weighted()] calculates the slopes associated with
+#' `slope_distance_weighted()` calculates the slopes associated with
 #'   consecutive distances and elevations,
 #'   with the mean value associated with each set of distance/elevation
 #'   vectors weighted in proportion to the distance between each elevation

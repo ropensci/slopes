@@ -34,16 +34,16 @@ for a given change in horizontal movement along the linestring.
 a steep gradient of 8\%.
 }
 \description{
-\code{\link[=slope_vector]{slope_vector()}} calculates the slopes associated with consecutive elements
+\code{slope_vector()} calculates the slopes associated with consecutive elements
 in one dimensional distance and associated elevations (see examples).
 
-\code{\link[=slope_distance]{slope_distance()}} calculates the slopes associated with consecutive
+\code{slope_distance()} calculates the slopes associated with consecutive
 distances and elevations.
 
-\code{\link[=slope_distance_mean]{slope_distance_mean()}} calculates the mean average slopes associated with
+\code{slope_distance_mean()} calculates the mean average slopes associated with
 consecutive distances and elevations.
 
-\code{\link[=slope_distance_weighted]{slope_distance_weighted()}} calculates the slopes associated with
+\code{slope_distance_weighted()} calculates the slopes associated with
 consecutive distances and elevations,
 with the mean value associated with each set of distance/elevation
 vectors weighted in proportion to the distance between each elevation
