@@ -51,7 +51,7 @@ MAPBOX_API_KEY=xxxxx # replace XXX with your api key
 ### Elevation
 
 - `elevation_add()` Take a linestring and add a third dimension (z) to its coordinates
-- `elevation_get()` Get elevation data from hosted maptile services
+- `elevation_get()` Get elevation data from hosted maptile services (returns a raster)
 - `elevation_extract()` Extract elevations from coordinates
 
 - `z_value()` retrieves elevation values for each z (as vector of sequential vertices)
@@ -223,8 +223,17 @@ tm_shape(sf_route) +
 
 **Step 1**: add elevations to each coordinate in the route:
 
-```{r}
+```{r, eval=FALSE}
 sf_route_xyz = elevation_add(sf_route)
+#> Loading required namespace: ceramic
+#> Preparing to download: 12 tiles at zoom = 15 from 
+#> https://api.mapbox.com/v4/mapbox.terrain-rgb/
+```
+
+```{r, echo=FALSE}
+# note: the following should be TRUE
+# identical(sf_route_xyz, lisbon_road_segment_xyz_mapbox)
+sf_route_xyz = lisbon_route_xyz_mapbox
 ```
 
 **Step 2**: calculate the average slope of the route
@@ -242,6 +251,7 @@ class(dem_lisbon_raster)
 slope_raster(routes = sf_route,
              dem = dem_lisbon_raster)
 ```
+
 The result shows a 7.8% gradient *on average*.
 As you can see, the retrieved result from elevation information available in mapbox and in this Digital Elevation Model, is quite similar. (See more about these differences in [Verification of slopes](https://itsleeds.github.io/slopes/articles/verification.html).) 
 
@@ -283,6 +293,7 @@ In any case, to use the `slopes` package you need **elevation points**, either a
 
 ## Calculating and plotting the gradient of roads
 
+### Road network
 Typical use cases for the package are calculating the slopes of geographic objects representing roads or other linear features.
 These two types of input data are represented in the code output and plot below.
 
@@ -324,7 +335,9 @@ raster::plot(dem_lisbon_raster)
 plot(lisbon_road_network["slope"], add = TRUE, lwd = 5)
 ```
 
-Imagine that we want to go from from the Santa Catarina area in the East of the map to the Castelo de São Jorge in the West.
+### Elevation profile
+
+Taking the [first route example](#route--available-dem), imagine that we want to go from from the Santa Catarina area in the East of the map to the Castelo de São Jorge in the West.
 This route goes down a valley and up the other side:
 
 ```{r route}
@@ -358,21 +371,20 @@ usethis::use_data(lisbon_route, overwrite = TRUE)
 usethis::use_data(lisbon_route_3d, overwrite = TRUE)
 ```
 
-```{r, eval=FALSE}
-lisbon_route_xyz = elevation_add(lisbon_route, dem_lisbon_raster)
+```{r, eval=TRUE}
+lisbon_route_xyz = elevation_add(lisbon_route, dem_lisbon_raster) 
 ```
 
-```{r, echo=FALSE}
-lisbon_route_xyz = lisbon_route_xyz_mapbox
-```
 
-We can now visualise the **elevation profile** of the route as follows:
+We can now visualise the elevation profile of the route as follows:
 
 ```{r plot_slope}
 plot_slope(lisbon_route_xyz)
 ```
 
-If you do not have a raster dataset representing elevations, you can automatically download them as follows (a step that is automatically done in the function `elevation_add()` shown in the basic example above, results of the subsequent code chunk not shown):
+### Using `elevation_add()` with and without a `dem =` argument
+
+If you do not have a raster dataset representing elevations, you can automatically download them by leaving the argument `dem = NULL` (a step that is automatically done in the function `elevation_add()` shown in the basic example above, results of the subsequent code chunk not shown):
 
 ```{r, message=FALSE, warning=FALSE, eval=FALSE}
 dem_mapbox = elevation_get(lisbon_route)
@@ -381,10 +393,26 @@ lisbon_route_xyz_mapbox = elevation_add(lisbon_road_proj, dem = dem_mapbox)
 plot_slope(lisbon_route_xyz_mapbox)
 ```
 
-The following commands calculate the elevations of a route in Leeds (not evaluated).
+As outlined in the basic example above this can be done more concisely, as:
 
 ```{r, eval=FALSE}
-cyclestreets_xyz = elevation_add(cyclestreets_route)
+lisbon_route_xyz_auto = elevation_add(lisbon_route) #dem = NULL
+```
+```{r, echo=FALSE}
+lisbon_route_xyz_auto = lisbon_route_xyz_mapbox
+```
+```{r}
+plot_slope(lisbon_route_xyz_auto)
+```
+
+Note that the elevations shown in both plots differ, since the first is based on DEM elevation available, and the second is based in _mapbox_ elevation.
+
+## Commulative elevation change
+
+The following example calculate the elevations of a route in Leeds, and plots its commutative sum along the route (not evaluated).
+
+```{r, eval=FALSE}
+cyclestreets_xyz = elevation_add(cyclestreets_route) 
 plot_slope(cyclestreets_xyz)
 plot(cumsum(cyclestreets_xyz$distances), cumsum(cyclestreets_xyz$elevation_change))
 ```
