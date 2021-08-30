@@ -274,12 +274,12 @@ slope_distance(sf_linestring_xyz)
 slope_distance_mean(sf_linestring_xyz)
 slope_distance_weighted(sf_linestring_xyz)
 ```
+
 ```{r}
 # for a line xz
 x = c(0, 2, 3, 4, 5, 9)
 elevations = c(1, 2, 2, 4, 3, 1) / 10
 slope_vector(x, elevations)
-
 
 # for a path xyz
 xy = st_coordinates(sf_linestring)
