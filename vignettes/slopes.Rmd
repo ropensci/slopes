@@ -167,7 +167,7 @@ You can do this as a two step process as follows.
 **Step 1**: add elevations to each coordinate in the linestring (requires a [MapBox API](https://account.mapbox.com/access-tokens/) key):
 
 ```{r, eval=FALSE}
-sf_linestring_xyz = elevation_add(sf_linestring)
+sf_linestring_xyz = elevation_add(sf_linestring) # dem = NULL
 #> Loading required namespace: ceramic
 #> Preparing to download: 9 tiles at zoom = 18 from 
 #> https://api.mapbox.com/v4/mapbox.terrain-rgb/
@@ -178,6 +178,8 @@ sf_linestring_xyz = elevation_add(sf_linestring)
 # identical(sf_linestring_xyz, lisbon_road_segment_xyz_mapbox)
 sf_linestring_xyz = lisbon_road_segment_xyz_mapbox
 ```
+
+With the argument `dem = NULL`, the function downloads the necessary elevation information from Mapbox. You can use this argument with a local digital elevation model (`dem = ...`).
 
 You can check the elevations added to the new `sf_linestring_xyz` object by printing its coordinates, as follows (note the new Z column that goes from above 87 m above sea level to only 79 m in a short distance).
 
@@ -253,7 +255,7 @@ slope_raster(routes = sf_route,
 ```
 
 The result shows a 7.8% gradient *on average*.
-As you can see, the retrieved result from elevation information available in mapbox and in this Digital Elevation Model, is quite similar. (See more about these differences in [Verification of slopes](https://itsleeds.github.io/slopes/articles/verification.html).) 
+As you can see, the retrieved result from elevation information available in Mapbox and in this Digital Elevation Model, is quite similar. (See more about these differences in [Verification of slopes](https://itsleeds.github.io/slopes/articles/verification.html).) 
 
 ### Route with xyz coordinates
 
@@ -384,7 +386,7 @@ plot_slope(lisbon_route_xyz)
 
 ### Using `elevation_add()` with and without a `dem =` argument
 
-If you do not have a raster dataset representing elevations, you can automatically download them by leaving the argument `dem = NULL` (a step that is automatically done in the function `elevation_add()` shown in the basic example above, results of the subsequent code chunk not shown):
+If you do not have a raster dataset representing elevations, you can automatically download them by omitting the argument `dem = NULL` (a step that is automatically done in the function `elevation_add()` shown in the basic example above, results of the subsequent code chunk not shown):
 
 ```{r, message=FALSE, warning=FALSE, eval=FALSE}
 dem_mapbox = elevation_get(lisbon_route)
@@ -405,7 +407,7 @@ lisbon_route_xyz_auto = lisbon_route_xyz_mapbox
 plot_slope(lisbon_route_xyz_auto)
 ```
 
-Note that the elevations shown in both plots differ, since the first is based on DEM elevation available, and the second is based in _mapbox_ elevation.
+Note that the elevations shown in both plots differ, since the first is based on DEM elevation available, and the second is based in _Mapbox_ elevation.
 
 ## Commulative elevation change
 
