@@ -190,11 +190,11 @@ st_write(network, "shapefiles/SlopesIoW.gpkg", append=F)
 
 ## Other examples
 
--   [São Paulo (Brazil)](http://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/DeclivesSaoPaulo.html)
--   [Lisbon (Portugal)](http://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/DeclivesLisboa.html)
--   [Oporto (Portugal)](http://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/DeclivesPorto_EU.html)
--   [Leeds (UK)](http://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/SlopesLeeds.html)
--   Bristol (UK)
+-   [São Paulo (Brazil)](https://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/DeclivesSaoPaulo.html)
+-   [Lisbon (Portugal)](https://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/DeclivesLisboa.html)
+-   [Oporto (Portugal)](https://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/DeclivesPorto_EU.html)
+-   [Leeds (UK)](https://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/SlopesLeeds.html)
+-   [Zurich (CH)](https://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/SlopesZurich.html)
 
 
 ```{r tidyup, include=FALSE}
