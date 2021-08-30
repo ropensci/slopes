@@ -241,6 +241,36 @@ slope_xyz = function(route_xyz, fun = slope_matrix_weighted, lonlat = TRUE) {
 
 #' Extract elevations from coordinates
 #'
+#' This function takes a series of points located in geographical space
+#' and a digital elevation model as inputs and returns a vector of
+#' elevation estimates associated with each point.
+#' The function takes locations
+#' represented as a matrix of XY (or longitude latitude) coordinates
+#' and a digital elevation model (DEM) with class `raster` or `terra`.
+#' It returns a vector of values representing estimates of elevation
+#' associated with each of the points.
+#'
+#' By default, the elevations are estimated using
+#' [bilinear interpolation](https://en.wikipedia.org/wiki/Bilinear_interpolation)
+#' (`method = "bilinear"`)
+#' which calculates point height based on proximity to the centroids of
+#' surrounging cells.
+#' The value of the `method` argument is passed to the `method` argument in
+#' [`raster::extract()`](https://rspatial.github.io/raster/reference/extract.html)
+#' or
+#' [`terra::extract()`](https://rspatial.github.io/terra/reference/extract.html)
+#' depending on the class of the input raster dataset.
+#'
+#' See Kidner et al. (1999)
+#' for descriptions of alternative elevation interpolation and extrapolation
+#' algorithms.
+#'
+#' @references
+#' Kidner, David, Mark Dorey, and Derek Smith.
+#'   "What’s the point? Interpolation and extrapolation with a regular grid DEM."
+#'   Fourth International Conference on GeoComputation, Fredericksburg,
+#'   VA, USA. 1999.
+#'
 #' @inheritParams slope_raster
 #' @inheritParams slope_matrix
 #' @return A vector of elevation values.
