@@ -3,8 +3,9 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   benchmark: benchmark.html
+  intro-to-slopes: intro-to-slopes.html
   roadnetworkcycling: roadnetworkcycling.html
   slopes: slopes.html
   verification: verification.html
-last_built: 2021-08-18T21:56Z
+last_built: 2021-08-30T00:49Z
 

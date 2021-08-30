@@ -102,6 +102,9 @@ with a geographic resolution of 10m." />
       <a href="../articles/benchmark.html">Benchmarking slopes calculation</a>
     </li>
     <li>
+      <a href="../articles/intro-to-slopes.html">An introduction to slopes</a>
+    </li>
+    <li>
       <a href="../articles/roadnetworkcycling.html">Example: gradients of a road network for a given city</a>
     </li>
     <li>
@@ -150,11 +153,19 @@ in a 1km bounding box in Lisbon, Portugal.</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     <p><a href='https://github.com/rspatial/terra/issues/29'>https://github.com/rspatial/terra/issues/29</a></p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The dataset orginates from This DEM was acquired by Instituto Superior
+Técnico (University of Lisbon) by 2012, covers all the Northern
+Metropolitan Area of Lisbon, and has a 10m cell resolution,
+when projected at the official Portuguese EPSG: 3763 - TM06/ETRS89.
+The dataset was released as an open access dataset with permission from the
+University of Lisbon to support this project.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>dem_lisbon_raster</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Loading required package: raster</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: sp</span></div><div class='output co'>#&gt; NULL</div><div class='input'><span class='fu'>raster</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>dem_lisbon_raster</span><span class='op'>)</span>
-</div><div class='input'><span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>lisbon_road_segments</span><span class='op'>[</span><span class='st'>"Avg_Slope"</span><span class='op'>]</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>lisbon_road_network</span><span class='op'>[</span><span class='st'>"Avg_Slope"</span><span class='op'>]</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='img'><img src='dem_lisbon_raster-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

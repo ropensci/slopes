@@ -40,7 +40,8 @@
 
 
 <meta property="og:title" content="A road segment in Lisbon, Portugal — lisbon_road_segment" />
-<meta property="og:description" content="A single road segment and a 3d version." />
+<meta property="og:description" content="A single road segment and a 3d version.
+Different versions of this dataset are provided." />
 
 
 
@@ -101,6 +102,9 @@
       <a href="../articles/benchmark.html">Benchmarking slopes calculation</a>
     </li>
     <li>
+      <a href="../articles/intro-to-slopes.html">An introduction to slopes</a>
+    </li>
+    <li>
       <a href="../articles/roadnetworkcycling.html">Example: gradients of a road network for a given city</a>
     </li>
     <li>
@@ -135,7 +139,8 @@
     </div>
 
     <div class="ref-description">
-    <p>A single road segment and a 3d version.</p>
+    <p>A single road segment and a 3d version.
+Different versions of this dataset are provided.</p>
     </div>
 
     <pre class="usage"><span class='va'>lisbon_road_segment</span></pre>
@@ -148,6 +153,11 @@
 
     <p>Produced by ESRI's
 <a href='https://pro.arcgis.com/en/pro-app/help/analysis/'>3D Analyst extension</a></p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The <code>lisbon_road_segment</code> has 23 columns and 1 row.</p>
+<p>The <code>lisbon_road_segment_xyz_mapbox</code> was created with:
+<code>lisbon_road_segment_xyz_mapbox = elevation_add(lisbon_road_segment)</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>lisbon_road_segment</span>
@@ -171,6 +181,21 @@
 #&gt; Dimension:     XYZ
 #&gt; Bounding box:  xmin: -87080.48 ymin: -105629.6 xmax: -87056.99 ymax: -105506.3
 #&gt; z_range:       zmin: 86.49414 zmax: 92.31126
+#&gt; Projected CRS: ETRS89 / Portugal TM06
+#&gt; <span style='color: #949494;'># A tibble: 1 × 23</span>
+#&gt;   OBJECTID fid_1 gradient_s Shape_Leng Z_Min Z_Max Z_Mean SLength Min_Slope
+#&gt; <span style='color: #BCBCBC;'>*</span>    <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>     <span style='text-decoration: underline;'>2</span>997  <span style='text-decoration: underline;'>2</span>997     0.078<span style='text-decoration: underline;'>0</span>       182.  86.5  92.3   89.9    183.     0.334
+#&gt; <span style='color: #949494;'># … with 14 more variables: Max_Slope &lt;dbl&gt;, Avg_Slope &lt;dbl&gt;, z0 &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   z1 &lt;dbl&gt;, gradverifi &lt;dbl&gt;, query &lt;chr&gt;, lat &lt;dbl&gt;, lon &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   lat_min &lt;dbl&gt;, lat_max &lt;dbl&gt;, lon_min &lt;dbl&gt;, lon_max &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   bbox &lt;POLYGON [°]&gt;, geom &lt;LINESTRING [m]&gt;</span></div><div class='input'><span class='va'>lisbon_road_segment_xyz_mapbox</span>
+</div><div class='output co'>#&gt; Simple feature collection with 1 feature and 21 fields
+#&gt; Active geometry column: geom
+#&gt; Geometry type: LINESTRING
+#&gt; Dimension:     XYZ
+#&gt; Bounding box:  xmin: -87080.48 ymin: -105629.6 xmax: -87056.99 ymax: -105506.3
+#&gt; z_range:       zmin: 76.4 zmax: 88
 #&gt; Projected CRS: ETRS89 / Portugal TM06
 #&gt; <span style='color: #949494;'># A tibble: 1 × 23</span>
 #&gt;   OBJECTID fid_1 gradient_s Shape_Leng Z_Min Z_Max Z_Mean SLength Min_Slope

@@ -60,6 +60,9 @@
       <a href="../articles/benchmark.html">Benchmarking slopes calculation</a>
     </li>
     <li>
+      <a href="../articles/intro-to-slopes.html">An introduction to slopes</a>
+    </li>
+    <li>
       <a href="../articles/roadnetworkcycling.html">Example: gradients of a road network for a given city</a>
     </li>
     <li>
@@ -206,14 +209,14 @@
 <span class="va">network</span><span class="op">$</span><span class="va">length</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/geos_measures.html">st_length</a></span><span class="op">(</span><span class="va">network</span><span class="op">)</span>
 
 <span class="co"># make an interactive map</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">tmap</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mtennekes/tmap">tmap</a></span><span class="op">)</span>
 <span class="va">palredgreen</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#267300"</span>, <span class="st">"#70A800"</span>, <span class="st">"#FFAA00"</span>, <span class="st">"#E60000"</span>, <span class="st">"#A80000"</span>, <span class="st">"#730000"</span><span class="op">)</span> <span class="co">#color palette</span>
 <span class="co"># tmap_mode("view")</span>
-<span class="fu">tmap_options</span><span class="op">(</span>basemaps <span class="op">=</span> <span class="fu">leaflet</span><span class="fu">::</span><span class="va">providers</span><span class="op">$</span><span class="va">CartoDB.Positron</span><span class="op">)</span> <span class="co">#basemap</span>
+<span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tmap_options.html">tmap_options</a></span><span class="op">(</span>basemaps <span class="op">=</span> <span class="fu">leaflet</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/leaflet/man/providers.html">providers</a></span><span class="op">$</span><span class="va">CartoDB.Positron</span><span class="op">)</span> <span class="co">#basemap</span>
 
 <span class="va">slopemap</span> <span class="op">=</span>
-  <span class="fu">tm_shape</span><span class="op">(</span><span class="va">network</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">tm_lines</span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_shape.html">tm_shape</a></span><span class="op">(</span><span class="va">network</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tm_lines.html">tm_lines</a></span><span class="op">(</span>
     col <span class="op">=</span> <span class="st">"slope_class"</span>,
     palette <span class="op">=</span> <span class="va">palredgreen</span>,
     lwd <span class="op">=</span> <span class="fl">2</span>, <span class="co">#line width</span>
@@ -230,7 +233,7 @@
 <span class="va">slopemap</span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#export to html</span>
-<span class="fu">tmap_save</span><span class="op">(</span><span class="va">slopemap</span>, <span class="st">"html/SlopesIoW.html"</span><span class="op">)</span> 
+<span class="fu"><a href="https://rdrr.io/pkg/tmap/man/tmap_save.html">tmap_save</a></span><span class="op">(</span><span class="va">slopemap</span>, <span class="st">"html/SlopesIoW.html"</span><span class="op">)</span> 
 
 <span class="co"># export information as geopackage</span>
 <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_write.html">st_write</a></span><span class="op">(</span><span class="va">network</span>, <span class="st">"shapefiles/SlopesIoW.gpkg"</span>, append<span class="op">=</span><span class="cn">F</span><span class="op">)</span></code></pre></div>
@@ -250,8 +253,8 @@
 <li><a href="http://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/DeclivesSaoPaulo.html">São Paulo (Brazil)</a></li>
 <li><a href="http://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/DeclivesLisboa.html">Lisbon (Portugal)</a></li>
 <li><a href="http://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/DeclivesPorto_EU.html">Oporto (Portugal)</a></li>
+<li><a href="http://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/SlopesLeeds.html">Leeds (UK)</a></li>
 <li>Bristol (UK)</li>
-<li>Sheffield (UK)</li>
 </ul>
 </div>
   </div>

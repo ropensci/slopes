@@ -60,6 +60,9 @@
       <a href="../articles/benchmark.html">Benchmarking slopes calculation</a>
     </li>
     <li>
+      <a href="../articles/intro-to-slopes.html">An introduction to slopes</a>
+    </li>
+    <li>
       <a href="../articles/roadnetworkcycling.html">Example: gradients of a road network for a given city</a>
     </li>
     <li>
@@ -115,7 +118,7 @@
 <p>A benchmark can reveal how many route gradients can be calculated per second:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">e</span> <span class="op">=</span> <span class="va">dem_lisbon_raster</span>
-<span class="va">r</span> <span class="op">=</span> <span class="va">lisbon_road_segments</span>
+<span class="va">r</span> <span class="op">=</span> <span class="va">lisbon_road_network</span>
 <span class="va">et</span> <span class="op">=</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html">rast</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>
 <span class="va">res</span> <span class="op">=</span> <span class="fu">bench</span><span class="fu">::</span><span class="fu">mark</span><span class="op">(</span>check <span class="op">=</span> <span class="cn">FALSE</span>,
   slope_raster <span class="op">=</span> <span class="fu"><a href="../reference/slope_raster.html">slope_raster</a></span><span class="op">(</span><span class="va">r</span>, <span class="va">e</span><span class="op">)</span>,
@@ -131,7 +134,7 @@
 <p>To go faster, you can chose the <code>simple</code> method to gain some speed at the expense of accuracy:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">e</span> <span class="op">=</span> <span class="va">dem_lisbon_raster</span>
-<span class="va">r</span> <span class="op">=</span> <span class="va">lisbon_road_segments</span>
+<span class="va">r</span> <span class="op">=</span> <span class="va">lisbon_road_network</span>
 <span class="va">res</span> <span class="op">=</span> <span class="fu">bench</span><span class="fu">::</span><span class="fu">mark</span><span class="op">(</span>check <span class="op">=</span> <span class="cn">FALSE</span>,
   bilinear1 <span class="op">=</span> <span class="fu"><a href="../reference/slope_raster.html">slope_raster</a></span><span class="op">(</span><span class="va">r</span>, <span class="va">e</span><span class="op">)</span>,
   bilinear2 <span class="op">=</span> <span class="fu"><a href="../reference/slope_raster.html">slope_raster</a></span><span class="op">(</span><span class="va">r</span>, <span class="va">et</span><span class="op">)</span>,
