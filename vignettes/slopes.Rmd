@@ -140,7 +140,7 @@ st_geometry_type(sf_linestring)
 
 > maybe remove this? or add step 1 and step 2 again.
 
-### Sinlge road segment + no DEM
+### Single road segment + no DEM
 
 You can check your input dataset is suitable with the functions `class()` from base R and `st_geometry_type()` from the `sf` package, as demonstrated below on the example object `lisbon_road_segment` that is contained within the package:
 
