@@ -10,7 +10,8 @@ slope_raster(
   lonlat = sf::st_is_longlat(routes),
   method = "bilinear",
   fun = slope_matrix_weighted,
-  terra = has_terra() && methods::is(dem, "SpatRaster")
+  terra = has_terra() && methods::is(dem, "SpatRaster"),
+  directed = FALSE
 )
 }
 \arguments{
@@ -32,6 +33,10 @@ datasets. Default: \code{"bilinear"}.}
 \item{terra}{Should the \code{terra} package be used?
 \code{TRUE} by default if the package is installed \emph{and}
 if \code{dem} is of class \code{SpatRast}}
+
+\item{directed}{Should the value be directed? \code{FALSE} by default.
+If \code{TRUE} the result will be negative when it represents a downslope
+(when the end point is lower than the start point).}
 }
 \value{
 A vector of slopes equal in length to the number simple features

@@ -4,7 +4,12 @@
 \alias{slope_xyz}
 \title{Extract slopes from xyz data frame or sf objects}
 \usage{
-slope_xyz(route_xyz, fun = slope_matrix_weighted, lonlat = TRUE)
+slope_xyz(
+  route_xyz,
+  fun = slope_matrix_weighted,
+  lonlat = TRUE,
+  directed = FALSE
+)
 }
 \arguments{
 \item{route_xyz}{An sf object with x, y, z dimensions}
@@ -13,6 +18,10 @@ slope_xyz(route_xyz, fun = slope_matrix_weighted, lonlat = TRUE)
 \code{slope_matrix_weighted} by default.}
 
 \item{lonlat}{Are the coordinates in lon/lat order? TRUE by default}
+
+\item{directed}{Should the value be directed? \code{FALSE} by default.
+If \code{TRUE} the result will be negative when it represents a downslope
+(when the end point is lower than the start point).}
 }
 \value{
 A vector of slopes equal in length to the number simple features
@@ -24,4 +33,5 @@ Extract slopes from xyz data frame or sf objects
 \examples{
 route_xyz = lisbon_road_segment_3d
 slope_xyz(route_xyz, lonlat = FALSE)
+slope_xyz(route_xyz, lonlat = FALSE, directed = TRUE)
 }
