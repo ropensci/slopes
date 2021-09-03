@@ -15,6 +15,8 @@
 #' [README](https://github.com/hypertidy/ceramic#local-caching-of-tiles).
 #'
 #' @param ... Options passed to `cc_elevation()`
+#' @param output_format What format to return the data in?
+#'   Accepts `"raster"` (the default) and `"terra"`.
 #' @inheritParams slope_raster
 #' @return A raster object with cell values representing elevations in the
 #'   bounding box of the input `routes` object.
@@ -27,11 +29,12 @@
 #' routes = cyclestreets_route
 #' e = elevation_get(routes)
 #' class(e)
+#' crs(e)
 #' e
 #' plot(e)
 #' plot(st_geometry(routes), add = TRUE)
 #' }
-elevation_get = function(routes, ...) {
+elevation_get = function(routes, ..., output_format = "raster") {
   if(requireNamespace("ceramic")) {
     mid_ext = sf_mid_ext_lonlat(routes)
     bw = max(c(mid_ext$width, mid_ext$height)) / 1 # buffer width
@@ -41,13 +44,16 @@ elevation_get = function(routes, ...) {
   } else {
     message("Install the package ceramic")
   }
-  # issue: cannot convert CRS currently
-  # cr = sf::st_crs(routes)
-  # cr$wkt
-  # raster::crs(e) = raster::crs("+init=epsg:3857")
-  # raster::projectRaster(e, "+init=epsg:4326")
-  # raster::projectRaster(e, sf::st_crs(routes)[[2]])
-  e
+  crs_routes = sf::st_crs(routes)
+  if(!requireNamespace("terra", quietly = TRUE)) {
+    message('install.packages("terra") # for this to work')
+  }
+  et = terra::rast(e)
+  res = terra::project(et, y = crs_routes$wkt)
+  if(output_format == "raster") {
+    res = raster::raster(res)
+  }
+  res
 }
 
 sf_mid_ext_lonlat = function(routes) {

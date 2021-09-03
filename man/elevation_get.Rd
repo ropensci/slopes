@@ -4,13 +4,16 @@
 \alias{elevation_get}
 \title{Get elevation data from hosted maptile services}
 \usage{
-elevation_get(routes, ...)
+elevation_get(routes, ..., output_format = "raster")
 }
 \arguments{
 \item{routes}{Routes, the gradients of which are to be calculated.
 The object must be of class \code{sf} with \code{LINESTRING} geometries.}
 
 \item{...}{Options passed to \code{cc_elevation()}}
+
+\item{output_format}{What format to return the data in?
+Accepts \code{"raster"} (the default) and \code{"terra"}.}
 }
 \value{
 A raster object with cell values representing elevations in the
@@ -39,6 +42,7 @@ library(raster)
 routes = cyclestreets_route
 e = elevation_get(routes)
 class(e)
+crs(e)
 e
 plot(e)
 plot(st_geometry(routes), add = TRUE)
