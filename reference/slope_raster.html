@@ -218,7 +218,11 @@ geometries to <code>LINESTRING</code>s as follows:
 <span class='op'>(</span><span class='va'>s</span> <span class='op'>=</span> <span class='fu'>slope_raster</span><span class='op'>(</span><span class='va'>routes</span>, <span class='va'>dem</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;           1           2           3 
 #&gt; 0.003074005 0.010870459 0.004998315 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>routes</span><span class='op'>$</span><span class='va'>Avg_Slope</span>, <span class='va'>s</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.9975107</div></pre>
+</div><div class='output co'>#&gt; [1] 0.9975107</div><div class='input'><span class='fu'>slope_raster</span><span class='op'>(</span><span class='va'>routes</span>, <span class='va'>dem</span>, directed <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;            1            2            3 
+#&gt;  0.003074005 -0.010870459  0.004998315 </div><div class='input'><span class='fu'>slope_raster</span><span class='op'>(</span><span class='fu'>sf</span><span class='fu'>::</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_unary.html'>st_reverse</a></span><span class='op'>(</span><span class='va'>routes</span><span class='op'>)</span>, <span class='va'>dem</span>, directed <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;            1            2            3 
+#&gt; -0.003074005  0.010870459 -0.004998315 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
