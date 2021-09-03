@@ -167,9 +167,9 @@ on the resulting gradient estimate (see examples).</p>
 
 <span class='fu'>slope_distance</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>elevations</span><span class='op'>)</span>
 
-<span class='fu'>slope_distance_mean</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>elevations</span><span class='op'>)</span>
+<span class='fu'>slope_distance_mean</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>elevations</span>, directed <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>slope_distance_weighted</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>elevations</span><span class='op'>)</span></pre>
+<span class='fu'>slope_distance_weighted</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>elevations</span>, directed <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -185,6 +185,12 @@ on the resulting gradient estimate (see examples).</p>
     <tr>
       <th>d</th>
       <td><p>Vector of distances between points</p></td>
+    </tr>
+    <tr>
+      <th>directed</th>
+      <td><p>Should the value be directed? <code>FALSE</code> by default.
+If <code>TRUE</code> the result will be negative when it represents a downslope
+(when the end point is lower than the start point).</p></td>
     </tr>
     </table>
 
@@ -202,9 +208,9 @@ a steep gradient of 8%.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>5</span>, <span class='fl'>9</span><span class='op'>)</span>
-<span class='va'>elevations</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>)</span> <span class='op'>/</span> <span class='fl'>10</span>
+<span class='va'>elevations</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>3</span>, <span class='fl'>0</span><span class='op'>)</span> <span class='op'>/</span> <span class='fl'>10</span> <span class='co'># downward slope overall</span>
 <span class='fu'>slope_vector</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>elevations</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1]  0.05  0.00  0.20 -0.10 -0.05</div><div class='input'><span class='va'>m</span> <span class='op'>=</span> <span class='fu'>sf</span><span class='fu'>::</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_coordinates.html'>st_coordinates</a></span><span class='op'>(</span><span class='va'>lisbon_road_segment</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1]  0.050  0.000  0.200 -0.100 -0.075</div><div class='input'><span class='va'>m</span> <span class='op'>=</span> <span class='fu'>sf</span><span class='fu'>::</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_coordinates.html'>st_coordinates</a></span><span class='op'>(</span><span class='va'>lisbon_road_segment</span><span class='op'>)</span>
 <span class='va'>d</span> <span class='op'>=</span> <span class='fu'><a href='sequential_dist.html'>sequential_dist</a></span><span class='op'>(</span><span class='va'>m</span>, lonlat <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='va'>elevations</span> <span class='op'>=</span> <span class='fu'><a href='elevation_extract.html'>elevation_extract</a></span><span class='op'>(</span><span class='va'>m</span>, <span class='va'>dem_lisbon_raster</span><span class='op'>)</span>
 <span class='fu'>slope_distance</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>elevations</span><span class='op'>)</span>
@@ -212,8 +218,11 @@ a steep gradient of 8%.</p>
 #&gt;  [6] -0.062426272 -0.123580541  0.033705378  0.004292243 -0.040360003
 #&gt; [11] -0.151671893 -0.182367906  0.409246854 -0.034463974 -0.098406640
 #&gt; [16] -0.161798173  0.076261379  0.100654228</div><div class='input'><span class='fu'>slope_distance_mean</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>elevations</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.09283052</div><div class='input'><span class='fu'>slope_distance_mean</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>elevations</span>, directed <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] -0.09283052</div><div class='input'><span class='fu'>slope_distance_mean</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rev.html'>rev</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rev.html'>rev</a></span><span class='op'>(</span><span class='va'>elevations</span><span class='op'>)</span>, directed <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 0.09283052</div><div class='input'><span class='fu'>slope_distance_weighted</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>elevations</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.09501323</div></pre>
+</div><div class='output co'>#&gt; [1] 0.09501323</div><div class='input'><span class='fu'>slope_distance_weighted</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>elevations</span>, directed <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] -0.09501323</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

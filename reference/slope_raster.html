@@ -151,7 +151,8 @@ It returns the average gradient of each route feature.</p>
   lonlat <span class='op'>=</span> <span class='fu'>sf</span><span class='fu'>::</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_is_longlat.html'>st_is_longlat</a></span><span class='op'>(</span><span class='va'>routes</span><span class='op'>)</span>,
   method <span class='op'>=</span> <span class='st'>"bilinear"</span>,
   fun <span class='op'>=</span> <span class='va'>slope_matrix_weighted</span>,
-  terra <span class='op'>=</span> <span class='fu'>has_terra</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='fu'>methods</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/methods/is.html'>is</a></span><span class='op'>(</span><span class='va'>dem</span>, <span class='st'>"SpatRaster"</span><span class='op'>)</span>
+  terra <span class='op'>=</span> <span class='fu'>has_terra</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='fu'>methods</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/methods/is.html'>is</a></span><span class='op'>(</span><span class='va'>dem</span>, <span class='st'>"SpatRaster"</span><span class='op'>)</span>,
+  directed <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -187,6 +188,12 @@ datasets. Default: <code>"bilinear"</code>.</p></td>
       <td><p>Should the <code>terra</code> package be used?
 <code>TRUE</code> by default if the package is installed <em>and</em>
 if <code>dem</code> is of class <code>SpatRast</code></p></td>
+    </tr>
+    <tr>
+      <th>directed</th>
+      <td><p>Should the value be directed? <code>FALSE</code> by default.
+If <code>TRUE</code> the result will be negative when it represents a downslope
+(when the end point is lower than the start point).</p></td>
     </tr>
     </table>
 
