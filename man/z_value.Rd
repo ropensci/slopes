@@ -7,6 +7,9 @@
 \alias{z_mean}
 \alias{z_max}
 \alias{z_min}
+\alias{z_elevation_change_start_end}
+\alias{z_direction}
+\alias{z_cumulative_difference}
 \title{Calculate summary values for 'Z' elevation attributes}
 \usage{
 z_value(x)
@@ -20,6 +23,12 @@ z_mean(x)
 z_max(x)
 
 z_min(x)
+
+z_elevation_change_start_end(x)
+
+z_direction(x)
+
+z_cumulative_difference(x)
 }
 \arguments{
 \item{x}{An \code{sfc} object with 'XYZ' coordinates}
@@ -40,4 +49,7 @@ xy = slopes::lisbon_route
 try(z_value(xy)) # error message
 z_start(x)
 z_end(x)
+z_direction(x)
+z_elevation_change_start_end(x)
+z_direction(x)
 }

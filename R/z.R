@@ -15,6 +15,10 @@
 #' try(z_value(xy)) # error message
 #' z_start(x)
 #' z_end(x)
+#' z_direction(x)
+#' z_elevation_change_start_end(x)
+#' z_direction(x)
+#' z_cumulative_difference(x)
 z_value = function(x) {
   coords = sf::st_coordinates(x)
   if(!"Z" %in% colnames(coords)) {
@@ -67,6 +71,20 @@ z_min = function(x) {
   }
   min(coords[, "Z"], na.rm = TRUE)
 }
+#' @rdname z_value
+#' @export
+z_elevation_change_start_end = function(x) {
+  z_end(x) - z_start(x)
+}
+
+#' @rdname z_value
+#' @export
 z_direction = function(x) {
-  # ...
+  sign(z_elevation_change_start_end(x))
+}
+
+#' @rdname z_value
+#' @export
+z_cumulative_difference = function(x) {
+  sum(abs(diff(z_value(x))))
 }
