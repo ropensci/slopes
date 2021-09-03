@@ -15,8 +15,10 @@
 #'
 #' @source \url{https://github.com/rspatial/terra/issues/29}
 #' @examples
+#' library(sf)
+#' library(raster)
 #' names(dem_lisbon_raster)
-#' raster::plot(dem_lisbon_raster)
+#' plot(dem_lisbon_raster)
 #' plot(lisbon_road_network["Avg_Slope"], add = TRUE)
 "dem_lisbon_raster"
 

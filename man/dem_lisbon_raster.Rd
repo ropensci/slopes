@@ -27,8 +27,10 @@ The dataset was released as an open access dataset with permission from the
 University of Lisbon to support this project.
 }
 \examples{
+library(sf)
+library(raster)
 names(dem_lisbon_raster)
-raster::plot(dem_lisbon_raster)
+plot(dem_lisbon_raster)
 plot(lisbon_road_network["Avg_Slope"], add = TRUE)
 }
 \keyword{datasets}
