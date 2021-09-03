@@ -62,4 +62,6 @@ routes = lisbon_road_network[1:3, ]
 dem = dem_lisbon_raster
 (s = slope_raster(routes, dem))
 cor(routes$Avg_Slope, s)
+slope_raster(routes, dem, directed = TRUE)
+slope_raster(sf::st_reverse(routes), dem, directed = TRUE)
 }

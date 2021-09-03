@@ -255,6 +255,14 @@ slope_raster = function(
 
 #' Extract slopes from xyz data frame or sf objects
 #'
+#' The function takes a sf object with 'XYZ' coordinates and returns a vector
+#' of numeric values representing the average slope of each linestring in the
+#' sf data frame input.
+#'
+#' The default function to calculate the mean slope is `slope_matrix_weighted()`.
+#' You can also use `slope_matrix_mean()` from the package or any other
+#' function that takes the same inputs as these functions not in the package.
+#'
 #' @param route_xyz An sf object with x, y, z dimensions
 #' @param lonlat Are the coordinates in lon/lat order? TRUE by default
 #' @inheritParams slope_raster
@@ -264,7 +272,9 @@ slope_raster = function(
 #' @examples
 #' route_xyz = lisbon_road_segment_3d
 #' slope_xyz(route_xyz, lonlat = FALSE)
+#' slope_xyz(route_xyz$geom, lonlat = FALSE)
 #' slope_xyz(route_xyz, lonlat = FALSE, directed = TRUE)
+#' slope_xyz(route_xyz, lonlat = FALSE, fun = slope_matrix_mean)
 slope_xyz = function(
   route_xyz,
   fun = slope_matrix_weighted,

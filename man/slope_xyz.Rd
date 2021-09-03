@@ -28,10 +28,19 @@ A vector of slopes equal in length to the number simple features
 (rows representing linestrings) in the input object.
 }
 \description{
-Extract slopes from xyz data frame or sf objects
+The function takes a sf object with 'XYZ' coordinates and returns a vector
+of numeric values representing the average slope of each linestring in the
+sf data frame input.
+}
+\details{
+The default function to calculate the mean slope is \code{slope_matrix_weighted()}.
+You can also use \code{slope_matrix_mean()} from the package or any other
+function that takes the same inputs as these functions not in the package.
 }
 \examples{
 route_xyz = lisbon_road_segment_3d
 slope_xyz(route_xyz, lonlat = FALSE)
+slope_xyz(route_xyz$geom, lonlat = FALSE)
 slope_xyz(route_xyz, lonlat = FALSE, directed = TRUE)
+slope_xyz(route_xyz, lonlat = FALSE, fun = slope_matrix_mean)
 }
