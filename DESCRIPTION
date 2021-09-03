@@ -9,17 +9,19 @@ Authors@R: c(
     person("Rosa", "Félix", email = "rosamfelix@tecnico.ulisboa.pt", role = c("aut"), 
       comment = c(ORCID = "0000-0002-5642-6006"))
     )
-Description: Functions and example data to support research into
-  'longitudinal gradient' (slope) of linear geographic entities, as defined in the context of rivers
-  by Cohen et al. (2018) <doi:10.1016/j.jhydrol.2018.06.066>.
-  The package was initially developed to research road slopes but has also been
-  used to calculate and visualise slopes of rivers and, using an open dataset
-  published by Javier Ariza-López et al. (2019) <doi:10.1038/s41597-019-0147-x>, trajectories representing
-  movement on roads.
+Description: Functions and example data to support research into the
+  slope (also known as longitudinal gradient or steepness)
+  of linear geographic entities such as roads <doi:10.1038/s41597-019-0147-x>
+  and rivers <doi:10.1016/j.jhydrol.2018.06.066>.
+  The package was initially developed to calculate the steepness of street segments
+  but can be used to calculate steepness of any linear feature that can be
+  represented as LINESTRING geometries in the 'sf' class system.
   The package takes two main types of input data for slope calculation: vector geographic
   objects representing linear features, and raster geographic objects with elevation values
   (which can be downloaded using functionality in the package)
   representing a continuous terrain surface.
+  Where no raster object is provided the package attempts to download elevation
+  data using the 'ceramic' package.
 License: GPL-3
 URL: https://github.com/itsleeds/slopes/, https://itsleeds.github.io/slopes/
 BugReports: https://github.com/itsleeds/slopes/issues
