@@ -421,18 +421,11 @@ elevation_add = function(
     m_xyz = cbind(m[, 1:2], z)
   }
   n = nrow(routes)
-
-  if(n == 1) {
-    rgeom3d_line = sf::st_linestring(m_xyz)
-    rgeom3d_sfc = sf::st_sfc(rgeom3d_line, crs = sf::st_crs(routes))
-    sf::st_geometry(routes) = rgeom3d_sfc
-  } else {
-    linestrings = lapply(seq(n), function(i){
-      rgeom3d_line = sf::st_linestring(m_xyz[m[, 3] == i, ])
-    })
-    rgeom3d_sfc = sf::st_sfc(linestrings, crs = sf::st_crs(routes))
-    sf::st_geometry(routes) = rgeom3d_sfc
-  }
+  linestrings = lapply(seq(n), function(i){
+    rgeom3d_line = sf::st_linestring(m_xyz[m[, 3] == i, ])
+  })
+  rgeom3d_sfc = sf::st_sfc(linestrings, crs = sf::st_crs(routes))
+  sf::st_geometry(routes) = rgeom3d_sfc
   routes
 }
 
