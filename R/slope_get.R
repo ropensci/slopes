@@ -29,7 +29,7 @@
 #' class(e)
 #' e
 #' plot(e)
-#' plot(sf::st_geometry(routes), add = TRUE)
+#' plot(st_geometry(routes), add = TRUE)
 #' }
 elevation_get = function(routes, ...) {
   if(requireNamespace("ceramic")) {

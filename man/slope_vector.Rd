@@ -58,7 +58,8 @@ on the resulting gradient estimate (see examples).
 x = c(0, 2, 3, 4, 5, 9)
 elevations = c(1, 2, 2, 4, 3, 0) / 10 # downward slope overall
 slope_vector(x, elevations)
-m = sf::st_coordinates(lisbon_road_segment)
+library(sf)
+m = st_coordinates(lisbon_road_segment)
 d = sequential_dist(m, lonlat = FALSE)
 elevations = elevation_extract(m, dem_lisbon_raster)
 slope_distance(d, elevations)

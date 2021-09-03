@@ -61,8 +61,9 @@ A plot showing the elevation profile associated with a linestring.
 Plot a digital elevation profile based on xyz data
 }
 \examples{
+library(sf)
 route_xyz = lisbon_road_segment_3d
-m = sf::st_coordinates(route_xyz)
+m = st_coordinates(route_xyz)
 d = cumsum(sequential_dist(m, lonlat = FALSE))
 d = c(0, d)
 z = m[, 3]

@@ -41,6 +41,6 @@ e = elevation_get(routes)
 class(e)
 e
 plot(e)
-plot(sf::st_geometry(routes), add = TRUE)
+plot(st_geometry(routes), add = TRUE)
 }
 }

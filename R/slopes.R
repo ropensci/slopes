@@ -38,7 +38,8 @@
 #' x = c(0, 2, 3, 4, 5, 9)
 #' elevations = c(1, 2, 2, 4, 3, 0) / 10 # downward slope overall
 #' slope_vector(x, elevations)
-#' m = sf::st_coordinates(lisbon_road_segment)
+#' library(sf)
+#' m = st_coordinates(lisbon_road_segment)
 #' d = sequential_dist(m, lonlat = FALSE)
 #' elevations = elevation_extract(m, dem_lisbon_raster)
 #' slope_distance(d, elevations)
@@ -226,7 +227,9 @@ slope_matrices = function(m_xyz_split, fun = slope_matrix_weighted, ...) {
 #' (s = slope_raster(routes, dem))
 #' cor(routes$Avg_Slope, s)
 #' slope_raster(routes, dem, directed = TRUE)
-#' slope_raster(sf::st_reverse(routes), dem, directed = TRUE)
+#' # Demonstrate that reverse routes have the opposite directed slope
+#' library(sf)
+#' slope_raster(st_reverse(routes), dem, directed = TRUE)
 slope_raster = function(
   routes,
   dem,
@@ -381,9 +384,10 @@ elevation_extract = function(
 #' routes = lisbon_road_network[204, ]
 #' dem = dem_lisbon_raster
 #' (r3d = elevation_add(routes, dem))
-#' sf::st_z_range(routes)
-#' sf::st_z_range(r3d)
-#' plot(sf::st_coordinates(r3d)[, 3])
+#' library(sf)
+#' st_z_range(routes)
+#' st_z_range(r3d)
+#' plot(st_coordinates(r3d)[, 3])
 #' plot_slope(r3d)
 #' \donttest{
 #' # Get elevation data (requires internet connection and API key):

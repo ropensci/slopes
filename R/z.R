@@ -9,7 +9,7 @@
 #' @export
 #' @examples
 #' x = slopes::lisbon_route_3d
-#' sf::st_geometry(x)
+#' x
 #' z_value(x)[1:5]
 #' xy = slopes::lisbon_route
 #' try(z_value(xy)) # error message
