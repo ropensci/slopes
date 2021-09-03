@@ -58,12 +58,12 @@ geometries to \code{LINESTRING}s as follows:
 \code{r_linestring = sf::st_cast(routes, "LINESTRING")}.
 }
 \examples{
+library(sf)
 routes = lisbon_road_network[1:3, ]
 dem = dem_lisbon_raster
 (s = slope_raster(routes, dem))
 cor(routes$Avg_Slope, s)
 slope_raster(routes, dem, directed = TRUE)
 # Demonstrate that reverse routes have the opposite directed slope
-library(sf)
 slope_raster(st_reverse(routes), dem, directed = TRUE)
 }

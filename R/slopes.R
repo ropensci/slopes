@@ -222,13 +222,13 @@ slope_matrices = function(m_xyz_split, fun = slope_matrix_weighted, ...) {
 #'   (rows representing linestrings) in the input object.
 #' @export
 #' @examples
+#' library(sf)
 #' routes = lisbon_road_network[1:3, ]
 #' dem = dem_lisbon_raster
 #' (s = slope_raster(routes, dem))
 #' cor(routes$Avg_Slope, s)
 #' slope_raster(routes, dem, directed = TRUE)
 #' # Demonstrate that reverse routes have the opposite directed slope
-#' library(sf)
 #' slope_raster(st_reverse(routes), dem, directed = TRUE)
 slope_raster = function(
   routes,
