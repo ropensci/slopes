@@ -12,7 +12,7 @@ slope_xyz(
 )
 }
 \arguments{
-\item{route_xyz}{An sf object with x, y, z dimensions}
+\item{route_xyz}{An \code{sf} or \code{sfc} object with \code{XYZ} coordinate dimensions}
 
 \item{fun}{The slope function to calculate per route,
 \code{slope_matrix_weighted} by default.}

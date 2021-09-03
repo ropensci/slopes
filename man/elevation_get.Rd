@@ -8,7 +8,7 @@ elevation_get(routes, ..., output_format = "raster")
 }
 \arguments{
 \item{routes}{Routes, the gradients of which are to be calculated.
-The object must be of class \code{sf} with \code{LINESTRING} geometries.}
+The object must be of class \code{sf} or \code{sfc} with \code{LINESTRING} geometries.}
 
 \item{...}{Options passed to \code{cc_elevation()}}
 

@@ -16,7 +16,7 @@ slope_raster(
 }
 \arguments{
 \item{routes}{Routes, the gradients of which are to be calculated.
-The object must be of class \code{sf} with \code{LINESTRING} geometries.}
+The object must be of class \code{sf} or \code{sfc} with \code{LINESTRING} geometries.}
 
 \item{dem}{Raster overlapping with \code{routes} and values representing elevations}
 

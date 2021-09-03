@@ -209,7 +209,7 @@ slope_matrices = function(m_xyz_split, fun = slope_matrix_weighted, ...) {
 #' @param lonlat Are the routes provided in longitude/latitude coordinates?
 #'   By default, value is from the CRS of the routes (`sf::st_is_longlat(routes)`).
 #' @param routes Routes, the gradients of which are to be calculated.
-#'   The object must be of class `sf` with `LINESTRING` geometries.
+#'   The object must be of class `sf` or `sfc` with `LINESTRING` geometries.
 #' @param dem Raster overlapping with `routes` and values representing elevations
 #' @param method The method of estimating elevation at points,
 #'   passed to the `extract` function for extracting values from raster
@@ -266,7 +266,7 @@ slope_raster = function(
 #' You can also use `slope_matrix_mean()` from the package or any other
 #' function that takes the same inputs as these functions not in the package.
 #'
-#' @param route_xyz An sf object with x, y, z dimensions
+#' @param route_xyz An `sf` or `sfc` object with `XYZ` coordinate dimensions
 #' @param lonlat Are the coordinates in lon/lat order? TRUE by default
 #' @inheritParams slope_raster
 #' @return A vector of slopes equal in length to the number simple features
@@ -401,11 +401,12 @@ elevation_extract = function(
 #' plot_slope(r3d_get)
 #' }
 elevation_add = function(
- routes,
+  routes,
   dem = NULL,
   method = "bilinear",
   terra = has_terra() && methods::is(dem, "SpatRaster")
   ) {
+  stopifnotsf(routes)
   if(is.null(dem)) {
     dem = elevation_get(routes)
     r_original = routes # create copy to deal with projection issues
@@ -444,4 +445,10 @@ stop_is_not_linestring = function(x) {
   stop(
     "Only works with LINESTRINGs. Try converting with sf::st_cast() first."
   )
+}
+
+stopifnotsf = function(x, arg_name = "routes") {
+  if(!is(x, "sf")) {
+    stop(arg_name, " is not an sf object. Try again with an sf object.")
+  }
 }
