@@ -12,17 +12,19 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Calculate Slopes of Roads, Rivers and Trajectories">
-<meta property="og:description" content="Functions and example data to support research into
-  longitudinal gradient (slope) of linear geographic entities, as defined in the context of rivers
-  by Cohen et al. (2018) &lt;doi:10.1016/j.jhydrol.2018.06.066&gt;.
-  The package was initially developed to research road slopes but has also been
-  used to calculate and visualise slopes of rivers and, using an open dataset
-  published by Javier Ariza-López et al. (2019) &lt;doi:10.1038/s41597-019-0147-x&gt;, trajectories representing
-  movement on roads.
+<meta property="og:description" content="Functions and example data to support research into the
+  slope (also known as longitudinal gradient or steepness)
+  of linear geographic entities such as roads &lt;doi:10.1038/s41597-019-0147-x&gt;
+  and rivers &lt;doi:10.1016/j.jhydrol.2018.06.066&gt;.
+  The package was initially developed to calculate the steepness of street segments
+  but can be used to calculate steepness of any linear feature that can be
+  represented as LINESTRING geometries in the sf class system.
   The package takes two main types of input data for slope calculation: vector geographic
   objects representing linear features, and raster geographic objects with elevation values
   (which can be downloaded using functionality in the package)
-  representing a continuous terrain surface.">
+  representing a continuous terrain surface.
+  Where no raster object is provided the package attempts to download elevation
+  data using the ceramic package.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
