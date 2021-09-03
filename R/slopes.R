@@ -33,14 +33,17 @@
 #' @export
 #' @examples
 #' x = c(0, 2, 3, 4, 5, 9)
-#' elevations = c(1, 2, 2, 4, 3, 1) / 10
+#' elevations = c(1, 2, 2, 4, 3, 0) / 10 # downward slope overall
 #' slope_vector(x, elevations)
 #' m = sf::st_coordinates(lisbon_road_segment)
 #' d = sequential_dist(m, lonlat = FALSE)
 #' elevations = elevation_extract(m, dem_lisbon_raster)
 #' slope_distance(d, elevations)
 #' slope_distance_mean(d, elevations)
+#' slope_distance_mean(d, elevations, directed = TRUE)
+#' slope_distance_mean(rev(d), rev(elevations), directed = TRUE)
 #' slope_distance_weighted(d, elevations)
+#' slope_distance_weighted(d, elevations, directed = TRUE)
 slope_vector = function(x, elevations) {
   d = diff(x)
   e_change = diff(elevations)
@@ -54,15 +57,24 @@ slope_distance = function(d, elevations) {
 }
 #' @rdname slope_vector
 #' @export
-slope_distance_mean = function(d, elevations) {
+slope_distance_mean = function(d, elevations, directed = FALSE) {
   e_change = diff(elevations)
-  mean(abs(e_change) / d)
+  if(directed) {
+    mean(abs(e_change) / d) * sign(tail(elevations, 1) - head(elevations, 1))
+  } else {
+    mean(abs(e_change) / d)
+  }
 }
 #' @rdname slope_vector
 #' @export
-slope_distance_weighted = function(d, elevations) {
+slope_distance_weighted = function(d, elevations, directed = FALSE) {
   e_change = diff(elevations)
-  stats::weighted.mean(abs(e_change) / d, d)
+  if(directed) {
+    stats::weighted.mean(abs(e_change) / d, d) *
+      sign(tail(elevations, 1) - head(elevations, 1))
+  } else {
+    stats::weighted.mean(abs(e_change) / d, d)
+  }
 }
 #' Calculate the gradient of line segments from a 3D matrix of coordinates
 #'
