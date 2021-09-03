@@ -8,9 +8,9 @@
 \usage{
 slope_matrix(m, elevations = m[, 3], lonlat = TRUE)
 
-slope_matrix_mean(m, elevations = m[, 3], lonlat = TRUE)
+slope_matrix_mean(m, elevations = m[, 3], lonlat = TRUE, directed = FALSE)
 
-slope_matrix_weighted(m, elevations = m[, 3], lonlat = TRUE)
+slope_matrix_weighted(m, elevations = m[, 3], lonlat = TRUE, directed = FALSE)
 }
 \arguments{
 \item{m}{Matrix containing coordinates and elevations.
@@ -26,6 +26,10 @@ Default value: \code{m[, 3]}, meaning the 'z' coordinate in a matrix of
 coordinates.}
 
 \item{lonlat}{Are the coordinates in lon/lat (geographic) coordinates? TRUE by default.}
+
+\item{directed}{Should the value be directed? \code{FALSE} by default.
+If \code{TRUE} the result will be negative when it represents a downslope
+(when the end point is lower than the start point).}
 }
 \value{
 A vector of slope gradients associated with each linear element
@@ -44,10 +48,15 @@ Calculate the gradient of line segments from a 3D matrix of coordinates
 \examples{
 x = c(0, 2, 3, 4, 5, 9)
 y = c(0, 0, 0, 0, 0, 9)
-z = c(1, 2, 2, 4, 3, 1) / 10
+z = c(1, 2, 2, 4, 3, 0) / 10
 m = cbind(x, y, z)
 slope_matrix_weighted(m, lonlat = FALSE)
+slope_matrix_weighted(m, lonlat = FALSE, directed = TRUE)
+# 0 value returned if no change in elevation:
+slope_matrix_weighted(m,lonlat = FALSE, directed = TRUE,
+  elevations = c(1, 2, 2, 4, 3, 1))
 slope_matrix_mean(m, lonlat = FALSE)
+slope_matrix_mean(m, lonlat = FALSE, directed = TRUE)
 plot(x, z, ylim = c(-0.5, 0.5), type = "l")
 (gx = slope_vector(x, z))
 (gxy = slope_matrix(m, lonlat = FALSE))

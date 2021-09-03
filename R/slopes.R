@@ -21,6 +21,9 @@
 #' @param x Vector of locations
 #' @param d Vector of distances between points
 #' @param elevations Elevations in same units as x (assumed to be metres)
+#' @param directed Should the value be directed? `FALSE` by default.
+#'   If `TRUE` the result will be negative when it represents a downslope
+#'   (when the end point is lower than the start point).
 #' @return A vector of slope gradients associated with each linear element
 #'   (each line between consecutive vertices) associated with linear features.
 #'   Returned values for `slope_distance_mean()` and
@@ -60,7 +63,8 @@ slope_distance = function(d, elevations) {
 slope_distance_mean = function(d, elevations, directed = FALSE) {
   e_change = diff(elevations)
   if(directed) {
-    mean(abs(e_change) / d) * sign(tail(elevations, 1) - head(elevations, 1))
+    mean(abs(e_change) / d) *
+      sign(utils::tail(elevations, 1) - utils::head(elevations, 1))
   } else {
     mean(abs(e_change) / d)
   }
@@ -71,7 +75,7 @@ slope_distance_weighted = function(d, elevations, directed = FALSE) {
   e_change = diff(elevations)
   if(directed) {
     stats::weighted.mean(abs(e_change) / d, d) *
-      sign(tail(elevations, 1) - head(elevations, 1))
+      sign(utils::tail(elevations, 1) - utils::head(elevations, 1))
   } else {
     stats::weighted.mean(abs(e_change) / d, d)
   }
@@ -103,10 +107,15 @@ slope_distance_weighted = function(d, elevations, directed = FALSE) {
 #' @examples
 #' x = c(0, 2, 3, 4, 5, 9)
 #' y = c(0, 0, 0, 0, 0, 9)
-#' z = c(1, 2, 2, 4, 3, 1) / 10
+#' z = c(1, 2, 2, 4, 3, 0) / 10
 #' m = cbind(x, y, z)
 #' slope_matrix_weighted(m, lonlat = FALSE)
+#' slope_matrix_weighted(m, lonlat = FALSE, directed = TRUE)
+#' # 0 value returned if no change in elevation:
+#' slope_matrix_weighted(m,lonlat = FALSE, directed = TRUE,
+#'   elevations = c(1, 2, 2, 4, 3, 1))
 #' slope_matrix_mean(m, lonlat = FALSE)
+#' slope_matrix_mean(m, lonlat = FALSE, directed = TRUE)
 #' plot(x, z, ylim = c(-0.5, 0.5), type = "l")
 #' (gx = slope_vector(x, z))
 #' (gxy = slope_matrix(m, lonlat = FALSE))
@@ -123,17 +132,27 @@ slope_matrix = function(m, elevations = m[, 3], lonlat = TRUE) {
 }
 #' @rdname slope_matrix
 #' @export
-slope_matrix_mean = function(m, elevations = m[, 3], lonlat = TRUE) {
+slope_matrix_mean = function(m, elevations = m[, 3], lonlat = TRUE, directed = FALSE) {
   g1 = slope_matrix(m, elevations = elevations, lonlat = lonlat)
   d = sequential_dist(m = m, lonlat = lonlat)
-  mean(abs(g1), na.rm = TRUE)
+  if(directed) {
+    mean(abs(g1), na.rm = TRUE) *
+      sign(utils::tail(elevations, 1) - utils::head(elevations, 1))
+  } else {
+    mean(abs(g1), na.rm = TRUE)
+  }
 }
 #' @rdname slope_matrix
 #' @export
-slope_matrix_weighted = function(m, elevations = m[, 3], lonlat = TRUE) {
+slope_matrix_weighted = function(m, elevations = m[, 3], lonlat = TRUE, directed = FALSE) {
   g1 = slope_matrix(m, elevations = elevations, lonlat = lonlat)
   d = sequential_dist(m = m, lonlat = lonlat)
-  stats::weighted.mean(abs(g1), d, na.rm = TRUE)
+  if(directed) {
+    stats::weighted.mean(abs(g1), d, na.rm = TRUE) *
+      sign(utils::tail(elevations, 1) - utils::head(elevations, 1))
+  } else {
+    stats::weighted.mean(abs(g1), d, na.rm = TRUE)
+  }
 }
 
 #' Calculate the sequential distances between sequential coordinate pairs

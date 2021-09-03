@@ -52,4 +52,5 @@ z_end(x)
 z_direction(x)
 z_elevation_change_start_end(x)
 z_direction(x)
+z_cumulative_difference(x)
 }

@@ -11,9 +11,9 @@ slope_vector(x, elevations)
 
 slope_distance(d, elevations)
 
-slope_distance_mean(d, elevations)
+slope_distance_mean(d, elevations, directed = FALSE)
 
-slope_distance_weighted(d, elevations)
+slope_distance_weighted(d, elevations, directed = FALSE)
 }
 \arguments{
 \item{x}{Vector of locations}
@@ -21,6 +21,10 @@ slope_distance_weighted(d, elevations)
 \item{elevations}{Elevations in same units as x (assumed to be metres)}
 
 \item{d}{Vector of distances between points}
+
+\item{directed}{Should the value be directed? \code{FALSE} by default.
+If \code{TRUE} the result will be negative when it represents a downslope
+(when the end point is lower than the start point).}
 }
 \value{
 A vector of slope gradients associated with each linear element
@@ -52,12 +56,15 @@ on the resulting gradient estimate (see examples).
 }
 \examples{
 x = c(0, 2, 3, 4, 5, 9)
-elevations = c(1, 2, 2, 4, 3, 1) / 10
+elevations = c(1, 2, 2, 4, 3, 0) / 10 # downward slope overall
 slope_vector(x, elevations)
 m = sf::st_coordinates(lisbon_road_segment)
 d = sequential_dist(m, lonlat = FALSE)
 elevations = elevation_extract(m, dem_lisbon_raster)
 slope_distance(d, elevations)
 slope_distance_mean(d, elevations)
+slope_distance_mean(d, elevations, directed = TRUE)
+slope_distance_mean(rev(d), rev(elevations), directed = TRUE)
 slope_distance_weighted(d, elevations)
+slope_distance_weighted(d, elevations, directed = TRUE)
 }
