@@ -8,7 +8,7 @@ sequential_dist(m, lonlat = TRUE)
 }
 \arguments{
 \item{m}{Matrix containing coordinates and elevations.
-The matrix should have three columns: x, y, and z. Typically
+The matrix should have three columns: x, y, and z, in that order. Typically
 these correspond to location in the West-East, South-North, and vertical
 elevation axes respectively.
 In data with geographic coordinates, Z values are assumed to be in

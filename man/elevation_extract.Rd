@@ -12,13 +12,8 @@ elevation_extract(
 )
 }
 \arguments{
-\item{m}{Matrix containing coordinates and elevations.
-The matrix should have three columns: x, y, and z. Typically
-these correspond to location in the West-East, South-North, and vertical
-elevation axes respectively.
-In data with geographic coordinates, Z values are assumed to be in
-metres. In data with projected coordinates, Z values are assumed to have
-the same units as the X and Y coordinates.}
+\item{m}{Matrix containing coordinates and elevations or an sf
+object representing a linear feature.}
 
 \item{dem}{Raster overlapping with \code{routes} and values representing elevations}
 
@@ -60,8 +55,9 @@ for descriptions of alternative elevation interpolation and extrapolation
 algorithms.
 }
 \examples{
-m = sf::st_coordinates(lisbon_road_network[1, ])
 dem = dem_lisbon_raster
+elevation_extract(lisbon_road_network[1, ], dem)
+m = sf::st_coordinates(lisbon_road_network[1, ])
 elevation_extract(m, dem)
 elevation_extract(m, dem, method = "simple")
 # Test with terra (requires internet connection):

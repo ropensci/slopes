@@ -87,7 +87,7 @@ slope_distance_weighted = function(d, elevations, directed = FALSE) {
 #'   Default value: `m[, 3]`, meaning the 'z' coordinate in a matrix of
 #'   coordinates.
 #' @param m Matrix containing coordinates and elevations.
-#'   The matrix should have three columns: x, y, and z. Typically
+#'   The matrix should have three columns: x, y, and z, in that order. Typically
 #'   these correspond to location in the West-East, South-North, and vertical
 #'   elevation axes respectively.
 #'   In data with geographic coordinates, Z values are assumed to be in
@@ -336,13 +336,16 @@ slope_xyz = function(
 #'   Fourth International Conference on GeoComputation, Fredericksburg,
 #'   VA, USA. 1999.
 #'
+#' @param m Matrix containing coordinates and elevations or an sf
+#'   object representing a linear feature.
 #' @inheritParams slope_raster
 #' @inheritParams slope_matrix
 #' @return A vector of elevation values.
 #' @export
 #' @examples
-#' m = sf::st_coordinates(lisbon_road_network[1, ])
 #' dem = dem_lisbon_raster
+#' elevation_extract(lisbon_road_network[1, ], dem)
+#' m = sf::st_coordinates(lisbon_road_network[1, ])
 #' elevation_extract(m, dem)
 #' elevation_extract(m, dem, method = "simple")
 #' # Test with terra (requires internet connection):
@@ -363,6 +366,9 @@ elevation_extract = function(
   method = "bilinear",
   terra = has_terra() && methods::is(dem, "SpatRaster")
   ) {
+  if(any(grepl(pattern = "sf", class(m)))) {
+    m = sf::st_coordinates(m)
+  }
   if(terra) {
     res = terra::extract(dem, m[, 1:2], method = method)[[1]]
   } else {
