@@ -21,6 +21,9 @@
 #' @param x Vector of locations
 #' @param d Vector of distances between points
 #' @param elevations Elevations in same units as x (assumed to be metres)
+#' @param directed Should the value be directed? `FALSE` by default.
+#'   If `TRUE` the result will be negative when it represents a downslope
+#'   (when the end point is lower than the start point).
 #' @return A vector of slope gradients associated with each linear element
 #'   (each line between consecutive vertices) associated with linear features.
 #'   Returned values for `slope_distance_mean()` and
@@ -33,14 +36,17 @@
 #' @export
 #' @examples
 #' x = c(0, 2, 3, 4, 5, 9)
-#' elevations = c(1, 2, 2, 4, 3, 1) / 10
+#' elevations = c(1, 2, 2, 4, 3, 0) / 10 # downward slope overall
 #' slope_vector(x, elevations)
 #' m = sf::st_coordinates(lisbon_road_segment)
 #' d = sequential_dist(m, lonlat = FALSE)
 #' elevations = elevation_extract(m, dem_lisbon_raster)
 #' slope_distance(d, elevations)
 #' slope_distance_mean(d, elevations)
+#' slope_distance_mean(d, elevations, directed = TRUE)
+#' slope_distance_mean(rev(d), rev(elevations), directed = TRUE)
 #' slope_distance_weighted(d, elevations)
+#' slope_distance_weighted(d, elevations, directed = TRUE)
 slope_vector = function(x, elevations) {
   d = diff(x)
   e_change = diff(elevations)
@@ -54,15 +60,25 @@ slope_distance = function(d, elevations) {
 }
 #' @rdname slope_vector
 #' @export
-slope_distance_mean = function(d, elevations) {
+slope_distance_mean = function(d, elevations, directed = FALSE) {
   e_change = diff(elevations)
-  mean(abs(e_change) / d)
+  if(directed) {
+    mean(abs(e_change) / d) *
+      sign(utils::tail(elevations, 1) - utils::head(elevations, 1))
+  } else {
+    mean(abs(e_change) / d)
+  }
 }
 #' @rdname slope_vector
 #' @export
-slope_distance_weighted = function(d, elevations) {
+slope_distance_weighted = function(d, elevations, directed = FALSE) {
   e_change = diff(elevations)
-  stats::weighted.mean(abs(e_change) / d, d)
+  if(directed) {
+    stats::weighted.mean(abs(e_change) / d, d) *
+      sign(utils::tail(elevations, 1) - utils::head(elevations, 1))
+  } else {
+    stats::weighted.mean(abs(e_change) / d, d)
+  }
 }
 #' Calculate the gradient of line segments from a 3D matrix of coordinates
 #'
@@ -91,10 +107,15 @@ slope_distance_weighted = function(d, elevations) {
 #' @examples
 #' x = c(0, 2, 3, 4, 5, 9)
 #' y = c(0, 0, 0, 0, 0, 9)
-#' z = c(1, 2, 2, 4, 3, 1) / 10
+#' z = c(1, 2, 2, 4, 3, 0) / 10
 #' m = cbind(x, y, z)
 #' slope_matrix_weighted(m, lonlat = FALSE)
+#' slope_matrix_weighted(m, lonlat = FALSE, directed = TRUE)
+#' # 0 value returned if no change in elevation:
+#' slope_matrix_weighted(m,lonlat = FALSE, directed = TRUE,
+#'   elevations = c(1, 2, 2, 4, 3, 1))
 #' slope_matrix_mean(m, lonlat = FALSE)
+#' slope_matrix_mean(m, lonlat = FALSE, directed = TRUE)
 #' plot(x, z, ylim = c(-0.5, 0.5), type = "l")
 #' (gx = slope_vector(x, z))
 #' (gxy = slope_matrix(m, lonlat = FALSE))
@@ -111,17 +132,27 @@ slope_matrix = function(m, elevations = m[, 3], lonlat = TRUE) {
 }
 #' @rdname slope_matrix
 #' @export
-slope_matrix_mean = function(m, elevations = m[, 3], lonlat = TRUE) {
+slope_matrix_mean = function(m, elevations = m[, 3], lonlat = TRUE, directed = FALSE) {
   g1 = slope_matrix(m, elevations = elevations, lonlat = lonlat)
   d = sequential_dist(m = m, lonlat = lonlat)
-  mean(abs(g1), na.rm = TRUE)
+  if(directed) {
+    mean(abs(g1), na.rm = TRUE) *
+      sign(utils::tail(elevations, 1) - utils::head(elevations, 1))
+  } else {
+    mean(abs(g1), na.rm = TRUE)
+  }
 }
 #' @rdname slope_matrix
 #' @export
-slope_matrix_weighted = function(m, elevations = m[, 3], lonlat = TRUE) {
+slope_matrix_weighted = function(m, elevations = m[, 3], lonlat = TRUE, directed = FALSE) {
   g1 = slope_matrix(m, elevations = elevations, lonlat = lonlat)
   d = sequential_dist(m = m, lonlat = lonlat)
-  stats::weighted.mean(abs(g1), d, na.rm = TRUE)
+  if(directed) {
+    stats::weighted.mean(abs(g1), d, na.rm = TRUE) *
+      sign(utils::tail(elevations, 1) - utils::head(elevations, 1))
+  } else {
+    stats::weighted.mean(abs(g1), d, na.rm = TRUE)
+  }
 }
 
 #' Calculate the sequential distances between sequential coordinate pairs
@@ -184,6 +215,7 @@ slope_matrices = function(m_xyz_split, fun = slope_matrix_weighted, ...) {
 #'   datasets. Default: `"bilinear"`.
 #' @param fun The slope function to calculate per route,
 #'   `slope_matrix_weighted` by default.
+#' @inheritParams slope_vector
 #' @importFrom methods is
 #' @return A vector of slopes equal in length to the number simple features
 #'   (rows representing linestrings) in the input object.
@@ -193,13 +225,16 @@ slope_matrices = function(m_xyz_split, fun = slope_matrix_weighted, ...) {
 #' dem = dem_lisbon_raster
 #' (s = slope_raster(routes, dem))
 #' cor(routes$Avg_Slope, s)
+#' slope_raster(routes, dem, directed = TRUE)
+#' slope_raster(sf::st_reverse(routes), dem, directed = TRUE)
 slope_raster = function(
   routes,
   dem,
   lonlat = sf::st_is_longlat(routes),
   method = "bilinear",
   fun = slope_matrix_weighted,
-  terra = has_terra() && methods::is(dem, "SpatRaster")
+  terra = has_terra() && methods::is(dem, "SpatRaster"),
+  directed = FALSE
   ) {
   if(is.na(lonlat)) {
     stop(
@@ -214,7 +249,7 @@ slope_raster = function(
   # colnames(m)
   z = elevation_extract(m, dem, method = method, terra = terra)
   m_xyz_df = data.frame(x = m[, "X"], y = m[, "Y"], z = z, L1 = m[, "L1"])
-  res = slope_xyz(m_xyz_df, fun = fun, lonlat = lonlat)
+  res = slope_xyz(m_xyz_df, fun = fun, lonlat = lonlat, directed = directed)
   res
 }
 
@@ -229,14 +264,25 @@ slope_raster = function(
 #' @examples
 #' route_xyz = lisbon_road_segment_3d
 #' slope_xyz(route_xyz, lonlat = FALSE)
-slope_xyz = function(route_xyz, fun = slope_matrix_weighted, lonlat = TRUE) {
+#' slope_xyz(route_xyz, lonlat = FALSE, directed = TRUE)
+slope_xyz = function(
+  route_xyz,
+  fun = slope_matrix_weighted,
+  lonlat = TRUE,
+  directed = FALSE
+  ) {
   if(inherits(route_xyz, "sf") | inherits(route_xyz, "sfc")) {
     lonlat = sf::st_is_longlat(route_xyz)
     route_xyz = as.data.frame(sf::st_coordinates(route_xyz))
   }
   if("L1" %in% colnames(route_xyz)) {
     m_xyz_split = split(x = route_xyz, f = route_xyz[, "L1"])
-    res = slope_matrices(m_xyz_split, lonlat = lonlat, fun = fun)
+    res = slope_matrices(
+      m_xyz_split,
+      lonlat = lonlat,
+      fun = fun,
+      directed = directed
+      )
   } else {
     # todo: add content here if data frame was generated by sfheaders
     # or another package that does not call id colums 'L1' by default
