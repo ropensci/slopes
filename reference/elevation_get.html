@@ -155,7 +155,7 @@ and in the
 <a href='https://itsleeds.github.io/slopes/articles/slopes.html'><code>slopes</code> vignette</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>elevation_get</span><span class='op'>(</span><span class='va'>routes</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>elevation_get</span><span class='op'>(</span><span class='va'>routes</span>, <span class='va'>...</span>, output_format <span class='op'>=</span> <span class='st'>"raster"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,6 +168,11 @@ The object must be of class <code>sf</code> with <code>LINESTRING</code> geometr
     <tr>
       <th>...</th>
       <td><p>Options passed to <code>cc_elevation()</code></p></td>
+    </tr>
+    <tr>
+      <th>output_format</th>
+      <td><p>What format to return the data in?
+Accepts <code>"raster"</code> (the default) and <code>"terra"</code>.</p></td>
     </tr>
     </table>
 
@@ -190,7 +195,8 @@ you can cache the data, as described in the package's
 <span class='va'>e</span> <span class='op'>=</span> <span class='fu'>elevation_get</span><span class='op'>(</span><span class='va'>routes</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Preparing to download: 6 tiles at zoom = 14 from 
 #&gt; https://api.mapbox.com/v4/mapbox.terrain-rgb/</div><div class='output co'>#&gt; <span class='error'>Error in curl::curl_download(url = api_query, outfile): HTTP error 401.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>e</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'e' not found</span></div><div class='input'><span class='va'>e</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'e' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/raster/man/projection.html'>crs</a></span><span class='op'>(</span><span class='va'>e</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'crs': object 'e' not found</span></div><div class='input'><span class='va'>e</span>
 </div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'e' not found</span></div><div class='input'><span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>e</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='error'>Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'e' not found</span></div><div class='input'><span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_geometry.html'>st_geometry</a></span><span class='op'>(</span><span class='va'>routes</span><span class='op'>)</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='error'>Error in plot.xy(xy.coords(x, y), type = type, ...): plot.new has not been called yet</span></div><div class='input'><span class='co'># }</span>
