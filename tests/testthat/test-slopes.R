@@ -14,6 +14,8 @@ test_that("slope_* functions work", {
 
   e = elevation_extract(m, dem_lisbon_raster)
   expect_identical(round(e[1:3], 2), c(92.31, 91.93, 91.60))
+  e = elevation_extract(lisbon_road_segment, dem_lisbon_raster)
+  expect_identical(round(e[1:3], 2), c(92.31, 91.93, 91.60))
   s = slope_distance(d, e)
   expect_identical(round(s[1:3], 3), c(-0.047, -0.041, -0.025))
 
@@ -32,8 +34,17 @@ test_that("slope_* functions work", {
   z = c(1, 2, 2, 4, 3, 1) / 10
   m = cbind(x, y, z)
   gxy = slope_matrix(m, lonlat = FALSE)
-  # dput(round(gxy, 3))
   expect_identical(round(gxy, 3), c(0.05, 0., 0.2, -0.1, -0.02))
+
+  gxy = slope_matrix_mean(m, lonlat = FALSE)
+  expect_identical(round(gxy, 3), 0.074)
+  gxy = slope_matrix_mean(m, lonlat = FALSE, directed = TRUE)
+  expect_identical(round(gxy, 3), 0.0) # not sure if that's right
+
+  gxy = slope_matrix_weighted(m, lonlat = FALSE)
+  expect_identical(round(gxy, 3), 0.04)
+  gxy = slope_matrix_weighted(m, lonlat = FALSE, directed = TRUE)
+  expect_identical(round(gxy, 3), 0.0) # not sure if that's right
 
   gxy = slope_matrix_weighted(m, lonlat = FALSE)
   expect_identical(round(gxy, 3), 0.04)
@@ -70,5 +81,7 @@ test_that("slope_* functions work", {
     ignore_attr = TRUE,
     tolerance = 10
     )
+
+  expect_error(slopes:::stopifnotsf(1))
 
 })
