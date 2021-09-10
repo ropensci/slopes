@@ -2,9 +2,11 @@
 #'
 #' A dataset containing elevation in and around Lisbon
 #' with a geographic resolution of 10m.
+#' The dataset is 200 pixels wide by 133 pixels high, covering
+#' 2.7 square kilometres of central Lisbon.
 #'
-#' The dataset orginates from This DEM was acquired by Instituto Superior
-#' Técnico (University of Lisbon) by 2012, covers all the Northern
+#' The dataset was acquired by Instituto Superior
+#' Técnico (University of Lisbon) in 2012, covers all the Northern
 #' Metropolitan Area of Lisbon, and has a 10m cell resolution,
 #' when projected at the official Portuguese EPSG: 3763 - TM06/ETRS89.
 #' The dataset was released as an open access dataset with permission from the
@@ -17,6 +19,8 @@
 #' @examples
 #' library(sf)
 #' library(raster)
+#' dim(dem_lisbon_raster)
+#' res(dem_lisbon_raster)
 #' names(dem_lisbon_raster)
 #' plot(dem_lisbon_raster)
 #' plot(lisbon_road_network["Avg_Slope"], add = TRUE)
@@ -27,11 +31,26 @@
 #' A dataset representing road segments in Lisbon,
 #'   with X, Y and Z (elevation) dimensions for each coordinate.
 #'
-#' @format An object of class `sf`
+#' The dataset covers 32 km of roads in central Lisbon, overlapping with the
+#' area covered by the `dem_lisbon_raster` dataset.
+#'
+#' @format An object of class `sf`, key variables of which include
+#' \describe{
+#'   \item{OBJECTID}{ID of the object}
+#'   \item{Z_Min}{The minimum elevation on the linear feature from ArcMAP}
+#'   \item{Z_Max}{The max elevation on the linear feature from ArcMAP}
+#'   \item{Z_Mean}{The mean elevation on the linear feature from ArcMAP}
+#'   \item{Slope_Min}{The minimum slope on the linear feature from ArcMAP}
+#'   \item{Slope_Max}{The max slope on the linear feature from ArcMAP}
+#'   \item{Slope_Mean}{The mean slope on the linear feature from ArcMAP}
+#'   \item{geom}{The geometry defining the LINESTRING component of the segment}
+#' }
 #' @source Produced by ESRI's
 #'  [3D Analyst extension](https://pro.arcgis.com/en/pro-app/help/analysis/)
 #' @examples
+#' library(sf)
 #' names(lisbon_road_network)
+#' sum(st_length(lisbon_road_network))
 #' plot(lisbon_road_network["Avg_Slope"])
 "lisbon_road_network"
 
@@ -43,14 +62,14 @@
 #'
 #' Different versions of this dataset are provided.
 #'
-#' The `lisbon_route` object has 1 row and 4 columns.
+#' The `lisbon_route` object has 1 row and 4 columns: geometry, ID,
+#'   length and whether or not a path was found.
 #'
 #' The `lisbon_route_xyz_mapbox` was created with:
 #' `lisbon_route_xyz_mapbox = elevation_add(lisbon_route)`.
 #'
 #' @format An object of class `sf`
-#' @source Produced by ESRI's
-#'  [3D Analyst extension](https://pro.arcgis.com/en/pro-app/help/analysis/)
+#' @source See the `lisbon_route.R` script in `data-raw`
 #' @aliases lisbon_route_3d lisbon_route_xyz_mapbox
 #' @examples
 #' lisbon_route
@@ -85,14 +104,17 @@
 #'
 #' Simple feature collection with 30 features and 32 fields
 #'
-#' See `data-raw` folder in the package's github repo for details.
+#' See `data-raw/cyclestreets_route.R` in the package's github repo for details.
 #'
-#' @format An object of class `sf`
+#' @format An object of class `sf` with 18 rows and 14 columns on route
+#'   characteristics. See https://rpackage.cyclestreets.net/reference/journey.html
+#'   for details.
 #' @source CycleStreets.net
 #' @examples
 #' library(sf)
 #' class(cyclestreets_route)
 #' plot(cyclestreets_route$geometry)
+#' cyclestreets_route
 "cyclestreets_route"
 
 #' Road segments in Magnolia, Seattle

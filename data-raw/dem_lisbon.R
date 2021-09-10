@@ -8,7 +8,14 @@ lisbon_road_network_esri = sf::read_sf("~/wip/pctLisbon-data/Shapefiles/route_se
 lisbon_1km_projected = sf::st_transform(lisbon_1km, sf::st_crs(lisbon_road_network_esri))
 lisbon_road_network = sf::st_intersection(lisbon_road_network_esri, lisbon_1km_projected)
 plot(lisbon_road_network["Avg_Slope"])
-usethis::use_data(lisbon_road_network)
+library(dplyr)
+lisbon_road_network = lisbon_road_network %>%
+  dplyr::select(matches("OB|Z|Slope", ignore.case = FALSE))
+usethis::use_data(lisbon_road_network, overwrite = TRUE)
+lisbon_road_segment = lisbon_road_network %>%
+  filter(OBJECTID == 2997)
+usethis::use_data(lisbon_road_segment, overwrite = TRUE)
+lisbon_road_segment_3d =
 
 download.file("https://github.com/geocompr/d/releases/download/1/r1.zip", "r1.zip")
 unzip("r1.zip")dem_lisbon_raster = raster::raster("r1")

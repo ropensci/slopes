@@ -17,10 +17,12 @@ dem_lisbon_raster
 \description{
 A dataset containing elevation in and around Lisbon
 with a geographic resolution of 10m.
+The dataset is 200 pixels wide by 133 pixels high, covering
+2.7 square kilometres of central Lisbon.
 }
 \details{
-The dataset orginates from This DEM was acquired by Instituto Superior
-Técnico (University of Lisbon) by 2012, covers all the Northern
+The dataset was acquired by Instituto Superior
+Técnico (University of Lisbon) in 2012, covers all the Northern
 Metropolitan Area of Lisbon, and has a 10m cell resolution,
 when projected at the official Portuguese EPSG: 3763 - TM06/ETRS89.
 The dataset was released as an open access dataset with permission from the
@@ -29,6 +31,8 @@ University of Lisbon to support this project.
 \examples{
 library(sf)
 library(raster)
+dim(dem_lisbon_raster)
+res(dem_lisbon_raster)
 names(dem_lisbon_raster)
 plot(dem_lisbon_raster)
 plot(lisbon_road_network["Avg_Slope"], add = TRUE)

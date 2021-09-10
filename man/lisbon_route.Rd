@@ -10,8 +10,7 @@
 An object of class \code{sf}
 }
 \source{
-Produced by ESRI's
-\href{https://pro.arcgis.com/en/pro-app/help/analysis/}{3D Analyst extension}
+See the \code{lisbon_route.R} script in \code{data-raw}
 }
 \usage{
 lisbon_route
@@ -24,7 +23,8 @@ in the West of central Lisbon.
 \details{
 Different versions of this dataset are provided.
 
-The \code{lisbon_route} object has 1 row and 4 columns.
+The \code{lisbon_route} object has 1 row and 4 columns: geometry, ID,
+length and whether or not a path was found.
 
 The \code{lisbon_route_xyz_mapbox} was created with:
 \code{lisbon_route_xyz_mapbox = elevation_add(lisbon_route)}.

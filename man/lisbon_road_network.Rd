@@ -5,7 +5,17 @@
 \alias{lisbon_road_network}
 \title{Road segments in Lisbon}
 \format{
-An object of class \code{sf}
+An object of class \code{sf}, key variables of which include
+\describe{
+\item{OBJECTID}{ID of the object}
+\item{Z_Min}{The minimum elevation on the linear feature from ArcMAP}
+\item{Z_Max}{The max elevation on the linear feature from ArcMAP}
+\item{Z_Mean}{The mean elevation on the linear feature from ArcMAP}
+\item{Slope_Min}{The minimum slope on the linear feature from ArcMAP}
+\item{Slope_Max}{The max slope on the linear feature from ArcMAP}
+\item{Slope_Mean}{The mean slope on the linear feature from ArcMAP}
+\item{geom}{The geometry defining the LINESTRING component of the segment}
+}
 }
 \source{
 Produced by ESRI's
@@ -18,8 +28,14 @@ lisbon_road_network
 A dataset representing road segments in Lisbon,
 with X, Y and Z (elevation) dimensions for each coordinate.
 }
+\details{
+The dataset covers 32 km of roads in central Lisbon, overlapping with the
+area covered by the \code{dem_lisbon_raster} dataset.
+}
 \examples{
+library(sf)
 names(lisbon_road_network)
+sum(st_length(lisbon_road_network))
 plot(lisbon_road_network["Avg_Slope"])
 }
 \keyword{datasets}

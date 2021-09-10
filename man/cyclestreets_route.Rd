@@ -5,7 +5,9 @@
 \alias{cyclestreets_route}
 \title{A journey from CycleStreets.net}
 \format{
-An object of class \code{sf}
+An object of class \code{sf} with 18 rows and 14 columns on route
+characteristics. See https://rpackage.cyclestreets.net/reference/journey.html
+for details.
 }
 \source{
 CycleStreets.net
@@ -20,11 +22,12 @@ in Leeds, UK.
 \details{
 Simple feature collection with 30 features and 32 fields
 
-See \code{data-raw} folder in the package's github repo for details.
+See \code{data-raw/cyclestreets_route.R} in the package's github repo for details.
 }
 \examples{
 library(sf)
 class(cyclestreets_route)
 plot(cyclestreets_route$geometry)
+cyclestreets_route
 }
 \keyword{datasets}
