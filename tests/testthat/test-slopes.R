@@ -83,5 +83,6 @@ test_that("slope_* functions work", {
     )
 
   expect_error(slopes:::stopifnotsf(1))
+  expect_error(slopes:::stop_is_not_linestring(1))
 
 })
