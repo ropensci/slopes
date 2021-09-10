@@ -19,9 +19,13 @@ test_that("slope_* functions work", {
 
   s = slope_distance_mean(d, e)
   expect_identical(round(s, 3), 0.093)
+  s = slope_distance_mean(d, e, directed = TRUE)
+  expect_identical(round(s, 3), -0.093)
 
   s = slope_distance_weighted(d, e)
   expect_identical(round(s, 3), 0.095)
+  s = slope_distance_weighted(d, e, directed = TRUE)
+  expect_identical(round(s, 3), -0.095)
 
   x = c(0, 2, 3, 4, 5, 9)
   y = c(0, 0, 0, 0, 0, 9)
