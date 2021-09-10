@@ -148,20 +148,72 @@ in Leeds, UK.</p>
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>An object of class <code>sf</code></p>
+    <p>An object of class <code>sf</code> with 18 rows and 14 columns on route
+characteristics. See https://rpackage.cyclestreets.net/reference/journey.html
+for details.</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     <p>CycleStreets.net</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Simple feature collection with 30 features and 32 fields</p>
-<p>See <code>data-raw</code> folder in the package's github repo for details.</p>
+<p>See <code>data-raw/cyclestreets_route.R</code> in the package's github repo for details.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://r-spatial.github.io/sf/'>sf</a></span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Linking to GEOS 3.8.1, GDAL 3.2.1, PROJ 7.2.1</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>cyclestreets_route</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "sf"         "data.frame"</div><div class='input'><span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>cyclestreets_route</span><span class='op'>$</span><span class='va'>geometry</span><span class='op'>)</span>
-</div><div class='img'><img src='cyclestreets_route-1.png' alt='' width='700' height='433' /></div></pre>
+</div><div class='img'><img src='cyclestreets_route-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='va'>cyclestreets_route</span>
+</div><div class='output co'>#&gt; Simple feature collection with 18 features and 14 fields
+#&gt; Geometry type: LINESTRING
+#&gt; Dimension:     XY
+#&gt; Bounding box:  xmin: -1.55598 ymin: 53.80275 xmax: -1.52271 ymax: 53.81893
+#&gt; Geodetic CRS:  WGS 84
+#&gt; First 10 features:
+#&gt;                      name distances time busynance elevations start_longitude
+#&gt; 1             Avenue Hill       156   22       226         NA        -1.52271
+#&gt; 2           Spencer Place       771  165      1768         NA        -1.52271
+#&gt; 3      Roundhay Road, A58       195   49      4256         NA        -1.52271
+#&gt; 4           Roundhay Road       513  129      1761         NA        -1.52271
+#&gt; 5            North Street       143   57       469         NA        -1.52271
+#&gt; 6  Sheepscar Street South       105   82      5298         NA        -1.52271
+#&gt; 7      Clay Pit Lane, A58       744  300     25635         NA        -1.52271
+#&gt; 8    Woodhouse Lane, A660         9    5       358         NA        -1.52271
+#&gt; 9    Woodhouse Lane, A660       160   68      4791         NA        -1.52271
+#&gt; 10   Woodhouse Lane, A660        65   32      2366         NA        -1.52271
+#&gt;    start_latitude finish_longitude finish_latitude gradient_segment
+#&gt; 1        53.81893         -1.55598        53.80692      0.051282051
+#&gt; 2        53.81893         -1.55598        53.80692      0.015564202
+#&gt; 3        53.81893         -1.55598        53.80692      0.005128205
+#&gt; 4        53.81893         -1.55598        53.80692      0.007797271
+#&gt; 5        53.81893         -1.55598        53.80692      0.006993007
+#&gt; 6        53.81893         -1.55598        53.80692      0.057142857
+#&gt; 7        53.81893         -1.55598        53.80692      0.029569892
+#&gt; 8        53.81893         -1.55598        53.80692      0.111111111
+#&gt; 9        53.81893         -1.55598        53.80692      0.031250000
+#&gt; 10       53.81893         -1.55598        53.80692      0.030769231
+#&gt;    elevation_change      provisionName quietness quietness_segment
+#&gt; 1                 8 Residential street         7        0.69026549
+#&gt; 2                12 Residential street         7        0.43608597
+#&gt; 3                 1         Trunk road         7        0.04581767
+#&gt; 4                 4         Minor road         7        0.29131175
+#&gt; 5                 1  Unclassified road         7        0.30490405
+#&gt; 6                 6  Trunk road access         7        0.01981880
+#&gt; 7                22         Trunk road         7        0.02902282
+#&gt; 8                 1         Trunk road         7        0.02513966
+#&gt; 9                 5         Trunk road         7        0.03339595
+#&gt; 10                2  Trunk road access         7        0.02747253
+#&gt;                          geometry
+#&gt; 1  LINESTRING (-1.52271 53.818...
+#&gt; 2  LINESTRING (-1.52375 53.817...
+#&gt; 3  LINESTRING (-1.52539 53.810...
+#&gt; 4  LINESTRING (-1.52807 53.810...
+#&gt; 5  LINESTRING (-1.53467 53.807...
+#&gt; 6  LINESTRING (-1.53531 53.806...
+#&gt; 7  LINESTRING (-1.53684 53.806...
+#&gt; 8  LINESTRING (-1.54594 53.802...
+#&gt; 9  LINESTRING (-1.546 53.80282...
+#&gt; 10 LINESTRING (-1.54752 53.803...</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

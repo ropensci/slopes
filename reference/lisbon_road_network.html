@@ -148,19 +148,33 @@ with X, Y and Z (elevation) dimensions for each coordinate.</p>
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>An object of class <code>sf</code></p>
+    <p>An object of class <code>sf</code>, key variables of which include</p><dl>
+<dt>OBJECTID</dt><dd><p>ID of the object</p></dd>
+<dt>Z_Min</dt><dd><p>The minimum elevation on the linear feature from ArcMAP</p></dd>
+<dt>Z_Max</dt><dd><p>The max elevation on the linear feature from ArcMAP</p></dd>
+<dt>Z_Mean</dt><dd><p>The mean elevation on the linear feature from ArcMAP</p></dd>
+<dt>Slope_Min</dt><dd><p>The minimum slope on the linear feature from ArcMAP</p></dd>
+<dt>Slope_Max</dt><dd><p>The max slope on the linear feature from ArcMAP</p></dd>
+<dt>Slope_Mean</dt><dd><p>The mean slope on the linear feature from ArcMAP</p></dd>
+<dt>geom</dt><dd><p>The geometry defining the LINESTRING component of the segment</p></dd>
+
+</dl>
+
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     <p>Produced by ESRI's
 <a href='https://pro.arcgis.com/en/pro-app/help/analysis/'>3D Analyst extension</a></p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The dataset covers 32 km of roads in central Lisbon, overlapping with the
+area covered by the <code>dem_lisbon_raster</code> dataset.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/raster/man/names.html'>names</a></span><span class='op'>(</span><span class='va'>lisbon_road_network</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  [1] "OBJECTID"   "fid_1"      "gradient_s" "Shape_Leng" "Z_Min"     
-#&gt;  [6] "Z_Max"      "Z_Mean"     "SLength"    "Min_Slope"  "Max_Slope" 
-#&gt; [11] "Avg_Slope"  "z0"         "z1"         "gradverifi" "query"     
-#&gt; [16] "lat"        "lon"        "lat_min"    "lat_max"    "lon_min"   
-#&gt; [21] "lon_max"    "bbox"       "geom"      </div><div class='input'><span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>lisbon_road_network</span><span class='op'>[</span><span class='st'>"Avg_Slope"</span><span class='op'>]</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://r-spatial.github.io/sf/'>sf</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/names.html'>names</a></span><span class='op'>(</span><span class='va'>lisbon_road_network</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "OBJECTID"  "Z_Min"     "Z_Max"     "Z_Mean"    "Min_Slope" "Max_Slope"
+#&gt; [7] "Avg_Slope" "geom"     </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_measures.html'>st_length</a></span><span class='op'>(</span><span class='va'>lisbon_road_network</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 32014.35 [m]</div><div class='input'><span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>lisbon_road_network</span><span class='op'>[</span><span class='st'>"Avg_Slope"</span><span class='op'>]</span><span class='op'>)</span>
 </div><div class='img'><img src='lisbon_road_network-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
