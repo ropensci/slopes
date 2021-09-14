@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slopes</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -70,6 +70,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -103,46 +106,52 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/itsleeds/slopes/">slopes</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">bench</span><span class="op">)</span></code></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-lib/bench">bench</a></span><span class="op">)</span></code></pre></div>
 <p><strong>Note: benchmarks do not currently evaluate on actions for faster build times.</strong></p>
 <div id="performance" class="section level1">
 <h1 class="hasAnchor">
 <a href="#performance" class="anchor"></a>Performance</h1>
-<p>For this benchmark we will download the following small (&lt; 100 kB) <code>.tif</code> file:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">u</span> <span class="op">=</span> <span class="st">"https://github.com/ITSLeeds/slopes/releases/download/0.0.0/dem_lisbon.tif"</span>
-<span class="va">f</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html">basename</a></span><span class="op">(</span><span class="va">u</span><span class="op">)</span>
-<span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files.html">file.exists</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
- <span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="va">u</span>, <span class="va">f</span>, mode <span class="op">=</span> <span class="st">"wb"</span><span class="op">)</span> 
-<span class="op">}</span></code></pre></div>
 <p>A benchmark can reveal how many route gradients can be calculated per second:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">e</span> <span class="op">=</span> <span class="va">dem_lisbon_raster</span>
 <span class="va">r</span> <span class="op">=</span> <span class="va">lisbon_road_network</span>
-<span class="va">et</span> <span class="op">=</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html">rast</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>
-<span class="va">res</span> <span class="op">=</span> <span class="fu">bench</span><span class="fu">::</span><span class="fu">mark</span><span class="op">(</span>check <span class="op">=</span> <span class="cn">FALSE</span>,
+<span class="va">et</span> <span class="op">=</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html">rast</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span>
+<span class="va">res</span> <span class="op">=</span> <span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bench/man/mark.html">mark</a></span><span class="op">(</span>check <span class="op">=</span> <span class="cn">FALSE</span>,
   slope_raster <span class="op">=</span> <span class="fu"><a href="../reference/slope_raster.html">slope_raster</a></span><span class="op">(</span><span class="va">r</span>, <span class="va">e</span><span class="op">)</span>,
   slope_terra <span class="op">=</span> <span class="fu"><a href="../reference/slope_raster.html">slope_raster</a></span><span class="op">(</span><span class="va">r</span>, <span class="va">et</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">res</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">res</span>
+<span class="co">#&gt; # A tibble: 2 × 6</span>
+<span class="co">#&gt;   expression        min   median `itr/sec` mem_alloc `gc/sec`</span>
+<span class="co">#&gt;   &lt;bch:expr&gt;   &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 slope_raster    109ms    112ms      8.73   22.48MB     5.82</span>
+<span class="co">#&gt; 2 slope_terra     114ms    114ms      8.80    2.17MB    17.6</span></code></pre></div>
 <p>That is approximately</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">`itr/sec`</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/ncell.html">nrow</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">`itr/sec`</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/ncell.html">nrow</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] 2366 2385</span></code></pre></div>
 <p>routes per second using the <code>raster</code> and <code>terra</code> (the default if installed, using <code>RasterLayer</code> and native <code>SpatRaster</code> objects) packages to extract elevation estimates from the raster datasets, respectively.</p>
 <p>The message: use the <code>terra</code> package to read-in DEM data for slope extraction if speed is important.</p>
 <p>To go faster, you can chose the <code>simple</code> method to gain some speed at the expense of accuracy:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">e</span> <span class="op">=</span> <span class="va">dem_lisbon_raster</span>
 <span class="va">r</span> <span class="op">=</span> <span class="va">lisbon_road_network</span>
-<span class="va">res</span> <span class="op">=</span> <span class="fu">bench</span><span class="fu">::</span><span class="fu">mark</span><span class="op">(</span>check <span class="op">=</span> <span class="cn">FALSE</span>,
+<span class="va">res</span> <span class="op">=</span> <span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bench/man/mark.html">mark</a></span><span class="op">(</span>check <span class="op">=</span> <span class="cn">FALSE</span>,
   bilinear1 <span class="op">=</span> <span class="fu"><a href="../reference/slope_raster.html">slope_raster</a></span><span class="op">(</span><span class="va">r</span>, <span class="va">e</span><span class="op">)</span>,
   bilinear2 <span class="op">=</span> <span class="fu"><a href="../reference/slope_raster.html">slope_raster</a></span><span class="op">(</span><span class="va">r</span>, <span class="va">et</span><span class="op">)</span>,
   simple1 <span class="op">=</span> <span class="fu"><a href="../reference/slope_raster.html">slope_raster</a></span><span class="op">(</span><span class="va">r</span>, <span class="va">e</span>, method <span class="op">=</span> <span class="st">"simple"</span><span class="op">)</span>,
   simple2 <span class="op">=</span> <span class="fu"><a href="../reference/slope_raster.html">slope_raster</a></span><span class="op">(</span><span class="va">r</span>, <span class="va">et</span>, method <span class="op">=</span> <span class="st">"simple"</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">res</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">res</span>
+<span class="co">#&gt; # A tibble: 4 × 6</span>
+<span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
+<span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 bilinear1     105ms  114.7ms      8.72    5.72MB     4.36</span>
+<span class="co">#&gt; 2 bilinear2     113ms  112.9ms      8.86    2.12MB     8.86</span>
+<span class="co">#&gt; 3 simple1        91ms   92.9ms     10.8     2.14MB     2.69</span>
+<span class="co">#&gt; 4 simple2       112ms  113.9ms      8.78    2.12MB     8.78</span></code></pre></div>
 </div>
   </div>
 
@@ -157,7 +166,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Robin Lovelace, Joey Talbot, Rosa Félix.</p>
+  <p>Developed by Robin Lovelace, Rosa Félix, Joey Talbot.</p>
 </div>
 
 <div class="pkgdown">
