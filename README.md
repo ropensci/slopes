@@ -25,6 +25,24 @@ features, based on two main inputs:
     the [`raster`](https://cran.r-project.org/package=raster) or more
     recent [`terra`](https://rspatial.org/terra) packages
 
+Data on slopes are useful in many fields of research, including
+[hydrology](https://en.wikipedia.org/wiki/Stream_gradient), natural
+hazards (including
+[flooding](https://www.humanitarianresponse.info/fr/operations/afghanistan/infographic/afg-river-gradient-and-flood-hazard)
+and [landslide risk
+management](https://assets.publishing.service.gov.uk/media/57a08d0740f0b652dd0016f4/R7815-ADD017_col.pdf)),
+recreational and competitive sports such as
+[cycling](http://theclimbingcyclist.com/gradients-and-cycling-an-introduction/),
+[hiking](https://trailism.com/trail-grades/), and
+[skiing](https://www.snowplaza.co.uk/blog/16682-skiing-steeps-what-does-gradient-mean-ski-piste/).
+Slopes are also also important in some branches of [transport and
+emissions
+modelling](https://www.sciencedirect.com/science/article/pii/S2352146516302642)
+and [ecology](https://doi.org/10.1016/j.ncon.2016.10.001). See the
+[`intro-to-slopes`
+vignette](https://itsleeds.github.io/slopes/articles/intro-to-slopes.html)
+for details on fields using slope data and the need for this package.
+
 This README covers installation and basic usage. For more information
 about slopes and how to use the package to calculate them, see the [get
 started](https://itsleeds.github.io/slopes/) and the [introducion to
