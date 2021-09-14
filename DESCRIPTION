@@ -4,10 +4,10 @@ Version: 1.0.0
 Authors@R: c(
     person("Robin", "Lovelace", email = "rob00x@gmail.com", role = c("aut","cre"),
       comment = c(ORCID = "0000-0001-5679-6536")),
-    person("Joey", "Talbot", email = "j.d.talbot@leeds.ac.uk", role = c("aut"), 
-      comment = c(ORCID = "0000-0002-6520-4560")),
     person("Rosa", "Félix", email = "rosamfelix@tecnico.ulisboa.pt", role = c("aut"), 
-      comment = c(ORCID = "0000-0002-5642-6006"))
+      comment = c(ORCID = "0000-0002-5642-6006")),
+    person("Joey", "Talbot", email = "j.d.talbot@leeds.ac.uk", role = c("aut"), 
+      comment = c(ORCID = "0000-0002-6520-4560"))
     )
 Description: Functions and example data to support research into the
   slope (also known as longitudinal gradient or steepness)
