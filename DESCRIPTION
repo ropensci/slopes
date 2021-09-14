@@ -51,6 +51,7 @@ Suggests:
     dplyr,
     rgdal,
     tmap,
-    leaflet
+    leaflet,
+    bench
 VignetteBuilder: knitr
 Config/testthat/edition: 3
