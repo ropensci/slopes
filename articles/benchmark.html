@@ -125,12 +125,12 @@
 <span class="co">#&gt; # A tibble: 2 × 6</span>
 <span class="co">#&gt;   expression        min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;   &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 slope_raster    109ms    112ms      8.73   22.48MB     5.82</span>
-<span class="co">#&gt; 2 slope_terra     114ms    114ms      8.80    2.17MB    17.6</span></code></pre></div>
+<span class="co">#&gt; 1 slope_raster    109ms    110ms      8.51   22.48MB     5.67</span>
+<span class="co">#&gt; 2 slope_terra     117ms    117ms      8.52    2.17MB    17.0</span></code></pre></div>
 <p>That is approximately</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">`itr/sec`</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/ncell.html">nrow</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 2366 2385</span></code></pre></div>
+<span class="co">#&gt; [1] 2305 2308</span></code></pre></div>
 <p>routes per second using the <code>raster</code> and <code>terra</code> (the default if installed, using <code>RasterLayer</code> and native <code>SpatRaster</code> objects) packages to extract elevation estimates from the raster datasets, respectively.</p>
 <p>The message: use the <code>terra</code> package to read-in DEM data for slope extraction if speed is important.</p>
 <p>To go faster, you can chose the <code>simple</code> method to gain some speed at the expense of accuracy:</p>
@@ -148,10 +148,10 @@
 <span class="co">#&gt; # A tibble: 4 × 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 bilinear1     105ms  114.7ms      8.72    5.72MB     4.36</span>
-<span class="co">#&gt; 2 bilinear2     113ms  112.9ms      8.86    2.12MB     8.86</span>
-<span class="co">#&gt; 3 simple1        91ms   92.9ms     10.8     2.14MB     2.69</span>
-<span class="co">#&gt; 4 simple2       112ms  113.9ms      8.78    2.12MB     8.78</span></code></pre></div>
+<span class="co">#&gt; 1 bilinear1   110.2ms  110.6ms      9.04    5.72MB     4.52</span>
+<span class="co">#&gt; 2 bilinear2   114.2ms  121.6ms      8.37    2.12MB     5.58</span>
+<span class="co">#&gt; 3 simple1      89.5ms   94.9ms     10.6     2.14MB     5.30</span>
+<span class="co">#&gt; 4 simple2       112ms  116.1ms      8.49    2.12MB     5.66</span></code></pre></div>
 </div>
   </div>
 
@@ -166,7 +166,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Robin Lovelace, Rosa Félix, Joey Talbot.</p>
+  <p>Developed by Robin Lovelace, Joey Talbot, Rosa Félix.</p>
 </div>
 
 <div class="pkgdown">
