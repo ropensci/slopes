@@ -10,8 +10,7 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  eval = FALSE
+  comment = "#>"
 )
 ```
 
@@ -24,22 +23,12 @@ library(bench)
 
 # Performance
 
-For this benchmark we will download the following small (< 100 kB) `.tif` file:
-
-```{r}
-u = "https://github.com/ITSLeeds/slopes/releases/download/0.0.0/dem_lisbon.tif"
-f = basename(u)
-if(!file.exists(f)) {
- download.file(u, f, mode = "wb") 
-}
-```
-
 A benchmark can reveal how many route gradients can be calculated per second:
 
 ```{r, results='hide'}
 e = dem_lisbon_raster
 r = lisbon_road_network
-et = terra::rast(f)
+et = terra::rast(e)
 res = bench::mark(check = FALSE,
   slope_raster = slope_raster(r, e),
   slope_terra = slope_raster(r, et)
@@ -78,7 +67,3 @@ res = bench::mark(check = FALSE,
 res
 ```
 
-
-```{r, include=FALSE}
-file.remove("dem_lisbon.tif")
-```
