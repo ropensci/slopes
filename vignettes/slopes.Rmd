@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 Welcome to the slopes vignette, a type of long-form documentation/article that introduces the core functions and functionality of the `slopes` package.
 
-## Installation
+# Installation
 
 You can install the released version of slopes from [CRAN](https://CRAN.R-project.org) with:
 
@@ -31,7 +31,7 @@ Install the development version from [GitHub](https://github.com/) with:
 remotes::install_github("ropensci/slopes")
 ```
 
-#### Installation for DEM downloads
+### Installation for DEM downloads
 
 If you do not already have DEM data and want to make use of the package's ability to download them using the `ceramic` package, install the package with suggested dependencies, as follows:
 
@@ -48,9 +48,9 @@ MAPBOX_API_KEY=xxxxx # replace XXX with your api key
 ```
 
 
-## Functions 
+# Functions 
 
-### Elevation
+## Elevation
 
 - `elevation_add()` Take a linestring and add a third dimension (z) to its coordinates
 - `elevation_get()` Get elevation data from hosted maptile services (returns a raster)
@@ -63,11 +63,11 @@ MAPBOX_API_KEY=xxxxx # replace XXX with your api key
 - `z_max()`  retrieves the elevation max value 
 - `z_min()`  retrieves the elevation min value 
 
-### Distance
+## Distance
 
 - `sequential_dist()` Calculate the sequential distances between sequential coordinate pairs
 
-### Slope
+## Slope
 
 - `slope_vector()` calculates the slopes associated with consecutive elements in one dimensional distance and associated elevations.
 - `slope_distance()` calculates the slopes associated with consecutive distances and elevations.
@@ -80,12 +80,12 @@ MAPBOX_API_KEY=xxxxx # replace XXX with your api key
 
 - `slope_xyz()` Calculates the slope associated with linestrings that have xyz coordinates
 
-### Plot
+## Plot
 
 - `plot_dz()` Plot a digital elevation profile based on xyz data
 - `plot_slope()` Plots the slope profile associated with a linestring with base R graphics
 
-## Package datasets
+# Package datasets
 
 The `slopes` package comes with some datasets to play with:
 
@@ -105,7 +105,7 @@ The `slopes` package comes with some datasets to play with:
 - `dem_lisbon_raster` a DEM of downtown Lisbon (EPSG:3763)
 
 
-## Examples
+# Examples
 
 Load the package in the usual way. We will also load the `sf` library:
 
@@ -142,7 +142,7 @@ st_geometry_type(sf_linestring)
 
 > maybe remove this? or add step 1 and step 2 again.
 
-### Single road segment + no DEM
+## Single road segment + no DEM
 
 You can check your input dataset is suitable with the functions `class()` from base R and `st_geometry_type()` from the `sf` package, as demonstrated below on the example object `lisbon_road_segment` that is contained within the package:
 
@@ -209,7 +209,7 @@ slope_xyz(sf_linestring_xyz)
 
 The result, just over 0.2, tells us that it's quite a steep slope: a 21% gradient *on average*.
 
-### Route + available DEM
+## Route + available DEM
 
 Using the slopes package we can estimate the gradient of individual road segments. When these segments are combined into routes, we then need a means of assessing the hilliness of the entire route. A range of indices can be used to represent route hilliness. The choice of which index is most appropriate may be context dependent (see the [introducion to slopes](https://ropensci.github.io/intro-to-slopes/) vignette).
   
@@ -259,7 +259,7 @@ slope_raster(routes = sf_route,
 The result shows a 7.8% gradient *on average*.
 As you can see, the retrieved result from elevation information available in Mapbox and in this Digital Elevation Model, is quite similar. (See more about these differences in [Verification of slopes](https://ropensci.github.io/slopes/articles/verification.html).) 
 
-### Route with xyz coordinates
+## Route with xyz coordinates
 
 If your linestring object already has X, Y and Z coordinates (e.g. from a GPS device), you can use the `slope_` functions directly. 
 
@@ -295,9 +295,10 @@ slope_distance_weighted(dist, elevations)
 
 In any case, to use the `slopes` package you need **elevation points**, either as a vector, a matrix or as a digital elevation model (DEM) encoded as a raster dataset.
 
-## Calculating and plotting the gradient of roads
+# Calculating and plotting gradients
 
-### Road network
+## Road network
+
 Typical use cases for the package are calculating the slopes of geographic objects representing roads or other linear features.
 These two types of input data are represented in the code output and plot below.
 
@@ -339,7 +340,7 @@ raster::plot(dem_lisbon_raster)
 plot(lisbon_road_network["slope"], add = TRUE, lwd = 5)
 ```
 
-### Elevation profile
+## Elevation profile
 
 Taking the [first route example](#route--available-dem), imagine that we want to go from from the Santa Catarina area in the East of the map to the Castelo de São Jorge in the West.
 This route goes down a valley and up the other side:
@@ -368,7 +369,7 @@ We can now visualise the elevation profile of the route as follows:
 plot_slope(lisbon_route_xyz)
 ```
 
-### Splitting the network
+## Splitting the network
 
 The `lisbon_route_xyz` example is useful but often you will want to calculate the slopes not of an entire route (in this case one that is 2.5 km long) but of segments.
 There are various ways to split segements, including using algorithms from other packages or [GIS programs](https://github.com/paleolimbot/qgisprocess/issues/26), but here we'll use the `stplanr` function `rnet_breakup_vertices()` (see  [`vignette("roadnetworkcycling")`](https://ropensci.github.io/slopes/articles/roadnetworkcycling.html) for an example of this function working on a large road network):
@@ -386,6 +387,8 @@ lisbon_route_segments$slope = slope_xyz(lisbon_route_segments)
 summary(lisbon_route_segments$slope)
 ```
 
+## Directed slopes
+
 The route has a direction that is implicit in the order of the vertices and segments.
 From the perspective of someone travelling along the route, the slopes have a direction which is important: it's easier to go uphill than downhill.
 To calculate the slopes with direction, add the `directed` argument as follows.
@@ -398,7 +401,6 @@ summary(lisbon_route_segments$slope_directed)
 Plotting the directed and undirected slopes side-by-side shows the importance of considering slope direction for route planning, which may want to avoid steep hills going uphill but not downhill for certain types of travel, for example.
 
 ```{r, fig.show='hold', out.width="50%"}
-plot(lisbon_route_segments["slope"])
 breaks = c(0, 3, 5, 8, 10, 20, 50)
 breaks_proportion = breaks / 100
 breaks_directed = c(-rev(breaks_proportion), (breaks_proportion[-1]))
@@ -441,7 +443,7 @@ mapview::mapview(route_segments)
 ```
 
 
-### Using `elevation_add()` with and without a `dem =` argument
+## Using `elevation_add()` with and without a `dem =` argument
 
 If you do not have a raster dataset representing elevations, you can automatically download them by omitting the argument `dem = NULL` (a step that is automatically done in the function `elevation_add()` shown in the basic example above, results of the subsequent code chunk not shown):
 
@@ -466,7 +468,7 @@ plot_slope(lisbon_route_xyz_auto)
 
 Note that the elevations shown in both plots differ, since the first is based on DEM elevation available, and the second is based in _Mapbox_ elevation.
 
-## Commulative elevation change
+# Commulative elevation change
 
 The following example calculate the elevations of a route in Leeds, and plots its commutative sum along the route (not evaluated).
 
@@ -477,7 +479,7 @@ plot(cumsum(cyclestreets_xyz$distances), cumsum(cyclestreets_xyz$elevation_chang
 ```
 
 
-## See more in vignettes
+# See more in vignettes
 
 -   [slopes package](https://ropensci.github.io/slopes/index.html)
 -   [An introduction to slopes](https://ropensci.github.io/slopes/articles/intro-to-slopes.html)
