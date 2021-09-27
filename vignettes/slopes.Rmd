@@ -211,7 +211,7 @@ The result, just over 0.2, tells us that it's quite a steep slope: a 21% gradien
 
 ### Route + available DEM
 
-Using the slopes package we can estimate the gradient of individual road segments. When these segments are combined into routes, we then need a means of assessing the hilliness of the entire route. A range of indices can be used to represent route hilliness. The choice of which index is most appropriate may be context dependent (see the [introducion to slopes](https://itsleeds.github.io/intro-to-slopes/) vignette).
+Using the slopes package we can estimate the gradient of individual road segments. When these segments are combined into routes, we then need a means of assessing the hilliness of the entire route. A range of indices can be used to represent route hilliness. The choice of which index is most appropriate may be context dependent (see the [introducion to slopes](https://ropensci.github.io/intro-to-slopes/) vignette).
   
 Again, let us use the same function with a entire route, `lisbon_route`, also available in the package:
 
@@ -257,7 +257,7 @@ slope_raster(routes = sf_route,
 ```
 
 The result shows a 7.8% gradient *on average*.
-As you can see, the retrieved result from elevation information available in Mapbox and in this Digital Elevation Model, is quite similar. (See more about these differences in [Verification of slopes](https://itsleeds.github.io/slopes/articles/verification.html).) 
+As you can see, the retrieved result from elevation information available in Mapbox and in this Digital Elevation Model, is quite similar. (See more about these differences in [Verification of slopes](https://ropensci.github.io/slopes/articles/verification.html).) 
 
 ### Route with xyz coordinates
 
@@ -323,7 +323,7 @@ This created a new column, `slope` that represents the average, distance weighte
 The units represent the percentage incline, that is the change in elevation divided by distance.
 The summary of the result tells us that the average gradient of slopes in the example data is just over 5%.
   
-This result is equivalent to that returned by ESRI's `Slope_3d()` in the [3D Analyst extension](https://desktop.arcgis.com/en/arcmap/10.3/tools/3d-analyst-toolbox/slope.htm), with a correlation between the ArcMap implementation and our implementation of more than 0.95 on our test dataset (we find higher correlations on larger datasets - see the [verification of slopes](https://itsleeds.github.io/slopes/articles/verification.html article):
+This result is equivalent to that returned by ESRI's `Slope_3d()` in the [3D Analyst extension](https://desktop.arcgis.com/en/arcmap/10.3/tools/3d-analyst-toolbox/slope.htm), with a correlation between the ArcMap implementation and our implementation of more than 0.95 on our test dataset (we find higher correlations on larger datasets - see the [verification of slopes](https://ropensci.github.io/slopes/articles/verification.html article):
 
 ```{r}
 cor(
@@ -371,7 +371,7 @@ plot_slope(lisbon_route_xyz)
 ### Splitting the network
 
 The `lisbon_route_xyz` example is useful but often you will want to calculate the slopes not of an entire route (in this case one that is 2.5 km long) but of segments.
-There are various ways to split segements, including using algorithms from other packages or [GIS programs](https://github.com/paleolimbot/qgisprocess/issues/26), but here we'll use the `stplanr` function `rnet_breakup_vertices()` (see  [`vignette("roadnetworkcycling")`](https://itsleeds.github.io/slopes/articles/roadnetworkcycling.html) for an example of this function working on a large road network):
+There are various ways to split segements, including using algorithms from other packages or [GIS programs](https://github.com/paleolimbot/qgisprocess/issues/26), but here we'll use the `stplanr` function `rnet_breakup_vertices()` (see  [`vignette("roadnetworkcycling")`](https://ropensci.github.io/slopes/articles/roadnetworkcycling.html) for an example of this function working on a large road network):
 
 ```{r}
 sf::st_length(lisbon_route_xyz) # check route length: 2.5 km
@@ -479,10 +479,10 @@ plot(cumsum(cyclestreets_xyz$distances), cumsum(cyclestreets_xyz$elevation_chang
 
 ## See more in vignettes
 
--   [slopes package](https://itsleeds.github.io/slopes/index.html)
--   [An introduction to slopes](https://itsleeds.github.io/slopes/articles/intro-to-slopes.html)
--   [Reproducible example: gradients of a road network for a given city](https://itsleeds.github.io/slopes/articles/roadnetworkcycling.html)
--   [Verification of slopes](https://itsleeds.github.io/slopes/articles/verification.html)
--   [Benchmarking slopes calculation](https://itsleeds.github.io/slopes/articles/benchmark.html)
+-   [slopes package](https://ropensci.github.io/slopes/index.html)
+-   [An introduction to slopes](https://ropensci.github.io/slopes/articles/intro-to-slopes.html)
+-   [Reproducible example: gradients of a road network for a given city](https://ropensci.github.io/slopes/articles/roadnetworkcycling.html)
+-   [Verification of slopes](https://ropensci.github.io/slopes/articles/verification.html)
+-   [Benchmarking slopes calculation](https://ropensci.github.io/slopes/articles/benchmark.html)
 
 

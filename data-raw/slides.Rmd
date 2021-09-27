@@ -154,7 +154,7 @@ Key functions:
 1. `slope_raster()`: Calculate slopes of linestrings based on local raster map
 1. `elevation_add()`: Adds a third dimension to linestring coordinates
 1. `plot_slope()`: Plots the slope profile associated with a linestring
-1. See https://itsleeds.github.io/slopes/reference/index.html for more
+1. See https://ropensci.github.io/slopes/reference/index.html for more
 
 
 ```{r}
@@ -296,7 +296,7 @@ m
 
 ###  Worked example
 
-See [vignette](https://itsleeds.github.io/slopes/articles/roadnetworkcycling.html) 
+See [vignette](https://ropensci.github.io/slopes/articles/roadnetworkcycling.html) 
 
 Load packages
 
@@ -351,7 +351,7 @@ summary(network$slope) # check the values
 qtm(network, "slope") # with a few extra arguments...
 ```
 
-See [`roadnetworkcycling`](https://itsleeds.github.io/slopes/articles/roadnetworkcycling.html) vignette for details and here for interactive map: http://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/SlopesIoW.html
+See [`roadnetworkcycling`](https://ropensci.github.io/slopes/articles/roadnetworkcycling.html) vignette for details and here for interactive map: http://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/SlopesIoW.html
 
 ![](https://user-images.githubusercontent.com/1825120/121820334-2435f080-cc8a-11eb-962c-79dcba97e459.png)
 
