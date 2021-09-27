@@ -1,3 +1,5 @@
+# slopes 1.0.1
+
 # slopes 1.0.0
 
 * We have submitted and responded to all comments to [rOpenSci review](https://github.com/ropensci/software-review/issues/420).  
