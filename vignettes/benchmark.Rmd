@@ -17,9 +17,8 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(slopes)
 library(bench)
+library(raster)
 ```
-
-**Note: benchmarks do not currently evaluate on actions for faster build times.**
 
 # Performance
 
@@ -67,3 +66,6 @@ res = bench::mark(check = FALSE,
 res
 ```
 
+```{r}
+round(res$`itr/sec` * nrow(r))
+```

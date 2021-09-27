@@ -351,13 +351,8 @@ slope_xyz = function(
 #' # Test with terra (requires internet connection):
 #' \donttest{
 #' if(slopes:::has_terra()) {
-#' u = paste0("https://github.com/ITSLeeds/slopes/",
-#'    "releases/download/0.0.0/dem_lisbon.tif" )
-#' f = "dem_lisbon.tif"
-#' if(!file.exists(f)) download.file(u, f, mode = "wb")
-#' et = terra::rast("dem_lisbon.tif")
+#' et = terra::rast(dem_lisbon_raster)
 #' elevation_extract(m, et)
-#' file.remove("dem_lisbon.tif")
 #' }
 #' }
 elevation_extract = function(
