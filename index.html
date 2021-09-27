@@ -88,7 +88,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/itsleeds/slopes/">
+  <a href="https://github.com/ropensci/slopes/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -138,14 +138,14 @@
 <p>Install the development version from <a href="https://github.com/">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"itsleeds/slopes"</span><span class="op">)</span></code></pre></div>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"ropensci/slopes"</span><span class="op">)</span></code></pre></div>
 <div id="installation-for-dem-downloads" class="section level4">
 <h4 class="hasAnchor">
 <a href="#installation-for-dem-downloads" class="anchor"></a>Installation for DEM downloads</h4>
 <p>If you do not already have DEM data and want to make use of the package’s ability to download them using the <code>ceramic</code> package, install the package with suggested dependencies, as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"itsleeds/slopes"</span>, dependencies <span class="op">=</span> <span class="st">"Suggests"</span><span class="op">)</span></code></pre></div>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"ropensci/slopes"</span>, dependencies <span class="op">=</span> <span class="st">"Suggests"</span><span class="op">)</span></code></pre></div>
 <p>Furthermore, you will need to add a MapBox API key to be able to get DEM datasets, by signing up and registering for a key at <a href="https://account.mapbox.com/access-tokens/" class="uri">https://account.mapbox.com/access-tokens/</a> and then following these steps:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">usethis</span><span class="fu">::</span><span class="fu">edit_r_environ</span><span class="op">(</span><span class="op">)</span>
@@ -158,7 +158,7 @@
 <a href="#basic-examples" class="anchor"></a>Basic examples</h2>
 <p>Load the package in the usual way. We will also load the <code>sf</code> library:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/itsleeds/slopes/">slopes</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/slopes">slopes</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span></code></pre></div>
 <p>The minimum input data requirement for using the package is an <code>sf</code> object containing LINESTRING geometries, as illustrated below (requires a MapBox API key):</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -203,9 +203,9 @@
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/itsleeds/slopes/">https://​github.com/​itsleeds/​slopes/​</a>
+<li>Browse source code at <br><a href="https://github.com/ropensci/slopes/">https://​github.com/​ropensci/​slopes/​</a>
 </li>
-<li>Report a bug at <br><a href="https://github.com/itsleeds/slopes/issues">https://​github.com/​itsleeds/​slopes/​issues</a>
+<li>Report a bug at <br><a href="https://github.com/ropensci/slopes/issues">https://​github.com/​ropensci/​slopes/​issues</a>
 </li>
 </ul>
 </div>
@@ -235,8 +235,8 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/itsleeds/slopes/actions"><img src="https://github.com/itsleeds/slopes/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://codecov.io/gh/itsleeds/slopes?branch=master"><img src="https://codecov.io/gh/itsleeds/slopes/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/ropensci/slopes/actions"><img src="https://github.com/ropensci/slopes/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://codecov.io/gh/ropensci/slopes?branch=master"><img src="https://codecov.io/gh/ropensci/slopes/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://github.com/ropensci/software-review/issues/420"><img src="https://badges.ropensci.org/420_status.svg" alt="Status at rOpenSci Software Peer Review"></a></li>
 </ul>
 </div>

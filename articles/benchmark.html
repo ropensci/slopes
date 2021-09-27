@@ -76,7 +76,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/itsleeds/slopes/">
+  <a href="https://github.com/ropensci/slopes/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -97,7 +97,7 @@
       <h1 data-toc-skip>Benchmarking slopes calculation</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/itsleeds/slopes/blob/master/vignettes/benchmark.Rmd"><code>vignettes/benchmark.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ropensci/slopes/blob/master/vignettes/benchmark.Rmd"><code>vignettes/benchmark.Rmd</code></a></small>
       <div class="hidden name"><code>benchmark.Rmd</code></div>
 
     </div>
@@ -105,7 +105,7 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/itsleeds/slopes/">slopes</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/slopes">slopes</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-lib/bench">bench</a></span><span class="op">)</span></code></pre></div>
 <p><strong>Note: benchmarks do not currently evaluate on actions for faster build times.</strong></p>
 <div id="performance" class="section level1">
@@ -125,12 +125,12 @@
 <span class="co">#&gt; # A tibble: 2 × 6</span>
 <span class="co">#&gt;   expression        min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;   &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 slope_raster    104ms    107ms      9.32   22.49MB     6.21</span>
-<span class="co">#&gt; 2 slope_terra     114ms    115ms      8.68    2.17MB     8.68</span></code></pre></div>
+<span class="co">#&gt; 1 slope_raster    141ms    146ms      6.84   22.49MB     6.84</span>
+<span class="co">#&gt; 2 slope_terra     114ms    114ms      8.80    2.17MB    17.6</span></code></pre></div>
 <p>That is approximately</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">`itr/sec`</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/ncell.html">nrow</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 2526 2351</span></code></pre></div>
+<span class="co">#&gt; [1] 1854 2384</span></code></pre></div>
 <p>routes per second using the <code>raster</code> and <code>terra</code> (the default if installed, using <code>RasterLayer</code> and native <code>SpatRaster</code> objects) packages to extract elevation estimates from the raster datasets, respectively.</p>
 <p>The message: use the <code>terra</code> package to read-in DEM data for slope extraction if speed is important.</p>
 <p>To go faster, you can chose the <code>simple</code> method to gain some speed at the expense of accuracy:</p>
@@ -148,10 +148,10 @@
 <span class="co">#&gt; # A tibble: 4 × 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 bilinear1     104ms  105.3ms      9.49    5.72MB     6.33</span>
-<span class="co">#&gt; 2 bilinear2     115ms  117.1ms      8.53    2.12MB     2.13</span>
-<span class="co">#&gt; 3 simple1        90ms   91.7ms     10.9     2.14MB     5.44</span>
-<span class="co">#&gt; 4 simple2       109ms  110.6ms      9.02    2.12MB     6.01</span></code></pre></div>
+<span class="co">#&gt; 1 bilinear1   110.2ms  111.2ms      8.99    5.72MB     4.50</span>
+<span class="co">#&gt; 2 bilinear2   120.8ms  122.9ms      8.08    2.12MB     2.69</span>
+<span class="co">#&gt; 3 simple1      95.9ms   96.1ms     10.3     2.14MB     6.88</span>
+<span class="co">#&gt; 4 simple2       114ms  116.7ms      8.53    2.12MB     5.69</span></code></pre></div>
 </div>
   </div>
 

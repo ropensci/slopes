@@ -76,7 +76,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/itsleeds/slopes/">
+  <a href="https://github.com/ropensci/slopes/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -97,7 +97,7 @@
       <h1 data-toc-skip>Verification of slopes</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/itsleeds/slopes/blob/master/vignettes/verification.Rmd"><code>vignettes/verification.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ropensci/slopes/blob/master/vignettes/verification.Rmd"><code>vignettes/verification.Rmd</code></a></small>
       <div class="hidden name"><code>verification.Rmd</code></div>
 
     </div>
@@ -110,7 +110,7 @@
 <p>This article aims to provide external verification of the results provided by the package. So far only one verification dataset has been used, but we hope to find others. If you know of verification datasets, please let us know — initially we planned to use a dataset from a paper on river slopes <span class="citation">(Cohen et al. 2018)</span>, but we could find no way of extracting the underlying data to do the calculation.</p>
 <p>For this article we primarily used the following packages, although others are loaded in subsequent code chunks.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/itsleeds/slopes/">slopes</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/slopes">slopes</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span>
 <span class="co">#&gt; Linking to GEOS 3.8.1, GDAL 3.2.1, PROJ 7.2.1</span></code></pre></div>
 <p>The results are reproducible (requires downloading input data manually and installing additional packages). To keep package build times low, only the results are presented below.</p>
