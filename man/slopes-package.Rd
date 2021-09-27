@@ -36,8 +36,14 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Joey Talbot \email{j.d.talbot@leeds.ac.uk} (\href{https://orcid.org/0000-0002-6520-4560}{ORCID})
   \item Rosa Félix \email{rosamfelix@tecnico.ulisboa.pt} (\href{https://orcid.org/0000-0002-5642-6006}{ORCID})
+  \item Joey Talbot \email{j.d.talbot@leeds.ac.uk} (\href{https://orcid.org/0000-0002-6520-4560}{ORCID})
+}
+
+Other contributors:
+\itemize{
+  \item Dan Olner (Dan reviewed the package for rOpenSci, see https://github.com/ropensci/software-review/issues/420#issuecomment-857662657 ) [reviewer]
+  \item Andy Teucher (Andy reviewed the package for rOpenSci, see https://github.com/ropensci/software-review/issues/420#issuecomment-858231647 ) [reviewer]
 }
 
 }

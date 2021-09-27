@@ -7,8 +7,10 @@ Authors@R: c(
     person("Rosa", "Félix", email = "rosamfelix@tecnico.ulisboa.pt", role = c("aut"), 
       comment = c(ORCID = "0000-0002-5642-6006")),
     person("Joey", "Talbot", email = "j.d.talbot@leeds.ac.uk", role = c("aut"), 
-      comment = c(ORCID = "0000-0002-6520-4560"))
-    )
+      comment = c(ORCID = "0000-0002-6520-4560")),
+    person("Dan", "Olner", role = c("rev"), comment = "Dan reviewed the package for rOpenSci, see https://github.com/ropensci/software-review/issues/420#issuecomment-857662657 "),
+    person("Andy", "Teucher", role = c("rev"), comment = "Andy reviewed the package for rOpenSci, see https://github.com/ropensci/software-review/issues/420#issuecomment-858231647 ")
+  )
 Description: Functions and example data to support research into the
   slope (also known as longitudinal gradient or steepness)
   of linear geographic entities such as roads <doi:10.1038/s41597-019-0147-x>
