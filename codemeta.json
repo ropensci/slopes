@@ -2,13 +2,13 @@
   "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "slopes",
-  "description": "Functions and example data to support research into the\n  slope (also known as longitudinal gradient or steepness)\n  of linear geographic entities such as roads <doi:10.1038/s41597-019-0147-x>\n  and rivers <doi:10.1016/j.jhydrol.2018.06.066>.\n  The package was initially developed to calculate the steepness of street segments\n  but can be used to calculate steepness of any linear feature that can be\n  represented as LINESTRING geometries in the 'sf' class system.\n  The package takes two main types of input data for slope calculation: vector geographic\n  objects representing linear features, and raster geographic objects with elevation values\n  (which can be downloaded using functionality in the package)\n  representing a continuous terrain surface.\n  Where no raster object is provided the package attempts to download elevation\n  data using the 'ceramic' package.",
+  "description": "Functions and example data to support research into the slope (also known as longitudinal gradient or steepness) of linear geographic entities such as roads <doi:10.1038/s41597-019-0147-x> and rivers <doi:10.1016/j.jhydrol.2018.06.066>. The package was initially developed to calculate the steepness of street segments but can be used to calculate steepness of any linear feature that can be represented as LINESTRING geometries in the 'sf' class system. The package takes two main types of input data for slope calculation: vector geographic objects representing linear features, and raster geographic objects with elevation values (which can be downloaded using functionality in the package) representing a continuous terrain surface. Where no raster object is provided the package attempts to download elevation data using the 'ceramic' package.",
   "name": "slopes: Calculate Slopes of Roads, Rivers and Trajectories",
   "codeRepository": "https://github.com/ropensci/slopes/",
-  "relatedLink": "https://ropensci.github.io/slopes/",
+  "relatedLink": "https://docs.ropensci.org/slopes/",
   "issueTracker": "https://github.com/ropensci/slopes/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.0.0.9000",
+  "version": "1.0.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -25,17 +25,17 @@
     },
     {
       "@type": "Person",
-      "givenName": "Joey",
-      "familyName": "Talbot",
-      "email": "j.d.talbot@leeds.ac.uk",
-      "@id": "https://orcid.org/0000-0002-6520-4560"
-    },
-    {
-      "@type": "Person",
       "givenName": "Rosa",
       "familyName": "Félix",
       "email": "rosamfelix@tecnico.ulisboa.pt",
       "@id": "https://orcid.org/0000-0002-5642-6006"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Joey",
+      "familyName": "Talbot",
+      "email": "j.d.talbot@leeds.ac.uk",
+      "@id": "https://orcid.org/0000-0002-6520-4560"
     }
   ],
   "maintainer": [
@@ -203,6 +203,18 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=leaflet"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "bench",
+      "name": "bench",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=bench"
     }
   ],
   "softwareRequirements": {
@@ -279,5 +291,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "407.513KB"
+  "fileSize": "362.052KB"
 }
