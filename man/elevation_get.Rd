@@ -27,7 +27,7 @@ DEM data in raster format anywhere worldwide.
 It requires an API that can be added by following guidance in the package's
 \href{https://github.com/ITSLeeds/slopes#installation-for-dem-downloads}{README}
 and in the
-\href{https://itsleeds.github.io/slopes/articles/slopes.html}{\code{slopes} vignette}.
+\href{https://ropensci.github.io/slopes/articles/slopes.html}{\code{slopes} vignette}.
 }
 \details{
 Note: if you use the \code{cc_elevation()} function directly to get DEM data,

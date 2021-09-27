@@ -40,13 +40,13 @@ emissions
 modelling](https://www.sciencedirect.com/science/article/pii/S2352146516302642)
 and [ecology](https://doi.org/10.1016/j.ncon.2016.10.001). See the
 [`intro-to-slopes`
-vignette](https://itsleeds.github.io/slopes/articles/intro-to-slopes.html)
+vignette](https://ropensci.github.io/slopes/articles/intro-to-slopes.html)
 for details on fields using slope data and the need for this package.
 
 This README covers installation and basic usage. For more information
 about slopes and how to use the package to calculate them, see the [get
-started](https://itsleeds.github.io/slopes/) and the [introducion to
-slopes](https://itsleeds.github.io/intro-to-slopes/) vignette.
+started](https://ropensci.github.io/slopes/) and the [introducion to
+slopes](https://ropensci.github.io/intro-to-slopes/) vignette.
 
 ## How it works
 
@@ -133,6 +133,8 @@ below:
 
 ``` r
 sf_linestring_xyz_local = elevation_add(sf_linestring, dem = dem_lisbon_raster)
+#> Loading required package: raster
+#> Loading required package: sp
 ```
 
 In both cases you can obtain the average gradient of the linestring with
@@ -149,21 +151,21 @@ plot_slope(sf_linestring_xyz_local)
 <img src="man/figures/README-elevationprofile-1.png" width="100%" />
 
 *See more functions in [Get
-started](https://itsleeds.github.io/slopes/articles/slopes.html)
+started](https://ropensci.github.io/slopes/articles/slopes.html)
 vignette.*
 
 ## See more in vignettes
 
 -   [Get
-    started](https://itsleeds.github.io/slopes/articles/slopes.html)
+    started](https://ropensci.github.io/slopes/articles/slopes.html)
 -   [An introduction to
-    slopes](https://itsleeds.github.io/slopes/articles/intro-to-slopes.html)
+    slopes](https://ropensci.github.io/slopes/articles/intro-to-slopes.html)
 -   [Reproducible example: gradients of a road network for a given
-    city](https://itsleeds.github.io/slopes/articles/roadnetworkcycling.html)
+    city](https://ropensci.github.io/slopes/articles/roadnetworkcycling.html)
 -   [Verification of
-    slopes](https://itsleeds.github.io/slopes/articles/verification.html)
+    slopes](https://ropensci.github.io/slopes/articles/verification.html)
 -   [Benchmarking slopes
-    calculation](https://itsleeds.github.io/slopes/articles/benchmark.html)
+    calculation](https://ropensci.github.io/slopes/articles/benchmark.html)
 
 ## Code of Conduct
 
