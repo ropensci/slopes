@@ -14,13 +14,15 @@ knitr::opts_chunk$set(
 )
 ```
 
+Welcome to the slopes vignette, a type of long-form documentation/article that introduces the core functions and functionality of the `slopes` package.
+
 ## Installation
 
-<!-- You can install the released version of slopes from [CRAN](https://CRAN.R-project.org) with: -->
+You can install the released version of slopes from [CRAN](https://CRAN.R-project.org) with:
 
-<!-- ``` r -->
-<!-- install.packages("slopes") -->
-<!-- ``` -->
+```r
+install.packages("slopes")
+```
 
 Install the development version from [GitHub](https://github.com/) with:
 
