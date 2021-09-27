@@ -15,18 +15,18 @@ investment in cycling, an activity which is sensitive to slopes,
 in particular.
 
 See \href{https://github.com/ITSLeeds/slopes/}{github.com/ITSLeeds/slopes}
-for the source code and \href{https://itsleeds.github.io/slopes/}{itsleeds.github.io/slopes}
+for the source code and \href{https://ropensci.github.io/slopes/}{ropensci.github.io/slopes}
 for the website.
 
 All package functions can be found in the
-\href{https://itsleeds.github.io/slopes/reference/index.html}{Reference page}
+\href{https://ropensci.github.io/slopes/reference/index.html}{Reference page}
 on the package website.
 }
 \seealso{
 Useful links:
 \itemize{
   \item \url{https://github.com/ropensci/slopes/}
-  \item \url{https://itsleeds.github.io/slopes/}
+  \item \url{https://ropensci.github.io/slopes/}
   \item Report bugs at \url{https://github.com/ropensci/slopes/issues}
 }
 
