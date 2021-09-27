@@ -362,12 +362,84 @@ We can convert the `lisbon_route` object into a 3d linestring object with X, Y a
 lisbon_route_xyz = elevation_add(lisbon_route, dem_lisbon_raster) 
 ```
 
-
 We can now visualise the elevation profile of the route as follows:
 
 ```{r plot_slope}
 plot_slope(lisbon_route_xyz)
 ```
+
+### Splitting the network
+
+The `lisbon_route_xyz` example is useful but often you will want to calculate the slopes not of an entire route (in this case one that is 2.5 km long) but of segments.
+There are various ways to split segements, including using algorithms from other packages or [GIS programs](https://github.com/paleolimbot/qgisprocess/issues/26), but here we'll use the `stplanr` function `rnet_breakup_vertices()` (see  [`vignette("roadnetworkcycling")`](https://itsleeds.github.io/slopes/articles/roadnetworkcycling.html) for an example of this function working on a large road network):
+
+```{r}
+sf::st_length(lisbon_route_xyz) # check route length: 2.5 km
+lisbon_route_segments = stplanr::rnet_breakup_vertices(lisbon_route_xyz)
+summary(sf::st_length(lisbon_route_segments)) # mean of 50 m
+```
+
+We can now calculate the slope for each of these segments.
+
+```{r}
+lisbon_route_segments$slope = slope_xyz(lisbon_route_segments)
+summary(lisbon_route_segments$slope)
+```
+
+The route has a direction that is implicit in the order of the vertices and segments.
+From the perspective of someone travelling along the route, the slopes have a direction which is important: it's easier to go uphill than downhill.
+To calculate the slopes with direction, add the `directed` argument as follows.
+
+```{r}
+lisbon_route_segments$slope_directed = slope_xyz(lisbon_route_segments, directed = TRUE)
+summary(lisbon_route_segments$slope_directed)
+```
+
+Plotting the directed and undirected slopes side-by-side shows the importance of considering slope direction for route planning, which may want to avoid steep hills going uphill but not downhill for certain types of travel, for example.
+
+```{r, fig.show='hold', out.width="50%"}
+plot(lisbon_route_segments["slope"])
+breaks = c(0, 3, 5, 8, 10, 20, 50)
+breaks_proportion = breaks / 100
+breaks_directed = c(-rev(breaks_proportion), (breaks_proportion[-1]))
+plot(lisbon_route_segments["slope"], breaks = breaks_proportion)
+plot(lisbon_route_segments["slope_directed"], breaks = breaks_directed)
+```
+
+```{r, eval=FALSE, echo=FALSE}
+# test code
+z = sf::st_make_grid(lisbon_route_xyz, cellsize = 100)
+sampled_points = sf::st_line_sample(lisbon_route_xyz, n = 30)
+points_sf = sf::st_sf(geometry = sf::st_cast(sampled_points, "POINT"))
+plot(points_sf)
+lisbon_route_segments = stplanr::route_split(lisbon_route_xyz, p = points_sf[2:3, ])
+lisbon_route_segments = stplanr::rnet_breakup_vertices(lisbon_route_xyz)
+library(tmap)
+tmap_mode("view")
+qtm(lisbon_route_segments, lines.lwd = 9, lines.col = 1:nrow(lisbon_route_segments))
+plot(lisbon_route_segments, col = 1:nrow(lisbon_route_segments))
+```
+
+
+```{r, eval=FALSE, echo=FALSE}
+# Test: try using QGIS
+remotes::install_github("paleolimbot/qgisprocess")
+library(qgisprocess)
+qgis_configure()
+algorithms = qgis_algorithms()
+View(algorithms)
+result = qgis_run_algorithm(
+  algorithm = "grass7:v.split",
+  INPUT = lisbon_route_xyz,
+  LENGTH = 500
+  )
+route_segments = sf::st_read(result$OUTPUT)
+route_segments
+plot(lisbon_route_xyz$geometry)
+plot(route_segments$geom, add = T, lwd = 3)
+mapview::mapview(route_segments)
+```
+
 
 ### Using `elevation_add()` with and without a `dem =` argument
 
