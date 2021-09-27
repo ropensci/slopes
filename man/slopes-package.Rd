@@ -25,9 +25,9 @@ on the package website.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/itsleeds/slopes/}
+  \item \url{https://github.com/ropensci/slopes/}
   \item \url{https://itsleeds.github.io/slopes/}
-  \item Report bugs at \url{https://github.com/itsleeds/slopes/issues}
+  \item Report bugs at \url{https://github.com/ropensci/slopes/issues}
 }
 
 }

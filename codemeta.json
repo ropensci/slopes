@@ -4,9 +4,9 @@
   "identifier": "slopes",
   "description": "Functions and example data to support research into the\n  slope (also known as longitudinal gradient or steepness)\n  of linear geographic entities such as roads <doi:10.1038/s41597-019-0147-x>\n  and rivers <doi:10.1016/j.jhydrol.2018.06.066>.\n  The package was initially developed to calculate the steepness of street segments\n  but can be used to calculate steepness of any linear feature that can be\n  represented as LINESTRING geometries in the 'sf' class system.\n  The package takes two main types of input data for slope calculation: vector geographic\n  objects representing linear features, and raster geographic objects with elevation values\n  (which can be downloaded using functionality in the package)\n  representing a continuous terrain surface.\n  Where no raster object is provided the package attempts to download elevation\n  data using the 'ceramic' package.",
   "name": "slopes: Calculate Slopes of Roads, Rivers and Trajectories",
-  "codeRepository": "https://github.com/itsleeds/slopes/",
+  "codeRepository": "https://github.com/ropensci/slopes/",
   "relatedLink": "https://itsleeds.github.io/slopes/",
-  "issueTracker": "https://github.com/itsleeds/slopes/issues",
+  "issueTracker": "https://github.com/ropensci/slopes/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
   "version": "0.0.0.9000",
   "programmingLanguage": {

@@ -77,7 +77,7 @@ Testing on the full network:
 
 ```{r}
 # install latest version
-remotes::install_github("itsleeds/slopes")
+remotes::install_github("ropensci/slopes")
 library(sf)
 library(raster)
 library(slopes)
@@ -104,7 +104,7 @@ plot(network_ls["slopeNASA"], lwd = 5)
 # Issues with terra
 
 ```{r}
-remotes::install_github("itsleeds/slopes")
+remotes::install_github("ropensci/slopes")
 library(slopes)
 class(lisbon_road_network)
 raster::plot(dem_lisbon_raster)
