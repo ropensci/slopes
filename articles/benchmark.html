@@ -119,18 +119,19 @@
 <span class="va">res</span> <span class="op">=</span> <span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bench/man/mark.html">mark</a></span><span class="op">(</span>check <span class="op">=</span> <span class="cn">FALSE</span>,
   slope_raster <span class="op">=</span> <span class="fu"><a href="../reference/slope_raster.html">slope_raster</a></span><span class="op">(</span><span class="va">r</span>, <span class="va">e</span><span class="op">)</span>,
   slope_terra <span class="op">=</span> <span class="fu"><a href="../reference/slope_raster.html">slope_raster</a></span><span class="op">(</span><span class="va">r</span>, <span class="va">et</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+<span class="op">)</span>
+<span class="co">#&gt; Warning: Some expressions had a GC in every iteration; so filtering is disabled.</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">res</span>
 <span class="co">#&gt; # A tibble: 2 × 6</span>
 <span class="co">#&gt;   expression        min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;   &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 slope_raster    107ms    111ms      9.04   22.49MB     6.03</span>
-<span class="co">#&gt; 2 slope_terra     114ms    114ms      8.77    2.17MB    17.5</span></code></pre></div>
+<span class="co">#&gt; 1 slope_raster    108ms    124ms      7.39   22.49MB     2.96</span>
+<span class="co">#&gt; 2 slope_terra     839ms    839ms      1.19    2.17MB     1.19</span></code></pre></div>
 <p>That is approximately</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">`itr/sec`</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/ncell.html">nrow</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 2451 2376</span></code></pre></div>
+<span class="co">#&gt; [1] 2003  323</span></code></pre></div>
 <p>routes per second using the <code>raster</code> and <code>terra</code> (the default if installed, using <code>RasterLayer</code> and native <code>SpatRaster</code> objects) packages to extract elevation estimates from the raster datasets, respectively.</p>
 <p>The message: use the <code>terra</code> package to read-in DEM data for slope extraction if speed is important.</p>
 <p>To go faster, you can chose the <code>simple</code> method to gain some speed at the expense of accuracy:</p>
@@ -148,10 +149,10 @@
 <span class="co">#&gt; # A tibble: 4 × 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 bilinear1   105.6ms  107.6ms      9.29    5.72MB     4.65</span>
-<span class="co">#&gt; 2 bilinear2   114.6ms  121.7ms      8.21    2.12MB     8.21</span>
-<span class="co">#&gt; 3 simple1      90.7ms   92.2ms     10.8     2.14MB     5.41</span>
-<span class="co">#&gt; 4 simple2     111.6ms  115.7ms      8.55    2.12MB     2.14</span></code></pre></div>
+<span class="co">#&gt; 1 bilinear1   108.4ms  115.7ms      8.64    5.72MB     4.32</span>
+<span class="co">#&gt; 2 bilinear2   117.3ms  117.8ms      8.49    2.12MB     5.66</span>
+<span class="co">#&gt; 3 simple1      94.1ms   94.5ms     10.6     2.14MB     5.29</span>
+<span class="co">#&gt; 4 simple2     115.9ms  116.6ms      8.47    2.12MB     2.12</span></code></pre></div>
 </div>
   </div>
 

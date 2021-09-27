@@ -120,7 +120,7 @@
 <div id="extract-the-osm-network-from-geofabrik" class="section level2">
 <h2 class="hasAnchor">
 <a href="#extract-the-osm-network-from-geofabrik" class="anchor"></a>Extract the OSM network from geofabrik</h2>
-<p>For this step you may use <code>osmextract</code> <a href="https://itsleeds.github.io/osmextract/articles/osmextract.html">package</a> which downloads the most recent information available at OSM (<a href="https://download.geofabrik.de/index.html" class="uri">https://download.geofabrik.de/index.html</a>) and converts to <em>GeoPackage</em> (.gpkg), the equivalent to <em>shapefile</em>.</p>
+<p>For this step you may use <code>osmextract</code> <a href="https://ropensci.github.io/osmextract/articles/osmextract.html">package</a> which downloads the most recent information available at OSM (<a href="https://download.geofabrik.de/index.html" class="uri">https://download.geofabrik.de/index.html</a>) and converts to <em>GeoPackage</em> (.gpkg), the equivalent to <em>shapefile</em>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span>
@@ -168,10 +168,10 @@
 <div id="get-slope-values-for-each-segment" class="section level2">
 <h2 class="hasAnchor">
 <a href="#get-slope-values-for-each-segment" class="anchor"></a>Get slope values for each segment</h2>
-<p>For this case we will use <code><a href="../reference/slope_raster.html">slope_raster()</a></code> <a href="https://itsleeds.github.io/slopes/reference/slope_raster.html">function</a>, to retrieve the z values from a digital elevation model. This raster was obtained from STRM NASA mission.</p>
+<p>For this case we will use <code><a href="../reference/slope_raster.html">slope_raster()</a></code> <a href="https://ropensci.github.io/slopes/reference/slope_raster.html">function</a>, to retrieve the z values from a digital elevation model. This raster was obtained from STRM NASA mission.</p>
 <p>The <strong>SRTM</strong> (<em>Shuttle Radar Topography Mission</em>) NASA’s mission provides <a href="https://gisgeography.com/srtm-shuttle-radar-topography-mission/">freely available</a> worldwide DEM, with a resolution of 25 to 30m and with a vertical accuracy of 16m - <a href="https://www2.jpl.nasa.gov/srtm/">more</a>. The resolution for USA might be better.</p>
 <p>Alternatively, <strong>COPERNICUS</strong> ESA’s mission also provides <a href="https://land.copernicus.eu/imagery-in-situ/eu-dem">freely available</a> DEM for all Europe, with a 25m resolution and a vertical accuracy of 7m - <a href="https://land.copernicus.eu/user-corner/publications/eu-dem-flyer/view">more</a>.</p>
-<p>Depending of how large is your road network, you can use <code><a href="../reference/elevation_add.html">elevation_add()</a></code> <a href="https://itsleeds.github.io/slopes/reference/elevation_add.html">function</a> - this will require a valid <a href="https://docs.mapbox.com/api/overview/">Mapbox api key</a>.</p>
+<p>Depending of how large is your road network, you can use <code><a href="../reference/elevation_add.html">elevation_add()</a></code> <a href="https://ropensci.github.io/slopes/reference/elevation_add.html">function</a> - this will require a valid <a href="https://docs.mapbox.com/api/overview/">Mapbox api key</a>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Import and plot DEM</span>
 <span class="va">u</span> <span class="op">=</span> <span class="st">"https://github.com/U-Shift/Declives-RedeViaria/releases/download/0.2/IsleOfWightNASA_clip.tif"</span>

@@ -117,8 +117,8 @@
 <li>
 <a href="https://geocompr.robinlovelace.net/spatial-class.html#raster-data">raster</a> objects with pixel values reporting average height, commonly known as digital elevation model (<strong>DEM</strong>) datasets, defined by classes in the <a href="https://cran.r-project.org/package=raster"><code>raster</code></a> or more recent <a href="https://rspatial.org/terra"><code>terra</code></a> packages</li>
 </ul>
-<p>Data on slopes are useful in many fields of research, including <a href="https://en.wikipedia.org/wiki/Stream_gradient">hydrology</a>, natural hazards (including <a href="https://www.humanitarianresponse.info/fr/operations/afghanistan/infographic/afg-river-gradient-and-flood-hazard">flooding</a> and <a href="https://assets.publishing.service.gov.uk/media/57a08d0740f0b652dd0016f4/R7815-ADD017_col.pdf">landslide risk management</a>), recreational and competitive sports such as <a href="http://theclimbingcyclist.com/gradients-and-cycling-an-introduction/">cycling</a>, <a href="https://trailism.com/trail-grades/">hiking</a>, and <a href="https://www.snowplaza.co.uk/blog/16682-skiing-steeps-what-does-gradient-mean-ski-piste/">skiing</a>. Slopes are also also important in some branches of <a href="https://www.sciencedirect.com/science/article/pii/S2352146516302642">transport and emissions modelling</a> and <a href="https://doi.org/10.1016/j.ncon.2016.10.001">ecology</a>. See the <a href="https://itsleeds.github.io/slopes/articles/intro-to-slopes.html"><code>intro-to-slopes</code> vignette</a> for details on fields using slope data and the need for this package.</p>
-<p>This README covers installation and basic usage. For more information about slopes and how to use the package to calculate them, see the <a href="https://itsleeds.github.io/slopes/">get started</a> and the <a href="https://itsleeds.github.io/intro-to-slopes/">introducion to slopes</a> vignette.</p>
+<p>Data on slopes are useful in many fields of research, including <a href="https://en.wikipedia.org/wiki/Stream_gradient">hydrology</a>, natural hazards (including <a href="https://www.humanitarianresponse.info/fr/operations/afghanistan/infographic/afg-river-gradient-and-flood-hazard">flooding</a> and <a href="https://assets.publishing.service.gov.uk/media/57a08d0740f0b652dd0016f4/R7815-ADD017_col.pdf">landslide risk management</a>), recreational and competitive sports such as <a href="http://theclimbingcyclist.com/gradients-and-cycling-an-introduction/">cycling</a>, <a href="https://trailism.com/trail-grades/">hiking</a>, and <a href="https://www.snowplaza.co.uk/blog/16682-skiing-steeps-what-does-gradient-mean-ski-piste/">skiing</a>. Slopes are also also important in some branches of <a href="https://www.sciencedirect.com/science/article/pii/S2352146516302642">transport and emissions modelling</a> and <a href="https://doi.org/10.1016/j.ncon.2016.10.001">ecology</a>. See the <a href="https://ropensci.github.io/slopes/articles/intro-to-slopes.html"><code>intro-to-slopes</code> vignette</a> for details on fields using slope data and the need for this package.</p>
+<p>This README covers installation and basic usage. For more information about slopes and how to use the package to calculate them, see the <a href="https://ropensci.github.io/slopes/">get started</a> and the <a href="https://ropensci.github.io/intro-to-slopes/">introducion to slopes</a> vignette.</p>
 <div id="how-it-works" class="section level2">
 <h2 class="hasAnchor">
 <a href="#how-it-works" class="anchor"></a>How it works</h2>
@@ -170,7 +170,9 @@
 <span class="co">#&gt; https://api.mapbox.com/v4/mapbox.terrain-rgb/</span></code></pre></div>
 <p>With the default argument <code>dem = NULL</code>, the function downloads the necessary elevation information from Mapbox. You can also this use a local digital elevation model (<code>dem = ...</code>), as shown in the example below:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sf_linestring_xyz_local</span> <span class="op">=</span> <span class="fu"><a href="reference/elevation_add.html">elevation_add</a></span><span class="op">(</span><span class="va">sf_linestring</span>, dem <span class="op">=</span> <span class="va">dem_lisbon_raster</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">sf_linestring_xyz_local</span> <span class="op">=</span> <span class="fu"><a href="reference/elevation_add.html">elevation_add</a></span><span class="op">(</span><span class="va">sf_linestring</span>, dem <span class="op">=</span> <span class="va">dem_lisbon_raster</span><span class="op">)</span>
+<span class="co">#&gt; Loading required package: raster</span>
+<span class="co">#&gt; Loading required package: sp</span></code></pre></div>
 <p>In both cases you can obtain the average gradient of the linestring with <code><a href="reference/slope_xyz.html">slope_xyz()</a></code> and plot the elevation profile with <code><a href="reference/plot_slope.html">plot_slope()</a></code> as follows:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/slope_xyz.html">slope_xyz</a></span><span class="op">(</span><span class="va">sf_linestring_xyz_local</span><span class="op">)</span>
@@ -178,17 +180,17 @@
 <span class="co">#&gt; 0.07817098</span>
 <span class="fu"><a href="reference/plot_slope.html">plot_slope</a></span><span class="op">(</span><span class="va">sf_linestring_xyz_local</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-elevationprofile-1.png" width="100%"></p>
-<p><em>See more functions in <a href="https://itsleeds.github.io/slopes/articles/slopes.html">Get started</a> vignette.</em></p>
+<p><em>See more functions in <a href="https://ropensci.github.io/slopes/articles/slopes.html">Get started</a> vignette.</em></p>
 </div>
 <div id="see-more-in-vignettes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#see-more-in-vignettes" class="anchor"></a>See more in vignettes</h2>
 <ul>
-<li><a href="https://itsleeds.github.io/slopes/articles/slopes.html">Get started</a></li>
-<li><a href="https://itsleeds.github.io/slopes/articles/intro-to-slopes.html">An introduction to slopes</a></li>
-<li><a href="https://itsleeds.github.io/slopes/articles/roadnetworkcycling.html">Reproducible example: gradients of a road network for a given city</a></li>
-<li><a href="https://itsleeds.github.io/slopes/articles/verification.html">Verification of slopes</a></li>
-<li><a href="https://itsleeds.github.io/slopes/articles/benchmark.html">Benchmarking slopes calculation</a></li>
+<li><a href="https://ropensci.github.io/slopes/articles/slopes.html">Get started</a></li>
+<li><a href="https://ropensci.github.io/slopes/articles/intro-to-slopes.html">An introduction to slopes</a></li>
+<li><a href="https://ropensci.github.io/slopes/articles/roadnetworkcycling.html">Reproducible example: gradients of a road network for a given city</a></li>
+<li><a href="https://ropensci.github.io/slopes/articles/verification.html">Verification of slopes</a></li>
+<li><a href="https://ropensci.github.io/slopes/articles/benchmark.html">Benchmarking slopes calculation</a></li>
 </ul>
 </div>
 <div id="code-of-conduct" class="section level2">
