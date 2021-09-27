@@ -14,7 +14,7 @@ to support their research in active travel, and the prioritisation of
 investment in cycling, an activity which is sensitive to slopes,
 in particular.
 
-See \href{https://github.com/ITSLeeds/slopes/}{github.com/ITSLeeds/slopes}
+See \href{https://github.com/ropensci/slopes}{github.com/ITSLeeds/slopes}
 for the source code and \href{https://ropensci.github.io/slopes/}{ropensci.github.io/slopes}
 for the website.
 
