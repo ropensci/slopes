@@ -9,11 +9,11 @@
 #' in particular.
 #'
 #' See [github.com/ITSLeeds/slopes](https://github.com/ITSLeeds/slopes/)
-#' for the source code and [itsleeds.github.io/slopes](https://itsleeds.github.io/slopes/)
+#' for the source code and [ropensci.github.io/slopes](https://ropensci.github.io/slopes/)
 #' for the website.
 #'
 #' All package functions can be found in the
-#' [Reference page](https://itsleeds.github.io/slopes/reference/index.html)
+#' [Reference page](https://ropensci.github.io/slopes/reference/index.html)
 #' on the package website.
 #'
 

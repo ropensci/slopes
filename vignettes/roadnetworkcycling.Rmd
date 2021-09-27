@@ -33,7 +33,7 @@ This will follow three steps:
 
 ## Extract the OSM network from geofabrik
 
-For this step you may use `osmextract` [package](https://itsleeds.github.io/osmextract/articles/osmextract.html) which downloads the most recent information available at OSM (https://download.geofabrik.de/index.html) and converts to _GeoPackage_ (.gpkg), the equivalent to _shapefile_.
+For this step you may use `osmextract` [package](https://ropensci.github.io/osmextract/articles/osmextract.html) which downloads the most recent information available at OSM (https://download.geofabrik.de/index.html) and converts to _GeoPackage_ (.gpkg), the equivalent to _shapefile_.
 
 ```{r setup1, warning=FALSE, message = FALSE}
 library(dplyr)
@@ -90,13 +90,13 @@ In this case, there are around 1.6 x the number of segments than in the original
 
 ## Get slope values for each segment
 
-For this case we will use `slope_raster()` [function](https://itsleeds.github.io/slopes/reference/slope_raster.html), to retrieve the z values from a digital elevation model. This raster was obtained from STRM NASA mission.
+For this case we will use `slope_raster()` [function](https://ropensci.github.io/slopes/reference/slope_raster.html), to retrieve the z values from a digital elevation model. This raster was obtained from STRM NASA mission.
 
 The **SRTM** (*Shuttle Radar Topography Mission*) NASA’s mission provides [freely available](https://gisgeography.com/srtm-shuttle-radar-topography-mission/) worldwide DEM, with a resolution of 25 to 30m and with a vertical accuracy of 16m - [more](https://www2.jpl.nasa.gov/srtm/). The resolution for USA might be better.
 
 Alternatively, **COPERNICUS** ESA's mission also provides [freely available](https://land.copernicus.eu/imagery-in-situ/eu-dem) DEM for all Europe, with a 25m resolution and a vertical accuracy of 7m - [more](https://land.copernicus.eu/user-corner/publications/eu-dem-flyer/view).
 
-Depending of how large is your road network, you can use `elevation_add()` [function](https://itsleeds.github.io/slopes/reference/elevation_add.html) - this will require a valid [Mapbox api key](https://docs.mapbox.com/api/overview/).
+Depending of how large is your road network, you can use `elevation_add()` [function](https://ropensci.github.io/slopes/reference/elevation_add.html) - this will require a valid [Mapbox api key](https://docs.mapbox.com/api/overview/).
 
 ```{r import_dem, message=FALSE}
 # Import and plot DEM

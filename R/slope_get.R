@@ -7,7 +7,7 @@
 #' It requires an API that can be added by following guidance in the package's
 #' [README](https://github.com/ITSLeeds/slopes#installation-for-dem-downloads)
 #' and in the
-#' [`slopes` vignette](https://itsleeds.github.io/slopes/articles/slopes.html).
+#' [`slopes` vignette](https://ropensci.github.io/slopes/articles/slopes.html).
 #'
 #'
 #' Note: if you use the `cc_elevation()` function directly to get DEM data,
