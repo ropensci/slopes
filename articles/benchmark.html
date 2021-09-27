@@ -126,12 +126,12 @@
 <span class="co">#&gt; # A tibble: 2 × 6</span>
 <span class="co">#&gt;   expression        min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt;   &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 slope_raster    108ms    124ms      7.39   22.49MB     2.96</span>
-<span class="co">#&gt; 2 slope_terra     839ms    839ms      1.19    2.17MB     1.19</span></code></pre></div>
+<span class="co">#&gt; 1 slope_raster    104ms    111ms      8.46   22.49MB     3.38</span>
+<span class="co">#&gt; 2 slope_terra     139ms    277ms      3.61    2.17MB     3.61</span></code></pre></div>
 <p>That is approximately</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">`itr/sec`</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/ncell.html">nrow</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 2003  323</span></code></pre></div>
+<span class="co">#&gt; [1] 2292  979</span></code></pre></div>
 <p>routes per second using the <code>raster</code> and <code>terra</code> (the default if installed, using <code>RasterLayer</code> and native <code>SpatRaster</code> objects) packages to extract elevation estimates from the raster datasets, respectively.</p>
 <p>The message: use the <code>terra</code> package to read-in DEM data for slope extraction if speed is important.</p>
 <p>To go faster, you can chose the <code>simple</code> method to gain some speed at the expense of accuracy:</p>
@@ -149,10 +149,10 @@
 <span class="co">#&gt; # A tibble: 4 × 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 bilinear1   108.4ms  115.7ms      8.64    5.72MB     4.32</span>
-<span class="co">#&gt; 2 bilinear2   117.3ms  117.8ms      8.49    2.12MB     5.66</span>
-<span class="co">#&gt; 3 simple1      94.1ms   94.5ms     10.6     2.14MB     5.29</span>
-<span class="co">#&gt; 4 simple2     115.9ms  116.6ms      8.47    2.12MB     2.12</span></code></pre></div>
+<span class="co">#&gt; 1 bilinear1   127.6ms    128ms      7.84    5.72MB     7.84</span>
+<span class="co">#&gt; 2 bilinear2     118ms    144ms      7.17    2.12MB     2.39</span>
+<span class="co">#&gt; 3 simple1      90.9ms     93ms      8.82    2.14MB     4.41</span>
+<span class="co">#&gt; 4 simple2     112.3ms    119ms      8.34    2.12MB     5.56</span></code></pre></div>
 </div>
   </div>
 
