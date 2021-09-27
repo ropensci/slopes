@@ -133,8 +133,6 @@ below:
 
 ``` r
 sf_linestring_xyz_local = elevation_add(sf_linestring, dem = dem_lisbon_raster)
-#> Loading required package: raster
-#> Loading required package: sp
 ```
 
 In both cases you can obtain the average gradient of the linestring with
@@ -169,7 +167,6 @@ vignette.*
 
 ## Code of Conduct
 
-slopes package is released under the [Contributor Code of
-Conduct](https://devguide.ropensci.org/collaboration.html#coc-file) of
-rOpenSci. By contributing to this project, you agree to abide by its
-terms.
+Please note that this package is released with a [Contributor Code of
+Conduct](https://ropensci.org/code-of-conduct/). By contributing to this
+project, you agree to abide by its terms.
