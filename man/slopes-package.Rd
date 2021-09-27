@@ -26,7 +26,7 @@ on the package website.
 Useful links:
 \itemize{
   \item \url{https://github.com/ropensci/slopes/}
-  \item \url{https://ropensci.github.io/slopes/}
+  \item \url{https://docs.ropensci.org/slopes/}
   \item Report bugs at \url{https://github.com/ropensci/slopes/issues}
 }
 
