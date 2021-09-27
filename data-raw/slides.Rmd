@@ -134,7 +134,7 @@ Image source: Goodchild ([2020](https://doi.org/10.1111/gean.12253)): Beyond Tob
 # Installation and set-up
 
 ```{r, eval=FALSE}
-remotes::install_github("itsleeds/slopes")
+remotes::install_github("ropensci/slopes")
 ```
 
 
@@ -378,7 +378,7 @@ plot(routes["slope"], add = TRUE)
 -   Improve `plot_slope()` visualization
 -   Explore accuracy of data vs 'ground truth'
 -   Finish review, publish in JOSS and on CRAN
--   See [itsleeds/slopes](https://github.com/ITSLeeds/slopes) on github to get involved!
+-   See [ropensci/slopes](https://github.com/ITSLeeds/slopes) on github to get involved!
 
 ]
 

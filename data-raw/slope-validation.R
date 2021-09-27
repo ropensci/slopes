@@ -1,7 +1,7 @@
 # Aim: get incline data for validation of slopes package
 
-remotes::install_github("itsleeds/slopes")
-# remotes::install_github("itsleeds/slopes", "2c9ef51509ffc64309d5100148cbc21c212f5772")
+remotes::install_github("ropensci/slopes")
+# remotes::install_github("ropensci/slopes", "2c9ef51509ffc64309d5100148cbc21c212f5772")
 
 library(dplyr)
 library(slopes)

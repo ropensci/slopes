@@ -21,7 +21,7 @@ The package calculates longitudinal steepness of linear features such as roads a
 After installing R, it can be installed as follows:
 
 ```{r, eval=FALSE}
-remotes::install_github("itsleeds/slopes")
+remotes::install_github("ropensci/slopes")
 ```
 
 The minimum data requirements for using the package are elevation points, either as a vector, a matrix or as a digital elevation model (DEM) encoded as a raster dataset. Typically you will also have a geographic object representing the roads or similar features. These two types of input data are represented in the code output and plot below.

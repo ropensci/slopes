@@ -5,9 +5,9 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/itsleeds/slopes/workflows/R-CMD-check/badge.svg)](https://github.com/itsleeds/slopes/actions)
+[![R-CMD-check](https://github.com/ropensci/slopes/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/slopes/actions)
 [![Codecov test
-coverage](https://codecov.io/gh/itsleeds/slopes/branch/master/graph/badge.svg)](https://codecov.io/gh/itsleeds/slopes?branch=master)
+coverage](https://codecov.io/gh/ropensci/slopes/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/slopes?branch=master)
 [![Status at rOpenSci Software Peer
 Review](https://badges.ropensci.org/420_status.svg)](https://github.com/ropensci/software-review/issues/420)
 <!-- badges: end -->
@@ -78,7 +78,7 @@ Install the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("itsleeds/slopes")
+remotes::install_github("ropensci/slopes")
 ```
 
 #### Installation for DEM downloads
@@ -89,7 +89,7 @@ the package with suggested dependencies, as follows:
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("itsleeds/slopes", dependencies = "Suggests")
+remotes::install_github("ropensci/slopes", dependencies = "Suggests")
 ```
 
 Furthermore, you will need to add a MapBox API key to be able to get DEM
