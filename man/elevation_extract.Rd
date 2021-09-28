@@ -43,7 +43,7 @@ By default, the elevations are estimated using
 \href{https://en.wikipedia.org/wiki/Bilinear_interpolation}{bilinear interpolation}
 (\code{method = "bilinear"})
 which calculates point height based on proximity to the centroids of
-surrounging cells.
+surrounding cells.
 The value of the \code{method} argument is passed to the \code{method} argument in
 \href{https://rspatial.github.io/raster/reference/extract.html}{\code{raster::extract()}}
 or

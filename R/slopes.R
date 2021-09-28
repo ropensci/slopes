@@ -319,7 +319,7 @@ slope_xyz = function(
 #' [bilinear interpolation](https://en.wikipedia.org/wiki/Bilinear_interpolation)
 #' (`method = "bilinear"`)
 #' which calculates point height based on proximity to the centroids of
-#' surrounging cells.
+#' surrounding cells.
 #' The value of the `method` argument is passed to the `method` argument in
 #' [`raster::extract()`](https://rspatial.github.io/raster/reference/extract.html)
 #' or
