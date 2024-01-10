@@ -195,6 +195,7 @@ st_write(network, "shapefiles/SlopesIoW.gpkg", append=F)
 -   [Oporto (Portugal)](https://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/DeclivesPorto_EU.html)
 -   [Leeds (UK)](https://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/SlopesLeeds.html)
 -   [Zurich (CH)](https://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/SlopesZurich.html)
+-   [Paris (FR)](https://web.tecnico.ulisboa.pt/~rosamfelix/gis/declives/SlopesParis_NASA.html)
 
 
 ```{r tidyup, include=FALSE}
