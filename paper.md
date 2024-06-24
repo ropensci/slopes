@@ -21,8 +21,8 @@ the ‘ceramic’ package.
 
 # Statement of need
 
-Although there are several ways to name “slope,” such as “steepness,”
-“hilliness,” “inclination,” “aspect,” “gradient,” “declivity,” the
+Although there are several ways to name “slope”, such as “steepness”,
+“hilliness”, “inclination”, “aspect”, “gradient”, “declivity”, the
 referred `slopes` in this package can be defined as the “longitudinal
 gradient” of linear geographic entities, as defined in the context of
 rivers by(Cohen et al. 2018).
@@ -53,20 +53,20 @@ and [ecology](https://doi.org/10.1016/j.ncon.2016.10.001). A growing
 number of people working with geospatial data require accurate estimates
 of gradient, including:
 
--   Transport planning practitioners who require accurate estimates of
-    roadway gradient for estimating energy consumption, safety and mode
-    shift potential in hilly cities (such as Lisbon, the case study city
-    used in the examples in the documentation).
--   Vehicle routing software developers, who need to build systems are
-    sensitive to going up or down steep hills (e.g. bicycles, trains,
-    and large trucks), such as active travel planning, logistics, and
-    emergency services.
--   Natural hazard researchers and risk assessors require estimates of
-    linear gradient to inform safety and mitigation plans associated
-    with project on hilly terrain.
--   Aquatic ecologists, flooding researchers and others, who could
-    benefit from estimates of river gradient to support modelling of
-    storm hydrographs
+- Transport planning practitioners who require accurate estimates of
+  roadway gradient for estimating energy consumption, safety and mode
+  shift potential in hilly cities (such as Lisbon, the case study city
+  used in the examples in the documentation).
+- Vehicle routing software developers, who need to build systems are
+  sensitive to going up or down steep hills (e.g. bicycles, trains, and
+  large trucks), such as active travel planning, logistics, and
+  emergency services.
+- Natural hazard researchers and risk assessors require estimates of
+  linear gradient to inform safety and mitigation plans associated with
+  project on hilly terrain.
+- Aquatic ecologists, flooding researchers and others, who could benefit
+  from estimates of river gradient to support modelling of storm
+  hydrographs
 
 There likely other domains where slopes could be useful, such as
 agriculture, geology, and civil engineering.
@@ -76,7 +76,9 @@ showing gradients across Sao Paulo (Brazil, see image below) that has
 received more than 300 ‘likes’ on Twitter and generated conversations:
 <https://twitter.com/DanielGuth/status/1347270685161304069>
 
-<img src="https://camo.githubusercontent.com/30a3b814dd72aef5b51db635f2ab6e1b6b6c57b856d239822788967a4932d655/68747470733a2f2f7062732e7477696d672e636f6d2f6d656469612f45724a32647238574d414948774d6e3f666f726d61743d6a7067266e616d653d6c61726765" style="width:50.0%" />
+<img
+src="https://camo.githubusercontent.com/30a3b814dd72aef5b51db635f2ab6e1b6b6c57b856d239822788967a4932d655/68747470733a2f2f7062732e7477696d672e636f6d2f6d656469612f45724a32647238574d414948774d6e3f666f726d61743d6a7067266e616d653d6c61726765"
+style="width:50.0%" />
 
 # Usage and Key functions
 
