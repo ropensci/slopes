@@ -55,5 +55,6 @@ Suggests:
     tmap,
     leaflet,
     bench
+Config/Needs/website: generics
 VignetteBuilder: knitr
 Config/testthat/edition: 3
