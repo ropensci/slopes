@@ -48,8 +48,7 @@ elevation_get = function(routes, ..., output_format = "raster") {
   if(!requireNamespace("terra", quietly = TRUE)) {
     message('install.packages("terra") # for this to work')
   }
-  et = terra::rast(e)
-  res = terra::project(et, y = crs_routes$wkt)
+  res = terra::project(e, y = crs_routes$wkt)
   if(output_format == "raster") {
     res = raster::raster(res)
   }
