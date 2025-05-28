@@ -14,7 +14,7 @@ to support their research in active travel, and the prioritisation of
 investment in cycling, an activity which is sensitive to slopes,
 in particular.
 
-See \href{https://github.com/ropensci/slopes}{github.com/ITSLeeds/slopes}
+See \href{https://github.com/ITSLeeds/slopes/}{github.com/ITSLeeds/slopes}
 for the source code and \href{https://ropensci.github.io/slopes/}{ropensci.github.io/slopes}
 for the website.
 
@@ -42,8 +42,8 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item Dan Olner (Dan reviewed the package for rOpenSci, see https://github.com/ropensci/software-review/issues/420#issuecomment-857662657 ) [reviewer]
-  \item Andy Teucher (Andy reviewed the package for rOpenSci, see https://github.com/ropensci/software-review/issues/420#issuecomment-858231647 ) [reviewer]
+  \item Dan Olner (Dan reviewed the package for rOpenSci, see https://github.com/ropensci/software-review/issues/420#issuecomment-857662657) [reviewer]
+  \item Andy Teucher (Andy reviewed the package for rOpenSci, see https://github.com/ropensci/software-review/issues/420#issuecomment-858231647) [reviewer]
 }
 
 }

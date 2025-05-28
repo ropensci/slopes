@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/ropensci/slopes/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/slopes/actions/workflows/R-CMD-check.yaml)
-[![Codecov test coverage](https://codecov.io/gh/ropensci/slopes/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/slopes?branch=master)
+[![Codecov test coverage](https://codecov.io/gh/ropensci/slopes/graph/badge.svg)](https://app.codecov.io/gh/ropensci/slopes)
 [![Status at rOpenSci Software Peer Review](https://badges.ropensci.org/420_status.svg)](https://github.com/ropensci/software-review/issues/420)
 <!-- badges: end -->
 
