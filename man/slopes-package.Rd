@@ -5,21 +5,25 @@
 \alias{slopes}
 \alias{slopes-package}
 \title{slopes: Calculate Slopes of Roads, Rivers and Trajectories}
+\value{
+The package does not return a single value, but a collection of functions.
+}
 \description{
 Calculate the slope (also known as steepness and gradient)
 of linear features such as roads, rivers and ski routes.
-
+}
+\details{
 Created by Robin Lovelace and Rosa Félix, who developed the package
 to support their research in active travel, and the prioritisation of
 investment in cycling, an activity which is sensitive to slopes,
 in particular.
 
-See \href{https://github.com/ITSLeeds/slopes/}{github.com/ITSLeeds/slopes}
-for the source code and \href{https://ropensci.github.io/slopes/}{ropensci.github.io/slopes}
+See \verb{https://github.com/ropensci/slopes/}
+for the source code and \verb{https://docs.ropensci.org/slopes/}
 for the website.
 
 All package functions can be found in the
-\href{https://ropensci.github.io/slopes/reference/index.html}{Reference page}
+\href{https://docs.ropensci.org/slopes/reference/index.html}{Reference page}
 on the package website.
 }
 \seealso{
@@ -32,7 +36,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Robin Lovelace \email{rob00x@gmail.com} (\href{https://orcid.org/0000-0001-5679-6536}{ORCID})
+\strong{Maintainer}: Robin Lovelace \email{rob00x@gmail.com} (\href{https://orcid.org/0000-0001-5679-6536}{ORCID}) [copyright holder]
 
 Authors:
 \itemize{

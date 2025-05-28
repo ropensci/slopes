@@ -37,14 +37,16 @@ you can cache the data, as described in the package's
 \examples{
 # Time-consuming examples that require an internet connection and API key:
 \donttest{
-library(sf)
-library(raster)
-routes = cyclestreets_route
-e = elevation_get(routes)
-class(e)
-crs(e)
-e
-plot(e)
-plot(st_geometry(routes), add = TRUE)
+if (rlang::is_installed("ceramic") && rlang::is_installed("sf") && rlang::is_installed("raster")) {
+  library(sf)
+  library(raster)
+  routes = cyclestreets_route
+  e = elevation_get(routes)
+  class(e)
+  crs(e)
+  e
+  plot(e)
+  plot(st_geometry(routes), add = TRUE)
+}
 }
 }

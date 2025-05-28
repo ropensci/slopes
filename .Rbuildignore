@@ -14,3 +14,8 @@
 ^\.httr-oauth$
 ^codecov\.yml$
 ^CODE_OF_CONDUCT\.md$
+codemeta.json
+paper.Rmd
+paper.bib
+paper.html
+paper.md

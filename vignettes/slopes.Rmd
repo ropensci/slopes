@@ -2,6 +2,8 @@
 title: "Get started"
 output: bookdown::html_vignette2
 vignette: >
+  %\VignetteIndexEntry{Get started}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 

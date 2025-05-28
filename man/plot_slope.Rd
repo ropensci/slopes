@@ -57,7 +57,7 @@ Includes negative numbers and omits zero by default}
 \item{...}{Additional parameters to pass to legend}
 }
 \value{
-A plot showing the elevation profile associated with a linestring.
+A plot object is invisibly returned, and a plot is created on the current graphics device.
 }
 \description{
 Plot slope data for a 3d linestring with base R graphics
