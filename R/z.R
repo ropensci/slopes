@@ -49,7 +49,7 @@ z_max = function(x) {
 #' @rdname z_value
 #' @export
 z_min = function(x) {
-  max(z_value(x), na.rm = TRUE)
+  min(z_value(x), na.rm = TRUE)
 }
 #' @rdname z_value
 #' @export
