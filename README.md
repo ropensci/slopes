@@ -5,9 +5,9 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/ropensci/slopes/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/slopes/actions)
+[![R-CMD-check.yaml](https://github.com/ropensci/slopes/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/slopes/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/ropensci/slopes/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/slopes?branch=master)
+coverage](https://codecov.io/gh/ropensci/slopes/graph/badge.svg)](https://app.codecov.io/gh/ropensci/slopes)
 [![Status at rOpenSci Software Peer
 Review](https://badges.ropensci.org/420_status.svg)](https://github.com/ropensci/software-review/issues/420)
 <!-- badges: end -->
@@ -16,10 +16,10 @@ The **slopes** R package calculates the slope (longitudinal steepness,
 also known as gradient) of roads, rivers and other linear (simple)
 features, based on two main inputs:
 
--   [vector](https://geocompr.robinlovelace.net/spatial-class.html#vector-data)
+  - [vector](https://geocompr.robinlovelace.net/spatial-class.html#vector-data)
     linestring geometries defined by classes in the
     [`sf`](https://r-spatial.github.io/sf/) package
--   [raster](https://geocompr.robinlovelace.net/spatial-class.html#raster-data)
+  - [raster](https://geocompr.robinlovelace.net/spatial-class.html#raster-data)
     objects with pixel values reporting average height, commonly known
     as digital elevation model (**DEM**) datasets, defined by classes in
     the [`raster`](https://cran.r-project.org/package=raster) or more
@@ -70,8 +70,11 @@ gradient by default). - an elevation model, available on your machine.
 ### Installation
 
 <!-- You can install the released version of slopes from [CRAN](https://CRAN.R-project.org) with: -->
+
 <!-- ``` r -->
+
 <!-- install.packages("slopes") -->
+
 <!-- ``` -->
 
 Install the development version from [GitHub](https://github.com/) with:
@@ -84,8 +87,8 @@ remotes::install_github("ropensci/slopes")
 #### Installation for DEM downloads
 
 If you do not already have DEM data and want to make use of the
-package’s ability to download them using the `ceramic` package, install
-the package with suggested dependencies, as follows:
+package’s ability to download them using the `ceramic` package,
+install the package with suggested dependencies, as follows:
 
 ``` r
 # install.packages("remotes")
@@ -133,6 +136,7 @@ below:
 
 ``` r
 sf_linestring_xyz_local = elevation_add(sf_linestring, dem = dem_lisbon_raster)
+#> Loading required namespace: raster
 ```
 
 In both cases you can obtain the average gradient of the linestring with
@@ -154,15 +158,15 @@ vignette.*
 
 ## See more in vignettes
 
--   [Get
+  - [Get
     started](https://ropensci.github.io/slopes/articles/slopes.html)
--   [An introduction to
+  - [An introduction to
     slopes](https://ropensci.github.io/slopes/articles/intro-to-slopes.html)
--   [Reproducible example: gradients of a road network for a given
+  - [Reproducible example: gradients of a road network for a given
     city](https://ropensci.github.io/slopes/articles/roadnetworkcycling.html)
--   [Verification of
+  - [Verification of
     slopes](https://ropensci.github.io/slopes/articles/verification.html)
--   [Benchmarking slopes
+  - [Benchmarking slopes
     calculation](https://ropensci.github.io/slopes/articles/benchmark.html)
 
 ## Code of Conduct
