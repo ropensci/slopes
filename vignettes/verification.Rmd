@@ -40,7 +40,7 @@ To keep package build times low, only the results are presented below.
 
 <!-- todo: make the segments -->
 
-An input dataset, comprising a 3D linestring recorded using a dual frequency GNSS receiver (a [Leica 1200](https://gef.nerc.ac.uk/equipment/gnss.php)) with a vertical accuracy of 20 mm
+An input dataset, comprising a 3D linestring recorded using a dual frequency GNSS receiver (a [Leica 1200](https://gef.nerc.ac.uk/equipment/gnss/)) with a vertical accuracy of 20 mm
 <!-- 138 GPS 3D traces of a hilly road from a peer reviewed journal article -->
 [@ariza-lopez_dataset_2019] was downloaded from the 
 <!-- [figshare website as a .zip file](https://ndownloader.figshare.com/files/14331197) - raw data -->
