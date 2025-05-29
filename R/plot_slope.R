@@ -21,8 +21,8 @@
 #' @inheritParams slope_raster
 #' @inheritParams sequential_dist
 #'
+#' @return A plot object is invisibly returned, and a plot is created on the current graphics device.
 #' @export
-#' @return A plot showing the elevation profile associated with a linestring.
 #' @examples
 #' plot_slope(lisbon_route_3d)
 #' route_xyz = lisbon_road_segment_3d

@@ -2,28 +2,22 @@ Package: slopes
 Title: Calculate Slopes of Roads, Rivers and Trajectories
 Version: 1.0.1
 Authors@R: c(
-    person("Robin", "Lovelace", email = "rob00x@gmail.com", role = c("aut","cre"),
+    person("Robin", "Lovelace", email = "rob00x@gmail.com", role = c("aut", "cre", "cph"),
       comment = c(ORCID = "0000-0001-5679-6536")),
     person("Rosa", "Félix", email = "rosamfelix@tecnico.ulisboa.pt", role = c("aut"), 
       comment = c(ORCID = "0000-0002-5642-6006")),
     person("Joey", "Talbot", email = "j.d.talbot@leeds.ac.uk", role = c("aut"), 
       comment = c(ORCID = "0000-0002-6520-4560")),
+    person("Gonçalo", "Matos", role = c("aut")),
     person("Dan", "Olner", role = c("rev"), comment = "Dan reviewed the package for rOpenSci, see https://github.com/ropensci/software-review/issues/420#issuecomment-857662657 "),
     person("Andy", "Teucher", role = c("rev"), comment = "Andy reviewed the package for rOpenSci, see https://github.com/ropensci/software-review/issues/420#issuecomment-858231647 ")
   )
-Description: Functions and example data to support research into the
-  slope (also known as longitudinal gradient or steepness)
-  of linear geographic entities such as roads <doi:10.1038/s41597-019-0147-x>
-  and rivers <doi:10.1016/j.jhydrol.2018.06.066>.
-  The package was initially developed to calculate the steepness of street segments
-  but can be used to calculate steepness of any linear feature that can be
-  represented as LINESTRING geometries in the 'sf' class system.
-  The package takes two main types of input data for slope calculation: vector geographic
-  objects representing linear features, and raster geographic objects with elevation values
-  (which can be downloaded using functionality in the package)
-  representing a continuous terrain surface.
-  Where no raster object is provided the package attempts to download elevation
-  data using the 'ceramic' package.
+Description: Calculates the slope (longitudinal gradient or steepness)
+  of linear geographic features such as roads <doi:10.1038/s41597-019-0147-x>
+  and rivers <doi:10.1016/j.jhydrol.2018.06.066>. It can use local
+  Digital Elevation Model (DEM) data or download DEM data via the 'ceramic'
+  package. The package also provides functions to add elevation data to
+  linestrings and visualize elevation profiles.
 License: GPL-3
 URL: https://github.com/ropensci/slopes/, https://docs.ropensci.org/slopes/
 BugReports: https://github.com/ropensci/slopes/issues
@@ -53,7 +47,8 @@ Suggests:
     dplyr,
     tmap,
     leaflet,
-    bench
+    bench,
+    rlang
 Config/Needs/website: generics
 VignetteBuilder: knitr
 Config/testthat/edition: 3

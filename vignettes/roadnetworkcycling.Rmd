@@ -92,9 +92,9 @@ In this case, there are around 1.6 x the number of segments than in the original
 
 For this case we will use `slope_raster()` [function](https://ropensci.github.io/slopes/reference/slope_raster.html), to retrieve the z values from a digital elevation model. This raster was obtained from STRM NASA mission.
 
-The **SRTM** (*Shuttle Radar Topography Mission*) NASA’s mission provides [freely available](https://gisgeography.com/srtm-shuttle-radar-topography-mission/) worldwide DEM, with a resolution of 25 to 30m and with a vertical accuracy of 16m - [more](https://www2.jpl.nasa.gov/srtm/). The resolution for USA might be better.
+The **SRTM** (*Shuttle Radar Topography Mission*) NASA’s mission provides [freely available](https://gisgeography.com/srtm-shuttle-radar-topography-mission/) worldwide DEM, with a resolution of 25 to 30m and with a vertical accuracy of 16m - [more](https://portal.opentopography.org/raster?opentopoID=OTSRTM.082015.4326.1). The resolution for USA might be better.
 
-Alternatively, **COPERNICUS** ESA's mission also provides [freely available](https://land.copernicus.eu/imagery-in-situ/eu-dem) DEM for all Europe, with a 25m resolution and a vertical accuracy of 7m - [more](https://land.copernicus.eu/user-corner/publications/eu-dem-flyer/view).
+Alternatively, **COPERNICUS** ESA's mission also provides [freely available](https://land.copernicus.eu/en/products/products-that-are-no-longer-disseminated-on-the-clms-website) DEM for all Europe, with a 25m resolution and a vertical accuracy of 7m - [more](https://land.copernicus.eu/en/news).
 
 Depending of how large is your road network, you can use `elevation_add()` [function](https://ropensci.github.io/slopes/reference/elevation_add.html) - this will require a valid [Mapbox api key](https://docs.mapbox.com/api/overview/).
 

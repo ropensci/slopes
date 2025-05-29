@@ -25,7 +25,7 @@ bounding box of the input \code{routes} object.
 function from the \code{ceramic} package to get
 DEM data in raster format anywhere worldwide.
 It requires an API that can be added by following guidance in the package's
-\href{https://github.com/ITSLeeds/slopes#installation-for-dem-downloads}{README}
+\href{https://github.com/ropensci/slopes}{README}
 and in the
 \href{https://ropensci.github.io/slopes/articles/slopes.html}{\code{slopes} vignette}.
 }
@@ -37,14 +37,16 @@ you can cache the data, as described in the package's
 \examples{
 # Time-consuming examples that require an internet connection and API key:
 \donttest{
-library(sf)
-library(raster)
-routes = cyclestreets_route
-e = elevation_get(routes)
-class(e)
-crs(e)
-e
-plot(e)
-plot(st_geometry(routes), add = TRUE)
+if (rlang::is_installed("ceramic") && rlang::is_installed("sf") && rlang::is_installed("raster")) {
+  library(sf)
+  library(raster)
+  routes = cyclestreets_route
+  e = elevation_get(routes)
+  class(e)
+  crs(e)
+  e
+  plot(e)
+  plot(st_geometry(routes), add = TRUE)
+}
 }
 }
