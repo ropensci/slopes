@@ -48,7 +48,7 @@ recreational and competitive sports such as
 [skiing](https://www.snowplaza.co.uk/blog/16682-skiing-steeps-what-does-gradient-mean-ski-piste/).
 Slopes are also also important in some branches of [transport and
 emissions
-modelling](https://www.sciencedirect.com/science/article/pii/S2352146516302642)
+modelling](https://doi.org/10.1016/j.trpro.2016.05.258)
 and [ecology](https://doi.org/10.1016/j.ncon.2016.10.001). A growing
 number of people working with geospatial data require accurate estimates
 of gradient, including:
