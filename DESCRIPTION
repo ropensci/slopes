@@ -8,7 +8,8 @@ Authors@R: c(
       comment = c(ORCID = "0000-0002-5642-6006")),
     person("Joey", "Talbot", email = "j.d.talbot@leeds.ac.uk", role = c("aut"), 
       comment = c(ORCID = "0000-0002-6520-4560")),
-    person("Gonçalo", "Matos", role = c("aut")),
+    person("Gonçalo", "Matos", email = "goncaloafmatos@tecnico.ulisboa.pt", role = c("aut"),
+      comment = c(ORCID = "0009-0001-3489-1732")),
     person("Dan", "Olner", role = c("rev"), comment = "Dan reviewed the package for rOpenSci, see https://github.com/ropensci/software-review/issues/420#issuecomment-857662657 "),
     person("Andy", "Teucher", role = c("rev"), comment = "Andy reviewed the package for rOpenSci, see https://github.com/ropensci/software-review/issues/420#issuecomment-858231647 ")
   )
