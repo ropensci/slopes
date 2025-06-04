@@ -11,7 +11,7 @@ An object of class \code{sf}
 }
 \source{
 Produced by ESRI's
-\href{http://pro.arcgis.com/en/pro-app/latest/help/analysis/}{3D Analyst extension}
+\href{https://pro.arcgis.com/en/pro-app/help/analysis/}{3D Analyst extension}
 }
 \usage{
 lisbon_road_segment
