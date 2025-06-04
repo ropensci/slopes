@@ -60,12 +60,10 @@ elevation_extract(lisbon_road_network[1, ], dem)
 m = sf::st_coordinates(lisbon_road_network[1, ])
 elevation_extract(m, dem)
 elevation_extract(m, dem, method = "simple")
-# Test with terra (requires internet connection):
 \donttest{
-if(slopes:::has_terra()) {
+# Test with terra (requires internet connection):
 et = terra::rast(dem_lisbon_raster)
 elevation_extract(m, et)
-}
 }
 }
 \references{
