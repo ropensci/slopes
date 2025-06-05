@@ -48,7 +48,7 @@
 #'   \item{geom}{The geometry defining the LINESTRING component of the segment}
 #' }
 #' @source Produced by ESRI's
-#'  [3D Analyst extension](https://pro.arcgis.com/en/pro-app/help/analysis/)
+#'  3D Analyst extension
 #' @examples
 #' library(sf)
 #' names(lisbon_road_network)
@@ -91,7 +91,7 @@
 #'
 #' @format An object of class `sf`
 #' @source Produced by ESRI's
-#'  [3D Analyst extension](https://pro.arcgis.com/en/pro-app/help/analysis/)
+#'  3D Analyst extension
 #' @aliases lisbon_road_segment_3d lisbon_road_segment_xyz_mapbox
 #' @examples
 #' lisbon_road_segment
