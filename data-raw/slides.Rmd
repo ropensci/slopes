@@ -378,7 +378,7 @@ plot(routes["slope"], add = TRUE)
 -   Improve `plot_slope()` visualization
 -   Explore accuracy of data vs 'ground truth'
 -   Finish review, publish in JOSS and on CRAN
--   See [ropensci/slopes](https://github.com/ITSLeeds/slopes) on github to get involved!
+-   See [ropensci/slopes](https://github.com/ropensci/slopes) on github to get involved!
 
 ]
 

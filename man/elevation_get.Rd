@@ -25,7 +25,7 @@ bounding box of the input \code{routes} object.
 function from the \code{ceramic} package to get
 DEM data in raster format anywhere worldwide.
 It requires an API that can be added by following guidance in the package's
-\href{https://github.com/ITSLeeds/slopes#installation-for-dem-downloads}{README}
+\href{https://github.com/ropensci/slopes#installation-for-dem-downloads}{README}
 and in the
 \href{https://ropensci.github.io/slopes/articles/slopes.html}{\code{slopes} vignette}.
 }

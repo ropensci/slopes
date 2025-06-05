@@ -5,7 +5,7 @@
 #' function from the `ceramic` package to get
 #' DEM data in raster format anywhere worldwide.
 #' It requires an API that can be added by following guidance in the package's
-#' [README](https://github.com/ITSLeeds/slopes#installation-for-dem-downloads)
+#' [README](https://github.com/ropensci/slopes#installation-for-dem-downloads)
 #' and in the
 #' [`slopes` vignette](https://ropensci.github.io/slopes/articles/slopes.html).
 #'
