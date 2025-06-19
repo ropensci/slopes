@@ -16,7 +16,7 @@ plot_dz(
   cex = 0.9,
   bg = grDevices::rgb(1, 1, 1, 0.8),
   title = "Slope colors (percentage gradient)",
-  brks = NULL,
+  brks = c(3, 6, 10, 20, 40, 100),
   seq_brks = NULL,
   ncol = 4
 )
@@ -44,21 +44,24 @@ and "center".}
 
 \item{bg}{Legend background colour, \code{grDevices::rgb(1, 1, 1, 0.8)} by default.}
 
-\item{title}{Title of the legend, \code{NULL} by default.}
+\item{title}{Title of the legend, "Slope colors (percentage gradient)" by default.}
 
 \item{brks}{Breaks in colour palette to show.
-\code{c(1, 3, 6, 10, 20, 40, 100)} by default.}
+\code{c(3, 6, 10, 20, 40, 100)} by default.}
 
 \item{seq_brks}{Sequence of breaks to show in legend.
-Includes negative numbers and omits zero by default}
+By default this is calculated from \code{brks}.}
 
 \item{ncol}{Number of columns in legend, 4 by default.}
 }
 \value{
-A plot object is invisibly returned, and a plot is created on the current graphics device.
+A plot is created on the current graphics device.
 }
 \description{
 Plot a digital elevation profile based on xyz data
+}
+\details{
+This function is called by \code{plot_slope()} but can be used directly.
 }
 \examples{
 library(sf)
@@ -67,5 +70,5 @@ m = st_coordinates(route_xyz)
 d = cumsum(sequential_dist(m, lonlat = FALSE))
 d = c(0, d)
 z = m[, 3]
-slopes:::plot_dz(d, z, brks = c(3, 6, 10, 20, 40, 100))
+plot_dz(d, z, brks = c(3, 6, 10, 20, 40, 100))
 }

@@ -44,10 +44,10 @@ and "center".}
 
 \item{bg}{Legend background colour, \code{grDevices::rgb(1, 1, 1, 0.8)} by default.}
 
-\item{title}{Title of the legend, \code{NULL} by default.}
+\item{title}{Title of the legend, "Slope colors (percentage gradient)" by default.}
 
 \item{brks}{Breaks in colour palette to show.
-\code{c(1, 3, 6, 10, 20, 40, 100)} by default.}
+\code{c(3, 6, 10, 20, 40, 100)} by default.}
 
 \item{seq_brks}{Sequence of breaks to show in legend.
 Includes negative numbers and omits zero by default}

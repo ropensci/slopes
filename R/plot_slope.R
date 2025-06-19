@@ -11,9 +11,9 @@
 #' @param col Line colour, black by default
 #' @param cex Legend size, 0.9 by default
 #' @param bg Legend background colour, `grDevices::rgb(1, 1, 1, 0.8)` by default.
-#' @param title Title of the legend, `NULL` by default.
+#' @param title Title of the legend, "Slope colors (percentage gradient)" by default.
 #' @param brks Breaks in colour palette to show.
-#'   `c(1, 3, 6, 10, 20, 40, 100)` by default.
+#'   `c(3, 6, 10, 20, 40, 100)` by default.
 #' @param seq_brks Sequence of breaks to show in legend.
 #'   Includes negative numbers and omits zero by default
 #' @param ncol Number of columns in legend, 4 by default.
@@ -71,9 +71,28 @@ plot_slope = function(
 }
 #' Plot a digital elevation profile based on xyz data
 #'
+#' @details
+#' This function is called by `plot_slope()` but can be used directly.
 #' @param d Cumulative distance
 #' @param z Elevations at points across a linestring
-#' @inherit plot_slope
+#' @param fill Should the profile be filled? `TRUE` by default
+#' @param horiz Should the legend be horizontal (`FALSE` by default)
+#' @param pal Color palette to use, `colorspace::diverging_hcl` by default.
+#' @param ... Additional parameters to pass to legend
+#' @param legend_position The legend position. One of "bottomright", "bottom",
+#'   "bottomleft", "left", "topleft", "top" (the default), "topright", "right"
+#'   and "center".
+#' @param col Line colour, black by default
+#' @param cex Legend size, 0.9 by default
+#' @param bg Legend background colour, `grDevices::rgb(1, 1, 1, 0.8)` by default.
+#' @param title Title of the legend, "Slope colors (percentage gradient)" by default.
+#' @param brks Breaks in colour palette to show.
+#'   `c(3, 6, 10, 20, 40, 100)` by default.
+#' @param seq_brks Sequence of breaks to show in legend.
+#'   By default this is calculated from `brks`.
+#' @param ncol Number of columns in legend, 4 by default.
+#' @return A plot is created on the current graphics device.
+#' @export
 #' @examples
 #' library(sf)
 #' route_xyz = lisbon_road_segment_3d
@@ -81,7 +100,7 @@ plot_slope = function(
 #' d = cumsum(sequential_dist(m, lonlat = FALSE))
 #' d = c(0, d)
 #' z = m[, 3]
-#' slopes:::plot_dz(d, z, brks = c(3, 6, 10, 20, 40, 100))
+#' plot_dz(d, z, brks = c(3, 6, 10, 20, 40, 100))
 plot_dz = function(
   d,
   z,
@@ -94,7 +113,7 @@ plot_dz = function(
   cex = 0.9,
   bg = grDevices::rgb(1, 1, 1, 0.8),
   title = "Slope colors (percentage gradient)",
-  brks = NULL,
+  brks = c(3, 6, 10, 20, 40, 100),
   seq_brks = NULL,
   ncol = 4
   ) {
