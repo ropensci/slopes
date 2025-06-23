@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 [![R-CMD-check.yaml](https://github.com/ropensci/slopes/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/slopes/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/ropensci/slopes/graph/badge.svg)](https://app.codecov.io/gh/ropensci/slopes)
 [![Status at rOpenSci Software Peer Review](https://badges.ropensci.org/420_status.svg)](https://github.com/ropensci/software-review/issues/420)
+[![CRAN status](https://www.r-pkg.org/badges/version/slopes)](https://CRAN.R-project.org/package=slopes)
 <!-- badges: end -->
 
 The **slopes** R package calculates the slope (longitudinal steepness, also known as gradient) of roads, rivers and other linear (simple) features, based on two main inputs:
@@ -47,11 +48,11 @@ The package can be used with two sources of elevation data:
 
 ### Installation
 
-<!-- You can install the released version of slopes from [CRAN](https://CRAN.R-project.org) with: -->
+Install the released version of slopes from [CRAN](https://CRAN.R-project.org) with:
 
-<!-- ``` r -->
-<!-- install.packages("slopes") -->
-<!-- ``` -->
+```{r, eval=FALSE}
+install.packages("slopes")
+```
 
 Install the development version from [GitHub](https://github.com/) with:
 
@@ -65,6 +66,7 @@ remotes::install_github("ropensci/slopes")
 If you do not already have DEM data and want to make use of the package's ability to download them using the `ceramic` package, install the package with suggested dependencies, as follows:
 
 ```{r, eval=FALSE}
+install.packages("slopes", dependencies = "Suggests")
 # install.packages("remotes")
 remotes::install_github("ropensci/slopes", dependencies = "Suggests")
 ```

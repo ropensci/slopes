@@ -1,3 +1,4 @@
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # slopes package
@@ -9,6 +10,8 @@
 coverage](https://codecov.io/gh/ropensci/slopes/graph/badge.svg)](https://app.codecov.io/gh/ropensci/slopes)
 [![Status at rOpenSci Software Peer
 Review](https://badges.ropensci.org/420_status.svg)](https://github.com/ropensci/software-review/issues/420)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/slopes)](https://CRAN.R-project.org/package=slopes)
 <!-- badges: end -->
 
 The **slopes** R package calculates the slope (longitudinal steepness,
@@ -35,9 +38,8 @@ recreational and competitive sports such as
 [hiking](https://trailism.com/trail-grades/), and
 [skiing](https://www.snowplaza.co.uk/blog/16682-skiing-steeps-what-does-gradient-mean-ski-piste/).
 Slopes are also also important in some branches of [transport and
-emissions
-modelling](https://doi.org/10.1016/j.trpro.2016.05.258)
-and [ecology](https://doi.org/10.1016/j.ncon.2016.10.001). See the
+emissions modelling](https://doi.org/10.1016/j.trpro.2016.05.258) and
+[ecology](https://doi.org/10.1016/j.ncon.2016.10.001). See the
 [`intro-to-slopes`
 vignette](https://docs.ropensci.org/slopes/articles/intro-to-slopes.html)
 for details on fields using slope data and the need for this package.
@@ -69,13 +71,12 @@ gradient by default). - an elevation model, available on your machine.
 
 ### Installation
 
-<!-- You can install the released version of slopes from [CRAN](https://CRAN.R-project.org) with: -->
+Install the released version of slopes from
+[CRAN](https://CRAN.R-project.org) with:
 
-<!-- ``` r -->
-
-<!-- install.packages("slopes") -->
-
-<!-- ``` -->
+``` r
+install.packages("slopes")
+```
 
 Install the development version from [GitHub](https://github.com/) with:
 
@@ -91,6 +92,7 @@ package’s ability to download them using the `ceramic` package,
 install the package with suggested dependencies, as follows:
 
 ``` r
+install.packages("slopes", dependencies = "Suggests")
 # install.packages("remotes")
 remotes::install_github("ropensci/slopes", dependencies = "Suggests")
 ```
