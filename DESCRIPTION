@@ -1,6 +1,6 @@
 Package: slopes
 Title: Calculate Slopes of Roads, Rivers and Trajectories
-Version: 1.0.1
+Version: 1.0.1.9000
 Authors@R: c(
     person("Robin", "Lovelace", email = "rob00x@gmail.com", role = c("aut", "cre", "cph"),
       comment = c(ORCID = "0000-0001-5679-6536")),

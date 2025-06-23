@@ -1,3 +1,5 @@
+# slopes (development version)
+
 # slopes 1.0.1
 
 * Package source code now hosted at https://github.com/ropensci/slopes
