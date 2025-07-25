@@ -31,6 +31,50 @@ library(sf)
 The results are reproducible (requires downloading input data manually and installing additional packages).
 To keep package build times low, only the results are presented below.
 
+# Roads in the Netherlands
+
+```{r, eval=FALSE}
+u = "https://downloads.rijkswaterstaatdata.nl/nwb-wegen/geogegevens/shapefile/NWB_hoogtebestand/01-10-2024%20Hoogtes%20Rijkswegen.zip"
+f_zip = "NWB_hoogtebestand.zip"
+download.file(u, f_zip)
+unzip(f_zip)
+
+# DEM for eu:
+install.packages("CopernicusDEM")
+system("msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi")
+# Test it's installed:
+system("aws --version")
+# Find location of aws cli from powershell (equivalent of `which aws` on Linux):
+# Get-Command aws | Select-Object -ExpandProperty Source
+# C:\Program Files\Amazon\AWSCLIV2\aws.exe
+current_path = Sys.getenv("PATH")
+
+aws_path = "C:\\Program Files\\Amazon\\AWSCLIV2"
+new_path = paste(aws_path, current_path, sep = ";")
+Sys.setenv(PATH = new_path)
+# Now aws should work
+system("aws --version")
+# Download DEM for Brussels 6 km from center
+zones = zonebuilder::zb_zone("Brussels", n_circles = 3)
+region = sf::st_union(zones$geometry) |>
+  sf::st_make_valid() 
+mapview::mapview(region)
+sf::sf_use_s2(FALSE) # disable s2 for this operation
+dem = CopernicusDEM::aoi_geom_save_tif_matches(
+  sf_or_file = region,
+  dir_save_tifs = "dems",
+  resolution = 30,
+  crs_value = 4326,
+  threads = parallel::detectCores(),
+  verbose = TRUE
+)
+dems = list.files("dems", full.names = TRUE)
+dem_terra = terra::rast(dems[1])
+dem_cropped = terra::crop(dem_terra, region)
+mapview::mapview(dem_cropped)
+
+```
+
 # Comparison with results from ArcMap 3D Analyst
 
 
