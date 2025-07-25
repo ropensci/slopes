@@ -58,10 +58,12 @@ system("aws --version")
 zones = zonebuilder::zb_zone("Brussels", n_circles = 3)
 region = sf::st_union(zones$geometry) |>
   sf::st_make_valid() 
-mapview::mapview(region)
+region_plus_100m = sf::st_buffer(region, dist = 100)
+mapview::mapview(region) + 
+  mapview::mapview(region_plus_100m)
 sf::sf_use_s2(FALSE) # disable s2 for this operation
 dem = CopernicusDEM::aoi_geom_save_tif_matches(
-  sf_or_file = region,
+  sf_or_file = region_plus_100m,
   dir_save_tifs = "dems",
   resolution = 30,
   crs_value = 4326,
@@ -70,13 +72,18 @@ dem = CopernicusDEM::aoi_geom_save_tif_matches(
 )
 dems = list.files("dems", full.names = TRUE)
 dem_terra = terra::rast(dems[1])
-dem_cropped = terra::crop(dem_terra, region)
+names(dem_terra)
+dem_cropped = terra::crop(dem_terra, region_plus_100m)
 mapview::mapview(dem_cropped)
 travel_network = osmactive::get_travel_network(
   region,
   boundary = region,
   boundary_type = "clipsrc"
 )
+plot(travel_network$geometry)
+travel_network = travel_network |>
+  sf::st_filter(region, .predicate = sf::st_within)
+
 cycle_net = osmactive::get_cycling_network(travel_network)
 drive_net = osmactive::get_driving_network(travel_network)
 cycle_net = osmactive::distance_to_road(cycle_net, drive_net)
@@ -84,6 +91,37 @@ cycle_net = osmactive::classify_cycle_infrastructure(cycle_net, include_mixed_tr
 names(cycle_net)
 mapview::mapview(cycle_net, zcol = "cycle_segregation")
 nrow(cycle_net)
+# Calculate slopes with the slopes package:
+# Add elevation to cycle network segments
+
+sf::st_crs(dem_cropped) == sf::st_crs(cycle_net)
+# check the extents of both:
+mapview::mapview(dem_cropped) + mapview::mapview(cycle_net)
+
+cycle_net_clean = sf::st_cast(cycle_net, "LINESTRING")
+cycle_net_xyz = elevation_add(cycle_net_clean, dem = dem_cropped)
+summary(sf::st_geometry_type(cycle_net_xyz))
+
+# Calculate slopes for each segment
+cycle_net_xyz$slope = slope_xyz(cycle_net_xyz, lonlat = TRUE, fun = slope_matrix_weighted)
+cycle_net_xyz$slope = slope_xyz(cycle_net_xyz, lonlat = TRUE, fun = slope_matrix_mean)
+summary(cycle_net_xyz$slope)
+# Convert to percentage:
+cycle_net_xyz = cycle_net_xyz |>
+  # Convert to factor with greater than 5 being "5+"
+  dplyr::mutate(
+    slope_percent = dplyr::case_when(
+      slope < 0.02 ~ as.character("0-2"),
+      slope < 0.05 ~ as.character("2-5"),
+      slope < 0.1 ~ as.character("5-10"),
+      TRUE ~ "10+"
+    )
+  )
+table(cycle_net_xyz$slope_percent)
+
+# Drop z dimension
+cycle_net_slopes = sf::st_zm(cycle_net_xyz)
+mapview::mapview(cycle_net_slopes, zcol = "slope_percent", legend = TRUE)
 ```
 
 # Comparison with results from ArcMap 3D Analyst
