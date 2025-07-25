@@ -55,23 +55,25 @@ Sys.setenv(PATH = new_path)
 # Now aws should work
 system("aws --version")
 # Download DEM for Brussels 6 km from center
-zones = zonebuilder::zb_zone("Leeds", n_circles = 3)
+zones = zonebuilder::zb_zone("Brussels", n_circles = 3)
 region = sf::st_union(zones$geometry) |>
   sf::st_make_valid() 
+sf::sf_use_s2(TRUE) # disable s2 for this operation
 region_plus_100m = sf::st_buffer(region, dist = 100)
 mapview::mapview(region) + 
   mapview::mapview(region_plus_100m)
 sf::sf_use_s2(FALSE) # disable s2 for this operation
+dir_save_tifs = "dems-brussels"
 dem = CopernicusDEM::aoi_geom_save_tif_matches(
   sf_or_file = region_plus_100m,
-  dir_save_tifs = "dems2",
+  dir_save_tifs = dir_save_tifs,
   resolution = 30,
   crs_value = 4326,
   threads = parallel::detectCores(),
   verbose = TRUE
 )
-dems = list.files("dems2", full.names = TRUE)
-dem_terra = terra::rast(dems[1])
+dems = list.files(dir_save_tifs, full.names = TRUE)
+dem_terra = terra::rast(dems)
 names(dem_terra)
 dem_cropped = terra::crop(dem_terra, region_plus_100m)
 mapview::mapview(dem_cropped)
@@ -103,8 +105,8 @@ cycle_net_xyz = elevation_add(cycle_net_clean, dem = dem_cropped)
 summary(sf::st_geometry_type(cycle_net_xyz))
 
 # Calculate slopes for each segment
-# cycle_net_xyz$slope = slope_xyz(cycle_net_xyz, lonlat = TRUE, fun = slope_matrix_weighted)
-cycle_net_xyz$slope = slope_xyz(cycle_net_xyz, lonlat = TRUE, fun = slope_matrix_mean)
+cycle_net_xyz$slope = slope_xyz(cycle_net_xyz, lonlat = TRUE, fun = slope_matrix_weighted)
+# cycle_net_xyz$slope = slope_xyz(cycle_net_xyz, lonlat = TRUE, fun = slope_matrix_mean)
 summary(cycle_net_xyz$slope)
 # Convert to percentage:
 cycle_net_xyz = cycle_net_xyz |>
@@ -113,15 +115,41 @@ cycle_net_xyz = cycle_net_xyz |>
     slope_percent = dplyr::case_when(
       slope < 0.02 ~ as.character("0-2"),
       slope < 0.05 ~ as.character("2-5"),
-      slope < 0.1 ~ as.character("5-10"),
-      TRUE ~ "10+"
+      slope < 0.08 ~ as.character("5-8"),
+      TRUE ~ "8+"
     )
   )
 table(cycle_net_xyz$slope_percent)
 
 # Drop z dimension
-cycle_net_slopes = sf::st_zm(cycle_net_xyz)
+cycle_net_slopes = sf::st_zm(cycle_net_xyz) |>
+  dplyr::transmute(osm_id, highway, cycle_segregation, slope = round(slope, 3), slope_percent)
+summary(duplicated(cycle_net_slopes$geometry))
 mapview::mapview(cycle_net_slopes, zcol = "slope_percent", legend = TRUE)
+sf::write_sf(cycle_net_slopes, "cycle_net_slopes_brussels.gpkg", delete_dsn = TRUE)
+system("gh release upload v1.0.1 cycle_net_slopes_brussels.gpkg --clobber")
+cycle_net_slopes = sf::read_sf("cycle_net_slopes_brussels.gpkg")
+
+# install cran version
+remotes::install_dev("tmap")
+# Save with tmap
+library(tmap)
+v = cols4all::c4a("brewer.rd_yl_gn", n = 4) |>
+  rev()
+m = tm_shape(cycle_net_slopes) +
+  tm_lines(
+    col = "slope_percent",
+    col.scale = tm_scale(values = v),
+    lwd = 2,
+    popup.vars = FALSE
+)
+m
+tmap_save(m, "cycle_net_slopes_brussels.html")
+browseURL("cycle_net_slopes_brussels.html")
+system("gh release upload v1.0.1 cycle_net_slopes_brussels.html --clobber")
+# url of the file:
+u_release = "https://github.com/ropensci/slopes/releases/download/v1.0.1/cycle_net_slopes_brussels.html"
+download.file(u_release, "cycle_net_slopes_brussels.html")
 ```
 
 # Comparison with results from ArcMap 3D Analyst
