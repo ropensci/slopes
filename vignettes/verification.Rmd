@@ -72,7 +72,18 @@ dems = list.files("dems", full.names = TRUE)
 dem_terra = terra::rast(dems[1])
 dem_cropped = terra::crop(dem_terra, region)
 mapview::mapview(dem_cropped)
-
+travel_network = osmactive::get_travel_network(
+  region,
+  boundary = region,
+  boundary_type = "clipsrc"
+)
+cycle_net = osmactive::get_cycling_network(travel_network)
+drive_net = osmactive::get_driving_network(travel_network)
+cycle_net = osmactive::distance_to_road(cycle_net, drive_net)
+cycle_net = osmactive::classify_cycle_infrastructure(cycle_net, include_mixed_traffic = TRUE)
+names(cycle_net)
+mapview::mapview(cycle_net, zcol = "cycle_segregation")
+nrow(cycle_net)
 ```
 
 # Comparison with results from ArcMap 3D Analyst
