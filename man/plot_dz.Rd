@@ -9,7 +9,7 @@ plot_dz(
   z,
   fill = TRUE,
   horiz = FALSE,
-  pal = colorspace::diverging_hcl,
+  pal = NULL,
   ...,
   legend_position = "top",
   col = "black",
@@ -30,7 +30,7 @@ plot_dz(
 
 \item{horiz}{Should the legend be horizontal (\code{FALSE} by default)}
 
-\item{pal}{Color palette to use, \code{colorspace::diverging_hcl} by default.}
+\item{pal}{Color palette to use, \code{NULL} by default (uses slopes_palette())}
 
 \item{...}{Additional parameters to pass to legend}
 

@@ -9,7 +9,7 @@ plot_slope(
   lonlat = sf::st_is_longlat(route_xyz),
   fill = TRUE,
   horiz = FALSE,
-  pal = colorspace::diverging_hcl,
+  pal = NULL,
   legend_position = "top",
   col = "black",
   cex = 0.9,
@@ -25,14 +25,14 @@ plot_slope(
 \item{route_xyz}{An sf linestring with x, y and z coordinates,
 representing a route or other linear object.}
 
-\item{lonlat}{Are the routes provided in longitude/latitude coordinates?
-By default, value is from the CRS of the routes (\code{sf::st_is_longlat(routes)}).}
+\item{lonlat}{Are the coordinates in longitude/latitude? If \code{NA} (the default),
+this is inferred from the CRS of the input.}
 
 \item{fill}{Should the profile be filled? \code{TRUE} by default}
 
 \item{horiz}{Should the legend be horizontal (\code{FALSE} by default)}
 
-\item{pal}{Color palette to use, \code{colorspace::diverging_hcl} by default.}
+\item{pal}{Color palette to use, \code{NULL} by default (uses slopes_palette())}
 
 \item{legend_position}{The legend position. One of "bottomright", "bottom",
 "bottomleft", "left", "topleft", "top" (the default), "topright", "right"

@@ -7,8 +7,7 @@
 elevation_get(routes, ..., output_format = "raster")
 }
 \arguments{
-\item{routes}{Routes, the gradients of which are to be calculated.
-The object must be of class \code{sf} or \code{sfc} with \code{LINESTRING} geometries.}
+\item{routes}{sf object with LINESTRING geometries}
 
 \item{...}{Options passed to \code{cc_elevation()}}
 
@@ -36,7 +35,7 @@ you can cache the data, as described in the package's
 }
 \examples{
 # Time-consuming examples that require an internet connection and API key:
-\donttest{
+\dontrun{
 if (rlang::is_installed("ceramic") && rlang::is_installed("sf") && rlang::is_installed("raster")) {
   library(sf)
   library(raster)

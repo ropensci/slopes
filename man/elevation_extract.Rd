@@ -12,63 +12,14 @@ elevation_extract(
 )
 }
 \arguments{
-\item{m}{Matrix containing coordinates and elevations or an sf
-object representing a linear feature.}
+\item{m}{Coordinates matrix or sf object}
 
-\item{dem}{Raster overlapping with \code{routes} and values representing elevations}
+\item{dem}{RasterLayer or SpatRaster}
 
-\item{method}{The method of estimating elevation at points,
-passed to the \code{extract} function for extracting values from raster
-datasets. Default: \code{"bilinear"}.}
+\item{method}{character; extraction method (default "bilinear")}
 
-\item{terra}{Should the \code{terra} package be used?
-\code{TRUE} by default if the package is installed \emph{and}
-if \code{dem} is of class \code{SpatRast}}
-}
-\value{
-A vector of elevation values.
+\item{terra}{logical; use terra if TRUE}
 }
 \description{
-This function takes a series of points located in geographical space
-and a digital elevation model as inputs and returns a vector of
-elevation estimates associated with each point.
-The function takes locations
-represented as a matrix of XY (or longitude latitude) coordinates
-and a digital elevation model (DEM) with class \code{raster} or \code{terra}.
-It returns a vector of values representing estimates of elevation
-associated with each of the points.
-}
-\details{
-By default, the elevations are estimated using
-\href{https://en.wikipedia.org/wiki/Bilinear_interpolation}{bilinear interpolation}
-(\code{method = "bilinear"})
-which calculates point height based on proximity to the centroids of
-surrounding cells.
-The value of the \code{method} argument is passed to the \code{method} argument in
-\href{https://rspatial.github.io/raster/reference/extract.html}{\code{raster::extract()}}
-or
-\href{https://rspatial.github.io/terra/reference/extract.html}{\code{terra::extract()}}
-depending on the class of the input raster dataset.
-
-See Kidner et al. (1999)
-for descriptions of alternative elevation interpolation and extrapolation
-algorithms.
-}
-\examples{
-dem = dem_lisbon_raster
-elevation_extract(lisbon_road_network[1, ], dem)
-m = sf::st_coordinates(lisbon_road_network[1, ])
-elevation_extract(m, dem)
-elevation_extract(m, dem, method = "simple")
-\donttest{
-# Test with terra (requires internet connection):
-et = terra::rast(dem_lisbon_raster)
-elevation_extract(m, et)
-}
-}
-\references{
-Kidner, David, Mark Dorey, and Derek Smith.
-"What’s the point? Interpolation and extrapolation with a regular grid DEM."
-Fourth International Conference on GeoComputation, Fredericksburg,
-VA, USA. 1999.
+Extract elevations from coordinates
 }

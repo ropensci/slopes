@@ -23,7 +23,7 @@
 #' @export
 #' @examples
 #' # Time-consuming examples that require an internet connection and API key:
-#' \donttest{
+#' \dontrun{
 #' if (rlang::is_installed("ceramic") && rlang::is_installed("sf") && rlang::is_installed("raster")) {
 #'   library(sf)
 #'   library(raster)
@@ -70,4 +70,37 @@ sf_mid_ext_lonlat = function(routes) {
     c(x = bb[1], y = bb[4])
     )
   res
+}
+
+#' Convert a slope matrix to a raster object
+#'
+#' @param x Matrix or RasterLayer of slope values
+#' @return A RasterLayer object
+#' @export
+slope_raster <- function(x) {
+  if (inherits(x, "Raster")) {
+    return(x)
+  }
+  if (is.matrix(x)) {
+    return(raster::raster(x))
+  }
+  stop("Input must be a matrix or RasterLayer")
+}
+
+#' Extract slope values as xyz coordinates
+#'
+#' @param x RasterLayer or matrix of slope values
+#' @return Data frame with x, y, z values
+#' @export
+slope_xyz <- function(x) {
+  if (inherits(x, "Raster")) {
+    xy <- raster::xyFromCell(x, 1:raster::ncell(x))
+    return(data.frame(x = xy[, 1], y = xy[, 2], z = raster::getValues(x)))
+  }
+  if (is.matrix(x)) {
+    df <- as.data.frame(as.table(x))
+    names(df) <- c("y", "x", "z")
+    return(df)
+  }
+  stop("Input must be a RasterLayer or matrix")
 }
