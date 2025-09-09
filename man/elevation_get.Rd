@@ -7,7 +7,7 @@
 elevation_get(routes, ..., output_format = "raster")
 }
 \arguments{
-\item{routes}{sf object with LINESTRING geometries}
+\item{routes}{An sf object representing routes or other linear features.}
 
 \item{...}{Options passed to \code{cc_elevation()}}
 

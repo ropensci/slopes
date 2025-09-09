@@ -17,7 +17,7 @@
 #' @param ... Options passed to `cc_elevation()`
 #' @param output_format What format to return the data in?
 #'   Accepts `"raster"` (the default) and `"terra"`.
-#' @inheritParams slope_raster
+#' @param routes An sf object representing routes or other linear features.
 #' @return A raster object with cell values representing elevations in the
 #'   bounding box of the input `routes` object.
 #' @export
@@ -77,7 +77,7 @@ sf_mid_ext_lonlat = function(routes) {
 #' @param x Matrix or RasterLayer of slope values
 #' @return A RasterLayer object
 #' @export
-slope_raster <- function(x) {
+slope_matrix_to_raster <- function(x) {  # <-- Changed name
   if (inherits(x, "Raster")) {
     return(x)
   }
@@ -92,7 +92,7 @@ slope_raster <- function(x) {
 #' @param x RasterLayer or matrix of slope values
 #' @return Data frame with x, y, z values
 #' @export
-slope_xyz <- function(x) {
+slope_xyz_simple <- function(x) {
   if (inherits(x, "Raster")) {
     xy <- raster::xyFromCell(x, 1:raster::ncell(x))
     return(data.frame(x = xy[, 1], y = xy[, 2], z = raster::getValues(x)))

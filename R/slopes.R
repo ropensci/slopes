@@ -207,6 +207,12 @@ elevation_add <- function(routes, dem = NULL, method = "bilinear", terra = has_t
 }
 
 # Utility functions
+#' Check if terra package is available
+#'
+#' Checks whether the terra package is installed and can be loaded.
+#'
+#' @return Logical value indicating if terra is available
+#' @export
 has_terra <- function() requireNamespace("terra", quietly = TRUE)
 is_linestring <- function(x) unique(sf::st_geometry_type(x)) == "LINESTRING"
 stop_is_not_linestring <- function(x) if (!is_linestring(x)) stop("Only works with LINESTRINGs. Convert with sf::st_cast()")

@@ -98,8 +98,6 @@ plot_dz = function(
 #'   Includes negative numbers and omits zero by default
 #' @param ncol Number of columns in legend, 4 by default.
 #' @param ... Additional parameters to pass to legend
-#' @inheritParams slope_raster
-#' @inheritParams sequential_dist
 #' @return A plot object is invisibly returned, and a plot is created on the current graphics device.
 #' @export
 #' @examples
@@ -107,7 +105,6 @@ plot_dz = function(
 #' route_xyz = lisbon_road_segment_3d
 #' plot_slope(route_xyz)
 #' plot_slope(route_xyz, brks = c(1, 2, 4, 8, 16, 30))
-#' plot_slope(route_xyz, s = 5:8)
 plot_slope = function(
     route_xyz,
     lonlat = sf::st_is_longlat(route_xyz),

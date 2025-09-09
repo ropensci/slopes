@@ -67,5 +67,4 @@ plot_slope(lisbon_route_3d)
 route_xyz = lisbon_road_segment_3d
 plot_slope(route_xyz)
 plot_slope(route_xyz, brks = c(1, 2, 4, 8, 16, 30))
-plot_slope(route_xyz, s = 5:8)
 }
