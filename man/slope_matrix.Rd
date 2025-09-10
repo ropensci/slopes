@@ -2,35 +2,20 @@
 % Please edit documentation in R/slopes.R
 \name{slope_matrix}
 \alias{slope_matrix}
-\alias{slope_matrix_mean}
-\alias{slope_matrix_weighted}
-\title{Calculate the gradient of line segments from a 3D matrix of coordinates}
+\title{Calculate slopes from coordinate matrix}
 \usage{
 slope_matrix(m, elevations = m[, 3], lonlat = TRUE)
-
-slope_matrix_mean(m, elevations = m[, 3], lonlat = TRUE, directed = FALSE)
-
-slope_matrix_weighted(m, elevations = m[, 3], lonlat = TRUE, directed = FALSE)
 }
 \arguments{
-\item{m}{Matrix with columns x, y, z}
+\item{m}{Matrix of coordinates (x, y, z)}
 
-\item{elevations}{Optional vector of elevations (default: third column of m)}
+\item{elevations}{Vector of elevation values (default: third column of m)}
 
-\item{lonlat}{Are coordinates longitude/latitude? TRUE by default}
-
-\item{directed}{Should slope be directed? FALSE by default}
+\item{lonlat}{Logical, whether coordinates are longitude/latitude (default: TRUE)}
 }
 \value{
-Vector of slope gradients for each linear element
+Numeric vector of slope values
 }
 \description{
-Calculate the gradient of line segments from a 3D matrix of coordinates
-}
-\examples{
-x <- c(0, 2, 3, 4, 5, 9)
-y <- c(0, 0, 0, 0, 0, 9)
-z <- c(1, 2, 2, 4, 3, 0) / 10
-m <- cbind(x, y, z)
-slope_matrix_weighted(m, lonlat = FALSE)
+Calculates slope gradients from a matrix of coordinates and elevation data.
 }

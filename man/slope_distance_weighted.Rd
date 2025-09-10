@@ -2,21 +2,20 @@
 % Please edit documentation in R/slopes.R
 \name{slope_distance_weighted}
 \alias{slope_distance_weighted}
-\title{Calculate weighted distance-based slopes}
+\title{Calculate distance-weighted slopes}
 \usage{
 slope_distance_weighted(d, elevations, directed = FALSE)
 }
 \arguments{
-\item{d}{Distance values between consecutive points}
-\item{elevations}{Elevation values at each point}
-\item{directed}{Logical indicating if slopes are directed (default: FALSE)}
+\item{d}{Vector of distance values between points}
+
+\item{elevations}{Vector of elevation values}
+
+\item{directed}{Logical, whether to calculate directed slopes (default: FALSE)}
 }
 \value{
-Numeric vector of weighted slope values
+Numeric value representing the weighted slope
 }
 \description{
-Calculates slope gradients with custom distance-based weighting.
-}
-\details{
-Applies distance-based weights to slope calculations, useful for emphasizing longer segments.
+Applies distance-based weighting to slope calculations for more accurate results.
 }

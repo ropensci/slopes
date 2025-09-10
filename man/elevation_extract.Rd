@@ -2,7 +2,7 @@
 % Please edit documentation in R/slopes.R
 \name{elevation_extract}
 \alias{elevation_extract}
-\title{Extract elevations from coordinates}
+\title{Extract elevation values from coordinates}
 \usage{
 elevation_extract(
   m,
@@ -12,14 +12,17 @@ elevation_extract(
 )
 }
 \arguments{
-\item{m}{Coordinates matrix or sf object}
+\item{m}{Matrix or sf object with coordinates}
 
-\item{dem}{RasterLayer or SpatRaster}
+\item{dem}{A raster object containing elevation data}
 
-\item{method}{character; extraction method (default "bilinear")}
+\item{method}{Method for raster extraction (default: "bilinear")}
 
-\item{terra}{logical; use terra if TRUE}
+\item{terra}{Logical, whether to use terra package (default: auto-detected)}
+}
+\value{
+Numeric vector of elevation values
 }
 \description{
-Extract elevations from coordinates
+Extracts elevation values from a DEM raster at specified coordinate locations.
 }

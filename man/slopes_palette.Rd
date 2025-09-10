@@ -2,18 +2,29 @@
 % Please edit documentation in R/palette.R
 \name{slopes_palette}
 \alias{slopes_palette}
-\title{Get a slope color palette}
+\title{Get color palette for slopes visualization}
 \usage{
 slopes_palette(n = 6, palette = "Green-Brown")
 }
 \arguments{
-\item{n}{Number of colors (default 6)}
+\item{n}{Number of colors to return (default: 6)}
 
-\item{palette}{Name of palette, default "Green-Brown"}
+\item{palette}{Name of the color palette to use (default: "Green-Brown")}
 }
 \value{
-A vector of hex color codes
+A character vector of color codes
 }
 \description{
-Get a slope color palette
+Returns a color palette suitable for visualizing slope data, with options
+for different color schemes.
+}
+\examples{
+# Get default Green-Brown palette with 6 colors
+slopes_palette()
+
+# Get 4 colors from Green-Brown palette
+slopes_palette(n = 4)
+
+# Use a different palette
+slopes_palette(n = 5, palette = "Blue-Red")
 }

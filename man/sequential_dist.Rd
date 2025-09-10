@@ -2,18 +2,18 @@
 % Please edit documentation in R/slopes.R
 \name{sequential_dist}
 \alias{sequential_dist}
-\title{Calculate sequential distances between coordinate pairs}
+\title{Calculate sequential distances between points}
 \usage{
 sequential_dist(m, lonlat = TRUE)
 }
 \arguments{
-\item{m}{Matrix of coordinates}
+\item{m}{Matrix of coordinates (x, y)}
 
-\item{lonlat}{Are coordinates lon/lat? TRUE by default}
+\item{lonlat}{Logical, whether coordinates are longitude/latitude (default: TRUE)}
 }
 \value{
-Vector of distances
+Numeric vector of distances between consecutive points
 }
 \description{
-Calculate sequential distances between coordinate pairs
+Calculates distances between consecutive points in a coordinate matrix.
 }

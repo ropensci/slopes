@@ -2,22 +2,22 @@
 % Please edit documentation in R/slopes.R
 \name{slope_matrix_weighted}
 \alias{slope_matrix_weighted}
-\title{Calculate weighted slopes from slope matrix}
+\title{Calculate weighted slopes from coordinate matrix}
 \usage{
 slope_matrix_weighted(m, elevations = m[, 3], lonlat = TRUE, directed = FALSE)
 }
 \arguments{
-\item{m}{Matrix of coordinates with x, y, and optionally z columns}
-\item{elevations}{Elevation values (default: m[, 3])}
-\item{lonlat}{Logical indicating if coordinates are longitude/latitude (default: TRUE)}
-\item{directed}{Logical indicating if slopes are directed (default: FALSE)}
+\item{m}{Matrix of coordinates (x, y, z)}
+
+\item{elevations}{Vector of elevation values (default: third column of m)}
+
+\item{lonlat}{Logical, whether coordinates are longitude/latitude (default: TRUE)}
+
+\item{directed}{Logical, whether to calculate directed slopes (default: FALSE)}
 }
 \value{
-Numeric vector of weighted slope values
+Numeric value representing the weighted slope
 }
 \description{
-Calculates weighted slope values from a slope matrix with custom weights.
-}
-\details{
-Applies weights to slope matrix elements to emphasize certain areas or segments.
+Applies distance-based weighting to slope calculations from coordinate matrix.
 }

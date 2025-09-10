@@ -1,11 +1,23 @@
 # R/palette.R
 
-#' Get a slope color palette
+#' Get color palette for slopes visualization
 #'
-#' @param n Number of colors (default 6)
-#' @param palette Name of palette, default "Green-Brown"
-#' @return A vector of hex color codes
+#' Returns a color palette suitable for visualizing slope data, with options
+#' for different color schemes.
+#'
+#' @param n Number of colors to return (default: 6)
+#' @param palette Name of the color palette to use (default: "Green-Brown")
+#' @return A character vector of color codes
 #' @export
+#' @examples
+#' # Get default Green-Brown palette with 6 colors
+#' slopes_palette()
+#'
+#' # Get 4 colors from Green-Brown palette
+#' slopes_palette(n = 4)
+#'
+#' # Use a different palette
+#' slopes_palette(n = 5, palette = "Blue-Red")
 slopes_palette <- function(n = 6, palette = "Green-Brown") {
   if (palette == "Green-Brown") {
     # Hardcode the test-expected colors

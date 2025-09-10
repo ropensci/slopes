@@ -2,21 +2,20 @@
 % Please edit documentation in R/slopes.R
 \name{slope_distance_mean}
 \alias{slope_distance_mean}
-\title{Calculate mean distance-based slopes}
+\title{Calculate mean slope using distance weighting}
 \usage{
 slope_distance_mean(d, elevations, directed = FALSE)
 }
 \arguments{
-\item{d}{Distance values between consecutive points}
-\item{elevations}{Elevation values at each point}
-\item{directed}{Logical indicating if slopes are directed (default: FALSE)}
+\item{d}{Vector of distance values between points}
+
+\item{elevations}{Vector of elevation values}
+
+\item{directed}{Logical, whether to calculate directed slopes (default: FALSE)}
 }
 \value{
-Numeric value representing mean slope
+Numeric value representing the mean slope
 }
 \description{
-Calculates the mean slope gradient using distance-weighted averaging across all segments.
-}
-\details{
-Computes the average slope across all segments of a linestring, weighted by distance.
+Computes the mean slope across segments using distance-weighted averaging.
 }

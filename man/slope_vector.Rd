@@ -2,39 +2,18 @@
 % Please edit documentation in R/slopes.R
 \name{slope_vector}
 \alias{slope_vector}
-\alias{slope_distance}
-\alias{slope_distance_mean}
-\alias{slope_distance_weighted}
-\title{Calculate the gradient of line segments from distance and elevation vectors}
+\title{Calculate slopes from vector data}
 \usage{
 slope_vector(x, elevations)
-
-slope_distance(d, elevations)
-
-slope_distance_mean(d, elevations, directed = FALSE)
-
-slope_distance_weighted(d, elevations, directed = FALSE)
 }
 \arguments{
-\item{x}{Vector of locations}
+\item{x}{Vector of distance values}
 
-\item{elevations}{Elevations in same units as x (default third column of m for matrix input)}
-
-\item{d}{Vector of distances between points}
-
-\item{directed}{Should the value be directed? FALSE by default. TRUE will make downslope negative}
+\item{elevations}{Vector of elevation values}
 }
 \value{
-Vector of slope gradients for each linear element. For mean/weighted mean functions, returns a single summary value.
+Numeric vector of slope values
 }
 \description{
-\code{slope_vector()} calculates slopes from consecutive elements in distance and elevation vectors.
-\code{slope_distance()} calculates slopes from consecutive distances and elevations.
-\code{slope_distance_mean()} calculates mean slopes from consecutive distances and elevations.
-\code{slope_distance_weighted()} calculates weighted slopes based on distance between elevation measurements.
-}
-\examples{
-x <- c(0, 2, 3, 4, 5, 9)
-elevations <- c(1, 2, 2, 4, 3, 0) / 10
-slope_vector(x, elevations)
+Calculates slope gradients using vector distance and elevation data.
 }

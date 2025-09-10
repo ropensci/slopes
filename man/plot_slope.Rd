@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_slope.R
 \name{plot_slope}
 \alias{plot_slope}
-\title{Plot slope data for a 3d linestring with base R graphics}
+\title{Plot elevation profile with slope coloring}
 \usage{
 plot_slope(
   route_xyz,
@@ -22,49 +22,38 @@ plot_slope(
 )
 }
 \arguments{
-\item{route_xyz}{An sf linestring with x, y and z coordinates,
-representing a route or other linear object.}
+\item{route_xyz}{An sf object containing linestring geometries with XYZ coordinates}
 
-\item{lonlat}{Are the coordinates in longitude/latitude? If \code{NA} (the default),
-this is inferred from the CRS of the input.}
+\item{lonlat}{Logical, whether coordinates are longitude/latitude (default: auto-detected)}
 
-\item{fill}{Should the profile be filled? \code{TRUE} by default}
+\item{fill}{Logical, whether to fill segments with slope colors (default: TRUE)}
 
-\item{horiz}{Should the legend be horizontal (\code{FALSE} by default)}
+\item{horiz}{Logical, whether legend should be horizontal (default: FALSE)}
 
-\item{pal}{Color palette to use, \code{NULL} by default (uses slopes_palette())}
+\item{pal}{Color palette for slope visualization (default: NULL, uses slopes_palette)}
 
-\item{legend_position}{The legend position. One of "bottomright", "bottom",
-"bottomleft", "left", "topleft", "top" (the default), "topright", "right"
-and "center".}
+\item{legend_position}{Position of legend (default: "top")}
 
-\item{col}{Line colour, black by default}
+\item{col}{Color of the elevation profile line (default: "black")}
 
-\item{cex}{Legend size, 0.9 by default}
+\item{cex}{Character expansion factor for legend text (default: 0.9)}
 
-\item{bg}{Legend background colour, \code{grDevices::rgb(1, 1, 1, 0.8)} by default.}
+\item{bg}{Background color for legend (default: semi-transparent white)}
 
-\item{title}{Title of the legend, "Slope colors (percentage gradient)" by default.}
+\item{title}{Title for the legend (default: "Slope colors (percentage gradient)")}
 
-\item{brks}{Breaks in colour palette to show.
-\code{c(3, 6, 10, 20, 40, 100)} by default.}
+\item{brks}{Vector of slope break points for coloring (default: c(3, 6, 10, 20, 40, 100))}
 
-\item{seq_brks}{Sequence of breaks to show in legend.
-Includes negative numbers and omits zero by default}
+\item{seq_brks}{Sequence of breaks to show in legend (default: auto-generated)}
 
-\item{ncol}{Number of columns in legend, 4 by default.}
+\item{ncol}{Number of columns in legend (default: 4)}
 
-\item{...}{Additional parameters to pass to legend}
+\item{...}{Additional arguments passed to plot_dz}
 }
 \value{
-A plot object is invisibly returned, and a plot is created on the current graphics device.
+NULL (creates plot as side effect)
 }
 \description{
-Plot slope data for a 3d linestring with base R graphics
-}
-\examples{
-plot_slope(lisbon_route_3d)
-route_xyz = lisbon_road_segment_3d
-plot_slope(route_xyz)
-plot_slope(route_xyz, brks = c(1, 2, 4, 8, 16, 30))
+Creates an elevation profile plot from route geometries with XYZ coordinates,
+with segments colored according to slope gradient.
 }

@@ -2,16 +2,16 @@
 % Please edit documentation in R/slope_get.R
 \name{slope_matrix_to_raster}
 \alias{slope_matrix_to_raster}
-\title{Convert a slope matrix to a raster object}
+\title{Convert slope matrix to raster}
 \usage{
 slope_matrix_to_raster(x)
 }
 \arguments{
-\item{x}{Matrix or RasterLayer of slope values}
+\item{x}{A matrix or RasterLayer object}
 }
 \value{
 A RasterLayer object
 }
 \description{
-Convert a slope matrix to a raster object
+Converts a slope matrix or checks if input is already a raster.
 }

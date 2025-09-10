@@ -1,35 +1,38 @@
-#' Calculate the gradient of line segments from distance and elevation vectors
+#' Calculate slopes from vector data
 #'
-#' @description
-#' `slope_vector()` calculates slopes from consecutive elements in distance and elevation vectors.
-#' `slope_distance()` calculates slopes from consecutive distances and elevations.
-#' `slope_distance_mean()` calculates mean slopes from consecutive distances and elevations.
-#' `slope_distance_weighted()` calculates weighted slopes based on distance between elevation measurements.
+#' Calculates slope gradients using vector distance and elevation data.
 #'
-#' @param x Vector of locations
-#' @param d Vector of distances between points
-#' @param elevations Elevations in same units as x (default third column of m for matrix input)
-#' @param directed Should the value be directed? FALSE by default. TRUE will make downslope negative
-#' @return Vector of slope gradients for each linear element. For mean/weighted mean functions, returns a single summary value.
+#' @param x Vector of distance values
+#' @param elevations Vector of elevation values
+#' @return Numeric vector of slope values
 #' @export
-#' @examples
-#' x <- c(0, 2, 3, 4, 5, 9)
-#' elevations <- c(1, 2, 2, 4, 3, 0) / 10
-#' slope_vector(x, elevations)
 slope_vector <- function(x, elevations) {
   d <- diff(x)
   e_change <- diff(elevations)
   e_change / d
 }
 
-#' @rdname slope_vector
+#' Calculate slopes using distance data
+#'
+#' Calculates slope gradients from distance and elevation vectors.
+#'
+#' @param d Vector of distance values between points
+#' @param elevations Vector of elevation values
+#' @return Numeric vector of slope values
 #' @export
 slope_distance <- function(d, elevations) {
   e_change <- diff(elevations)
   e_change / d
 }
 
-#' @rdname slope_vector
+#' Calculate mean slope using distance weighting
+#'
+#' Computes the mean slope across segments using distance-weighted averaging.
+#'
+#' @param d Vector of distance values between points
+#' @param elevations Vector of elevation values
+#' @param directed Logical, whether to calculate directed slopes (default: FALSE)
+#' @return Numeric value representing the mean slope
 #' @export
 slope_distance_mean <- function(d, elevations, directed = FALSE) {
   e_change <- diff(elevations)
@@ -41,7 +44,14 @@ slope_distance_mean <- function(d, elevations, directed = FALSE) {
   }
 }
 
-#' @rdname slope_vector
+#' Calculate distance-weighted slopes
+#'
+#' Applies distance-based weighting to slope calculations for more accurate results.
+#'
+#' @param d Vector of distance values between points
+#' @param elevations Vector of elevation values
+#' @param directed Logical, whether to calculate directed slopes (default: FALSE)
+#' @return Numeric value representing the weighted slope
 #' @export
 slope_distance_weighted <- function(d, elevations, directed = FALSE) {
   e_change <- diff(elevations)
@@ -53,26 +63,30 @@ slope_distance_weighted <- function(d, elevations, directed = FALSE) {
   }
 }
 
-#' Calculate the gradient of line segments from a 3D matrix of coordinates
-#' @param m Matrix with columns x, y, z
-#' @param elevations Optional vector of elevations (default: third column of m)
-#' @param lonlat Are coordinates longitude/latitude? TRUE by default
-#' @param directed Should slope be directed? FALSE by default
-#' @return Vector of slope gradients for each linear element
+#' Calculate slopes from coordinate matrix
+#'
+#' Calculates slope gradients from a matrix of coordinates and elevation data.
+#'
+#' @param m Matrix of coordinates (x, y, z)
+#' @param elevations Vector of elevation values (default: third column of m)
+#' @param lonlat Logical, whether coordinates are longitude/latitude (default: TRUE)
+#' @return Numeric vector of slope values
 #' @export
-#' @examples
-#' x <- c(0, 2, 3, 4, 5, 9)
-#' y <- c(0, 0, 0, 0, 0, 9)
-#' z <- c(1, 2, 2, 4, 3, 0) / 10
-#' m <- cbind(x, y, z)
-#' slope_matrix_weighted(m, lonlat = FALSE)
 slope_matrix <- function(m, elevations = m[, 3], lonlat = TRUE) {
   d <- sequential_dist(m, lonlat = lonlat)
   e_change <- diff(elevations)
   e_change / d
 }
 
-#' @rdname slope_matrix
+#' Calculate mean slope from coordinate matrix
+#'
+#' Computes the mean slope from a matrix of coordinates with elevation data.
+#'
+#' @param m Matrix of coordinates (x, y, z)
+#' @param elevations Vector of elevation values (default: third column of m)
+#' @param lonlat Logical, whether coordinates are longitude/latitude (default: TRUE)
+#' @param directed Logical, whether to calculate directed slopes (default: FALSE)
+#' @return Numeric value representing the mean slope
 #' @export
 slope_matrix_mean <- function(m, elevations = m[, 3], lonlat = TRUE, directed = FALSE) {
   g1 <- slope_matrix(m, elevations = elevations, lonlat = lonlat)
@@ -84,7 +98,15 @@ slope_matrix_mean <- function(m, elevations = m[, 3], lonlat = TRUE, directed = 
   }
 }
 
-#' @rdname slope_matrix
+#' Calculate weighted slopes from coordinate matrix
+#'
+#' Applies distance-based weighting to slope calculations from coordinate matrix.
+#'
+#' @param m Matrix of coordinates (x, y, z)
+#' @param elevations Vector of elevation values (default: third column of m)
+#' @param lonlat Logical, whether coordinates are longitude/latitude (default: TRUE)
+#' @param directed Logical, whether to calculate directed slopes (default: FALSE)
+#' @return Numeric value representing the weighted slope
 #' @export
 slope_matrix_weighted <- function(m, elevations = m[, 3], lonlat = TRUE, directed = FALSE) {
   g1 <- slope_matrix(m, elevations = elevations, lonlat = lonlat)
@@ -97,10 +119,13 @@ slope_matrix_weighted <- function(m, elevations = m[, 3], lonlat = TRUE, directe
   }
 }
 
-#' Calculate sequential distances between coordinate pairs
-#' @param m Matrix of coordinates
-#' @param lonlat Are coordinates lon/lat? TRUE by default
-#' @return Vector of distances
+#' Calculate sequential distances between points
+#'
+#' Calculates distances between consecutive points in a coordinate matrix.
+#'
+#' @param m Matrix of coordinates (x, y)
+#' @param lonlat Logical, whether coordinates are longitude/latitude (default: TRUE)
+#' @return Numeric vector of distances between consecutive points
 #' @export
 sequential_dist <- function(m, lonlat = TRUE) {
   if (lonlat) {
@@ -110,24 +135,32 @@ sequential_dist <- function(m, lonlat = TRUE) {
   }
 }
 
-#' Apply slope function over multiple matrices
-#' @param m_xyz_split List of matrices/data.frames with xyz coordinates
-#' @param fun Slope function to apply (default: slope_matrix_weighted)
-#' @param ... Additional arguments to fun
+#' Calculate slopes for multiple coordinate matrices
+#'
+#' Applies slope calculation function to a list of coordinate matrices.
+#'
+#' @param m_xyz_split List of coordinate matrices with elevation data
+#' @param fun Function to apply for slope calculation (default: slope_matrix_weighted)
+#' @param ... Additional arguments passed to the slope function
+#' @return Numeric vector of slope values for all matrices
 #' @export
 slope_matrices <- function(m_xyz_split, fun = slope_matrix_weighted, ...) {
   slope_list <- pbapply::pblapply(m_xyz_split, fun, ...)
   unlist(slope_list)
 }
 
-#' Calculate slopes from raster and sf routes
-#' @param routes sf object with LINESTRING geometries
-#' @param dem RasterLayer or SpatRaster
-#' @param lonlat logical; are coordinates longitude/latitude? Default: sf::st_is_longlat(routes)
-#' @param method character; method for extracting raster values (default "bilinear")
-#' @param fun slope function to apply (default: slope_matrix_weighted)
-#' @param terra logical; use terra if TRUE
-#' @param directed logical; if TRUE, downslope is negative
+#' Calculate slopes using raster elevation data
+#'
+#' Calculates slope gradients for routes using digital elevation model (DEM) raster data.
+#'
+#' @param routes An sf object containing linestring geometries
+#' @param dem A raster object containing elevation data
+#' @param lonlat Logical, whether coordinates are longitude/latitude (default: auto-detected)
+#' @param method Method for raster extraction (default: "bilinear")
+#' @param fun Function for slope calculation (default: slope_matrix_weighted)
+#' @param terra Logical, whether to use terra package (default: auto-detected)
+#' @param directed Logical, whether to calculate directed slopes (default: FALSE)
+#' @return Numeric vector of slope values
 #' @export
 slope_raster <- function(routes, dem, lonlat = sf::st_is_longlat(routes),
                          method = "bilinear", fun = slope_matrix_weighted,
@@ -142,11 +175,15 @@ slope_raster <- function(routes, dem, lonlat = sf::st_is_longlat(routes),
   slope_xyz(m_xyz_df, fun = fun, lonlat = lonlat, directed = directed)
 }
 
-#' Calculate slopes from xyz data frames or sf objects
-#' @param route_xyz data.frame or sf object
-#' @param fun slope function (default: slope_matrix_weighted)
-#' @param lonlat logical; are coordinates longitude/latitude?
-#' @param directed logical; if TRUE, downslope is negative
+#' Calculate slopes from XYZ coordinate data
+#'
+#' Calculates slope gradients from linestring geometries with XYZ coordinates.
+#'
+#' @param route_xyz An sf object or data frame with XYZ coordinates
+#' @param fun Function for slope calculation (default: slope_matrix_weighted)
+#' @param lonlat Logical, whether coordinates are longitude/latitude (default: TRUE)
+#' @param directed Logical, whether to calculate directed slopes (default: FALSE)
+#' @return Numeric vector of slope values
 #' @export
 slope_xyz <- function(route_xyz, fun = slope_matrix_weighted, lonlat = TRUE, directed = FALSE) {
   if (inherits(route_xyz, "sf") | inherits(route_xyz, "sfc")) {
@@ -162,11 +199,15 @@ slope_xyz <- function(route_xyz, fun = slope_matrix_weighted, lonlat = TRUE, dir
   }
 }
 
-#' Extract elevations from coordinates
-#' @param m Coordinates matrix or sf object
-#' @param dem RasterLayer or SpatRaster
-#' @param method character; extraction method (default "bilinear")
-#' @param terra logical; use terra if TRUE
+#' Extract elevation values from coordinates
+#'
+#' Extracts elevation values from a DEM raster at specified coordinate locations.
+#'
+#' @param m Matrix or sf object with coordinates
+#' @param dem A raster object containing elevation data
+#' @param method Method for raster extraction (default: "bilinear")
+#' @param terra Logical, whether to use terra package (default: auto-detected)
+#' @return Numeric vector of elevation values
 #' @export
 elevation_extract <- function(m, dem, method = "bilinear", terra = has_terra() && methods::is(dem, "SpatRaster")) {
   if (any(grepl(pattern = "sf", class(m)))) m <- sf::st_coordinates(m)
@@ -177,11 +218,15 @@ elevation_extract <- function(m, dem, method = "bilinear", terra = has_terra() &
   }
 }
 
-#' Add elevations to linestring sf object
-#' @param routes sf object with LINESTRING geometries
-#' @param dem RasterLayer or SpatRaster
-#' @param method character; extraction method (default "bilinear")
-#' @param terra logical; use terra if TRUE
+#' Add elevation data to route linestrings
+#'
+#' Adds elevation (Z) coordinates to linestring geometries using DEM data.
+#'
+#' @param routes An sf object containing linestring geometries
+#' @param dem A raster object containing elevation data (default: NULL for automatic download)
+#' @param method Method for raster extraction (default: "bilinear")
+#' @param terra Logical, whether to use terra package (default: auto-detected)
+#' @return An sf object with XYZ linestring geometries
 #' @export
 elevation_add <- function(routes, dem = NULL, method = "bilinear", terra = has_terra() && methods::is(dem, "SpatRaster")) {
   stopifnotsf(routes)
@@ -207,14 +252,7 @@ elevation_add <- function(routes, dem = NULL, method = "bilinear", terra = has_t
 }
 
 # Utility functions
-#' Check if terra package is available
-#'
-#' Checks whether the terra package is installed and can be loaded.
-#'
-#' @return Logical value indicating if terra is available
-#' @export
 has_terra <- function() requireNamespace("terra", quietly = TRUE)
 is_linestring <- function(x) unique(sf::st_geometry_type(x)) == "LINESTRING"
 stop_is_not_linestring <- function(x) if (!is_linestring(x)) stop("Only works with LINESTRINGs. Convert with sf::st_cast()")
 stopifnotsf <- function(x, arg_name = "routes") if (!methods::is(x, "sf")) stop(arg_name, " is not an sf object. Try again with an sf object.")
-

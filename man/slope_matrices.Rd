@@ -2,17 +2,20 @@
 % Please edit documentation in R/slopes.R
 \name{slope_matrices}
 \alias{slope_matrices}
-\title{Apply slope function over multiple matrices}
+\title{Calculate slopes for multiple coordinate matrices}
 \usage{
 slope_matrices(m_xyz_split, fun = slope_matrix_weighted, ...)
 }
 \arguments{
-\item{m_xyz_split}{List of matrices/data.frames with xyz coordinates}
+\item{m_xyz_split}{List of coordinate matrices with elevation data}
 
-\item{fun}{Slope function to apply (default: slope_matrix_weighted)}
+\item{fun}{Function to apply for slope calculation (default: slope_matrix_weighted)}
 
-\item{...}{Additional arguments to fun}
+\item{...}{Additional arguments passed to the slope function}
+}
+\value{
+Numeric vector of slope values for all matrices
 }
 \description{
-Apply slope function over multiple matrices
+Applies slope calculation function to a list of coordinate matrices.
 }

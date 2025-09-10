@@ -2,22 +2,22 @@
 % Please edit documentation in R/slopes.R
 \name{slope_matrix_mean}
 \alias{slope_matrix_mean}
-\title{Calculate mean slopes from slope matrix}
+\title{Calculate mean slope from coordinate matrix}
 \usage{
 slope_matrix_mean(m, elevations = m[, 3], lonlat = TRUE, directed = FALSE)
 }
 \arguments{
-\item{m}{Matrix of coordinates with x, y, and optionally z columns}
-\item{elevations}{Elevation values (default: m[, 3])}
-\item{lonlat}{Logical indicating if coordinates are longitude/latitude (default: TRUE)}
-\item{directed}{Logical indicating if slopes are directed (default: FALSE)}
+\item{m}{Matrix of coordinates (x, y, z)}
+
+\item{elevations}{Vector of elevation values (default: third column of m)}
+
+\item{lonlat}{Logical, whether coordinates are longitude/latitude (default: TRUE)}
+
+\item{directed}{Logical, whether to calculate directed slopes (default: FALSE)}
 }
 \value{
 Numeric value representing the mean slope
 }
 \description{
-Calculates mean slope values from a slope matrix representation.
-}
-\details{
-Computes the mean slope across all matrix elements, providing a summary statistic.
+Computes the mean slope from a matrix of coordinates with elevation data.
 }

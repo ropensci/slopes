@@ -1,36 +1,24 @@
-#' Plot a digital elevation profile based on xyz data
+#' Plot distance-elevation profile with slope coloring
 #'
-#' @details
-#' This function is called by `plot_slope()` but can be used directly.
-#' @param d Cumulative distance
-#' @param z Elevations at points across a linestring
-#' @param fill Should the profile be filled? `TRUE` by default
-#' @param horiz Should the legend be horizontal (`FALSE` by default)
-#' @param pal Color palette to use, `NULL` by default (uses slopes_palette())
-#' @param legend_position The legend position. One of "bottomright", "bottom",
-#'   "bottomleft", "left", "topleft", "top" (the default), "topright", "right"
-#'   and "center".
-#' @param col Line colour, black by default
-#' @param cex Legend size, 0.9 by default
-#' @param bg Legend background colour, `grDevices::rgb(1, 1, 1, 0.8)` by default.
-#' @param title Title of the legend, "Slope colors (percentage gradient)" by default.
-#' @param brks Breaks in colour palette to show.
-#'   `c(3, 6, 10, 20, 40, 100)` by default.
-#' @param seq_brks Sequence of breaks to show in legend.
-#'   By default this is calculated from `brks`.
-#' @param ncol Number of columns in legend, 4 by default.
-#' @param ... Additional parameters to pass to legend
-#' @return A plot is created on the current graphics device.
+#' Creates a distance-elevation plot with segments colored by slope gradient.
+#'
+#' @param d Vector of cumulative distances
+#' @param z Vector of elevation values
+#' @param fill Logical, whether to fill segments with slope colors (default: TRUE)
+#' @param horiz Logical, whether legend should be horizontal (default: FALSE)
+#' @param pal Color palette for slope visualization (default: NULL, uses slopes_palette)
+#' @param ... Additional arguments passed to graphics functions
+#' @param legend_position Position of legend (default: "top")
+#' @param col Color of the elevation profile line (default: "black")
+#' @param cex Character expansion factor for legend text (default: 0.9)
+#' @param bg Background color for legend (default: semi-transparent white)
+#' @param title Title for the legend (default: "Slope colors (percentage gradient)")
+#' @param brks Vector of slope break points for coloring (default: c(3, 6, 10, 20, 40, 100))
+#' @param seq_brks Sequence of breaks to show in legend (default: NULL, auto-generated)
+#' @param ncol Number of columns in legend (default: 4)
+#' @return NULL (creates plot as side effect)
 #' @export
-#' @examples
-#' library(sf)
-#' route_xyz = lisbon_road_segment_3d
-#' m = st_coordinates(route_xyz)
-#' d = cumsum(sequential_dist(m, lonlat = FALSE))
-#' d = c(0, d)
-#' z = m[, 3]
-#' plot_dz(d, z, brks = c(3, 6, 10, 20, 40, 100))
-plot_dz = function(
+plot_dz <- function(
     d, z, fill = TRUE, horiz = FALSE, pal = NULL, ...,
     legend_position = "top", col = "black", cex = 0.9,
     bg = grDevices::rgb(1, 1, 1, 0.8),
@@ -39,23 +27,18 @@ plot_dz = function(
     seq_brks = NULL,
     ncol = 4
 ) {
-
   # Make breaks
-  b = make_breaks(brks)
-
+  b <- make_breaks(brks)
   # Use palette of correct length
   if (is.null(pal)) pal <- slopes_palette(n = length(b) - 1)
-
   # Ensure pal matches intervals
   if (length(pal) != length(b) - 1) {
     pal <- grDevices::colorRampPalette(pal)(length(b) - 1)
   }
-
   graphics::plot(d, z, type = "l", col = "brown", lwd = 2)
-
   if (fill) {
-    g = slope_vector(x = d, elevations = z)
-    colz = make_colz(g, b, pal)
+    g <- slope_vector(x = d, elevations = z)
+    colz <- make_colz(g, b, pal)
     lapply(seq(d)[-(length(d))], function(i) {
       graphics::polygon(
         x = c(d[i:(i + 1)], d[(i + 1):i]),
@@ -65,47 +48,36 @@ plot_dz = function(
       )
     })
     graphics::lines(d, z, col = col, lwd = 2)
-    if(is.null(seq_brks)) seq_brks = seq(from = 3, to = length(b) - 2)
-    s = c(seq_brks[-(length(seq_brks) / 2) -1], max(seq_brks) + 1)
+    if(is.null(seq_brks)) seq_brks <- seq(from = 3, to = length(b) - 2)
+    s <- c(seq_brks[-(length(seq_brks) / 2) -1], max(seq_brks) + 1)
     graphics::legend(x = legend_position, legend = b[s] * 100, fill = pal[s],
                      ..., bg = bg, title = title, horiz = horiz,
                      ncol = ncol, cex = cex)
   }
 }
 
-
-
-
-#' Plot slope data for a 3d linestring with base R graphics
+#' Plot elevation profile with slope coloring
 #'
-#' @param route_xyz An sf linestring with x, y and z coordinates,
-#'   representing a route or other linear object.
-#' @param lonlat Are the coordinates in longitude/latitude? If `NA` (the default),
-#'   this is inferred from the CRS of the input.
-#' @param fill Should the profile be filled? `TRUE` by default
-#' @param horiz Should the legend be horizontal (`FALSE` by default)
-#' @param pal Color palette to use, `NULL` by default (uses slopes_palette())
-#' @param legend_position The legend position. One of "bottomright", "bottom",
-#'   "bottomleft", "left", "topleft", "top" (the default), "topright", "right"
-#'   and "center".
-#' @param col Line colour, black by default
-#' @param cex Legend size, 0.9 by default
-#' @param bg Legend background colour, `grDevices::rgb(1, 1, 1, 0.8)` by default.
-#' @param title Title of the legend, "Slope colors (percentage gradient)" by default.
-#' @param brks Breaks in colour palette to show.
-#'   `c(3, 6, 10, 20, 40, 100)` by default.
-#' @param seq_brks Sequence of breaks to show in legend.
-#'   Includes negative numbers and omits zero by default
-#' @param ncol Number of columns in legend, 4 by default.
-#' @param ... Additional parameters to pass to legend
-#' @return A plot object is invisibly returned, and a plot is created on the current graphics device.
+#' Creates an elevation profile plot from route geometries with XYZ coordinates,
+#' with segments colored according to slope gradient.
+#'
+#' @param route_xyz An sf object containing linestring geometries with XYZ coordinates
+#' @param lonlat Logical, whether coordinates are longitude/latitude (default: auto-detected)
+#' @param fill Logical, whether to fill segments with slope colors (default: TRUE)
+#' @param horiz Logical, whether legend should be horizontal (default: FALSE)
+#' @param pal Color palette for slope visualization (default: NULL, uses slopes_palette)
+#' @param legend_position Position of legend (default: "top")
+#' @param col Color of the elevation profile line (default: "black")
+#' @param cex Character expansion factor for legend text (default: 0.9)
+#' @param bg Background color for legend (default: semi-transparent white)
+#' @param title Title for the legend (default: "Slope colors (percentage gradient)")
+#' @param brks Vector of slope break points for coloring (default: c(3, 6, 10, 20, 40, 100))
+#' @param seq_brks Sequence of breaks to show in legend (default: auto-generated)
+#' @param ncol Number of columns in legend (default: 4)
+#' @param ... Additional arguments passed to plot_dz
+#' @return NULL (creates plot as side effect)
 #' @export
-#' @examples
-#' plot_slope(lisbon_route_3d)
-#' route_xyz = lisbon_road_segment_3d
-#' plot_slope(route_xyz)
-#' plot_slope(route_xyz, brks = c(1, 2, 4, 8, 16, 30))
-plot_slope = function(
+plot_slope <- function(
     route_xyz,
     lonlat = sf::st_is_longlat(route_xyz),
     fill = TRUE,
@@ -121,17 +93,14 @@ plot_slope = function(
     ncol = 4,
     ...
 ) {
-
   if (is.null(pal)) pal <- slopes_palette(n = length(brks) - 1)
-
   if(is.na(lonlat)) {
     stop(
       "CRS of routes not known. Set the CRS, e.g. as follows:\n",
       "sf::st_crs(routes) = 4326 # if the routes are in lon/lat coordinates"
     )
   }
-  dz = distance_z(route_xyz, lonlat = lonlat)
-
+  dz <- distance_z(route_xyz, lonlat = lonlat)
   # Corrected call
   plot_dz(
     d = dz$d,
@@ -151,16 +120,23 @@ plot_slope = function(
   )
 }
 
-make_pal = function(pal, b) {
+#' Create color palette for slope visualization
+#'
+#' Creates or processes color palettes for slope gradient visualization.
+#'
+#' @param pal Color palette (function or character vector)
+#' @param b Vector of breaks for color mapping
+#' @return Character vector of colors
+make_pal <- function(pal, b) {
   if (identical(pal, colorspace::diverging_hcl)) {
-    pal = slopes_palette(n = length(b) - 1)
+    pal <- slopes_palette(n = length(b) - 1)
   } else if (is.function(pal)) {
-    pal = pal(n = length(b) - 1)
+    pal <- pal(n = length(b) - 1)
   } else if (is.character(pal)) {
     if (length(pal) < length(b) - 1) {
-      pal = grDevices::colorRampPalette(pal)(length(b) - 1)
+      pal <- grDevices::colorRampPalette(pal)(length(b) - 1)
     } else {
-      pal = pal[seq_len(length(b) - 1)]
+      pal <- pal[seq_len(length(b) - 1)]
     }
   } else {
     stop("pal must be a function or a character vector of hex colors")
@@ -168,25 +144,44 @@ make_pal = function(pal, b) {
   pal
 }
 
-
-
-distance_z = function(route_xyz, lonlat) {
-  m = sf::st_coordinates(route_xyz)
-  d = cumsum(sequential_dist(m, lonlat = lonlat))
-  d = c(0, d)
-  z = m[, 3]
+#' Extract distance and elevation data from route
+#'
+#' Extracts cumulative distance and elevation vectors from route XYZ coordinates.
+#'
+#' @param route_xyz An sf object with XYZ coordinates
+#' @param lonlat Logical, whether coordinates are longitude/latitude
+#' @return List with components d (distances) and z (elevations)
+distance_z <- function(route_xyz, lonlat) {
+  m <- sf::st_coordinates(route_xyz)
+  d <- cumsum(sequential_dist(m, lonlat = lonlat))
+  d <- c(0, d)
+  z <- m[, 3]
   list(d = d, z = z)
 }
 
-make_breaks = function(brks) {
-  n = brks
-  n = c(-rev(n), 0, (n))
-  b = n / 100
+#' Create slope breaks for color mapping
+#'
+#' Creates symmetric slope breaks around zero for color classification.
+#'
+#' @param brks Vector of positive slope break values (as percentages)
+#' @return Vector of slope breaks including negative values and zero
+make_breaks <- function(brks) {
+  n <- brks
+  n <- c(-rev(n), 0, (n))
+  b <- n / 100
   b
 }
 
-make_colz = function(g, b, pal) {
-  colz = cut(
+#' Assign colors to slope values
+#'
+#' Maps slope gradient values to colors based on break points.
+#'
+#' @param g Vector of slope gradient values
+#' @param b Vector of break points
+#' @param pal Vector of colors corresponding to breaks
+#' @return Character vector of colors for each slope value
+make_colz <- function(g, b, pal) {
+  colz <- cut(
     x = g,
     breaks = b,
     labels = pal

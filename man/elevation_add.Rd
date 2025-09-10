@@ -2,7 +2,7 @@
 % Please edit documentation in R/slopes.R
 \name{elevation_add}
 \alias{elevation_add}
-\title{Add elevations to linestring sf object}
+\title{Add elevation data to route linestrings}
 \usage{
 elevation_add(
   routes,
@@ -12,14 +12,17 @@ elevation_add(
 )
 }
 \arguments{
-\item{routes}{sf object with LINESTRING geometries}
+\item{routes}{An sf object containing linestring geometries}
 
-\item{dem}{RasterLayer or SpatRaster}
+\item{dem}{A raster object containing elevation data (default: NULL for automatic download)}
 
-\item{method}{character; extraction method (default "bilinear")}
+\item{method}{Method for raster extraction (default: "bilinear")}
 
-\item{terra}{logical; use terra if TRUE}
+\item{terra}{Logical, whether to use terra package (default: auto-detected)}
+}
+\value{
+An sf object with XYZ linestring geometries
 }
 \description{
-Add elevations to linestring sf object
+Adds elevation (Z) coordinates to linestring geometries using DEM data.
 }

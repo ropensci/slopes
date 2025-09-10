@@ -2,20 +2,18 @@
 % Please edit documentation in R/slopes.R
 \name{slope_distance}
 \alias{slope_distance}
-\title{Calculate distance-based slopes}
+\title{Calculate slopes using distance data}
 \usage{
 slope_distance(d, elevations)
 }
 \arguments{
-\item{d}{Distance values between consecutive points}
-\item{elevations}{Elevation values at each point}
+\item{d}{Vector of distance values between points}
+
+\item{elevations}{Vector of elevation values}
 }
 \value{
-Numeric vector of slope gradients
+Numeric vector of slope values
 }
 \description{
-Calculates slope gradients using distance between consecutive points in linestring geometries.
-}
-\details{
-This function computes slope by considering the horizontal distance between vertices and the elevation change.
+Calculates slope gradients from distance and elevation vectors.
 }

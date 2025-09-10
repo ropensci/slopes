@@ -2,7 +2,7 @@
 % Please edit documentation in R/slopes.R
 \name{slope_raster}
 \alias{slope_raster}
-\title{Calculate slopes from raster and sf routes}
+\title{Calculate slopes using raster elevation data}
 \usage{
 slope_raster(
   routes,
@@ -15,20 +15,23 @@ slope_raster(
 )
 }
 \arguments{
-\item{routes}{sf object with LINESTRING geometries}
+\item{routes}{An sf object containing linestring geometries}
 
-\item{dem}{RasterLayer or SpatRaster}
+\item{dem}{A raster object containing elevation data}
 
-\item{lonlat}{logical; are coordinates longitude/latitude? Default: sf::st_is_longlat(routes)}
+\item{lonlat}{Logical, whether coordinates are longitude/latitude (default: auto-detected)}
 
-\item{method}{character; method for extracting raster values (default "bilinear")}
+\item{method}{Method for raster extraction (default: "bilinear")}
 
-\item{fun}{slope function to apply (default: slope_matrix_weighted)}
+\item{fun}{Function for slope calculation (default: slope_matrix_weighted)}
 
-\item{terra}{logical; use terra if TRUE}
+\item{terra}{Logical, whether to use terra package (default: auto-detected)}
 
-\item{directed}{logical; if TRUE, downslope is negative}
+\item{directed}{Logical, whether to calculate directed slopes (default: FALSE)}
+}
+\value{
+Numeric vector of slope values
 }
 \description{
-Calculate slopes from raster and sf routes
+Calculates slope gradients for routes using digital elevation model (DEM) raster data.
 }

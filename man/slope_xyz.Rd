@@ -2,7 +2,7 @@
 % Please edit documentation in R/slopes.R
 \name{slope_xyz}
 \alias{slope_xyz}
-\title{Calculate slopes from xyz data frames or sf objects}
+\title{Calculate slopes from XYZ coordinate data}
 \usage{
 slope_xyz(
   route_xyz,
@@ -12,14 +12,17 @@ slope_xyz(
 )
 }
 \arguments{
-\item{route_xyz}{data.frame or sf object}
+\item{route_xyz}{An sf object or data frame with XYZ coordinates}
 
-\item{fun}{slope function (default: slope_matrix_weighted)}
+\item{fun}{Function for slope calculation (default: slope_matrix_weighted)}
 
-\item{lonlat}{logical; are coordinates longitude/latitude?}
+\item{lonlat}{Logical, whether coordinates are longitude/latitude (default: TRUE)}
 
-\item{directed}{logical; if TRUE, downslope is negative}
+\item{directed}{Logical, whether to calculate directed slopes (default: FALSE)}
+}
+\value{
+Numeric vector of slope values
 }
 \description{
-Calculate slopes from xyz data frames or sf objects
+Calculates slope gradients from linestring geometries with XYZ coordinates.
 }
