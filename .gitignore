@@ -9,3 +9,5 @@ inst/doc
 data-raw/slides.html
 data-raw/slides_*
 data-raw/xaringan-themer.css
+/doc/
+/Meta/

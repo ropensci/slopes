@@ -3,24 +3,14 @@
 \docType{data}
 \name{magnolia_xy}
 \alias{magnolia_xy}
-\title{Road segments in Magnolia, Seattle}
+\title{Magnolia coordinates}
 \format{
-An object of class \code{sf}
-}
-\source{
-Accessed in early 2021 from the \code{seattle-streets} layer from the
-\href{https://data-seattlecitygis.opendata.arcgis.com/}{data-seattlecitygis}
-website.
+A data frame
 }
 \usage{
 magnolia_xy
 }
 \description{
-A dataset representing road segments in the Magnolia area of Seattle
-with X, Y and Z (elevation) dimensions for each coordinate.
-}
-\examples{
-names(magnolia_xy)
-plot(magnolia_xy["SLOPE_PCT"])
+Magnolia coordinates
 }
 \keyword{datasets}

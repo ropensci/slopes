@@ -2,14 +2,14 @@
 % Please edit documentation in R/plot_slope.R
 \name{plot_dz}
 \alias{plot_dz}
-\title{Plot a digital elevation profile based on xyz data}
+\title{Plot distance-elevation profile with slope coloring}
 \usage{
 plot_dz(
   d,
   z,
   fill = TRUE,
   horiz = FALSE,
-  pal = colorspace::diverging_hcl,
+  pal = NULL,
   ...,
   legend_position = "top",
   col = "black",
@@ -22,53 +22,37 @@ plot_dz(
 )
 }
 \arguments{
-\item{d}{Cumulative distance}
+\item{d}{Vector of cumulative distances}
 
-\item{z}{Elevations at points across a linestring}
+\item{z}{Vector of elevation values}
 
-\item{fill}{Should the profile be filled? \code{TRUE} by default}
+\item{fill}{Logical, whether to fill segments with slope colors (default: TRUE)}
 
-\item{horiz}{Should the legend be horizontal (\code{FALSE} by default)}
+\item{horiz}{Logical, whether legend should be horizontal (default: FALSE)}
 
-\item{pal}{Color palette to use, \code{colorspace::diverging_hcl} by default.}
+\item{pal}{Color palette for slope visualization (default: NULL, uses slopes_palette)}
 
-\item{...}{Additional parameters to pass to legend}
+\item{...}{Additional arguments passed to graphics functions}
 
-\item{legend_position}{The legend position. One of "bottomright", "bottom",
-"bottomleft", "left", "topleft", "top" (the default), "topright", "right"
-and "center".}
+\item{legend_position}{Position of legend (default: "top")}
 
-\item{col}{Line colour, black by default}
+\item{col}{Color of the elevation profile line (default: "black")}
 
-\item{cex}{Legend size, 0.9 by default}
+\item{cex}{Character expansion factor for legend text (default: 0.9)}
 
-\item{bg}{Legend background colour, \code{grDevices::rgb(1, 1, 1, 0.8)} by default.}
+\item{bg}{Background color for legend (default: semi-transparent white)}
 
-\item{title}{Title of the legend, "Slope colors (percentage gradient)" by default.}
+\item{title}{Title for the legend (default: "Slope colors (percentage gradient)")}
 
-\item{brks}{Breaks in colour palette to show.
-\code{c(3, 6, 10, 20, 40, 100)} by default.}
+\item{brks}{Vector of slope break points for coloring (default: c(3, 6, 10, 20, 40, 100))}
 
-\item{seq_brks}{Sequence of breaks to show in legend.
-By default this is calculated from \code{brks}.}
+\item{seq_brks}{Sequence of breaks to show in legend (default: NULL, auto-generated)}
 
-\item{ncol}{Number of columns in legend, 4 by default.}
+\item{ncol}{Number of columns in legend (default: 4)}
 }
 \value{
-A plot is created on the current graphics device.
+NULL (creates plot as side effect)
 }
 \description{
-Plot a digital elevation profile based on xyz data
-}
-\details{
-This function is called by \code{plot_slope()} but can be used directly.
-}
-\examples{
-library(sf)
-route_xyz = lisbon_road_segment_3d
-m = st_coordinates(route_xyz)
-d = cumsum(sequential_dist(m, lonlat = FALSE))
-d = c(0, d)
-z = m[, 3]
-plot_dz(d, z, brks = c(3, 6, 10, 20, 40, 100))
+Creates a distance-elevation plot with segments colored by slope gradient.
 }

@@ -2,67 +2,20 @@
 % Please edit documentation in R/slopes.R
 \name{slope_matrix}
 \alias{slope_matrix}
-\alias{slope_matrix_mean}
-\alias{slope_matrix_weighted}
-\title{Calculate the gradient of line segments from a 3D matrix of coordinates}
+\title{Calculate slopes from coordinate matrix}
 \usage{
 slope_matrix(m, elevations = m[, 3], lonlat = TRUE)
-
-slope_matrix_mean(m, elevations = m[, 3], lonlat = TRUE, directed = FALSE)
-
-slope_matrix_weighted(m, elevations = m[, 3], lonlat = TRUE, directed = FALSE)
 }
 \arguments{
-\item{m}{Matrix containing coordinates and elevations.
-The matrix should have three columns: x, y, and z, in that order. Typically
-these correspond to location in the West-East, South-North, and vertical
-elevation axes respectively.
-In data with geographic coordinates, Z values are assumed to be in
-metres. In data with projected coordinates, Z values are assumed to have
-the same units as the X and Y coordinates.}
+\item{m}{Matrix of coordinates (x, y, z)}
 
-\item{elevations}{Elevations in same units as x (assumed to be metres).
-Default value: \code{m[, 3]}, meaning the 'z' coordinate in a matrix of
-coordinates.}
+\item{elevations}{Vector of elevation values (default: third column of m)}
 
-\item{lonlat}{Are the coordinates in lon/lat (geographic) coordinates? TRUE by default.}
-
-\item{directed}{Should the value be directed? \code{FALSE} by default.
-If \code{TRUE} the result will be negative when it represents a downslope
-(when the end point is lower than the start point).}
+\item{lonlat}{Logical, whether coordinates are longitude/latitude (default: TRUE)}
 }
 \value{
-A vector of slope gradients associated with each linear element
-(each line between consecutive vertices) associated with linear features.
-Returned values for \code{slope_matrix_mean()} and
-\code{slope_matrix_weighted()} are summary statistics for all
-linear elements in the linestring.
-The output value is a proportion representing the change in elevation
-for a given change in horizontal movement along the linestring.
-0.02, for example, represents a low gradient of 2\% while 0.08 represents
-a steep gradient of 8\%.
+Numeric vector of slope values
 }
 \description{
-Calculate the gradient of line segments from a 3D matrix of coordinates
-}
-\examples{
-x = c(0, 2, 3, 4, 5, 9)
-y = c(0, 0, 0, 0, 0, 9)
-z = c(1, 2, 2, 4, 3, 0) / 10
-m = cbind(x, y, z)
-slope_matrix_weighted(m, lonlat = FALSE)
-slope_matrix_weighted(m, lonlat = FALSE, directed = TRUE)
-# 0 value returned if no change in elevation:
-slope_matrix_weighted(m,lonlat = FALSE, directed = TRUE,
-  elevations = c(1, 2, 2, 4, 3, 1))
-slope_matrix_mean(m, lonlat = FALSE)
-slope_matrix_mean(m, lonlat = FALSE, directed = TRUE)
-plot(x, z, ylim = c(-0.5, 0.5), type = "l")
-(gx = slope_vector(x, z))
-(gxy = slope_matrix(m, lonlat = FALSE))
-abline(h = 0, lty = 2)
-points(x[-length(x)], gx, col = "red")
-points(x[-length(x)], gxy, col = "blue")
-title("Distance (in x coordinates) elevation profile",
-  sub = "Points show calculated gradients of subsequent lines")
+Calculates slope gradients from a matrix of coordinates and elevation data.
 }

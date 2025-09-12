@@ -3,35 +3,14 @@
 \docType{data}
 \name{lisbon_route}
 \alias{lisbon_route}
-\alias{lisbon_route_3d}
-\alias{lisbon_route_xyz_mapbox}
-\title{A route composed of a single linestring in Lisbon, Portugal}
+\title{Lisbon route data}
 \format{
-An object of class \code{sf}
-}
-\source{
-See the \code{lisbon_route.R} script in \code{data-raw}
+An sf object
 }
 \usage{
 lisbon_route
 }
 \description{
-A route representing a trip from the Santa Catarina area
-in the East of central Lisbon the map to the Castelo de São Jorge
-in the West of central Lisbon.
-}
-\details{
-Different versions of this dataset are provided.
-
-The \code{lisbon_route} object has 1 row and 4 columns: geometry, ID,
-length and whether or not a path was found.
-
-The \code{lisbon_route_xyz_mapbox} was created with:
-\code{lisbon_route_xyz_mapbox = elevation_add(lisbon_route)}.
-}
-\examples{
-lisbon_route
-lisbon_route_3d
-lisbon_route_xyz_mapbox
+Lisbon route data
 }
 \keyword{datasets}

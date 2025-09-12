@@ -21,3 +21,5 @@ paper.html
 paper.md
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
+^doc$
+^Meta$

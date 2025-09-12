@@ -2,51 +2,20 @@
 % Please edit documentation in R/slope_get.R
 \name{elevation_get}
 \alias{elevation_get}
-\title{Get elevation data from hosted maptile services}
+\title{Get elevation data for routes}
 \usage{
 elevation_get(routes, ..., output_format = "raster")
 }
 \arguments{
-\item{routes}{Routes, the gradients of which are to be calculated.
-The object must be of class \code{sf} or \code{sfc} with \code{LINESTRING} geometries.}
+\item{routes}{An sf object containing linestring geometries}
 
-\item{...}{Options passed to \code{cc_elevation()}}
+\item{...}{Additional arguments passed to ceramic::cc_elevation}
 
-\item{output_format}{What format to return the data in?
-Accepts \code{"raster"} (the default) and \code{"terra"}.}
+\item{output_format}{Character string specifying output format ("raster" or "terra")}
 }
 \value{
-A raster object with cell values representing elevations in the
-bounding box of the input \code{routes} object.
+Elevation raster data covering the routes
 }
 \description{
-\code{elevation_get()} uses the
-\href{https://hypertidy.github.io/ceramic/reference/cc_location.html}{\code{cc_elevation()}}
-function from the \code{ceramic} package to get
-DEM data in raster format anywhere worldwide.
-It requires an API that can be added by following guidance in the package's
-\href{https://github.com/ropensci/slopes#installation-for-dem-downloads}{README}
-and in the
-\href{https://ropensci.github.io/slopes/articles/slopes.html}{\code{slopes} vignette}.
-}
-\details{
-Note: if you use the \code{cc_elevation()} function directly to get DEM data,
-you can cache the data, as described in the package's
-\href{https://github.com/hypertidy/ceramic#local-caching-of-tiles}{README}.
-}
-\examples{
-# Time-consuming examples that require an internet connection and API key:
-\donttest{
-if (rlang::is_installed("ceramic") && rlang::is_installed("sf") && rlang::is_installed("raster")) {
-  library(sf)
-  library(raster)
-  routes = cyclestreets_route
-  e = elevation_get(routes)
-  class(e)
-  crs(e)
-  e
-  plot(e)
-  plot(st_geometry(routes), add = TRUE)
-}
-}
+Downloads elevation data using the ceramic package for given routes.
 }

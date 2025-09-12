@@ -1,41 +1,12 @@
-#' Get elevation data from hosted maptile services
+#' Get elevation data for routes
 #'
-#' `elevation_get()` uses the
-#' [`cc_elevation()`](https://hypertidy.github.io/ceramic/reference/cc_location.html)
-#' function from the `ceramic` package to get
-#' DEM data in raster format anywhere worldwide.
-#' It requires an API that can be added by following guidance in the package's
-#' [README](https://github.com/ropensci/slopes#installation-for-dem-downloads)
-#' and in the
-#' [`slopes` vignette](https://ropensci.github.io/slopes/articles/slopes.html).
+#' Downloads elevation data using the ceramic package for given routes.
 #'
-#'
-#' Note: if you use the `cc_elevation()` function directly to get DEM data,
-#' you can cache the data, as described in the package's
-#' [README](https://github.com/hypertidy/ceramic#local-caching-of-tiles).
-#'
-#' @param ... Options passed to `cc_elevation()`
-#' @param output_format What format to return the data in?
-#'   Accepts `"raster"` (the default) and `"terra"`.
-#' @inheritParams slope_raster
-#' @return A raster object with cell values representing elevations in the
-#'   bounding box of the input `routes` object.
+#' @param routes An sf object containing linestring geometries
+#' @param ... Additional arguments passed to ceramic::cc_elevation
+#' @param output_format Character string specifying output format ("raster" or "terra")
+#' @return Elevation raster data covering the routes
 #' @export
-#' @examples
-#' # Time-consuming examples that require an internet connection and API key:
-#' \donttest{
-#' if (rlang::is_installed("ceramic") && rlang::is_installed("sf") && rlang::is_installed("raster")) {
-#'   library(sf)
-#'   library(raster)
-#'   routes = cyclestreets_route
-#'   e = elevation_get(routes)
-#'   class(e)
-#'   crs(e)
-#'   e
-#'   plot(e)
-#'   plot(st_geometry(routes), add = TRUE)
-#' }
-#' }
 elevation_get = function(routes, ..., output_format = "raster") {
   if(requireNamespace("ceramic")) {
     mid_ext = sf_mid_ext_lonlat(routes)
@@ -57,6 +28,12 @@ elevation_get = function(routes, ..., output_format = "raster") {
   res
 }
 
+#' Extract midpoint and extent from routes in lonlat
+#'
+#' Internal helper function to get midpoint and extent of routes in lon/lat coordinates.
+#'
+#' @param routes An sf object containing linestring geometries
+#' @return A list with midpoint coordinates and width/height dimensions
 sf_mid_ext_lonlat = function(routes) {
   res = list()
   if(!sf::st_is_longlat(routes)) {
@@ -68,6 +45,43 @@ sf_mid_ext_lonlat = function(routes) {
   res$height = geodist::geodist(
     c(x = bb[1], y = bb[2]),
     c(x = bb[1], y = bb[4])
-    )
+  )
   res
+}
+
+#' Convert slope matrix to raster
+#'
+#' Converts a slope matrix or checks if input is already a raster.
+#'
+#' @param x A matrix or RasterLayer object
+#' @return A RasterLayer object
+#' @export
+slope_matrix_to_raster <- function(x) {  # <-- Changed name
+  if (inherits(x, "Raster")) {
+    return(x)
+  }
+  if (is.matrix(x)) {
+    return(raster::raster(x))
+  }
+  stop("Input must be a matrix or RasterLayer")
+}
+
+#' Extract XYZ coordinates from raster or matrix
+#'
+#' Simplifies raster or matrix data to XYZ coordinate format.
+#'
+#' @param x A RasterLayer or matrix object
+#' @return A data frame with x, y, z coordinates
+#' @export
+slope_xyz_simple <- function(x) {
+  if (inherits(x, "Raster")) {
+    xy <- raster::xyFromCell(x, 1:raster::ncell(x))
+    return(data.frame(x = xy[, 1], y = xy[, 2], z = raster::getValues(x)))
+  }
+  if (is.matrix(x)) {
+    df <- as.data.frame(as.table(x))
+    names(df) <- c("y", "x", "z")
+    return(df)
+  }
+  stop("Input must be a RasterLayer or matrix")
 }

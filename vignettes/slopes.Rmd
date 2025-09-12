@@ -133,7 +133,11 @@ slope
 You can visualize the elevation profile of a 3D linestring using `plot_slope()`:
 
 ```{r}
-plot_slope(sf_linestring_xyz_local)
+# ensure a palette and breaks exist
+brks <- c(3, 6, 10, 20, 40, 100)
+pal <- slopes_palette(length(brks) - 1)
+
+plot_slope(sf_linestring_xyz_local, pal = pal, brks = brks)
 ```
 
 ## Working with segments

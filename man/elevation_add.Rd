@@ -2,7 +2,7 @@
 % Please edit documentation in R/slopes.R
 \name{elevation_add}
 \alias{elevation_add}
-\title{Take a linestring and add a third (z) dimension to its coordinates}
+\title{Add elevation data to route linestrings}
 \usage{
 elevation_add(
   routes,
@@ -12,40 +12,17 @@ elevation_add(
 )
 }
 \arguments{
-\item{routes}{Routes, the gradients of which are to be calculated.
-The object must be of class \code{sf} or \code{sfc} with \code{LINESTRING} geometries.}
+\item{routes}{An sf object containing linestring geometries}
 
-\item{dem}{Raster overlapping with \code{routes} and values representing elevations}
+\item{dem}{A raster object containing elevation data (default: NULL for automatic download)}
 
-\item{method}{The method of estimating elevation at points,
-passed to the \code{extract} function for extracting values from raster
-datasets. Default: \code{"bilinear"}.}
+\item{method}{Method for raster extraction (default: "bilinear")}
 
-\item{terra}{Should the \code{terra} package be used?
-\code{TRUE} by default if the package is installed \emph{and}
-if \code{dem} is of class \code{SpatRast}}
+\item{terra}{Logical, whether to use terra package (default: auto-detected)}
 }
 \value{
-An sf object that is identical to the input \code{routes}, except that
-the coordinate values in the ouput has a third \code{z} dimension representing
-the elevation of each vertex that defines a linear feature such as a road.
+An sf object with XYZ linestring geometries
 }
 \description{
-Take a linestring and add a third (z) dimension to its coordinates
-}
-\examples{
-library(sf)
-routes = lisbon_road_network[204, ]
-dem = dem_lisbon_raster
-(r3d = elevation_add(routes, dem))
-library(sf)
-st_z_range(routes)
-st_z_range(r3d)
-plot(st_coordinates(r3d)[, 3])
-plot_slope(r3d)
-\donttest{
-# Get elevation data (requires internet connection and API key):
-r3d_get = elevation_add(cyclestreets_route)
-plot_slope(r3d_get)
-}
+Adds elevation (Z) coordinates to linestring geometries using DEM data.
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/slopes.R
 \name{slope_xyz}
 \alias{slope_xyz}
-\title{Extract slopes from xyz data frame or sf objects}
+\title{Calculate slopes from XYZ coordinate data}
 \usage{
 slope_xyz(
   route_xyz,
@@ -12,35 +12,17 @@ slope_xyz(
 )
 }
 \arguments{
-\item{route_xyz}{An \code{sf} or \code{sfc} object with \code{XYZ} coordinate dimensions}
+\item{route_xyz}{An sf object or data frame with XYZ coordinates}
 
-\item{fun}{The slope function to calculate per route,
-\code{slope_matrix_weighted} by default.}
+\item{fun}{Function for slope calculation (default: slope_matrix_weighted)}
 
-\item{lonlat}{Are the coordinates in lon/lat order? TRUE by default}
+\item{lonlat}{Logical, whether coordinates are longitude/latitude (default: TRUE)}
 
-\item{directed}{Should the value be directed? \code{FALSE} by default.
-If \code{TRUE} the result will be negative when it represents a downslope
-(when the end point is lower than the start point).}
+\item{directed}{Logical, whether to calculate directed slopes (default: FALSE)}
 }
 \value{
-A vector of slopes equal in length to the number simple features
-(rows representing linestrings) in the input object.
+Numeric vector of slope values
 }
 \description{
-The function takes a sf object with 'XYZ' coordinates and returns a vector
-of numeric values representing the average slope of each linestring in the
-sf data frame input.
-}
-\details{
-The default function to calculate the mean slope is \code{slope_matrix_weighted()}.
-You can also use \code{slope_matrix_mean()} from the package or any other
-function that takes the same inputs as these functions not in the package.
-}
-\examples{
-route_xyz = lisbon_road_segment_3d
-slope_xyz(route_xyz, lonlat = FALSE)
-slope_xyz(route_xyz$geom, lonlat = FALSE)
-slope_xyz(route_xyz, lonlat = FALSE, directed = TRUE)
-slope_xyz(route_xyz, lonlat = FALSE, fun = slope_matrix_mean)
+Calculates slope gradients from linestring geometries with XYZ coordinates.
 }

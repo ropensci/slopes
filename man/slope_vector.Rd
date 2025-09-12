@@ -2,70 +2,18 @@
 % Please edit documentation in R/slopes.R
 \name{slope_vector}
 \alias{slope_vector}
-\alias{slope_distance}
-\alias{slope_distance_mean}
-\alias{slope_distance_weighted}
-\title{Calculate the gradient of line segments from distance and elevation vectors}
+\title{Calculate slopes from vector data}
 \usage{
 slope_vector(x, elevations)
-
-slope_distance(d, elevations)
-
-slope_distance_mean(d, elevations, directed = FALSE)
-
-slope_distance_weighted(d, elevations, directed = FALSE)
 }
 \arguments{
-\item{x}{Vector of locations}
+\item{x}{Vector of distance values}
 
-\item{elevations}{Elevations in same units as x (assumed to be metres)}
-
-\item{d}{Vector of distances between points}
-
-\item{directed}{Should the value be directed? \code{FALSE} by default.
-If \code{TRUE} the result will be negative when it represents a downslope
-(when the end point is lower than the start point).}
+\item{elevations}{Vector of elevation values}
 }
 \value{
-A vector of slope gradients associated with each linear element
-(each line between consecutive vertices) associated with linear features.
-Returned values for \code{slope_distance_mean()} and
-\code{slope_distance_mean_weighted()} are summary statistics for all
-linear elements in the linestring.
-The output value is a proportion representing the change in elevation
-for a given change in horizontal movement along the linestring.
-0.02, for example, represents a low gradient of 2\% while 0.08 represents
-a steep gradient of 8\%.
+Numeric vector of slope values
 }
 \description{
-\code{slope_vector()} calculates the slopes associated with consecutive elements
-in one dimensional distance and associated elevations (see examples).
-
-\code{slope_distance()} calculates the slopes associated with consecutive
-distances and elevations.
-
-\code{slope_distance_mean()} calculates the mean average slopes associated with
-consecutive distances and elevations.
-
-\code{slope_distance_weighted()} calculates the slopes associated with
-consecutive distances and elevations,
-with the mean value associated with each set of distance/elevation
-vectors weighted in proportion to the distance between each elevation
-measurement, so longer sections have proportionally more influence
-on the resulting gradient estimate (see examples).
-}
-\examples{
-x = c(0, 2, 3, 4, 5, 9)
-elevations = c(1, 2, 2, 4, 3, 0) / 10 # downward slope overall
-slope_vector(x, elevations)
-library(sf)
-m = st_coordinates(lisbon_road_segment)
-d = sequential_dist(m, lonlat = FALSE)
-elevations = elevation_extract(m, dem_lisbon_raster)
-slope_distance(d, elevations)
-slope_distance_mean(d, elevations)
-slope_distance_mean(d, elevations, directed = TRUE)
-slope_distance_mean(rev(d), rev(elevations), directed = TRUE)
-slope_distance_weighted(d, elevations)
-slope_distance_weighted(d, elevations, directed = TRUE)
+Calculates slope gradients using vector distance and elevation data.
 }

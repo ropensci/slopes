@@ -2,7 +2,7 @@
 % Please edit documentation in R/slopes.R
 \name{slope_raster}
 \alias{slope_raster}
-\title{Calculate the gradient of line segments from a raster dataset}
+\title{Calculate slopes using raster elevation data}
 \usage{
 slope_raster(
   routes,
@@ -15,55 +15,23 @@ slope_raster(
 )
 }
 \arguments{
-\item{routes}{Routes, the gradients of which are to be calculated.
-The object must be of class \code{sf} or \code{sfc} with \code{LINESTRING} geometries.}
+\item{routes}{An sf object containing linestring geometries}
 
-\item{dem}{Raster overlapping with \code{routes} and values representing elevations}
+\item{dem}{A raster object containing elevation data}
 
-\item{lonlat}{Are the routes provided in longitude/latitude coordinates?
-By default, value is from the CRS of the routes (\code{sf::st_is_longlat(routes)}).}
+\item{lonlat}{Logical, whether coordinates are longitude/latitude (default: auto-detected)}
 
-\item{method}{The method of estimating elevation at points,
-passed to the \code{extract} function for extracting values from raster
-datasets. Default: \code{"bilinear"}.}
+\item{method}{Method for raster extraction (default: "bilinear")}
 
-\item{fun}{The slope function to calculate per route,
-\code{slope_matrix_weighted} by default.}
+\item{fun}{Function for slope calculation (default: slope_matrix_weighted)}
 
-\item{terra}{Should the \code{terra} package be used?
-\code{TRUE} by default if the package is installed \emph{and}
-if \code{dem} is of class \code{SpatRast}}
+\item{terra}{Logical, whether to use terra package (default: auto-detected)}
 
-\item{directed}{Should the value be directed? \code{FALSE} by default.
-If \code{TRUE} the result will be negative when it represents a downslope
-(when the end point is lower than the start point).}
+\item{directed}{Logical, whether to calculate directed slopes (default: FALSE)}
 }
 \value{
-A vector of slopes equal in length to the number simple features
-(rows representing linestrings) in the input object.
+Numeric vector of slope values
 }
 \description{
-This function takes an \code{sf} representing routes over geographical space
-and a raster dataset representing the terrain as inputs.
-It returns the average gradient of each route feature.
-}
-\details{
-If calculating slopes associated with OSM data, the results may be better
-if the network is first split-up, e.g. using the function
-\code{stplanr::rnet_breakup_vertices()} from the
-\href{https://docs.ropensci.org/stplanr/reference/}{\code{stplanr}} package.
-\strong{Note:} The \code{routes} object must have a geometry type of \code{LINESTRING}.
-The \code{sf::st_cast()} function can convert from \code{MULTILINESTRING} (and other)
-geometries to \code{LINESTRING}s as follows:
-\code{r_linestring = sf::st_cast(routes, "LINESTRING")}.
-}
-\examples{
-library(sf)
-routes = lisbon_road_network[1:3, ]
-dem = dem_lisbon_raster
-(s = slope_raster(routes, dem))
-cor(routes$Avg_Slope, s)
-slope_raster(routes, dem, directed = TRUE)
-# Demonstrate that reverse routes have the opposite directed slope
-slope_raster(st_reverse(routes), dem, directed = TRUE)
+Calculates slope gradients for routes using digital elevation model (DEM) raster data.
 }
