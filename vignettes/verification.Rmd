@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Introduction
+## Introduction
 
 This article aims to provide external verification of the results provided by the package.
 So far only one verification dataset has been used, but we hope to find others.
@@ -31,13 +31,72 @@ library(sf)
 The results are reproducible (requires downloading input data manually and installing additional packages).
 To keep package build times low, only the results are presented below.
 
-# Roads in the Netherlands
+## Case studies
+
+### Roads in the Netherlands
 
 ```{r, eval=FALSE}
 u = "https://downloads.rijkswaterstaatdata.nl/nwb-wegen/geogegevens/shapefile/NWB_hoogtebestand/01-10-2024%20Hoogtes%20Rijkswegen.zip"
 f_zip = "NWB_hoogtebestand.zip"
-download.file(u, f_zip)
-unzip(f_zip)
+if (!file.exists(f_zip)) {
+  download.file(u, f_zip)
+  unzip(f_zip)
+  # Datasets in 
+  list.files("NWB3D_resultaten_oktober_2024.gdb")
+  roads_nl_layers = sf::st_layers("NWB3D_resultaten_oktober_2024.gdb")
+#   Driver: OpenFileGDB
+# Available layers:
+#                                   layer_name        geometry_type features
+# 1    NWB3D_resultaten_oktober_2024_wegvakken 3D Multi Line String    16456
+# 2 NWB3D_resultaten_oktober_2024_vertexpunten             3D Point  1095615
+#   fields            crs_name
+# 1     59 Amersfoort / RD New
+# 2     59 Amersfoort / RD New
+  roads_nl = sf::st_read("NWB3D_resultaten_oktober_2024.gdb", layer = "NWB3D_resultaten_oktober_2024_wegvakken")
+  names(roads_nl)
+#    [1] "WVK_ID"        "BST_CODE"      "WVK_BEGDAT"    "JTE_ID_BEG"
+#  [5] "JTE_ID_END"    "WEGBEHSRT"     "WEGNUMMER"     "WEGDEELLTR"
+#  [9] "HECTO_LTTR"    "RPE_CODE"      "ADMRICHTNG"    "RIJRICHTNG"
+# [13] "STT_NAAM"      "STT_BRON"      "WPSNAAM"       "GME_ID"
+# [17] "GME_NAAM"      "HNRSTRLNKS"    "HNRSTRRHTS"    "E_HNR_LNKS"
+# [21] "E_HNR_RHTS"    "L_HNR_LNKS"    "L_HNR_RHTS"    "BEGAFSTAND"
+# [25] "ENDAFSTAND"    "BEGINKM"       "EINDKM"        "POS_TV_WOL"
+# [29] "WEGBEHCODE"    "WEGBEHNAAM"    "DISTRCODE"     "DISTRNAAM"
+# [33] "DIENSTCODE"    "DIENSTNAAM"    "WEGTYPE"       "WGTYPE_OMS"
+# [37] "ROUTELTR"      "ROUTENR"       "ROUTELTR2"     "ROUTENR2"
+# [41] "ROUTELTR3"     "ROUTENR3"      "ROUTELTR4"     "ROUTENR4"
+# [45] "WEGNR_AW"      "WEGNR_HMP"     "GEOBRON_ID"    "GEOBRON_NM"
+# [49] "BRONJAAR"      "OPENLR"        "BAG_ORL"       "FRC"
+# [53] "FOW"           "ALT_NAAM"      "ALT_NR"        "REL_HOOGTE"
+# [57] "Hoogte_bron"   "Kwaliteitlaag" "SHAPE_Length"  "SHAPE"
+# Plot the slopes (variable called REL_HOOGTE):
+  summary(roads_nl$REL_HOOGTE)
+  # xyz 
+  roads_nl_xyz = sf::st_coordinates(roads_nl)
+  head(roads_nl_xyz)
+  hist(roads_nl_xyz[, "Z"], breaks = 50, main = "Histogram of elevation values (m)", xlab = "Elevation (m)")
+  plot(roads_nl["REL_HOOGTE"])
+  summary(sf::st_geometry_type(roads_nl))
+  roads_nl$slope = roads_nl |>
+    sf::st_cast("LINESTRING") |>
+    slopes::slope_xyz() * 100
+  
+  summary(roads_nl$slope)
+  library(tmap)
+  library(tmap.mapgl)
+  m = tm_shape(roads_nl) +
+    tm_lines(
+      col = "slope",
+      col.scale = tm_scale_intervals(
+        breaks = c(-1, 0.5, 1, 2, 20),
+        labels = c("0-0.5%", "0.5-1%", "1-2%", "2%+"),
+        values = cols4all::c4a("-brewer.rd_yl_gn")
+      ),
+      lwd = 5
+  )
+  tmap_mode("maplibre")
+  m
+}
 
 # DEM for eu:
 install.packages("CopernicusDEM")
@@ -151,6 +210,8 @@ system("gh release upload v1.0.1 cycle_net_slopes_brussels.html --clobber")
 u_release = "https://github.com/ropensci/slopes/releases/download/v1.0.1/cycle_net_slopes_brussels.html"
 download.file(u_release, "cycle_net_slopes_brussels.html")
 ```
+
+![Example from the Netherlands](example-nl.png)
 
 # Comparison with results from ArcMap 3D Analyst
 
