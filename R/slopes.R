@@ -228,6 +228,22 @@ elevation_extract <- function(m, dem, method = "bilinear", terra = has_terra() &
 #' @param terra Logical, whether to use terra package (default: auto-detected)
 #' @return An sf object with XYZ linestring geometries
 #' @export
+#' @examples
+#' library(sf)
+#' routes = lisbon_road_network[204, ]
+#' dem = dem_lisbon_raster
+#' (r3d = elevation_add(routes, dem))
+#' st_z_range(routes)
+#' st_z_range(r3d)
+#' plot(st_coordinates(r3d)[, 3])
+#' plot_slope(r3d)
+#' \dontrun{
+#' # Get elevation data (requires internet connection, ceramic pkg, and API key):
+#' if (requireNamespace("ceramic", quietly = TRUE)) {
+#'   r3d_get = elevation_add(cyclestreets_route)
+#'   plot_slope(r3d_get)
+#' }
+#' }
 elevation_add <- function(routes, dem = NULL, method = "bilinear", terra = has_terra() && methods::is(dem, "SpatRaster")) {
   stopifnotsf(routes)
   if (is.null(dem)) {
