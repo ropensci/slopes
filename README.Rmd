@@ -124,7 +124,7 @@ sf_linestring_xyz_local = elevation_add(sf_linestring, dem = dem_lisbon())
 
 In both cases you can obtain the average gradient of the linestring with `slope_xyz()` and plot the elevation profile with `plot_slope()` as follows:
 
-```{r elevationprofile}
+```{r elevationprofile, out.width=NULL}
 slope_xyz(sf_linestring_xyz_local)
 plot_slope(sf_linestring_xyz_local)
 ```

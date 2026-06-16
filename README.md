@@ -156,7 +156,7 @@ slope_xyz(sf_linestring_xyz_local)
 plot_slope(sf_linestring_xyz_local)
 ```
 
-<img src="man/figures/README-elevationprofile-1.png" alt="" width="100%" />
+![](man/figures/README-elevationprofile-1.png)<!-- -->
 
 *See more functions in [Get
 started](https://docs.ropensci.org/slopes/articles/slopes.html)
