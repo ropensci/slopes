@@ -54,7 +54,7 @@ usethis::edit_r_environ()
 ## Elevation
 
 - `elevation_add()` Take a linestring and add a third dimension (z) to its coordinates
-- `elevation_get()` Get elevation data from hosted maptile services (returns a raster)
+- `elevation_get()` Get elevation data from hosted maptile services (returns a `SpatRaster`)
 - `elevation_extract()` Extract elevations from coordinates
 
 ## Slope calculation
@@ -95,11 +95,10 @@ First, load the necessary packages and data:
 ```{r}
 library(slopes)
 library(sf)
-library(raster)
 
 # Load example data
 data(lisbon_route)
-data(dem_lisbon_raster)
+dem_lisbon = dem_lisbon()
 ```
 
 ## Add elevation to a linestring
@@ -107,7 +106,7 @@ data(dem_lisbon_raster)
 If you have a 2D linestring and a DEM, you can add elevation data to the linestring using `elevation_add()`:
 
 ```{r}
-sf_linestring_xyz_local = elevation_add(lisbon_route, dem = dem_lisbon_raster)
+sf_linestring_xyz_local = elevation_add(lisbon_route, dem = dem_lisbon)
 head(sf::st_coordinates(sf_linestring_xyz_local))
 ```
 
@@ -149,7 +148,7 @@ First, let's segment the `lisbon_route`:
 lisbon_route_segments = sf::st_segmentize(lisbon_route, dfMaxLength = 100) # Arbitrary length
 lisbon_route_segments = sf::st_cast(lisbon_route_segments, "LINESTRING")
 # Add elevation to segments
-lisbon_route_segments_xyz = elevation_add(lisbon_route_segments, dem = dem_lisbon_raster)
+lisbon_route_segments_xyz = elevation_add(lisbon_route_segments, dem = dem_lisbon)
 ```
 
 Now calculate the slope for each segment:

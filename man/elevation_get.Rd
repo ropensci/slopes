@@ -4,18 +4,17 @@
 \alias{elevation_get}
 \title{Get elevation data for routes}
 \usage{
-elevation_get(routes, ..., output_format = "raster")
+elevation_get(routes, ...)
 }
 \arguments{
 \item{routes}{An sf object containing linestring geometries}
 
 \item{...}{Additional arguments passed to ceramic::cc_elevation}
-
-\item{output_format}{Character string specifying output format ("raster" or "terra")}
 }
 \value{
-Elevation raster data covering the routes
+A SpatRaster covering the routes
 }
 \description{
 Downloads elevation data using the ceramic package for given routes.
+Returns a \code{SpatRaster} object (terra package).
 }

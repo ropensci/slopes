@@ -2,16 +2,17 @@
 % Please edit documentation in R/slope_get.R
 \name{slope_matrix_to_raster}
 \alias{slope_matrix_to_raster}
-\title{Convert slope matrix to raster}
+\title{Convert slope matrix to SpatRaster}
 \usage{
 slope_matrix_to_raster(x)
 }
 \arguments{
-\item{x}{A matrix or RasterLayer object}
+\item{x}{A matrix, SpatRaster, or legacy RasterLayer object}
 }
 \value{
-A RasterLayer object
+A SpatRaster object
 }
 \description{
-Converts a slope matrix or checks if input is already a raster.
+Converts a slope matrix or a legacy RasterLayer to a SpatRaster (terra).
+Accepts \code{SpatRaster}, legacy \verb{Raster*}, or a plain matrix.
 }

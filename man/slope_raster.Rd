@@ -10,14 +10,14 @@ slope_raster(
   lonlat = sf::st_is_longlat(routes),
   method = "bilinear",
   fun = slope_matrix_weighted,
-  terra = has_terra() && methods::is(dem, "SpatRaster"),
+  terra = NULL,
   directed = FALSE
 )
 }
 \arguments{
 \item{routes}{An sf object containing linestring geometries}
 
-\item{dem}{A raster object containing elevation data}
+\item{dem}{A SpatRaster object (terra package) containing elevation data}
 
 \item{lonlat}{Logical, whether coordinates are longitude/latitude (default: auto-detected)}
 
@@ -25,7 +25,7 @@ slope_raster(
 
 \item{fun}{Function for slope calculation (default: slope_matrix_weighted)}
 
-\item{terra}{Logical, whether to use terra package (default: auto-detected)}
+\item{terra}{Deprecated. Ignored; terra is always used.}
 
 \item{directed}{Logical, whether to calculate directed slopes (default: FALSE)}
 }

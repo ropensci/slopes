@@ -2,16 +2,17 @@
 % Please edit documentation in R/slope_get.R
 \name{slope_xyz_simple}
 \alias{slope_xyz_simple}
-\title{Extract XYZ coordinates from raster or matrix}
+\title{Extract XYZ coordinates from SpatRaster or matrix}
 \usage{
 slope_xyz_simple(x)
 }
 \arguments{
-\item{x}{A RasterLayer or matrix object}
+\item{x}{A SpatRaster, legacy RasterLayer, or matrix object}
 }
 \value{
 A data frame with x, y, z coordinates
 }
 \description{
 Simplifies raster or matrix data to XYZ coordinate format.
+Accepts \code{SpatRaster} (terra), legacy \verb{Raster*} objects, or a plain matrix.
 }

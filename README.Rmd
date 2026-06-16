@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 The **slopes** R package calculates the slope (longitudinal steepness, also known as gradient) of roads, rivers and other linear (simple) features, based on two main inputs:
 
 - [vector](https://r.geocompx.org/spatial-class.html) linestring geometries defined by classes in the [`sf`](https://r-spatial.github.io/sf/) package
-- [raster](https://r.geocompx.org/spatial-class.html) objects with pixel values reporting average height, commonly known as digital elevation model (**DEM**) datasets, defined by classes in the [`raster`](https://cran.r-project.org/package=raster) or more recent [`terra`](https://rspatial.org/terra) packages
+- [raster](https://r.geocompx.org/spatial-class.html) objects with pixel values reporting average height, commonly known as digital elevation model (**DEM**) datasets, defined by classes in the [`terra`](https://rspatial.org/terra) package (`SpatRaster`)
 
 Data on slopes are useful in many fields of research, including [hydrology](https://en.wikipedia.org/wiki/Stream_gradient), natural hazards (including [flooding](https://response.reliefweb.int/afghanistan) and [landslide risk management](https://assets.publishing.service.gov.uk/media/57a08d0740f0b652dd0016f4/R7815-ADD017_col.pdf)), recreational and competitive sports such as [cycling](https://theclimbingcyclist.com/gradients-and-cycling-an-introduction/), [hiking](https://trailism.com/trail-grades/), and [skiing](https://www.snowplaza.co.uk/blog/16682-skiing-steeps-what-does-gradient-mean-ski-piste/).
 Slopes are also also important in some branches of [transport and emissions modelling](https://doi.org/10.1016/j.trpro.2016.05.258) and [ecology](https://doi.org/10.1016/j.ncon.2016.10.001).
@@ -119,7 +119,7 @@ With the default argument `dem = NULL`, the function downloads the necessary ele
 You can also this use a local DEM (`dem = ...`), as shown in the example below:
 
 ```{r}
-sf_linestring_xyz_local = elevation_add(sf_linestring, dem = dem_lisbon_raster)
+sf_linestring_xyz_local = elevation_add(sf_linestring, dem = dem_lisbon())
 ```
 
 In both cases you can obtain the average gradient of the linestring with `slope_xyz()` and plot the elevation profile with `plot_slope()` as follows:
