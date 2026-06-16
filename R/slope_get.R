@@ -5,13 +5,9 @@
 #'
 #' @param routes An sf object containing linestring geometries
 #' @param ... Additional arguments passed to ceramic::cc_elevation
-#' @param output_format Deprecated. Ignored; always returns a SpatRaster.
 #' @return A SpatRaster covering the routes
 #' @export
-elevation_get = function(routes, ..., output_format = NULL) {
-  if (!is.null(output_format)) {
-    .Deprecated(msg = "The 'output_format' argument is deprecated. elevation_get() now always returns a SpatRaster.")
-  }
+elevation_get = function(routes, ...) {
   if (!requireNamespace("ceramic", quietly = TRUE)) {
     stop("Install the package ceramic to use elevation_get().")
   }
