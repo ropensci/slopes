@@ -158,7 +158,7 @@ summary(lisbon_route_segments_xyz$slope)
 ```{r}
 plot(st_geometry(lisbon_route_segments_xyz),
   col = heat.colors(length(lisbon_route_segments_xyz$slope))[rank(lisbon_route_segments_xyz$slope)],
-  lwd = 3, main = "Slope by vertex segment"
+  lwd = 3, main = "Slope by vertex segments"
 )
 ```
 
@@ -167,22 +167,18 @@ plot(st_geometry(lisbon_route_segments_xyz),
 `stplanr::line_segment()` splits the route into segments of a given length (e.g. 100 m).
 Elevation must be added after segmenting, since the new endpoints won't have Z coordinates yet:
 
-```{r}
-if (requireNamespace("stplanr", quietly = TRUE)) {
-  lisbon_route_100m <- stplanr::line_segment(lisbon_route, segment_length = 100)
-  lisbon_route_100m_xyz <- elevation_add(lisbon_route_100m, dem = dem_lisbon())
-  lisbon_route_100m_xyz$slope <- slope_xyz(lisbon_route_100m_xyz)
-  summary(lisbon_route_100m_xyz$slope)
-}
+```{r warning=FALSE}
+lisbon_route_100m <- stplanr::line_segment(lisbon_route, segment_length = 100)
+lisbon_route_100m_xyz <- elevation_add(lisbon_route_100m, dem = dem_lisbon())
+lisbon_route_100m_xyz$slope <- slope_xyz(lisbon_route_100m_xyz)
+summary(lisbon_route_100m_xyz$slope)
 ```
 
 ```{r}
-if (requireNamespace("stplanr", quietly = TRUE)) {
-  plot(st_geometry(lisbon_route_100m_xyz),
-    col = heat.colors(length(lisbon_route_100m_xyz$slope))[rank(lisbon_route_100m_xyz$slope)],
-    lwd = 3, main = "Slope by 100 m segment"
-  )
-}
+plot(st_geometry(lisbon_route_100m_xyz),
+  col = heat.colors(length(lisbon_route_100m_xyz$slope))[rank(lisbon_route_100m_xyz$slope)],
+  lwd = 3, main = "Slope by 100 m segments"
+)
 ```
 
 This vignette provides a basic overview. For more detailed information and advanced use cases, please refer to the other vignettes and the function documentation.
