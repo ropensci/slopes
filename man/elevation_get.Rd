@@ -4,14 +4,12 @@
 \alias{elevation_get}
 \title{Get elevation data for routes}
 \usage{
-elevation_get(routes, ..., output_format = NULL)
+elevation_get(routes, ...)
 }
 \arguments{
 \item{routes}{An sf object containing linestring geometries}
 
 \item{...}{Additional arguments passed to ceramic::cc_elevation}
-
-\item{output_format}{Deprecated. Ignored; always returns a SpatRaster.}
 }
 \value{
 A SpatRaster covering the routes
