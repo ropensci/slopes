@@ -287,3 +287,26 @@ has_terra <- function() requireNamespace("terra", quietly = TRUE)
 is_linestring <- function(x) unique(sf::st_geometry_type(x)) == "LINESTRING"
 stop_is_not_linestring <- function(x) if (!is_linestring(x)) stop("Only works with LINESTRINGs. Convert with sf::st_cast()")
 stopifnotsf <- function(x, arg_name = "routes") if (!methods::is(x, "sf")) stop(arg_name, " is not an sf object. Try again with an sf object.")
+
+#' Split a route into vertex-to-vertex segments
+#'
+#' Splits a linestring with XYZ coordinates into individual 2-point segments,
+#' one per consecutive vertex pair. Useful for computing per-segment slopes
+#' with [slope_xyz()].
+#'
+#' @param route_xyz An sf object with a single LINESTRING geometry with Z coordinates,
+#'   as returned by [elevation_add()].
+#' @return An sf object with one LINESTRING feature per vertex-to-vertex segment.
+#' @export
+#' @examples
+#' route_xyz = elevation_add(lisbon_route, dem = dem_lisbon())
+#' segs = route_to_segments(route_xyz)
+#' segs$slope = slope_xyz(segs)
+#' summary(segs$slope)
+route_to_segments <- function(route_xyz) {
+  coords <- sf::st_coordinates(route_xyz)
+  n <- nrow(coords)
+  segs <- lapply(seq_len(n - 1), function(i) sf::st_linestring(coords[i:(i + 1), 1:3]))
+  sf::st_sf(geometry = sf::st_sfc(segs, crs = sf::st_crs(route_xyz)))
+}
+
