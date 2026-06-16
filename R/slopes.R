@@ -276,7 +276,7 @@ elevation_add <- function(routes, dem = NULL, method = "bilinear", terra = NULL)
     m_xyz <- cbind(m[, 1:2], z)
   }
   n <- nrow(routes)
-  linestrings <- lapply(seq(n), function(i) sf::st_linestring(m_xyz[m[, 3] == i, ]))
+  linestrings <- lapply(seq(n), function(i) sf::st_linestring(m_xyz[m[, "L1"] == i, ]))
   rgeom3d_sfc <- sf::st_sfc(linestrings, crs = sf::st_crs(routes))
   sf::st_geometry(routes) <- rgeom3d_sfc
   routes
