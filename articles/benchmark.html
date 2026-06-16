@@ -119,12 +119,12 @@ second using different interpolation methods:</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 6</span></span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> bilinear     20.8ms   22.5ms      44.9    18.2MB     35.9</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> simple       17.9ms   18.5ms      53.7    1.88MB     35.8</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> bilinear     21.3ms   22.5ms      44.6    18.2MB     35.7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> simple       18.3ms   18.8ms      52.8    1.88MB     31.7</span></span></code></pre></div>
 <p>That is approximately</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">`itr/sec`</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 12165 14540</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 12090 14298</span></span></code></pre></div>
 <p>routes per second using <code>bilinear</code> and <code>simple</code>
 interpolation methods, respectively.</p>
 <p>To go faster, you can chose the <code>simple</code> method to gain
@@ -139,11 +139,11 @@ some speed at the expense of accuracy:</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 6</span></span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> bilinear     21.7ms   22.4ms      43.8    1.73MB     29.2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> simple       18.6ms     19ms      52.3    1.81MB     44.2</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> bilinear     21.6ms   23.4ms      43.0    1.73MB     31.3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> simple       19.6ms   19.9ms      49.6    1.81MB     41.4</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">res2</span><span class="op">$</span><span class="va">`itr/sec`</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 11878 14166</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 11648 13453</span></span></code></pre></div>
 </div>
   </div>
 
