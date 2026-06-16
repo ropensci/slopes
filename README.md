@@ -18,14 +18,13 @@ The **slopes** R package calculates the slope (longitudinal steepness,
 also known as gradient) of roads, rivers and other linear (simple)
 features, based on two main inputs:
 
-  - [vector](https://r.geocompx.org/spatial-class.html) linestring
-    geometries defined by classes in the
-    [`sf`](https://r-spatial.github.io/sf/) package
-  - [raster](https://r.geocompx.org/spatial-class.html) objects with
-    pixel values reporting average height, commonly known as digital
-    elevation model (**DEM**) datasets, defined by classes in the
-    [`raster`](https://cran.r-project.org/package=raster) or more recent
-    [`terra`](https://rspatial.org/terra) packages
+- [vector](https://r.geocompx.org/spatial-class.html) linestring
+  geometries defined by classes in the
+  [`sf`](https://r-spatial.github.io/sf/) package
+- [raster](https://r.geocompx.org/spatial-class.html) objects with pixel
+  values reporting average height, commonly known as digital elevation
+  model (**DEM**) datasets, defined by classes in the
+  [`terra`](https://rspatial.org/terra) package (`SpatRaster`)
 
 Data on slopes are useful in many fields of research, including
 [hydrology](https://en.wikipedia.org/wiki/Stream_gradient), natural
@@ -88,8 +87,8 @@ remotes::install_github("ropensci/slopes")
 #### Installation for DEM downloads
 
 If you do not already have DEM data and want to make use of the
-package’s ability to download them using the `ceramic` package,
-install the package with suggested dependencies, as follows:
+package’s ability to download them using the `ceramic` package, install
+the package with suggested dependencies, as follows:
 
 ``` r
 install.packages("slopes", dependencies = "Suggests")
@@ -143,8 +142,7 @@ necessary elevation information from Mapbox. You can also this use a
 local DEM (`dem = ...`), as shown in the example below:
 
 ``` r
-sf_linestring_xyz_local = elevation_add(sf_linestring, dem = dem_lisbon_raster)
-#> Loading required namespace: raster
+sf_linestring_xyz_local = elevation_add(sf_linestring, dem = dem_lisbon())
 ```
 
 In both cases you can obtain the average gradient of the linestring with
@@ -158,7 +156,7 @@ slope_xyz(sf_linestring_xyz_local)
 plot_slope(sf_linestring_xyz_local)
 ```
 
-<img src="man/figures/README-elevationprofile-1.png" width="100%" />
+<img src="man/figures/README-elevationprofile-1.png" alt="" width="100%" />
 
 *See more functions in [Get
 started](https://docs.ropensci.org/slopes/articles/slopes.html)
@@ -166,15 +164,15 @@ vignette.*
 
 ## See more in vignettes
 
-  - [Get started](https://docs.ropensci.org/slopes/articles/slopes.html)
-  - [An introduction to
-    slopes](https://docs.ropensci.org/slopes/articles/intro-to-slopes.html)
-  - [Reproducible example: gradients of a road network for a given
-    city](https://docs.ropensci.org/slopes/articles/roadnetworkcycling.html)
-  - [Verification of
-    slopes](https://docs.ropensci.org/slopes/articles/verification.html)
-  - [Benchmarking slopes
-    calculation](https://docs.ropensci.org/slopes/articles/benchmark.html)
+- [Get started](https://docs.ropensci.org/slopes/articles/slopes.html)
+- [An introduction to
+  slopes](https://docs.ropensci.org/slopes/articles/intro-to-slopes.html)
+- [Reproducible example: gradients of a road network for a given
+  city](https://docs.ropensci.org/slopes/articles/roadnetworkcycling.html)
+- [Verification of
+  slopes](https://docs.ropensci.org/slopes/articles/verification.html)
+- [Benchmarking slopes
+  calculation](https://docs.ropensci.org/slopes/articles/benchmark.html)
 
 ## Code of Conduct
 
