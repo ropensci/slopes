@@ -3,10 +3,6 @@
 #' @format An sf object
 "cyclestreets_route"
 
-#' Lisbon elevation raster
-#' @format A raster object
-"dem_lisbon_raster"
-
 #' Lisbon road network
 #' @format An sf object
 "lisbon_road_network"

@@ -4,21 +4,16 @@
 \alias{elevation_add}
 \title{Add elevation data to route linestrings}
 \usage{
-elevation_add(
-  routes,
-  dem = NULL,
-  method = "bilinear",
-  terra = has_terra() && methods::is(dem, "SpatRaster")
-)
+elevation_add(routes, dem = NULL, method = "bilinear", terra = NULL)
 }
 \arguments{
 \item{routes}{An sf object containing linestring geometries}
 
-\item{dem}{A raster object containing elevation data (default: NULL for automatic download)}
+\item{dem}{A SpatRaster object containing elevation data (default: NULL for automatic download)}
 
 \item{method}{Method for raster extraction (default: "bilinear")}
 
-\item{terra}{Logical, whether to use terra package (default: auto-detected)}
+\item{terra}{Deprecated. Ignored; terra is always used.}
 }
 \value{
 An sf object with XYZ linestring geometries
@@ -29,7 +24,7 @@ Adds elevation (Z) coordinates to linestring geometries using DEM data.
 \examples{
 library(sf)
 routes = lisbon_road_network[204, ]
-dem = dem_lisbon_raster
+dem = dem_lisbon()
 (r3d = elevation_add(routes, dem))
 st_z_range(routes)
 st_z_range(r3d)

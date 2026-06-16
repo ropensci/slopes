@@ -12,9 +12,9 @@ test_that("slope_* functions work", {
     round(as.numeric(sf::st_length(lisbon_road_segment)), 2)
   expect_true(sequential_right)
 
-  e = elevation_extract(m, dem_lisbon_raster)
+  e = elevation_extract(m, dem_lisbon())
   expect_identical(round(e[1:3], 2), c(92.31, 91.93, 91.60))
-  e = elevation_extract(lisbon_road_segment, dem_lisbon_raster)
+  e = elevation_extract(lisbon_road_segment, dem_lisbon())
   expect_identical(round(e[1:3], 2), c(92.31, 91.93, 91.60))
   s = slope_distance(d, e)
   expect_identical(round(s[1:3], 3), c(-0.047, -0.041, -0.025))
@@ -57,7 +57,7 @@ test_that("slope_* functions work", {
 
   expect_error(slope_raster(1))
   r = lisbon_road_network[1:3, ]
-  e = dem_lisbon_raster
+  e = dem_lisbon()
   s = slope_raster(r, e)
   expect_true(cor(r$Avg_Slope, s) > 0.9975)
 

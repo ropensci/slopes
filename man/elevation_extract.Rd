@@ -4,25 +4,22 @@
 \alias{elevation_extract}
 \title{Extract elevation values from coordinates}
 \usage{
-elevation_extract(
-  m,
-  dem,
-  method = "bilinear",
-  terra = has_terra() && methods::is(dem, "SpatRaster")
-)
+elevation_extract(m, dem, method = "bilinear", terra = NULL)
 }
 \arguments{
 \item{m}{Matrix or sf object with coordinates}
 
-\item{dem}{A raster object containing elevation data}
+\item{dem}{A SpatRaster (or legacy RasterLayer) containing elevation data}
 
 \item{method}{Method for raster extraction (default: "bilinear")}
 
-\item{terra}{Logical, whether to use terra package (default: auto-detected)}
+\item{terra}{Deprecated. Ignored; terra is always used.}
 }
 \value{
 Numeric vector of elevation values
 }
 \description{
 Extracts elevation values from a DEM raster at specified coordinate locations.
+Accepts both \code{SpatRaster} (terra) and legacy \verb{Raster*} (raster) objects;
+legacy objects are automatically converted to \code{SpatRaster}.
 }
