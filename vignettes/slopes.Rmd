@@ -98,7 +98,7 @@ library(sf)
 
 # Load example data
 data(lisbon_route)
-dem_lisbon = dem_lisbon()
+dem_lisbon <- dem_lisbon()
 ```
 
 ## Add elevation to a linestring
@@ -106,7 +106,7 @@ dem_lisbon = dem_lisbon()
 If you have a 2D linestring and a DEM, you can add elevation data to the linestring using `elevation_add()`:
 
 ```{r}
-sf_linestring_xyz_local = elevation_add(lisbon_route, dem = dem_lisbon)
+sf_linestring_xyz_local <- elevation_add(lisbon_route, dem = dem_lisbon)
 head(sf::st_coordinates(sf_linestring_xyz_local))
 ```
 
@@ -123,7 +123,7 @@ If you don't have a local DEM, `elevation_add()` can download elevation data (th
 Once you have a 3D linestring (with XYZ coordinates), you can calculate its average slope using `slope_xyz()`:
 
 ```{r}
-slope = slope_xyz(sf_linestring_xyz_local)
+slope <- slope_xyz(sf_linestring_xyz_local)
 slope
 ```
 
@@ -141,37 +141,48 @@ plot_slope(sf_linestring_xyz_local, pal = pal, brks = brks)
 
 ## Working with segments
 
-The `slopes` package can also work with individual segments of a linestring. 
-First, let's segment the `lisbon_route`:
+The `slopes` package can also work with individual segments of a linestring.
+There are two ways to split a route into segments:
+
+### By vertex (native segments of the linestring)
+
+`route_to_segments()` splits the route at every existing vertex, producing one 2-point segment per coordinate pair:
 
 ```{r}
-lisbon_route_segments = sf::st_segmentize(lisbon_route, dfMaxLength = 100) # Arbitrary length
-lisbon_route_segments = sf::st_cast(lisbon_route_segments, "LINESTRING")
-# Add elevation to segments
-lisbon_route_segments_xyz = elevation_add(lisbon_route_segments, dem = dem_lisbon)
-```
-
-Now calculate the slope for each segment:
-
-```{r}
-lisbon_route_segments_xyz$slope = slope_xyz(lisbon_route_segments_xyz)
+lisbon_route_xyz <- elevation_add(lisbon_route, dem = dem_lisbon())
+lisbon_route_segments_xyz <- route_to_segments(lisbon_route_xyz)
+lisbon_route_segments_xyz$slope <- slope_xyz(lisbon_route_segments_xyz)
 summary(lisbon_route_segments_xyz$slope)
 ```
 
-You can plot these segments, for example, colored by their slope. Here we use `tmap` for a more advanced plot (requires `tmap` package).
-
-```{r, eval=FALSE}
-# Requires tmap package
-# library(tmap)
-# qtm(lisbon_route_segments_xyz, lines.col = "slope", lines.lwd = 3)
+```{r}
+plot(st_geometry(lisbon_route_segments_xyz),
+  col = heat.colors(length(lisbon_route_segments_xyz$slope))[rank(lisbon_route_segments_xyz$slope)],
+  lwd = 3, main = "Slope by vertex segment"
+)
 ```
 
-Alternatively, using base R graphics:
+### By fixed length (using stplanr)
+
+`stplanr::line_segment()` splits the route into segments of a given length (e.g. 100 m).
+Elevation must be added after segmenting, since the new endpoints won't have Z coordinates yet:
 
 ```{r}
-plot(st_geometry(lisbon_route_segments_xyz), col = heat.colors(length(lisbon_route_segments_xyz$slope))[rank(lisbon_route_segments_xyz$slope)], lwd = 3)
+if (requireNamespace("stplanr", quietly = TRUE)) {
+  lisbon_route_100m <- stplanr::line_segment(lisbon_route, segment_length = 100)
+  lisbon_route_100m_xyz <- elevation_add(lisbon_route_100m, dem = dem_lisbon())
+  lisbon_route_100m_xyz$slope <- slope_xyz(lisbon_route_100m_xyz)
+  summary(lisbon_route_100m_xyz$slope)
+}
+```
+
+```{r}
+if (requireNamespace("stplanr", quietly = TRUE)) {
+  plot(st_geometry(lisbon_route_100m_xyz),
+    col = heat.colors(length(lisbon_route_100m_xyz$slope))[rank(lisbon_route_100m_xyz$slope)],
+    lwd = 3, main = "Slope by 100 m segment"
+  )
+}
 ```
 
 This vignette provides a basic overview. For more detailed information and advanced use cases, please refer to the other vignettes and the function documentation.
-
-
