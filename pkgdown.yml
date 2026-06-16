@@ -7,4 +7,7 @@ articles:
   roadnetworkcycling: roadnetworkcycling.html
   slopes: slopes.html
   verification: verification.html
-last_built: 2026-06-16T16:55Z
+last_built: 2026-06-16T18:22Z
+urls:
+  reference: https://docs.ropensci.org/slopes/reference
+  article: https://docs.ropensci.org/slopes/articles
