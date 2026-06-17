@@ -4,15 +4,16 @@
 \alias{slope_breaks}
 \title{Recommended slope break thresholds}
 \format{
-A numeric vector of length 7.
+A numeric vector of length 6.
 }
 \usage{
 slope_breaks
 }
 \description{
-A numeric vector of seven break points (as proportions, e.g. 0.05 = 5 \\%)
-that define the slope severity classes used with \code{\link{slope_colors}}.
-Classes are: 0--3\\%, 3--5\\%, 5--8\\%, 8--10\\%, 10--20\\%, >20\\%.
+A numeric vector of six positive break points in \strong{percentage units}
+(e.g. 5 = 5\\%), without \code{0} or \code{Inf}.
+\code{\link{plot_slope}} uses these to build a symmetric set of 12 intervals
+(downhill and uphill), matched to the 12 colours in \code{\link{slope_colors}}.
 }
 \examples{
 slope_breaks

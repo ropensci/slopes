@@ -4,15 +4,16 @@
 \alias{slope_colors}
 \title{Recommended slope colours (dark green to dark red)}
 \format{
-A character vector of length 6.
+A character vector of length 12.
 }
 \usage{
 slope_colors
 }
 \description{
-A character vector of six hex colours ranging from dark green (flat terrain)
-to dark red (steep terrain), representing increasing slope severity.
-Designed to be used together with \code{\link{slope_breaks}}.
+A character vector of twelve hex colours for use with \code{\link{slope_breaks}}
+and \code{\link{plot_slope}}. Colours run from dark green (flat) through amber
+to dark red (steep), covering both downhill (negative) and uphill (positive)
+slope directions — six colours per direction.
 }
 \examples{
 slope_colors

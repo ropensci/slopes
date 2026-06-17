@@ -155,8 +155,8 @@ summary(lisbon_route_segments_xyz$slope)
 
 ```{r}
 plot(st_geometry(lisbon_route_segments_xyz),
-  col = slope_colors[cut(lisbon_route_segments_xyz$slope, breaks = slope_breaks,
-    labels = FALSE, include.lowest = TRUE)],
+  col = slope_colors[7:12][cut(abs(lisbon_route_segments_xyz$slope) * 100,
+    breaks = slope_breaks, labels = FALSE, include.lowest = TRUE)],
   lwd = 3, main = "Slope by vertex segments"
 )
 ```
@@ -175,8 +175,8 @@ summary(lisbon_route_100m_xyz$slope)
 
 ```{r}
 plot(st_geometry(lisbon_route_100m_xyz),
-  col = slope_colors[cut(lisbon_route_100m_xyz$slope, breaks = slope_breaks,
-    labels = FALSE, include.lowest = TRUE)],
+  col = slope_colors[7:12][cut(abs(lisbon_route_100m_xyz$slope) * 100,
+    breaks = slope_breaks, labels = FALSE, include.lowest = TRUE)],
   lwd = 3, main = "Slope by 100 m segments"
 )
 ```
