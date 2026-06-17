@@ -17,6 +17,10 @@ A numeric vector of six positive break points in \strong{percentage units}
 }
 \examples{
 slope_breaks
+\donttest{
+route_xyz <- elevation_add(lisbon_route, dem = dem_lisbon())
+plot_slope(route_xyz, pal = slope_colors, brks = slope_breaks)
+}
 }
 \seealso{
 \code{\link{slope_colors}}, \code{\link{slopes_palette}}

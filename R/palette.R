@@ -11,7 +11,10 @@
 #' @seealso \code{\link{slope_breaks}}, \code{\link{slopes_palette}}
 #' @examples
 #' slope_colors
-#' plot_slope(lisbon_route_xyz, pal = slope_colors, brks = slope_breaks)
+#' \donttest{
+#' route_xyz <- elevation_add(lisbon_route, dem = dem_lisbon())
+#' plot_slope(route_xyz, pal = slope_colors, brks = slope_breaks)
+#' }
 #' @export
 slope_colors <- c(
   "#730000", "#A80000", "#E60000", "#FFAA00", "#70A800", "#267300",  # downhill
@@ -29,6 +32,10 @@ slope_colors <- c(
 #' @seealso \code{\link{slope_colors}}, \code{\link{slopes_palette}}
 #' @examples
 #' slope_breaks
+#' \donttest{
+#' route_xyz <- elevation_add(lisbon_route, dem = dem_lisbon())
+#' plot_slope(route_xyz, pal = slope_colors, brks = slope_breaks)
+#' }
 #' @export
 slope_breaks <- c(3, 5, 8, 10, 20, 100)
 
