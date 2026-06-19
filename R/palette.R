@@ -1,5 +1,45 @@
 # R/palette.R
 
+#' Recommended slope colours (dark green to dark red)
+#'
+#' A character vector of twelve hex colours for use with \code{\link{slope_breaks}}
+#' and \code{\link{plot_slope}}. Colours run from dark green (flat) through amber
+#' to dark red (steep), covering both downhill (negative) and uphill (positive)
+#' slope directions — six colours per direction.
+#'
+#' @format A character vector of length 12.
+#' @seealso \code{\link{slope_breaks}}, \code{\link{slopes_palette}}
+#' @examples
+#' slope_colors
+#' \donttest{
+#' route_xyz <- elevation_add(lisbon_route, dem = dem_lisbon())
+#' plot_slope(route_xyz, pal = slope_colors, brks = slope_breaks)
+#' }
+#' @export
+slope_colors <- c(
+  "#730000", "#A80000", "#E60000", "#FFAA00", "#70A800", "#267300",  # downhill
+  "#267300", "#70A800", "#FFAA00", "#E60000", "#A80000", "#730000"   # uphill
+)
+
+#' Recommended slope break thresholds
+#'
+#' A numeric vector of six positive break points in **percentage units**
+#' (e.g. 5 = 5\%), without \code{0} or \code{Inf}.
+#' \code{\link{plot_slope}} uses these to build a symmetric set of 12 intervals
+#' (downhill and uphill), matched to the 12 colours in \code{\link{slope_colors}}.
+#'
+#' @format A numeric vector of length 6.
+#' @seealso \code{\link{slope_colors}}, \code{\link{slopes_palette}}
+#' @examples
+#' slope_breaks
+#' \donttest{
+#' route_xyz <- elevation_add(lisbon_route, dem = dem_lisbon())
+#' plot_slope(route_xyz, pal = slope_colors, brks = slope_breaks)
+#' }
+#' @export
+slope_breaks <- c(3, 5, 8, 10, 20, 100)
+
+
 #' Get color palette for slopes visualization
 #'
 #' Returns a color palette suitable for visualizing slope data, with options

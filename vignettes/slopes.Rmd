@@ -132,11 +132,9 @@ slope
 You can visualize the elevation profile of a 3D linestring using `plot_slope()`:
 
 ```{r}
-# ensure a palette and breaks exist
-brks <- c(3, 6, 10, 20, 40, 100)
-pal <- slopes_palette(length(brks) - 1)
+# Use the recommended green-to-red palette and matching break thresholds
 
-plot_slope(sf_linestring_xyz_local, pal = pal, brks = brks)
+plot_slope(sf_linestring_xyz_local, pal = slope_colors, brks = slope_breaks)
 ```
 
 ## Working with segments
@@ -157,7 +155,8 @@ summary(lisbon_route_segments_xyz$slope)
 
 ```{r}
 plot(st_geometry(lisbon_route_segments_xyz),
-  col = heat.colors(length(lisbon_route_segments_xyz$slope))[rank(lisbon_route_segments_xyz$slope)],
+  col = slope_colors[7:12][cut(abs(lisbon_route_segments_xyz$slope) * 100,
+    breaks = slope_breaks, labels = FALSE, include.lowest = TRUE)],
   lwd = 3, main = "Slope by vertex segments"
 )
 ```
@@ -176,7 +175,8 @@ summary(lisbon_route_100m_xyz$slope)
 
 ```{r}
 plot(st_geometry(lisbon_route_100m_xyz),
-  col = heat.colors(length(lisbon_route_100m_xyz$slope))[rank(lisbon_route_100m_xyz$slope)],
+  col = slope_colors[7:12][cut(abs(lisbon_route_100m_xyz$slope) * 100,
+    breaks = slope_breaks, labels = FALSE, include.lowest = TRUE)],
   lwd = 3, main = "Slope by 100 m segments"
 )
 ```
