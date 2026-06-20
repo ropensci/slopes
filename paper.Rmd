@@ -85,7 +85,16 @@ By default, the elevation of each vertex is estimated using [bilinear interpolat
 The value of the `method` argument is passed to the `method` argument in [`raster::extract()`](https://rspatial.github.io/raster/reference/extract.html) or [`terra::extract()`](https://rspatial.github.io/terra/reference/extract.html) depending on the class of the input raster dataset.
 See @kidner_what_1999 for descriptions of alternative elevation interpolation and extrapolation algorithms.
 
-<!-- # Calculating slopes on regional transport networks -->
+# Verification
+
+The package has been verified against two independent external datasets, as documented in the [verification vignette](https://docs.ropensci.org/slopes/articles/verification.html).
+
+First, slope estimates were compared with the 3D GNSS road trace dataset of @ariza-lopez_dataset_2019, which comprises 138 traces recorded with a dual-frequency GNSS receiver (Leica 1200, vertical accuracy 20 mm).
+The package's estimates (mean gradient 6.2%, max 48.2%, stdev 5.6%) were compared with both standard GPS and the precise GNSS receiver results, showing that the package provides less noisy estimates than standard GPS, though it tends to overestimate gradient due to the resolution of the underlying DEM.
+
+Second, the package's DEM-derived elevation estimates were validated against the Dutch NWB Hoogtebestand [@nwb_hoogtebestand], an open-access dataset of 16,456 national road segments with 3D coordinates derived from high-resolution Dutch elevation models (AHN4/AHN5, sub-10 cm vertical accuracy).
+A comparison of 7,458 vertices across 30 road segments in South Limburg (the hilliest region of the Netherlands) showed strong agreement between the package's `elevation_add()` estimates and the survey-grade heights: elevation RMSE of 4.78 m, correlation r = 0.989, and slope correlation r = 0.802 (RMSE 0.81%).
+The DEM-derived slopes showed lower maximum values and standard deviation than the ground truth, consistent with the smoothing effect of the DEM resolution.
 
 <!-- # Acknowledgements -->
 

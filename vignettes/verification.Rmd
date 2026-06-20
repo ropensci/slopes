@@ -36,7 +36,7 @@ To keep package build times low, only the results are presented below.
 ### Roads in the Netherlands
 
 ```{r, eval=FALSE}
-u = "https://downloads.rijkswaterstaatdata.nl/nwb-wegen/geogegevens/shapefile/NWB_hoogtebestand/01-10-2024%20Hoogtes%20Rijkswegen.zip"
+u = "https://downloads.rijkswaterstaatdata.nl/nwb-wegen/geogegevens/shapefile/NWB_hoogtebestand/01-10-2024%20Hoogtes_Rijkswegen.zip"
 f_zip = "NWB_hoogtebestand.zip"
 if (!file.exists(f_zip)) {
   download.file(u, f_zip)
@@ -97,6 +97,93 @@ if (!file.exists(f_zip)) {
   tmap_mode("maplibre")
   m
 }
+```
+
+### Comparison of DEM-derived and survey-grade Z values
+
+The NL NWB Hoogtebestand contains 3D linestring geometries with Z coordinates derived from high-resolution Dutch elevation models (AHN4/AHN5, with sub-10 cm vertical accuracy).
+These provide a ground truth against which the `slopes` package's DEM-derived elevation estimates can be compared, as proposed in issue #71.
+
+The following code demonstrates the comparison, using a sample of 30 road segments from South Limburg (the hilliest region of the Netherlands, with elevations ranging from 32 m to 181 m above NAP) and an independent DEM sourced from AWS Open Data terrain tiles via the `elevatr` package (zoom level 10, approximately 120 m resolution).
+
+```{r, eval=FALSE}
+# Load the NL data (see code above) and focus on South Limburg
+roads_wgs84 = sf::st_transform(roads_nl, 4326)
+coords_centroid = sf::st_coordinates(sf::st_centroid(st_geometry(roads_wgs84)))
+in_limburg = coords_centroid[, "Y"] > 50.75 &
+             coords_centroid[, "Y"] < 51.0 &
+             coords_centroid[, "X"] > 5.6 &
+             coords_centroid[, "X"] < 6.1
+roads_limburg = roads_nl[in_limburg, ]
+
+# Pick 30 segments with most Z variation
+get_z_range = function(geom) {
+  c = sf::st_coordinates(geom)
+  if (nrow(c) < 2) return(0)
+  diff(range(c[, "Z"]))
+}
+z_ranges = sapply(sf::st_geometry(roads_limburg), get_z_range)
+top_idx = order(z_ranges, decreasing = TRUE)[1:30]
+roads_sample = roads_limburg[top_idx, ]
+
+# Download DEM via elevatr (AWS Open Data, no API key required)
+library(elevatr)
+roads_sample_wgs84 = sf::st_transform(roads_sample, 4326)
+bb = sf::st_bbox(roads_sample_wgs84)
+# Buffer the bbox by ~1 km to ensure all vertices are covered
+bb_mat = matrix(c(
+  bb["xmin"] - 0.01, bb["ymin"] - 0.01,
+  bb["xmax"] + 0.01, bb["ymin"] - 0.01,
+  bb["xmax"] + 0.01, bb["ymax"] + 0.01,
+  bb["xmin"] - 0.01, bb["ymax"] + 0.01,
+  bb["xmin"] - 0.01, bb["ymin"] - 0.01
+), ncol = 2, byrow = TRUE)
+bb_sf = sf::st_sf(geometry = sf::st_sfc(sf::st_polygon(list(bb_mat)), crs = 4326))
+dem_elevatr = get_elev_raster(bb_sf, z = 10, clip = "bbox")
+# Project DEM to match the NL data CRS (EPSG:28992)
+dem_28992 = terra::project(terra::rast(dem_elevatr), "EPSG:28992", method = "bilinear")
+
+# Prepare roads: cast to LINESTRING and record actual Z values
+roads_ls = sf::st_cast(roads_sample, "LINESTRING")
+coords_before = sf::st_coordinates(roads_ls)
+actual_z = coords_before[, "Z"]
+
+# Add elevation from the DEM using the slopes package
+roads_with_z = slopes::elevation_add(roads_ls, dem = dem_28992)
+coords_after = sf::st_coordinates(roads_with_z)
+est_z = coords_after[, "Z"]
+
+# Compare Z values
+z_diff = est_z - actual_z
+cat("Z RMSE:", round(sqrt(mean(z_diff^2)), 2), "m\n")
+cat("Z MAE:", round(mean(abs(z_diff)), 2), "m\n")
+cat("Z correlation (r):", round(cor(est_z, actual_z), 3), "\n")
+cat("Z mean bias:", round(mean(z_diff), 2), "m\n")
+
+# Compare slopes (both in EPSG:28992, so lonlat = FALSE)
+slopes_actual = slopes::slope_xyz(roads_ls, lonlat = FALSE) * 100
+slopes_est = slopes::slope_xyz(roads_with_z, lonlat = FALSE) * 100
+cat("Slope correlation (r):",
+    round(cor(slopes_actual, slopes_est, use = "complete.obs"), 3), "\n")
+cat("Slope RMSE:",
+    round(sqrt(mean((slopes_est - slopes_actual)^2, na.rm = TRUE)), 3), "%\n")
+```
+
+The results of this comparison, based on 7458 vertices across 30 road segments in South Limburg, are summarised below.
+
+| Metric | Elevation (Z) | Slope (%) |
+| --- | --- | --- |
+| RMSE | 4.78 m | 0.805 |
+| MAE | 3.59 m | 0.586 |
+| Correlation (r) | 0.989 | 0.802 |
+| Mean bias | -0.67 m | +0.14 |
+
+The elevation estimates from the DEM are very strongly correlated with the survey-grade NL road heights (r = 0.989, RMSE = 4.78 m), demonstrating that the `slopes` package's `elevation_add()` function accurately captures the general terrain.
+The slight negative bias (-0.67 m) and the RMSE of under 5 m are consistent with the expected vertical accuracy of the AWS terrain tiles at this zoom level.
+
+The slope estimates are also well correlated (r = 0.802), with a modest RMSE of 0.81%.
+The DEM-derived slopes have a lower maximum (5.5% vs 7.3%) and lower standard deviation (1.16% vs 1.34%) than the NL data, reflecting the smoothing effect of the coarser DEM resolution.
+This is consistent with the findings from the GNSS trace comparison above: the package provides less noisy slope estimates than raw GPS data, but may underestimate steeper gradients due to DEM resolution limitations.
 
 # DEM for eu:
 install.packages("CopernicusDEM")
