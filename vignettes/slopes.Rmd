@@ -101,7 +101,7 @@ data(lisbon_route)
 dem_lisbon <- dem_lisbon()
 ```
 
-## Add elevation to a linestring
+## Add elevation to linestrings or points
 
 If you have a 2D linestring and a DEM, you can add elevation data to the linestring using `elevation_add()`:
 
@@ -117,6 +117,8 @@ If you don't have a local DEM, `elevation_add()` can download elevation data (th
 # sf_linestring_xyz_mapbox = elevation_add(lisbon_route)
 # head(sf::st_coordinates(sf_linestring_xyz_mapbox))
 ```
+
+You can also use `elevation_add()` with points.
 
 ## Calculate slope
 
@@ -157,7 +159,8 @@ summary(lisbon_route_segments_xyz$slope)
 # Segments are coloured by steepness (absolute slope), regardless of direction
 # (uphill or downhill). slope_breaks are in proportions, matching slope_xyz() output.
 col_idx <- cut(abs(lisbon_route_segments_xyz$slope),
-  breaks = slope_breaks, labels = FALSE, include.lowest = TRUE)
+  breaks = slope_breaks, labels = FALSE, include.lowest = TRUE
+)
 plot(st_geometry(lisbon_route_segments_xyz),
   col = slope_colors[col_idx],
   lwd = 3, main = "Slope by vertex segments"
@@ -178,7 +181,8 @@ summary(lisbon_route_100m_xyz$slope)
 
 ```{r}
 col_idx <- cut(abs(lisbon_route_100m_xyz$slope),
-  breaks = slope_breaks, labels = FALSE, include.lowest = TRUE)
+  breaks = slope_breaks, labels = FALSE, include.lowest = TRUE
+)
 plot(st_geometry(lisbon_route_100m_xyz),
   col = slope_colors[col_idx],
   lwd = 3, main = "Slope by 100 m segments"

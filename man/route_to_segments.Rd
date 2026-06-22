@@ -19,8 +19,8 @@ one per consecutive vertex pair. Useful for computing per-segment slopes
 with \code{\link[=slope_xyz]{slope_xyz()}}.
 }
 \examples{
-route_xyz = elevation_add(lisbon_route, dem = dem_lisbon())
-segs = route_to_segments(route_xyz)
-segs$slope = slope_xyz(segs)
+route_xyz <- elevation_add(lisbon_route, dem = dem_lisbon())
+segs <- route_to_segments(route_xyz)
+segs$slope <- slope_xyz(segs)
 summary(segs$slope)
 }

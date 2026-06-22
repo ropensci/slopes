@@ -202,86 +202,6 @@ slope_xyz <- function(route_xyz, fun = slope_matrix_weighted, lonlat = TRUE, dir
   }
 }
 
-#' Extract elevation values from coordinates
-#'
-#' Extracts elevation values from a DEM raster at specified coordinate locations.
-#' Accepts both `SpatRaster` (terra) and legacy `Raster*` (raster) objects;
-#' legacy objects are automatically converted to `SpatRaster`.
-#'
-#' @param m Matrix or sf object with coordinates
-#' @param dem A SpatRaster (or legacy RasterLayer) containing elevation data
-#' @param method Method for raster extraction (default: "bilinear")
-#' @param terra Deprecated. Ignored; terra is always used.
-#' @return Numeric vector of elevation values
-#' @export
-elevation_extract <- function(m, dem, method = "bilinear", terra = NULL) {
-  if (!is.null(terra)) {
-    .Deprecated(msg = "The 'terra' argument is deprecated and ignored. terra is always used.")
-  }
-  if (any(grepl(pattern = "sf", class(m)))) m <- sf::st_coordinates(m)
-  if (!methods::is(dem, "SpatRaster")) {
-    if (requireNamespace("terra", quietly = TRUE)) {
-      message("Converting legacy Raster* object to SpatRaster. Consider using terra::rast() directly.")
-      dem <- terra::rast(dem)
-    } else {
-      stop("terra package is required. Install it with: install.packages('terra')")
-    }
-  }
-  terra::extract(dem, m[, 1:2], method = method)[[1]]
-}
-
-#' Add elevation data to route linestrings
-#'
-#' Adds elevation (Z) coordinates to linestring geometries using DEM data.
-#'
-#' @param routes An sf object containing linestring geometries
-#' @param dem A SpatRaster object containing elevation data (default: NULL for automatic download)
-#' @param method Method for raster extraction (default: "bilinear")
-#' @param terra Deprecated. Ignored; terra is always used.
-#' @return An sf object with XYZ linestring geometries
-#' @export
-#' @examples
-#' library(sf)
-#' routes = lisbon_road_network[204, ]
-#' dem = dem_lisbon()
-#' (r3d = elevation_add(routes, dem))
-#' st_z_range(routes)
-#' st_z_range(r3d)
-#' plot(st_coordinates(r3d)[, 3])
-#' plot_slope(r3d)
-#' \dontrun{
-#' # Get elevation data (requires internet connection, ceramic pkg, and API key):
-#' if (requireNamespace("ceramic", quietly = TRUE)) {
-#'   r3d_get = elevation_add(cyclestreets_route)
-#'   plot_slope(r3d_get)
-#' }
-#' }
-elevation_add <- function(routes, dem = NULL, method = "bilinear", terra = NULL) {
-  if (!is.null(terra)) {
-    .Deprecated(msg = "The 'terra' argument is deprecated and ignored. terra is always used.")
-  }
-  stopifnotsf(routes)
-  if (is.null(dem)) {
-    dem <- elevation_get(routes)  # returns SpatRaster
-    r_original <- routes
-    routes <- sf::st_transform(routes, terra::crs(dem))
-    suppressWarnings({sf::st_crs(routes) <- sf::st_crs(r_original)})
-    m <- sf::st_coordinates(routes)
-    mo <- sf::st_coordinates(r_original)
-    z <- as.numeric(elevation_extract(m, dem, method = method))
-    m_xyz <- cbind(mo[, 1:2], z)
-  } else {
-    m <- sf::st_coordinates(routes)
-    z <- as.numeric(elevation_extract(m, dem, method = method))
-    m_xyz <- cbind(m[, 1:2], z)
-  }
-  n <- nrow(routes)
-  linestrings <- lapply(seq(n), function(i) sf::st_linestring(m_xyz[m[, "L1"] == i, ]))
-  rgeom3d_sfc <- sf::st_sfc(linestrings, crs = sf::st_crs(routes))
-  sf::st_geometry(routes) <- rgeom3d_sfc
-  routes
-}
-
 # Utility functions
 has_terra <- function() requireNamespace("terra", quietly = TRUE)
 is_linestring <- function(x) unique(sf::st_geometry_type(x)) == "LINESTRING"
@@ -299,9 +219,9 @@ stopifnotsf <- function(x, arg_name = "routes") if (!methods::is(x, "sf")) stop(
 #' @return An sf object with one LINESTRING feature per vertex-to-vertex segment.
 #' @export
 #' @examples
-#' route_xyz = elevation_add(lisbon_route, dem = dem_lisbon())
-#' segs = route_to_segments(route_xyz)
-#' segs$slope = slope_xyz(segs)
+#' route_xyz <- elevation_add(lisbon_route, dem = dem_lisbon())
+#' segs <- route_to_segments(route_xyz)
+#' segs$slope <- slope_xyz(segs)
 #' summary(segs$slope)
 route_to_segments <- function(route_xyz) {
   coords <- sf::st_coordinates(route_xyz)

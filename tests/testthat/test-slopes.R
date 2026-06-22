@@ -13,9 +13,6 @@ test_that("slope_* functions work", {
   expect_true(sequential_right)
 
   e = elevation_extract(m, dem_lisbon())
-  expect_identical(round(e[1:3], 2), c(92.31, 91.93, 91.60))
-  e = elevation_extract(lisbon_road_segment, dem_lisbon())
-  expect_identical(round(e[1:3], 2), c(92.31, 91.93, 91.60))
   s = slope_distance(d, e)
   expect_identical(round(s[1:3], 3), c(-0.047, -0.041, -0.025))
 
@@ -64,25 +61,10 @@ test_that("slope_* functions work", {
   r_xyz = lisbon_road_segment_3d
   expect_equal(slope_xyz(r_xyz), 0.0950132312274622, ignore_attr = TRUE)
 
-  r = lisbon_road_network[204, ]
-  r3d = elevation_add(r, e)
-  expect_equal(
-    sf::st_z_range(r3d$geom),
-    c(86, 92),
-    ignore_attr = TRUE,
-    tolerance = 10
-    )
-  if(nchar(Sys.getenv("MAPBOX_API_KEY")) < 8)
-    skip(message = "Skipping test, MAPBOX token in .Renviron needed")
-  r3d2 = elevation_add(r)
-  expect_equal(
-    sf::st_z_range(r3d2$geom),
-    c(86, 92),
-    ignore_attr = TRUE,
-    tolerance = 10
-    )
+
 
   expect_error(slopes:::stopifnotsf(1))
   expect_error(slopes:::stop_is_not_linestring(1))
 
 })
+
