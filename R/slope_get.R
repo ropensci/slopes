@@ -1,46 +1,4 @@
-#' Get elevation data for routes
-#'
-#' Downloads elevation data using the ceramic package for given routes.
-#' Returns a `SpatRaster` object (terra package).
-#'
-#' @param routes An sf object containing linestring geometries
-#' @param ... Additional arguments passed to ceramic::cc_elevation
-#' @return A SpatRaster covering the routes
-#' @export
-elevation_get = function(routes, ...) {
-  if (!requireNamespace("ceramic", quietly = TRUE)) {
-    stop("Install the package ceramic to use elevation_get().")
-  }
-  mid_ext = sf_mid_ext_lonlat(routes)
-  bw = max(c(mid_ext$width, mid_ext$height)) / 1 # buffer width
-  suppressWarnings({
-    e = ceramic::cc_elevation(loc = mid_ext$midpoint, buffer = bw, ...)
-  })
-  crs_routes = sf::st_crs(routes)
-  terra::project(e, y = crs_routes$wkt)
-}
-
-#' Extract midpoint and extent from routes in lonlat
-#'
-#' Internal helper function to get midpoint and extent of routes in lon/lat coordinates.
-#'
-#' @param routes An sf object containing linestring geometries
-#' @return A list with midpoint coordinates and width/height dimensions
-sf_mid_ext_lonlat = function(routes) {
-  res = list()
-  if(!sf::st_is_longlat(routes)) {
-    routes = sf::st_transform(routes, 4326)
-  }
-  bb = sf::st_bbox(routes)
-  res$midpoint = c(mean(c(bb[1], bb[3])), mean(c(bb[2], bb[4])))
-  res$width = geodist::geodist(c(x = bb[1], y = bb[2]), c(x = bb[3], y = bb[2]))
-  res$height = geodist::geodist(
-    c(x = bb[1], y = bb[2]),
-    c(x = bb[1], y = bb[4])
-  )
-  res
-}
-
+# Raster / matrix utility functions for slope data
 #' Convert slope matrix to SpatRaster
 #'
 #' Converts a slope matrix or a legacy RasterLayer to a SpatRaster (terra).
