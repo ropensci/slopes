@@ -2,26 +2,26 @@
 % Please edit documentation in R/palette.R
 \name{slope_breaks}
 \alias{slope_breaks}
-\title{Recommended slope break thresholds}
+\title{Recommended slope break thresholds (as proportions)}
 \format{
-A numeric vector of length 6.
+A numeric vector of length 7.
 }
 \usage{
 slope_breaks
 }
 \description{
-A numeric vector of six positive break points in \strong{percentage units}
-(e.g. 5 = 5\\%), without \code{0} or \code{Inf}.
-\code{\link{plot_slope}} uses these to build a symmetric set of 12 intervals
-(downhill and uphill), matched to the 12 colours in \code{\link{slope_colors}}.
+A numeric vector of seven break points in \strong{proportion units}
+(e.g. 0.05 = 5\\%), including \code{0} and \code{Inf} as outer bounds.
+Defines six slope severity classes for use with \code{\link{slope_colors}}:
+0--3\\%, 3--5\\%, 5--8\\%, 8--10\\%, 10--20\\%, >20\\%.
+}
+\details{
+Use with \code{cut(slope_values, breaks = slope_breaks)} where slope values
+are proportions as returned by \code{\link{slope_xyz}}.
 }
 \examples{
 slope_breaks
-\donttest{
-route_xyz <- elevation_add(lisbon_route, dem = dem_lisbon())
-plot_slope(route_xyz, pal = slope_colors, brks = slope_breaks)
-}
 }
 \seealso{
-\code{\link{slope_colors}}, \code{\link{slopes_palette}}
+\code{\link{slope_colors}}, \code{\link{plot_slope}}
 }
