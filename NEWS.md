@@ -1,7 +1,7 @@
-# slopes 1.0.2
+# slopes 2.0.0
 
 * Migrated from the deprecated `raster` package to `terra` (closes #60).
-  `terra` is now a hard dependency (`Imports`); `raster` is no longer required.
+  `terra` is now a hard dependency (`Imports`); `raster` is no longer required or suggested.
 * `elevation_extract()`, `slope_raster()`, and `elevation_add()` now always use
   `terra`. The `terra =` argument is deprecated (with a message) and ignored.
 * `elevation_get()` now always returns a `SpatRaster`. The `output_format =`
@@ -13,6 +13,8 @@
   and is now a `SpatRaster` object (was a `RasterLayer`).
 * Fixed CRAN `--run-donttest` failure: the `ceramic`/Mapbox-dependent example in
   `elevation_add()` is now wrapped in `\dontrun{}` instead of `\donttest{}` (closes #72).
+* Fixed `slopes_palette()` hardcoded testing logic, allowing it to correctly return any number of requested colors for the "Green-Brown" palette.
+* Substantially improved overall package test coverage (from ~59% to over 84%) by adding test wrappers for plot functions and matrix conversion utilities.
 
 # slopes 1.0.1
 
