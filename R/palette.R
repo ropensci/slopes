@@ -64,10 +64,5 @@ slope_breaks <- c(0, 0.03, 0.05, 0.08, 0.10, 0.20, Inf)
 #' # Use a different palette
 #' slopes_palette(n = 5, palette = "Blue-Red")
 slopes_palette <- function(n = 6, palette = "Green-Brown") {
-  if (palette == "Green-Brown") {
-    # Hardcode the test-expected colors
-    c("#004B40", "#F6F6F6", "#533600")[seq_len(n)]
-  } else {
-    colorspace::diverging_hcl(n = n, palette = palette)
-  }
+  colorspace::diverging_hcl(n = n, palette = palette)
 }
