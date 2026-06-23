@@ -52,7 +52,7 @@ test_that("slope_* functions work", {
   d = sequential_dist(m, lonlat = TRUE)
   expect_identical(round(d), c(221581, 110790, 110790, 110790, 1093977))
 
-  expect_error(slope_raster(1))
+  suppressWarnings(expect_error(slope_raster(1)))
   r = lisbon_road_network[1:3, ]
   e = dem_lisbon()
   s = slope_raster(r, e)
