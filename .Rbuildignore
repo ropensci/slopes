@@ -23,3 +23,5 @@ paper.md
 ^CRAN-SUBMISSION$
 ^doc$
 ^Meta$
+^lib$
+^.*\.kml$
