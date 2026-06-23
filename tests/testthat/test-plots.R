@@ -23,3 +23,15 @@ test_that("plotting functions work", {
   p = rainbow
   expect_equal(make_pal(p, b[1:4]), c("#FF0000", "#00FF00", "#0000FF"))
 })
+
+test_that("exported plotting functions run without error", {
+  pdf(file = tempfile())
+  on.exit(dev.off())
+  
+  # test plot_slope
+  expect_error(slopes::plot_slope(slopes::lisbon_route_3d), NA)
+  
+  # test plot_dz
+  dz <- distance_z(slopes::lisbon_route_3d, lonlat = TRUE)
+  expect_error(slopes::plot_dz(dz$d, dz$z), NA)
+})
